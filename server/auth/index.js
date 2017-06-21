@@ -5,36 +5,45 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const models = require('../db');
 const User = models.User;
+const secrets = require('../../google_api.js');
 
-const googleCodes = process.env.NODE_ENV === 'development' ? require('../google_api') : {
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET
-}
+// configure the strategy with our config object
+const googleConfig = {
+    clientID: process.env.GOOGLE_CLIENT_ID ? process.env.GOOGLE_CLIENT_ID : secrets.clientID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET ? process.env.GOOGLE_CLIENT_SECRET : secrets.clientSecret,
+    callbackURL: process.env.GOOGLE_CALLBACK
+};
 
-passport.use(
-    new GoogleStrategy({
-            clientID: googleCodes.clientID,
-            clientSecret: googleCodes.clientSecret,
-            callbackURL: '/auth/google/callback'
-        },
-        // Google will send back the token and profile
-        function(token, refreshToken, profile, done) {
-            User.findOrCreate({
-                    where: {
-                        name: profile.displayName,
-                        email: profile.emails[0].value
-                    }
-                })
-                .then(() => done())
+// Google will send back the token and profile;
+// Here's function that passport will invoke after google sends
+// us the user's profile and access token
+const strategy = new GoogleStrategy(googleConfig, function(token, refreshToken, profile, done) {
+    const googleId = profile.id;
+    const name = profile.displayName;
+    const email = profile.emails[0].value;
+
+    User.findOne({ where: { googleId: googleId } })
+        .then(user => {
+            if (!user) {
+                return User.create({ name, email, googleId })
+                    .then(() => {
+                        done(null, user);
+                    });
+            } else {
+                done(null, user);
+            }
         })
-);
+        .catch(done);
+});
+
+passport.use(strategy);
 
 app.get('/auth/google', passport.authenticate('google', { scope: 'email' }));
 
 app.get('/auth/google/callback',
     passport.authenticate('google', {
         successRedirect: '/',
-        failureRedirect: '/'
+        failureRedirect: '/login'
     }))
 
 router.use(passport.initialize());
