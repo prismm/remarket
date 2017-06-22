@@ -21,7 +21,7 @@ const User = db.define('user', {
                 // unique: true
         }
     },
-    googleID: {
+    googleId: {
         type: Sequelize.STRING
     },
     isAdmin: {

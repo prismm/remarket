@@ -10,6 +10,9 @@ const Listing = db.define('listing', {
         type: Sequelize.ENUM('for sale', 'housing', 'community'),
         allowNull: false
     },
+    subcategory: {
+        type: Sequelize.STRING
+    },
     description: {
         type: Sequelize.TEXT
     },
@@ -17,17 +20,16 @@ const Listing = db.define('listing', {
         type: Sequelize.INTEGER,
         defaultValue: 0,
     },
+    imageUrl: {
+        type: Sequelize.STRING
+    },
     askingPrice: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         defaultValue: 0,
         validate: {
             min: 0
         }
     }
-    // imageUrl: {
-    //     type: Sequelize.STRING
-    // }
 });
 
 module.exports = Listing;

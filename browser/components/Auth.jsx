@@ -1,6 +1,7 @@
+/* eslint-disable camelcase */
 import { connect } from 'react-redux';
 import AuthForm from './AuthForm.jsx';
-import { auth } from '../reducers/user';
+import { auth_dispatch } from '../actions/user';
 
 const mapLogin = ({ user }) => ({
   name: 'login',
@@ -20,7 +21,7 @@ const mapDispatch = dispatch => ({
     const formName = evt.target.name;
     const email = evt.target.email.value;
     const password = evt.target.password.value;
-    dispatch(auth(email, password, formName));
+    dispatch(auth_dispatch(email, password, formName));
   }
 });
 

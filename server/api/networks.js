@@ -7,5 +7,5 @@ const db = model.db;
 const Listing = model.Listing;
 const User = model.User;
 
-
+module.exports = router;
 // a route for GET: /api/networks/${networkId} to return a network

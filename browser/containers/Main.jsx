@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { logout } from '../reducers/user';
+import { logout_dispatch } from '../actions/user';
 
 // Component //
 
@@ -43,7 +43,7 @@ const mapState = ({ user }) => ({
 
 const mapDispatch = dispatch => ({
   handleClick () {
-    dispatch(logout());
+    dispatch(logout_dispatch());
   }
 });
 

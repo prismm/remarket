@@ -12,13 +12,14 @@ const removeUser_action = () => ({ type: 'REMOVE_USER' });
 const defaultUser = {};
 
 export const me_dispatch = () => dispatch => {
-    axios.get('/auth/me')
+    return axios.get('/auth/me')
         .then(res =>
             dispatch(getUser_action(res.data || defaultUser)))
         .catch(console.error)
 }
+
 export const auth_dispatch = (email, password, method) => dispatch => {
-    axios.post(`/auth/${method}`, { email, password })
+    return axios.post(`/auth/${method}`, { email, password })
         .then(res => {
             dispatch(getUser_action(res.data));
             browserHistory.push('/home');
@@ -27,11 +28,11 @@ export const auth_dispatch = (email, password, method) => dispatch => {
             dispatch(getUser_action({ error })));
 }
 
-export const logout_dispatch = () =>
-    dispatch =>
-    axios.post('/auth/logout')
-    .then(res => {
-        dispatch(removeUser_action());
-        browserHistory.push('/login');
-    })
-    .catch(err => console.log(err));
+export const logout_dispatch = () => dispatch => {
+    return axios.post('/auth/logout')
+        .then(() => {
+            dispatch(removeUser_action());
+            browserHistory.push('/login');
+        })
+        .catch(err => console.log(err));
+}

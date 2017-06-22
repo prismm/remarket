@@ -21,15 +21,17 @@ const strategy = new GoogleStrategy(googleConfig, function(token, refreshToken, 
     const name = profile.displayName;
     const email = profile.emails[0].value;
 
-    console.log("GOOGLE ID", googleId); //is this a string as expected?
+    console.log("GOOGLE ID type", typeof googleId); //is this a string as expected?
 
     User.findOne({ where: { googleId: googleId } })
         .then(user => {
             console.log(user);
             if (!user) {
-                //do something over here to note that the user didn't previously exist
+                console.log("The user is falsy")
+                    //do something over here to note that the user didn't previously exist
                 return User.create({ name, email, googleId })
                     .then(() => {
+                        console.log("DID WE GET HERE to create the user?")
                         done(null, user);
                     });
             } else {
@@ -39,18 +41,17 @@ const strategy = new GoogleStrategy(googleConfig, function(token, refreshToken, 
         .catch(done);
 });
 
+router.use(passport.initialize());
+router.use(passport.session());
 passport.use(strategy);
 
 router.get('/auth/google', passport.authenticate('google', { scope: 'email' }));
 
 router.get('/auth/google/callback',
     passport.authenticate('google', {
-        successRedirect: '/',
+        successRedirect: '/home',
         failureRedirect: '/login'
     }))
-
-router.use(passport.initialize());
-router.use(passport.session());
 
 // stores user's id in the session store upon login
 passport.serializeUser((user, done) => {
