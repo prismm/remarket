@@ -38,7 +38,6 @@ app.use('/api', require('./api'));
 
 //serves index.html file for non-api routes
 app.get('*', (req, res, next) => {
-    console.log('we hit this index.html route!')
     res.sendFile(path.join(__dirname, '../index.html'));
 })
 

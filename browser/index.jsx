@@ -1,15 +1,14 @@
 import './index.scss';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import store from './store.jsx';
 import { Login, Signup, UserHome } from './components/index.jsx';
-import { Main } from './containers/Main.jsx'
-import { me } from './reducers/user';
+import Main from './containers/Main.jsx'
+import { me_dispatch } from './actions/user';
 
-const whoAmI = store.dispatch(me());
+const whoAmI = store.dispatch(me_dispatch());
 
 const requireLogin = (nextRouterState, replace, next) =>
   whoAmI

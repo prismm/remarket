@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const app = express();
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const models = require('../db');
@@ -11,20 +10,24 @@ const secrets = require('../../google_api.js');
 const googleConfig = {
     clientID: process.env.GOOGLE_CLIENT_ID ? process.env.GOOGLE_CLIENT_ID : secrets.clientID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET ? process.env.GOOGLE_CLIENT_SECRET : secrets.clientSecret,
-    callbackURL: process.env.GOOGLE_CALLBACK
+    callbackURL: process.env.GOOGLE_CALLBACK ? process.env.GOOGLE_CALLBACK : '/auth/google/callback'
 };
 
 // Google will send back the token and profile;
-// Here's function that passport will invoke after google sends
+// Here's the function that passport will invoke after google sends
 // us the user's profile and access token
 const strategy = new GoogleStrategy(googleConfig, function(token, refreshToken, profile, done) {
     const googleId = profile.id;
     const name = profile.displayName;
     const email = profile.emails[0].value;
 
+    console.log("GOOGLE ID", googleId); //is this a string as expected?
+
     User.findOne({ where: { googleId: googleId } })
         .then(user => {
+            console.log(user);
             if (!user) {
+                //do something over here to note that the user didn't previously exist
                 return User.create({ name, email, googleId })
                     .then(() => {
                         done(null, user);
@@ -38,9 +41,9 @@ const strategy = new GoogleStrategy(googleConfig, function(token, refreshToken, 
 
 passport.use(strategy);
 
-app.get('/auth/google', passport.authenticate('google', { scope: 'email' }));
+router.get('/auth/google', passport.authenticate('google', { scope: 'email' }));
 
-app.get('/auth/google/callback',
+router.get('/auth/google/callback',
     passport.authenticate('google', {
         successRedirect: '/',
         failureRedirect: '/login'
