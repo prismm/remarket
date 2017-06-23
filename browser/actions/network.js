@@ -27,7 +27,7 @@ export const fetchSingleNetwork_dispatch = networkId => dispatch => {
 }
 
 export const addMyNetwork_dispatch = (user, network) => dispatch => {
-    axios.post(`/api/users/${user.id}/networks`, network)
+    axios.post(`/api/users/${user.id}/networks/${network.id}`)
         .then(() => {
             dispatch(addMyNetwork_action(user, network));
             dispatch(setCurrentNetwork_action(network));
@@ -36,7 +36,7 @@ export const addMyNetwork_dispatch = (user, network) => dispatch => {
 }
 
 export const removeNetwork_dispatch = (user, network) => dispatch => {
-    axios.delete(`/api/users/${user.id}/networks`, network)
+    axios.delete(`/api/users/${user.id}/networks/${network.id}`, network)
         .then(() => {
             dispatch(removeNetwork_action(network));
         })

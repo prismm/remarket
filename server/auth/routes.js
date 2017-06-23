@@ -1,3 +1,5 @@
+/* ROUTES FOR PATH '/auth' BELOW */
+
 const router = require('express').Router();
 const User = require('../db/models/User');
 
@@ -11,7 +13,8 @@ router.post('/login', (req, res, next) => {
             if (!user) res.status(401).send('We don\'t have an account under that email address');
             else if (!user.correctPassword(req.body.password)) res.status(401).send('That\'s not the right password ... try again!');
             else {
-                // this will attach the user to our passport, which will save the user in the session store
+                // this will attach the user to our passport,
+                // which will save the user in the session store
                 req.login(user, err => {
                     if (err) next(err);
                     else res.json(user.sanitize()).status(200);

@@ -45,7 +45,7 @@ app.get('*', (req, res, next) => {
 app.use((err, req, res, next) => {
     console.error(err);
     console.error(err.stack);
-    res.status(err.status || 500).send(err.message || 'oops ... Internal server error.');
+    res.status(err.status || 500).send(err.message || 'oops ... Internal server error. Maybe you hit a route that doesn\'t exist.');
 });
 
 module.exports = app;

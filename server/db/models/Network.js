@@ -5,9 +5,8 @@ const Network = db.define('network', {
     name: {
         type: Sequelize.STRING
     },
-
     location: {
-        type: Sequelize.ENUM('New York', 'Boston')
+        type: Sequelize.STRING
     }
 });
 

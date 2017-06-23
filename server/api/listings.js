@@ -1,32 +1,20 @@
 /* ROUTES FOR PATH '/api/listings' BELOW */
 
 const express = require('express');
-const router = require('express').Router();
+const router = express.Router();
 const model = require('../db');
-const db = model.db;
 const Listing = model.Listing;
-const User = model.User;
-const Network = model.Network;
-const Comment = model.Comment;
-const Offer = model.Offer;
 const listingNotFound = () => (new Error('We can\'t find that listing, sorry!'))
 
 
 router.get('/', (req, res, next) => {
-    Listing.findAll()
+    Listing.findAll({ include: [{ all: true }] })
         .then(listings => res.json(listings))
         .catch(next)
 })
 
 router.get('/:id', (req, res, next) => {
-    Listing.findById(req.params.id, {
-            include: [
-                { model: User },
-                { model: Network },
-                { model: Comment },
-                { model: Offer }
-            ]
-        })
+    Listing.findById(req.params.id, { include: [{ all: true }] })
         .then(listing => res.json(listing))
         .catch(next)
 })
@@ -64,7 +52,7 @@ router.delete('/:id', (req, res, next) => {
             if (!result) {
                 next(listingNotFound);
             } else {
-                res.json(req.params.id); // returns the id of the deleted item
+                res.status(204).json(req.params.id); // returns the id of the deleted item
             }
         })
         .catch(next)

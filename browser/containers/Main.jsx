@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { logout_dispatch } from '../actions/user';
+import ListingsContainer from './ListingsContainer.jsx'
 
 // Component //
 
@@ -24,6 +25,7 @@ const Main = props => {
           </nav>
       }
       <hr />
+      <ListingsContainer />
       { children }
     </div>
   );
@@ -38,7 +40,8 @@ Main.propTypes = {
 // Container //
 
 const mapState = ({ user }) => ({
-  loggedIn: !!user.id
+  loggedIn: !!user.id,
+  currentUser: user
 });
 
 const mapDispatch = dispatch => ({

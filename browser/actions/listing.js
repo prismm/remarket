@@ -3,7 +3,7 @@ import axios from 'axios';
 
 /* ------------   ACTION CREATORS     ------------------ */
 
-const getListings_action = listings => ({ type: 'GET_LISTINGS', listings });
+const setListings_action = listings => ({ type: 'SET_LISTINGS', listings });
 const setCurrentListing_action = listing => ({ type: 'SET_CURRENT_LISTING', listing });
 const archiveListing_action = listing => ({ type: 'ARCHIVE_LISTING', listing });
 const createListing_action = listing => ({ type: 'CREATE_LISTING', listing });
@@ -14,15 +14,16 @@ const deleteListing_action = listingId => ({ type: 'DELETE_LISTING', listingId }
 /* ------------       DISPATCHERS     ------------------ */
 
 export const fetchAllListings_dispatch = () => dispatch => {
-    axios.get('/api/listings')
+    console.log("FETCH ALL LISTINGS DISPATCH!");
+    return axios.get('/api/listings')
         .then(res => {
-            dispatch(getListings_action(res.data));
+            dispatch(setListings_action(res.data));
         })
         .catch(console.error);
 }
 
 export const fetchSingleListing_dispatch = listingId => dispatch => {
-    axios.get(`/api/listings/${listingId}`)
+    return axios.get(`/api/listings/${listingId}`)
         .then(res => {
             dispatch(setCurrentListing_action(res.data));
         })

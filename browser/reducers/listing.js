@@ -6,7 +6,7 @@ const initialState = {
 const listingReducer = (state = initialState, action) => {
     const newState = Object.assign({}, state);
     switch (action.type) {
-        case 'GET_LISTINGS':
+        case 'SET_LISTINGS':
             newState.listings = action.listings;
             break;
         case 'SET_CURRENT_LISTING':
