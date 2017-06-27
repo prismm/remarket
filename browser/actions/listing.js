@@ -31,6 +31,7 @@ export const fetchSingleListing_dispatch = listingId => dispatch => {
 }
 
 export const createListing_dispatch = listing => dispatch => {
+    console.log("here in the dispatch", listing);
     axios.post('/api/listings', listing)
         .then(res => {
             dispatch(createListing_action(res.data));

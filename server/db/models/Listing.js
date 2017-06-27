@@ -16,6 +16,9 @@ const Listing = db.define('listing', {
     description: {
         type: Sequelize.TEXT
     },
+    location: {
+        type: Sequelize.STRING
+    },
     floorPrice: {
         type: Sequelize.INTEGER,
         defaultValue: 0,
@@ -29,6 +32,9 @@ const Listing = db.define('listing', {
         validate: {
             min: 0
         }
+    },
+    expirationDate: {
+        type: Sequelize.DATE
     }
 });
 
