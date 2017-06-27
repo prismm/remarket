@@ -1,14 +1,12 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { logout_dispatch } from '../actions/user';
-import ListingsContainer from './ListingsContainer.jsx'
 
-// Component //
-
+/*------------------- Main component ----------------------*/
 const Main = ({ children, handleClick, loggedIn }) => {
-  console.log(children);
   return (
     <div>
       <h1><Link to="/">remarket</Link></h1>
@@ -37,7 +35,7 @@ Main.propTypes = {
   loggedIn: PropTypes.bool.isRequired
 };
 
-// Container //
+/*------------------- Container ----------------------*/
 
 const mapState = ({ user }) => ({
   loggedIn: !!user.id,

@@ -6,6 +6,7 @@ const User = models.User;
 const Comment = models.Comment;
 const Offer = models.Offer;
 const Network = models.Network;
+const NetworkAffiliation = models.network_affiliations;
 
 const users = [
     { name: 'Geoff', email: 'Geoff@gmail.com', password: 'hello', isAdmin: false },
@@ -59,6 +60,21 @@ const networks = [
     { name: 'Princeton', location: 'Princeton' }
 ]
 
+const networkAffiliations = [
+    { userId: 1, networkId: 1 },
+    { userId: 2, networkId: 1 },
+    { userId: 3, networkId: 1 },
+    { userId: 4, networkId: 1 },
+    { userId: 8, networkId: 1 },
+    { userId: 1, networkId: 6 },
+    { userId: 2, networkId: 4 },
+    { userId: 3, networkId: 3 },
+    { userId: 4, networkId: 3 },
+    { userId: 8, networkId: 7 },
+    { userId: 8, networkId: 4 },
+    { userId: 8, networkId: 2 }
+]
+
 const offers = [];
 
 const comments = [];
@@ -70,45 +86,56 @@ function createUsers() {
 }
 
 function createOffers() {
-    return Promise.map(offers, function(orders) {
-        return Offer.create(orders);
+    return Promise.map(offers, function(offer) {
+        return Offer.create(offer);
     })
 }
 
 function createNetworks() {
-    return Promise.map(networks, function(inventory) {
-        return Network.create(inventory);
+    return Promise.map(networks, function(network) {
+        return Network.create(network);
+    })
+}
+
+function createAffiliations() {
+    return Promise.map(networkAffiliations, function(affiliation) {
+        return NetworkAffiliation.create(affiliation);
     })
 }
 
 function createListings() {
-    return Promise.map(listings, function(item) {
-        return Listing.create(item);
+    return Promise.map(listings, function(listing) {
+        return Listing.create(listing);
     })
 }
 
 function createComments() {
-    return Promise.map(comments, function(category) {
-        return Comment.create(category);
+    return Promise.map(comments, function(comment) {
+        return Comment.create(comment);
     })
 }
 
 function seed() {
-    console.log('...creating users...');
+    console.log('...creating networks...');
     return createNetworks()
         .then(function() {
-            console.log('...creating inventory...');
+            console.log('...creating users...');
             return createUsers();
         })
         .then(function() {
-            console.log('...creating categories...');
+            console.log('...creating affiliations...');
+            return createAffiliations();
+        })
+        .then(function() {
+            console.log('...creating listings...');
             return createListings();
         })
         .then(function() {
-            console.log('...creating items...');
+            console.log('...creating offers...');
             return createOffers()
         })
         .then(function() {
+            console.log('...creating comments...');
             return createComments()
         })
         .catch(console.error)

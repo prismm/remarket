@@ -1,6 +1,10 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { auth_dispatch } from '../actions/user';
 
+/*-------------------Auth Form component ----------------------*/
 const AuthForm = props => {
 
   const { name, displayName, handleSubmit, error } = props;
@@ -26,11 +30,35 @@ const AuthForm = props => {
   );
 };
 
-export default AuthForm;
-
 AuthForm.propTypes = {
   name: PropTypes.string.isRequired,
   displayName: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.object
 };
+
+/*-------------------Login & Signup containers ----------------------*/
+const mapLogin = ({ user }) => ({
+  name: 'login',
+  displayName: 'Login',
+  error: user.error
+});
+
+const mapSignup = ({ user }) => ({
+  name: 'signup',
+  displayName: 'Sign Up',
+  error: user.error
+});
+
+const mapDispatch = dispatch => ({
+  handleSubmit (evt) {
+    evt.preventDefault();
+    const formName = evt.target.name;
+    const email = evt.target.email.value;
+    const password = evt.target.password.value;
+    dispatch(auth_dispatch(email, password, formName));
+  }
+});
+
+export const Login = connect(mapLogin, mapDispatch)(AuthForm);
+export const Signup = connect(mapSignup, mapDispatch)(AuthForm);

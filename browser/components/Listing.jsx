@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import PropTypes from 'prop-types';
 
 export default function Listing({ listing }) {
     return (
@@ -9,3 +10,7 @@ export default function Listing({ listing }) {
         </div>)
     )
 }
+
+Listing.propTypes = {
+  listing: PropTypes.object.isRequired
+};

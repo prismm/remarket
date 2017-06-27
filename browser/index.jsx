@@ -5,13 +5,15 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import store from './store.jsx';
-import { Login, Signup, UserHome } from './components/index.jsx';
-import Main from './containers/Main.jsx'
+
 import { me_dispatch } from './actions/user';
 import { fetchAllListings_dispatch, fetchSingleListing_dispatch } from './actions/listing';
+
+import { Login, Signup } from './containers/Auth.jsx'
+import Main from './containers/Main.jsx'
 import ListingsContainer from './containers/ListingsContainer.jsx';
 import ListingDetailContainer from './containers/ListingDetailContainer.jsx'
-import CreateListing from './components/CreateListing.jsx'
+import CreateListing from './containers/CreateListing.jsx'
 
 const whoAmI = store.dispatch(me_dispatch());
 
@@ -37,7 +39,7 @@ ReactDOM.render(
         <Route path="home" component={ListingsContainer} />
         <Route path="signup" component={Signup} />
         <Route path="listings" component={ListingsContainer} />
-        <Route path="listings/post" component={CreateListing} />
+        <Route path="listings/post" component={CreateListing} onEnter={requireLogin} />
         <Route path="listings/:listingId" component={ListingDetailContainer} onEnter={getCurrentListing} />
       </Route>
     </Router>

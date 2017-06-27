@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function ListingDetail({currentListing, user, network}){
+export default function ListingDetail({currentListing, user}){
     return (
         currentListing && (
         <div className="currentListing">
@@ -21,3 +22,8 @@ export default function ListingDetail({currentListing, user, network}){
         </div>)
     )
 }
+
+ListingDetail.propTypes = {
+  currentListing: PropTypes.object.isRequired,
+  user: PropTypes.object
+};

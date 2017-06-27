@@ -15,17 +15,14 @@ const googleConfig = {
 
 // Google will send back the token and profile;
 // Here's the function that passport will invoke after google sends
-// us the user's profile and access token
 const strategy = new GoogleStrategy(googleConfig, function(token, refreshToken, profile, done) {
     const googleId = profile.id;
     const name = profile.displayName;
     const email = profile.emails[0].value;
 
-    console.log("GOOGLE ID type", typeof googleId); //is this a string as expected?
 
     User.findOne({ where: { googleId: googleId } })
         .then(user => {
-            console.log(user);
             if (!user) {
                 console.log("The user is falsy")
                     //do something over here to note that the user didn't previously exist

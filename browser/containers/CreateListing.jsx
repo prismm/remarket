@@ -1,13 +1,17 @@
 /* eslint-disable camelcase */
-import store from '../store.jsx';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import Radio from 'react-md/lib/SelectionControls/Radio';
 import TextField from 'react-md/lib/TextFields';
 import DatePicker from 'react-md/lib/Pickers/DatePickerContainer';
 import Button from 'react-md/lib/Buttons/Button';
+
 import {createListing_dispatch} from '../actions/listing';
 
-export default class CreateListing extends Component {
+/*------------------- CreateListing component ----------------------*/
+class CreateListing extends Component {
     constructor(props){
         super(props);
         this.handleChange = this.handleChange.bind(this);
@@ -20,8 +24,10 @@ export default class CreateListing extends Component {
                         description: '',
                         floorPrice: 0,
                         askingPrice: null,
-                        expirationDate: new Date()
+                        expirationDate: new Date(),
+                        authorId: props.user.id
                     };
+        console.log("PROPS USER", props.user)
     }
 
     handleChange(event) {
@@ -29,10 +35,8 @@ export default class CreateListing extends Component {
     }
 
     handleSubmit(event){
-        console.log(event);
         event.preventDefault();
-        console.log("state at submit", this.state)
-        store.dispatch(createListing_dispatch(this.state));
+        this.props.createListing(this.state)
     }
 
     setExpirationDate(event){
@@ -200,3 +204,26 @@ export default class CreateListing extends Component {
             )
     }
 }
+
+CreateListing.propTypes = {
+  user: PropTypes.object.isRequired
+};
+
+/*------------------- Container ----------------------*/
+
+const mapStateToProps = state => {
+    return {
+        user: state.user,
+        userNetworks: state.user.networks
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        createListing: listing => {
+            dispatch(createListing_dispatch(listing))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateListing);

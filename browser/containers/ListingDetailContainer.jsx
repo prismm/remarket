@@ -1,22 +1,14 @@
-import React from 'react';
 import { connect } from 'react-redux';
 import ListingDetail from '../components/ListingDetail.jsx';
 
-const mapStateToProps = ({user, listing, network}) => {
-    return (
-            {
-            currentListing: listing.currentListing,
-            user: user,
-            network: network
-        }
-    )
-}
+/*------------------- ListingDetail Container ----------------------*/
+const mapStateToProps = ({user, listing, network}) => ({
+        currentListing: listing.currentListing,
+        user: user,
+        network: network
+    });
 
-// const mapDispatchToProps = (dispatch) => {
-//     return ({
-
-//     })
-// }
+// const mapDispatchToProps = (dispatch) => ({})
 
 const ListingDetailContainer = connect(mapStateToProps)(ListingDetail);
 

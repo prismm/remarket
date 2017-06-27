@@ -19,7 +19,7 @@ Network.hasMany(Listing);
 // User has many Listings (Listing table has userId foreign key)
 Listing.belongsTo(User, { as: 'author' });
 Listing.belongsTo(User, { as: 'buyer' });
-User.hasMany(Listing);
+// User.hasMany(Listing);
 
 // User has many Offers (Offer table has userId foreign key)
 Offer.belongsTo(User, { as: 'bidder' });
