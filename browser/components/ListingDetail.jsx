@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/*------------------- ListingDetail component ----------------------*/
 export default function ListingDetail({currentListing, user}){
     return (
         currentListing && (
