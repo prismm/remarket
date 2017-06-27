@@ -1,6 +1,7 @@
 body {
     font-family: sans-serif;
     color: red;
+    margin: 15px;
     a {
         text-decoration: none;
     }
@@ -14,5 +15,11 @@ body {
     form div {
         margin: 1em;
         display: inline-block;
+    }
+    .md-text-field-icon-container {
+        margin: -1em;
+    }
+    .listing-container {
+        margin: 20px 10px;
     }
 }

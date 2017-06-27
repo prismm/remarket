@@ -9,7 +9,7 @@ class ListingsContainer extends Component {
 
     render() {
         return (
-            <div>
+            <div className="listing-container">
                 {/*<h1>Listings Container is here </h1>*/}
                { this.props.listings ? 
                     this.props.listings.map(listing => <Listing listing={listing} key={listing.id} />)

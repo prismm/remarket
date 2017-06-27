@@ -7,17 +7,16 @@ import ListingsContainer from './ListingsContainer.jsx'
 
 // Component //
 
-const Main = props => {
-
-  const { children, handleClick, loggedIn } = props;
-
+const Main = ({ children, handleClick, loggedIn }) => {
+  console.log(children);
   return (
     <div>
-      <h1>remarket</h1>
+      <h1><Link to="/">remarket</Link></h1>
       { loggedIn ?
           <nav>
             <Link to="/home">Home</Link>
             <a href="#" onClick={handleClick}>Logout</a>
+            <Link to="/listings/post">New Post</Link>
           </nav> :
           <nav>
             <Link to="/login">Login</Link>
@@ -25,8 +24,9 @@ const Main = props => {
           </nav>
       }
       <hr />
-      <ListingsContainer />
       { children }
+      <hr />
+
     </div>
   );
 };

@@ -11,6 +11,7 @@ import { me_dispatch } from './actions/user';
 import { fetchAllListings_dispatch, fetchSingleListing_dispatch } from './actions/listing';
 import ListingsContainer from './containers/ListingsContainer.jsx';
 import ListingDetailContainer from './containers/ListingDetailContainer.jsx'
+import CreateListing from './components/CreateListing.jsx'
 
 const whoAmI = store.dispatch(me_dispatch());
 
@@ -31,12 +32,13 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={Main} onEnter={ () => store.dispatch(fetchAllListings_dispatch()) }>
-        <IndexRoute component={Login} />
+        <IndexRoute component={ListingsContainer} />
         <Route path="login" component={Login} />
+        <Route path="home" component={ListingsContainer} />
         <Route path="signup" component={Signup} />
         <Route path="listings" component={ListingsContainer} />
+        <Route path="listings/post" component={CreateListing} />
         <Route path="listings/:listingId" component={ListingDetailContainer} onEnter={getCurrentListing} />
-        <Route path="home" component={UserHome} />
       </Route>
     </Router>
   </Provider>,
