@@ -8,15 +8,16 @@ import store from './store.jsx';
 
 import { me_dispatch } from './actions/user';
 import { fetchAllListings_dispatch, fetchSingleListing_dispatch } from './actions/listing';
+import { fetchAllNetworks_dispatch } from './actions/network';
 
 import { Login, Signup } from './containers/Auth.jsx'
 import Main from './containers/Main.jsx'
 import ListingsContainer from './containers/ListingsContainer.jsx';
 import ListingDetailContainer from './containers/ListingDetailContainer.jsx'
 import CreateListing from './containers/CreateListing.jsx'
+import AddNetwork from './containers/AddNetwork.jsx'
 
 const whoAmI = store.dispatch(me_dispatch());
-
 const requireLogin = (nextRouterState, replace, next) =>
   whoAmI
     .then(() => {
@@ -30,18 +31,24 @@ const getCurrentListing = (nextRouterState) => {
   store.dispatch(fetchSingleListing_dispatch(nextRouterState.params.listingId));
 }
 
+const loadEverything = () => {
+  store.dispatch(fetchAllListings_dispatch());
+  store.dispatch(fetchAllNetworks_dispatch())
+}
+
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/" component={Main} onEnter={ () => store.dispatch(fetchAllListings_dispatch()) }>
+      <Route path="/" component={Main} onEnter={loadEverything}>
         <IndexRoute component={ListingsContainer} />
         <Route path="login" component={Login} />
         <Route path="home" component={ListingsContainer} />
         <Route path="signup" component={Signup} />
-        <Route path="listings" component={ListingsContainer} />
-        <Route path="listings/post" component={CreateListing} onEnter={requireLogin} />
-        <Route path="listings/:listingId" component={ListingDetailContainer} onEnter={getCurrentListing} />
       </Route>
+      <Route path="listings" component={ListingsContainer} />
+      <Route path="listings/post" component={CreateListing} onEnter={requireLogin} />
+      <Route path="listings/:listingId" component={ListingDetailContainer} onEnter={getCurrentListing} />
+      <Route path="addnetwork" component={AddNetwork} onEnter={loadEverything} />
     </Router>
   </Provider>,
   document.getElementById('app')

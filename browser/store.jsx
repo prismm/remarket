@@ -10,4 +10,3 @@ export default createStore(
         applyMiddleware(thunkMiddleware, createLogger())
     )
 )
-    

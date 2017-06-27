@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import axios from 'axios';
+import { browserHistory } from 'react-router';
 
 /* ------------   ACTION CREATORS     ------------------ */
 
@@ -14,7 +15,6 @@ const deleteListing_action = listingId => ({ type: 'DELETE_LISTING', listingId }
 /* ------------       DISPATCHERS     ------------------ */
 
 export const fetchAllListings_dispatch = () => dispatch => {
-    console.log("FETCH ALL LISTINGS DISPATCH!");
     return axios.get('/api/listings')
         .then(res => {
             dispatch(setListings_action(res.data));
@@ -31,10 +31,11 @@ export const fetchSingleListing_dispatch = listingId => dispatch => {
 }
 
 export const createListing_dispatch = listing => dispatch => {
-    console.log("here in the dispatch", listing);
     axios.post('/api/listings', listing)
         .then(res => {
             dispatch(createListing_action(res.data));
+            console.log("RES DATA", res.data)
+            browserHistory.push(`/listings/${res.data.id}`);
         })
         .catch(console.error);
 }

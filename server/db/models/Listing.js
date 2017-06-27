@@ -36,6 +36,13 @@ const Listing = db.define('listing', {
     expirationDate: {
         type: Sequelize.DATE
     }
+}, {
+    instanceMethods: {
+        getListingAuthor: () => {
+            return this.getUser({ include: [{ all: true }] })
+                .then(user => Promise.all(user))
+        }
+    }
 });
 
 module.exports = Listing;

@@ -3,12 +3,21 @@ import axios from 'axios';
 
 /* ------------   ACTION CREATORS     ------------------ */
 
+const setNetworks_action = networks => ({ type: 'SET_NETWORKS', networks });
 const getMyNetworks_action = user => ({ type: 'GET_MY_NETWORKS', user });
 const setCurrentNetwork_action = network => ({ type: 'SET_CURRENT_NETWORK', network });
 const addMyNetwork_action = network => ({ type: 'ADD_NETWORK', network });
 const removeNetwork_action = network => ({ type: 'REMOVE_NETWORK', network })
 
 /* ------------       DISPATCHERS     ------------------ */
+
+export const fetchAllNetworks_dispatch = () => dispatch => {
+    return axios.get('/api/networks')
+        .then(res => {
+            dispatch(setNetworks_action(res.data));
+        })
+        .catch(console.error);
+}
 
 export const getMyNetworks_dispatch = user => dispatch => {
     axios.get(`/api/users/${user.id}/networks`)

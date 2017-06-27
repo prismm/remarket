@@ -12,9 +12,9 @@ const network_affiliations = db.define('network_affiliations', {}, { freezeTable
 User.belongsToMany(Network, { through: network_affiliations });
 Network.belongsToMany(User, { through: network_affiliations });
 
-// Network has many Listings (Listing table has networkId foreign key)
-Listing.belongsTo(Network);
-Network.hasMany(Listing);
+// // Network has many Listings (Listing table has networkId foreign key)
+// Listing.belongsTo(Network);
+// Network.hasMany(Listing);
 
 // User has many Listings (Listing table has userId foreign key)
 Listing.belongsTo(User, { as: 'author' });

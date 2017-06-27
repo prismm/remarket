@@ -1,3 +1,4 @@
+/*------------------- managing state.listing ----------------------*/
 const initialState = {
     listings: [],
     currentListing: {}

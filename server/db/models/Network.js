@@ -8,6 +8,20 @@ const Network = db.define('network', {
     location: {
         type: Sequelize.STRING
     }
+}, {
+    getterMethods: {
+        suggestedDomain: function() {
+            return 'you@' + this.name.toLowerCase() + '.edu';
+        }
+    },
+    instanceMethods: {
+        getAllListings: function() {
+            return this.getUsers({ include: [{ all: true }] })
+                .then(users => users.map(user => user.listings)) // map listings by users and Promise.all the mapped arr?
+                .then(listings => listings)
+                .catch(console.error)
+        }
+    }
 });
 
 module.exports = Network;

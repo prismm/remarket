@@ -27,7 +27,6 @@ class CreateListing extends Component {
                         expirationDate: new Date(),
                         authorId: props.user.id
                     };
-        console.log("PROPS USER", props.user)
     }
 
     handleChange(event) {
@@ -36,7 +35,11 @@ class CreateListing extends Component {
 
     handleSubmit(event){
         event.preventDefault();
-        this.props.createListing(this.state)
+        if (!this.state.name || !this.state.description){
+            alert("You must complete required fields in order to post -- Thanks!");
+            return
+        }
+        this.props.createListing(this.state);
     }
 
     setExpirationDate(event){
@@ -139,30 +142,35 @@ class CreateListing extends Component {
                         <form className="md-grid" onChange={this.handleChange} onSubmit={this.handleSubmit}>
                             <TextField
                                 id="Title"
-                                label="Housing Post Title?"
+                                name="name"
+                                label="Title for your housing post?"
                                 className="md-cell md-cell--12"
                                 required
                             />
                             <TextField
                                 id="applicationLocation"
+                                name="location"
                                 label="Location?"
                                 className="location md-cell md-cell--1-phone md-cell--4"
                                 required
                             />
                             <TextField
                                 id="askingPrice"
+                                name="askingPrice"
                                 label="Price?"
                                 className="price md-cell md-cell--1-phone md-cell--8"
                             />
                             <TextField
                                 id="description"
                                 label="Description"
+                                name="description"
                                 rows={3}
                                 className="md-cell md-cell--12"
                                 required
                             />
                             <DatePicker
                                 id="inline"
+                                name="expirationDate"
                                 label="Post expiration date?"
                                 inline
                                 className="md-cell date-picker"
@@ -170,7 +178,7 @@ class CreateListing extends Component {
                                 onChange={this.setExpirationDate}
                                 />
                             <Button flat primary label="Submit" type="submit" className="submit md-cell--12 md-cell--right" />
-                        </form> 
+                        </form>
                     </div>
                     : null}
                 { category === 'community' ?
@@ -178,13 +186,15 @@ class CreateListing extends Component {
                         <form className="md-grid" onChange={this.handleChange} onSubmit={this.handleSubmit}>
                             <TextField
                                 id="Title"
-                                label="Post Title?"
+                                name="name"
+                                label="Title for your post?"
                                 className="md-cell md-cell--12"
                                 required
                             />
                             <TextField
                                 id="description"
                                 label="Content"
+                                name="description"
                                 rows={3}
                                 className="md-cell md-cell--12"
                                 required
@@ -192,6 +202,7 @@ class CreateListing extends Component {
                             <DatePicker
                                 id="inline"
                                 label="Post expiration date?"
+                                name="expirationDate"
                                 className="md-cell date-picker"
                                 required
                                 onChange={this.setExpirationDate}
@@ -206,7 +217,8 @@ class CreateListing extends Component {
 }
 
 CreateListing.propTypes = {
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  createListing: PropTypes.func.isRequired
 };
 
 /*------------------- Container ----------------------*/

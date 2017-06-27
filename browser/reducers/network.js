@@ -1,13 +1,18 @@
+/*------------------- managing state.network ----------------------*/
 const initialState = {
     networks: [],
+    myNetworks: [],
     currentNetwork: {}
 };
 
 const networkReducer = (state = initialState, action) => {
     const newState = Object.assign({}, state);
     switch (action.type) {
-        case 'GET_MY_NETWORKS':
+        case 'SET_NETWORKS':
             newState.networks = action.networks;
+            break;
+        case 'GET_MY_NETWORKS':
+            newState.myNetworks = action.myNetworks;
             break;
         case 'SET_CURRENT_NETWORK':
             newState.currentNetwork = action.network;

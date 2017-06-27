@@ -1,3 +1,4 @@
+/*------------------- managing state.user ----------------------*/
 const defaultUser = {};
 
 export default function(state = defaultUser, action) {
