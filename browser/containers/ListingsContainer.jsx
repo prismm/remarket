@@ -32,7 +32,7 @@ class Listings extends Component {
             );
         this.setState({
             searchTerm: searchTerm,
-            // filteredListings: filteredListings
+            filteredListings: filteredListings
         })
     }
 
@@ -68,7 +68,7 @@ class Listings extends Component {
     }
 
     render(){
-        const filteredListings = generalFilter(filterByLocation(filterByNetwork(this.props.listings)));
+        // const filteredListings = generalFilter(filterByLocation(filterByNetwork(this.props.listings)));
         return (
             <div>
                 <Filters handleSubmit={this.handleSubmit} handleChange={this.handleChange} searchTerm={this.state.searchTerm} generalFilter={this.generalFilter} filterByCategory={this.filterByCategory} filterByLocation={this.filterByLocation} filterByNetwork={this.filterByNetwork} />

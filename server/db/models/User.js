@@ -43,6 +43,11 @@ const User = db.define('user', {
         correctPassword: function(candidatePassword) {
             const encryptedPassword = User.encryptPassword(candidatePassword, this.getDataValue('salt'));
             return encryptedPassword === this.password;
+        },
+        getMyListings: function() {
+            return this.getListings({ include: [{ all: true }] })
+                .then(listings => listings)
+                .catch(console.error)
         }
     },
     classMethods: {

@@ -37,7 +37,7 @@ class AddNetwork extends Component {
     }
     //value={this.state.network.id}
     render(){
-        console.log("PROPS networks", this.props.networks);
+        console.log("PROPS", this.props);
         console.log('STATE', this.state.network);
         return (
         // <div className="add-network-container md-grid">
@@ -63,6 +63,7 @@ class AddNetwork extends Component {
                             onChange={this.handleNetworkChange}
                             menuItems={this.props.networks}
                         />
+                        <span id="textfield-container">
                         <TextField
                             id="verificationEmail"
                             name="verificationEmail"
@@ -72,6 +73,7 @@ class AddNetwork extends Component {
                             className={this.state.network.suggestedDomain + ' md-cell md-cell--1-phone md-cell--4'}
                             required
                         />
+                        </span>
                         <Button flat primary label="Submit" type="submit" className="submit md-cell--4" />
                     </form>
 
