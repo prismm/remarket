@@ -7,11 +7,13 @@ body {
     h1 {
         font-family: Courier New, Courier, monospace;
     }
+    hr {
+        clear: both;
+    }
     label {
         display: block;
     }
     nav a {
-        display: inline-block;
         margin: 1em;
     }
     form div {
@@ -29,4 +31,23 @@ body {
         margin: auto;
         background-color: yellow;
     }
+    // .add-network-container {
+    //     display: flex;
+    //     /* establish flex container */
+    //     flex-direction: column;
+    //     /* make main axis vertical */
+    //     justify-content: center;
+    //     /* center items vertically, in this case */
+    //     align-items: center;
+    //     /* center items horizontally, in this case */
+    //     height: 500px;
+    // }
+    // .add-network {
+    //     width: 300px;
+    //     margin: 5px;
+    //     text-align: center;
+    // }
+    // .add-network-form {
+    //     margin-top: 45px;
+    // }
 }

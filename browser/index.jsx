@@ -44,11 +44,11 @@ ReactDOM.render(
         <Route path="login" component={Login} />
         <Route path="home" component={ListingsContainer} />
         <Route path="signup" component={Signup} />
+        <Route path="listings/post" component={CreateListing} onEnter={requireLogin} />
+        <Route path="listings/:listingId" component={ListingDetailContainer} onEnter={getCurrentListing} />
+        <Route path="addnetwork" component={AddNetwork} onEnter={loadEverything} />
       </Route>
       <Route path="listings" component={ListingsContainer} />
-      <Route path="listings/post" component={CreateListing} onEnter={requireLogin} />
-      <Route path="listings/:listingId" component={ListingDetailContainer} onEnter={getCurrentListing} />
-      <Route path="addnetwork" component={AddNetwork} onEnter={loadEverything} />
     </Router>
   </Provider>,
   document.getElementById('app')

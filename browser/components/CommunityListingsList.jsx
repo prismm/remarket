@@ -3,7 +3,7 @@ import Listing from './Listing.jsx';
 import PropTypes from 'prop-types';
 
 /*------------------- ListingsList component ----------------------*/
-export default function ListingsList({listings, category}) {
+export default function ListingsList({category, listings}) {
     return (
         <div className="listing-container">
             <h2>{category}</h2>

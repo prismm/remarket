@@ -3,10 +3,9 @@ import Listing from './Listing.jsx';
 import PropTypes from 'prop-types';
 
 /*------------------- ListingsList component ----------------------*/
-export default function ListingsList({listings, category}) {
+export default function ListingsList({listings}) {
     return (
         <div className="listing-container">
-            <h2>{category}</h2>
             { listings ?
                 listings.map(listing => <Listing listing={listing} key={listing.id} />)
                 :
@@ -17,6 +16,5 @@ export default function ListingsList({listings, category}) {
 }
 
 ListingsList.propTypes = {
-    category: PropTypes.string,
-    listings: PropTypes.array
+  listings: PropTypes.array
 };
