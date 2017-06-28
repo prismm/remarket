@@ -8,18 +8,18 @@ import ExpansionList from 'react-md/lib/ExpansionPanels/ExpansionList';
 const locations = [
   'New York',
   'New Haven',
-  'Boston',
-  'Philadelphia'
+  'Boston/Cambridge',
+  'Philadelphia',
+  'Princeton'
 ];
 
 export default class LocationDropdown extends PureComponent {
 
   constructor(props) {
         super(props);
-
         this.state = {
-        location: locations[0],
-        tempLocation: locations[0],
+          location: locations[0],
+          tempLocation: locations[0],
         };
     }
 

@@ -7,6 +7,12 @@ body {
     h1 {
         font-family: Courier New, Courier, monospace;
     }
+    .site-header {
+        float: left;
+    }
+    .site-nav-link {
+        float: right;
+    }
     hr {
         clear: both;
     }

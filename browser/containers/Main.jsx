@@ -9,16 +9,16 @@ import { logout_dispatch } from '../actions/user';
 const Main = ({ children, handleClick, loggedIn }) => {
   return (
     <div>
-      <h1><Link to="/">remarket</Link></h1>
+      <h1 className="site-header"><Link to="/">remarket</Link></h1>
       { loggedIn ?
-          <nav>
-            <Link to="/home">Home</Link>
-            <a href="#" onClick={handleClick}>Logout</a>
-            <Link to="/listings/post">New Post</Link>
+          <nav className="site-nav">
+            <Link className="site-nav-link" to="/home">Home</Link>
+            <a className="site-nav-link" href="#" onClick={handleClick}>Logout</a>
+            <Link className="site-nav-link" to="/listings/post">New Post</Link>
           </nav> :
-          <nav>
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
+          <nav className="site-nav">
+            <Link className="site-nav-link" to="/login">Login</Link>
+            <Link className="site-nav-link" to="/signup">Sign Up</Link>
           </nav>
       }
       <hr />
