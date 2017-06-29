@@ -31,9 +31,10 @@ class Listings extends Component {
     }
 
     generalFilter(searchTerm){
-        let filteredListings = this.props.listings.filter(listing => (
-            (listing.name.indexOf(searchTerm) !== -1) || (listing.description.indexOf(searchTerm) !== -1))
-            );
+        searchTerm = searchTerm.toLowerCase();
+        let filteredListings = this.props.listings.filter(listing => {
+            return (listing.name.toLowerCase().indexOf(searchTerm) !== -1) || (listing.description.toLowerCase().indexOf(searchTerm) !== -1)
+        })
         this.setState({
             searchTerm: searchTerm,
             filteredListings: filteredListings
@@ -86,10 +87,9 @@ class Listings extends Component {
         this.state.networkFilters.forEach( networkFilter => {
             filteredListings = this.filterByNetwork(filteredListings, networkFilter)
         });
-        console.log(filteredListings);
         filteredListings = this.filterByLocation(filteredListings, this.state.location);
         //filter by Location was tested and appears to work; filter by network not yet tested
-        console.log("FILTERED LISTINGS IN RENDER FUNCTION OF LISTINGS CONTAINER", filteredListings)
+        // console.log("FILTERED LISTINGS IN RENDER FUNCTION OF LISTINGS CONTAINER", filteredListings)
 
         return (
             <div>
