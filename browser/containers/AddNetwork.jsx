@@ -37,24 +37,19 @@ class AddNetwork extends Component {
     }
     //value={this.state.network.id}
     render(){
-        // console.log("PROPS", this.props);
-        // console.log('STATE', this.state.network);
+
         return (
-        // <div className="add-network-container md-grid">
-        //     <div className="add-network md-cell-8">
-                <div className="your-networks md-cell-4">
-                    <h2>Your networks:</h2>
+                <div className="your-networks">
+                    <h3>My Networks</h3>
                     { (this.props.user.networks && this.props.user.networks.length) ?
-                        this.props.user.networks.map(network => <li key={network.id}>network.name</li>)
+                        this.props.user.networks.map(network => <li key={network.id}>{network.name}</li>)
                         :
-                        <h5>You currently are not affiliated with any networks. Add a network below.</h5>
+                        <h5>You currently are not affiliated with any networks on remarket. <br /><br />But are you in real life? Add yourself to your network below.</h5>
                     }
-                {/*</div>*/}
-                {/*// <div className="add-network-form md-cell-4">
-                // </div>*/}
-            {/*</div>*/}
-                    <h2>Add a new network:</h2>
+
+                    <h3>Add a Network</h3>
                     <form onSubmit={this.handleSubmit}>
+                        <div className="add-network-fields">
                         <SelectField
                             id="chooseNetwork"
                             placeholder="Choose your Network"
@@ -63,18 +58,17 @@ class AddNetwork extends Component {
                             onChange={this.handleNetworkChange}
                             menuItems={this.props.networks}
                         />
-                        <span id="textfield-container">
                         <TextField
                             id="verificationEmail"
                             name="verificationEmail"
                             onChange={this.handleChange} 
                             label="Verify your network with your associated email address"
                             value={this.state.network.suggestedDomain}
-                            className={this.state.network.suggestedDomain + ' md-cell md-cell--1-phone md-cell--4'}
+                            className={this.state.network.suggestedDomain}
                             required
                         />
-                        </span>
-                        <Button flat primary label="Submit" type="submit" className="submit md-cell--4" />
+                        </div>
+                        <Button flat primary label="Submit" type="submit" className="submit" />
                     </form>
 
         </div>

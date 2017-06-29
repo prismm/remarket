@@ -13,7 +13,7 @@ class Account extends Component {
     render(){
         return (
         <div className="md-grid">
-            <div className="md-cell-2">
+            <div className="md-cell md-cell--2">
             <h3> account > </h3>
             <ul className="account-nav">
                 <li><Link className="account-nav-link" to="/account">My Profile</Link></li>
@@ -22,7 +22,7 @@ class Account extends Component {
                 <li><Link className="account-nav-link" to="/account/savedlistings">My Saved Listings</Link></li>
             </ul>
             </div>
-            <div className="md-cell-10">
+            <div className="md-cell md-cell--10">
                 {this.props.children}
             </div>
         </div>

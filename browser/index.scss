@@ -4,9 +4,9 @@
         a {
             text-decoration: none;
         }
-        h1 {
-            font-family: Courier New, Courier, monospace;
-        }
+        // h1 {
+        //     font-family: Courier New, Courier, monospace;
+        // }
         .site-header {
             float: left;
         }
@@ -16,15 +16,11 @@
         hr {
             clear: both;
         }
-        label {
-            display: block;
-        }
+        // label {
+        //     display: block;
+        // }
         nav a {
             margin: 1em;
-        }
-        form div {
-            margin: 1em;
-            display: inline-block;
         }
         .md-text-field-icon-container {
             margin: -1em;
@@ -37,17 +33,12 @@
             margin: auto;
             background-color: yellow;
         }
-        #chooseNetwork-menu {
-            margin: -1em;
-        }
-        #textfield-container {
-            margin: 4px;
-        }
         .md-dialog--centered {
             padding: 0 0 20px 20px;
         }
-        .account-nav {
+        .account-nav li {
             list-style: none;
-            padding: 5px;
+            font-size: 14px;
+            line-height: 2em;
         }
     }

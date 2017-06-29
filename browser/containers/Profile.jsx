@@ -30,50 +30,53 @@ class Profile extends Component {
     render(){
         return (
             <div className="md-grid">
-            <div className="md-cell">
+            <div className="md-cell md-cell--6">
                 <AddNetwork />
             </div>
-            <div className="md-cell">
+            <div className="md-cell md-cell--6">
+                <h3>My Profile</h3>
                 <DataTable plain>
                     <TableHeader>
                     <TableRow>
                         <TableColumn>PUBLIC PROFILE</TableColumn>
+                        <TableColumn />
+                        <TableColumn />
                     </TableRow>
                     </TableHeader>
                     <TableBody>
                         <TableRow key={1}>
-                            <TableColumn>name</TableColumn>
+                            <TableColumn>Name</TableColumn>
                             <TableColumn>{this.props.user.name}</TableColumn>
                             <TableColumn><UpdateNameButton updateName={this.props.updateName} currentUser={this.props.user} /></TableColumn>
                         </TableRow>
                         <TableRow key={2}>
-                            <TableColumn>user name</TableColumn>
+                            <TableColumn>Username</TableColumn>
                             <TableColumn>{this.props.user.username ? this.props.user.username : this.props.user.userId}</TableColumn>
                             <TableColumn><UpdateUsernameButton updateUsername={this.props.updateUsername} currentUser={this.props.user} /></TableColumn>
                         </TableRow>
                         <TableRow key={3}>
-                            <TableColumn>bio</TableColumn>
+                            <TableColumn>Bio</TableColumn>
                             <TableColumn></TableColumn>
                             <TableColumn><UpdateBioButton updateBio={this.props.updateBio} currentUser={this.props.user} /></TableColumn>
                         </TableRow>
                     </TableBody>
                 </DataTable>
-            </div>
-            <div className="md-cell">
                 <DataTable plain>
                     <TableHeader>
                     <TableRow>
                         <TableColumn>PRIVATE INFORMATION</TableColumn>
+                        <TableColumn />
+                        <TableColumn />
                     </TableRow>
                     </TableHeader>
                     <TableBody>
                         <TableRow key={1}>
-                            <TableColumn>email address</TableColumn>
+                            <TableColumn>Email Address</TableColumn>
                             <TableColumn>{this.props.user.email}</TableColumn>
                             <TableColumn><UpdateEmailButton updateEmail={this.props.updateEmail} currentUser={this.props.user} /></TableColumn>
                         </TableRow>
                         <TableRow key={2}>
-                            <TableColumn>password</TableColumn>
+                            <TableColumn>Password</TableColumn>
                             <TableColumn>[hidden]</TableColumn>
                             <TableColumn><UpdatePasswordButton updatePassword={this.props.updatePassword} currentUser={this.props.user} /></TableColumn>
                         </TableRow>
