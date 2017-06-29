@@ -7,7 +7,7 @@ import ExpansionPanel from 'react-md/lib/ExpansionPanels';
 import ExpansionList from 'react-md/lib/ExpansionPanels/ExpansionList';
 
 const locations = [
-  'all',
+  '<all>',
   'New York',
   'New Haven',
   'Boston/Cambridge',

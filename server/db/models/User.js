@@ -35,7 +35,11 @@ const User = db.define('user', {
     scopes: {
         unsanitized: {}
     },
-    getterMethods: {},
+    getterMethods: {
+        userId: function() {
+            return this.email.slice(0, this.email.indexOf('@'));
+        }
+    },
     instanceMethods: {
         // this function will omit password and salt from user instance
         sanitize: function() {

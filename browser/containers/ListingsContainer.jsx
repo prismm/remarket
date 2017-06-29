@@ -13,7 +13,7 @@ class Listings extends Component {
                         searchTerm: '',
                         filters: [],
                         networkFilters: [],
-                        location: 'all',
+                        location: '<all>',
                         filteredListings: props.listings,
                         unfilteredListings: props.listings
                     }
@@ -66,7 +66,7 @@ class Listings extends Component {
 
     filterByLocation(arr, location){
         console.log(location);
-        if (location === 'all') return arr;
+        if (location === '<all>') return arr;
         return arr.filter(listing => (listing.location === location));
     }
 
