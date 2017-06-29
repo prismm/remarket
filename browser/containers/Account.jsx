@@ -14,8 +14,8 @@ class Account extends Component {
         return (
         <div className="md-grid">
             <div className="md-cell-2">
-            <h2>my account</h2>
-            <ul>
+            <h3> account > </h3>
+            <ul className="account-nav">
                 <li><Link className="account-nav-link" to="/account">My Profile</Link></li>
                 <li><Link className="account-nav-link" to="/account/managelistings">My Listings</Link></li>
                 <li><Link className="account-nav-link" to="/account/manageoffers">Offer History</Link></li>

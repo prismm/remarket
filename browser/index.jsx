@@ -35,15 +35,16 @@ const getCurrentListing = (nextRouterState) => {
   store.dispatch(fetchSingleListing_dispatch(nextRouterState.params.listingId));
 }
 
-// const getMyListings = (nextRouterState, replace, next) => {
-//   whoAmI
-//     .then(() => {
-//       const { user } = store.getState();
-//       if (!user.id) replace('/login');
-//       store.dispatch(fetchListingsByUser_dispatch(user.id));
-//     })
-//     .catch(console.error)
-// }
+const getMyListings = (nextRouterState, replace, next) => {
+  whoAmI
+    .then(() => {
+      const { user } = store.getState();
+      if (!user.id) replace('/login');
+      store.dispatch(fetchListingsByUser_dispatch(user.id));
+      next();
+    })
+    .catch(console.error)
+}
 
 const loadEverything = () => {
   store.dispatch(fetchAllListings_dispatch());
@@ -60,7 +61,7 @@ ReactDOM.render(
         <Route path="signup" component={Signup} />
         <Route path="listings/post" component={CreateListing} onEnter={requireLogin} />
         <Route path="listings/:listingId" component={ListingDetailContainer} onEnter={getCurrentListing} />
-        <Route path="account" component={AccountContainer} onEnter={requireLogin} >
+        <Route path="account" component={AccountContainer} onEnter={getMyListings} >
            <IndexRoute component={Profile} />
           <Route path="/account/managelistings" component={MyListings} />
           <Route path="/account/manageoffers" component={MyOffers} />

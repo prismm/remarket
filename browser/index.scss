@@ -1,68 +1,53 @@
-body {
-    color: red;
-    margin: 15px;
-    a {
-        text-decoration: none;
+    body {
+        color: red;
+        margin: 15px;
+        a {
+            text-decoration: none;
+        }
+        h1 {
+            font-family: Courier New, Courier, monospace;
+        }
+        .site-header {
+            float: left;
+        }
+        .site-nav-link {
+            float: right;
+        }
+        hr {
+            clear: both;
+        }
+        label {
+            display: block;
+        }
+        nav a {
+            margin: 1em;
+        }
+        form div {
+            margin: 1em;
+            display: inline-block;
+        }
+        .md-text-field-icon-container {
+            margin: -1em;
+        }
+        .listing-container {
+            margin: 20px 30px 20px 0;
+        }
+        .submit {
+            border: 2px solid black;
+            margin: auto;
+            background-color: yellow;
+        }
+        #chooseNetwork-menu {
+            margin: -1em;
+        }
+        #textfield-container {
+            margin: 4px;
+        }
+        .md-dialog--centered {
+            padding: 0 0 20px 20px;
+        }
+        .account-nav {
+            list-style: none;
+            padding: 5px;
+        }
     }
-    h1 {
-        font-family: Courier New, Courier, monospace;
-    }
-    .site-header {
-        float: left;
-    }
-    .site-nav-link {
-        float: right;
-    }
-    hr {
-        clear: both;
-    }
-    label {
-        display: block;
-    }
-    nav a {
-        margin: 1em;
-    }
-    form div {
-        margin: 1em;
-        display: inline-block;
-    }
-    .md-text-field-icon-container {
-        margin: -1em;
-    }
-    .listing-container {
-        margin: 20px 30px 20px 0;
-    }
-    .submit {
-        border: 2px solid black;
-        margin: auto;
-        background-color: yellow;
-    }
-    #chooseNetwork-menu {
-        margin: -1em;
-    }
-    #textfield-container {
-        margin: 4px;
-    }
-    // #verificationEmail {
-    //     margin: 14px;
-    // }
-    // .add-network-container {
-    //     display: flex;
-    //     /* establish flex container */
-    //     flex-direction: column;
-    //     /* make main axis vertical */
-    //     justify-content: center;
-    //     /* center items vertically, in this case */
-    //     align-items: center;
-    //     /* center items horizontally, in this case */
-    //     height: 500px;
-    // }
-    // .add-network {
-    //     width: 300px;
-    //     margin: 5px;
-    //     text-align: center;
-    // }
-    // .add-network-form {
-    //     margin-top: 45px;
-    // }
-}

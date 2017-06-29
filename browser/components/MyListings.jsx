@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Listing from './Listing.jsx';
 import PropTypes from 'prop-types';
 
-import { fetchListingsByUser_dispatch } from '../actions/listing';
+import { fetchListingsByUser_dispatch, editListing_dispatch, deleteListing_dispatch} from '../actions/listing';
 
 import DataTable from 'react-md/lib/DataTables/DataTable';
 import TableHeader from 'react-md/lib/DataTables/TableHeader';
@@ -13,12 +13,7 @@ import TableColumn from 'react-md/lib/DataTables/TableColumn';
 import { EditListingButton, DeleteListingButton, RenewListingButton } from './Buttons.jsx'
 
 /*------------------- MyListings component ----------------------*/
-function MyListings({myListings}) {
-    console.log(myListings);
-    const editListing = () => {};
-    const renewListing = () => {};
-    const deleteListing = () => {};
-    const archiveListing = () => {};
+function MyListings({myListings, editListing, renewListing, deleteListing, archiveListing}) {
 
     return (
         <div className="my-listings">
@@ -29,6 +24,7 @@ function MyListings({myListings}) {
                     <TableColumn>listing</TableColumn>
                     <TableColumn>category</TableColumn>
                     <TableColumn>status</TableColumn>
+                    <TableColumn>expires on</TableColumn>
                     <TableColumn></TableColumn>
                     <TableColumn></TableColumn>
                     <TableColumn></TableColumn>
@@ -41,8 +37,9 @@ function MyListings({myListings}) {
                                     <TableColumn><Listing listing={listing}/></TableColumn>
                                     <TableColumn>{listing.category}</TableColumn>
                                     <TableColumn>{listing.status}</TableColumn>
+                                    <TableColumn>{listing.expiresIn}</TableColumn>
+                                    <TableColumn>{listing.status !== 'deleted' ? <RenewListingButton renewListing={renewListing} currentListing={listing} /> : null}</TableColumn>
                                     <TableColumn><EditListingButton editListing={editListing} currentListing={listing} /></TableColumn>
-                                    <TableColumn><RenewListingButton renewListing={renewListing} currentListing={listing} /></TableColumn>
                                     <TableColumn><DeleteListingButton deleteListing={deleteListing} archiveListing={archiveListing} currentListing={listing} /></TableColumn>
                                 </TableRow>
                         )
@@ -58,7 +55,11 @@ function MyListings({myListings}) {
 }
 
 MyListings.propTypes = {
-  myListings: PropTypes.array
+  myListings: PropTypes.array,
+  editListing: PropTypes.func,
+  renewListing: PropTypes.func,
+  deleteListing: PropTypes.func,
+  archiveListing: PropTypes.func
 };
 
 
@@ -67,20 +68,24 @@ const mapStateToProps = state => ({
         myListings: state.listing.myListings
     });
 
-export default connect(mapStateToProps)(MyListings);
+const mapDispatchToProps = dispatch => ({
+        editListing: (listingId, changes) => {
+            console.log('editing listing...');
+            dispatch(editListing_dispatch(listingId, changes))
+        },
+        renewListing: (listingId, newDate) => {
+            console.log('renewing listing...');
+            dispatch(editListing_dispatch(listingId, {expirationDate: newDate}))
+        },
+        deleteListing: listing => {
+            console.log('deleting listing...');
+            dispatch(deleteListing_dispatch(listing));
+            dispatch(editListing_dispatch(listing.id, {status: 'deleted'}))
+        },
+        archiveListing: listingId => {
+            console.log('editing listing...');
+            dispatch(editListing_dispatch(listingId, {status: 'archived'}))
+        }
+});
 
-
-// /*----------------------- Container ---------------------------*/
-// const mapStateToProps = state => ({
-//         user: state.user,
-//     });
-
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         getMyListings: userId => {
-//             dispatch(fetchListingsByUser_dispatch(userId))
-//         }
-//     }
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(MyListings);
+export default connect(mapStateToProps, mapDispatchToProps)(MyListings);

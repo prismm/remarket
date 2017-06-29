@@ -3,9 +3,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import PropTypes from 'prop-types';
+
 import AddNetwork from './AddNetwork.jsx'
+import { UpdateNameButton, UpdateUsernameButton, UpdateBioButton, UpdateEmailButton, UpdatePasswordButton } from '../components/Buttons.jsx'
 
 import { fetchListingsByUser_dispatch } from '../actions/listing';
+import { editUser_dispatch } from '../actions/user';
+
 
 import DataTable from 'react-md/lib/DataTables/DataTable';
 import TableHeader from 'react-md/lib/DataTables/TableHeader';
@@ -19,13 +23,13 @@ class Profile extends Component {
         super(props);
     }
 
-    componentDidMount(){
-        this.props.getMyListings(this.props.user.id);
-    }
+    // componentDidMount(){
+    //     this.props.getMyListings(this.props.user.id);
+    // }
 
     render(){
         return (
-        <div className="md-grid">
+            <div className="md-grid">
             <div className="md-cell">
                 <AddNetwork />
             </div>
@@ -40,17 +44,17 @@ class Profile extends Component {
                         <TableRow key={1}>
                             <TableColumn>name</TableColumn>
                             <TableColumn>{this.props.user.name}</TableColumn>
-                            <TableColumn>[update NAME]</TableColumn>
+                            <TableColumn><UpdateNameButton updateName={this.props.updateName} currentUser={this.props.user} /></TableColumn>
                         </TableRow>
                         <TableRow key={2}>
                             <TableColumn>user name</TableColumn>
-                            <TableColumn>{this.props.user.userId}</TableColumn>
-                            <TableColumn>[update USERNAME]</TableColumn>
+                            <TableColumn>{this.props.user.username ? this.props.user.username : this.props.user.userId}</TableColumn>
+                            <TableColumn><UpdateUsernameButton updateUsername={this.props.updateUsername} currentUser={this.props.user} /></TableColumn>
                         </TableRow>
                         <TableRow key={3}>
                             <TableColumn>bio</TableColumn>
                             <TableColumn></TableColumn>
-                            <TableColumn>[update BIO]</TableColumn>
+                            <TableColumn><UpdateBioButton updateBio={this.props.updateBio} currentUser={this.props.user} /></TableColumn>
                         </TableRow>
                     </TableBody>
                 </DataTable>
@@ -66,12 +70,12 @@ class Profile extends Component {
                         <TableRow key={1}>
                             <TableColumn>email address</TableColumn>
                             <TableColumn>{this.props.user.email}</TableColumn>
-                            <TableColumn>[update EMAIL]</TableColumn>
+                            <TableColumn><UpdateEmailButton updateEmail={this.props.updateEmail} currentUser={this.props.user} /></TableColumn>
                         </TableRow>
                         <TableRow key={2}>
                             <TableColumn>password</TableColumn>
                             <TableColumn>[hidden]</TableColumn>
-                            <TableColumn>[update PASSWORD]</TableColumn>
+                            <TableColumn><UpdatePasswordButton updatePassword={this.props.updatePassword} currentUser={this.props.user} /></TableColumn>
                         </TableRow>
                     </TableBody>
                 </DataTable>
@@ -82,7 +86,12 @@ class Profile extends Component {
 }
 
 Profile.propTypes = {
-    user: PropTypes.object.isRequired
+    user: PropTypes.object.isRequired,
+    updateName: PropTypes.func,
+    updateUsername: PropTypes.func,
+    updateBio: PropTypes.func,
+    updateEmail: PropTypes.func,
+    updatePassword: PropTypes.func
 };
 
 /*----------------------- Container ---------------------------*/
@@ -92,8 +101,23 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
     return {
-        getMyListings: userId => {
-            dispatch(fetchListingsByUser_dispatch(userId))
+        updateUsername: (userId, newUsername) => {
+            console.log('updating username...');
+            dispatch(editUser_dispatch(userId, {username: newUsername}))
+        },
+        updateBio: (userId, newBio) => {
+            console.log('updating bio...');
+            dispatch(editUser_dispatch(userId, {bio: newBio}))
+        },
+        //need to do email verification
+        updateEmail: (userId, newEmail) => {
+            console.log('updating email...');
+            dispatch(editUser_dispatch(userId, {email: newEmail}))
+        },
+        //need to do password validation
+        updatePassword: (userId, newPassword) => {
+            console.log('updating password...');
+            dispatch(editUser_dispatch(userId, {password: newPassword}))
         }
     }
 }

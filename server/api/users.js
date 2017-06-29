@@ -38,6 +38,24 @@ router.post('/:userId/networks/:networkId', (req, res, next) => {
         .catch(next)
 })
 
+//a route for PUT: /api/users/${userId} that updates the user info
+router.put('/:id', (req, res, next) => {
+    User.update(req.body, {
+            where: {
+                id: req.params.id
+            },
+            returning: true
+        })
+        .then(result => {
+            if (!result[0]) {
+                next();
+            } else {
+                res.json(result[1][0]) //not sure what this -- will have to console log!
+            }
+        })
+        .catch(next)
+})
+
 //a route for DELETE: /api/users/${user.id}/networks/${network.id} that removes a network from a user's networks
 router.delete('/:userId/networks/:networkId', (req, res, next) => {
     affiliations.destroy({ where: { userId: req.params.userId, networkId: req.params.networkId } })

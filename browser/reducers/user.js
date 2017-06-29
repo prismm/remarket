@@ -1,13 +1,22 @@
 /*------------------- managing state.user ----------------------*/
-const defaultUser = {};
+const initialState = {
+    user: {},
+}
 
-export default function(state = defaultUser, action) {
+export default function(state = initialState, action) {
+    const newState = Object.assign({}, state)
     switch (action.type) {
         case 'GET_USER':
-            return action.user;
+            newState.user = action.user;
+            break;
         case 'REMOVE_USER':
-            return defaultUser;
+            newState.user = {};
+            break;
+        case 'EDIT_USER':
+            newState.user = Object.assign({}, state.user, action.changes)
+            break;
         default:
-            return state;
+            break;
     }
+    return newState;
 }

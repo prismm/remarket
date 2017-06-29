@@ -10,6 +10,10 @@ const Listing = db.define('listing', {
         type: Sequelize.ENUM('for sale', 'housing', 'community'),
         allowNull: false
     },
+    status: {
+        type: Sequelize.ENUM('active', 'archived', 'deleted'),
+        defaultValue: 'active'
+    },
     subcategory: {
         type: Sequelize.STRING
     },
@@ -37,6 +41,13 @@ const Listing = db.define('listing', {
         type: Sequelize.DATE
     }
 }, {
+    getterMethods: {
+        expiresIn: function() {
+            if (this.expirationDate && this.status === 'active') return this.expirationDate + ' (' + (new Date() - this.expirationDate) + ')';
+            else if (this.status === 'archived') return 'expired';
+            else return 'something'
+        }
+    },
     instanceMethods: {
         getListingAuthor: () => {
             return this.getUser({ include: [{ all: true }] })

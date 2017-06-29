@@ -6,7 +6,7 @@ import { browserHistory } from 'react-router';
 
 const getUser_action = user => ({ type: 'GET_USER', user });
 const removeUser_action = () => ({ type: 'REMOVE_USER' });
-
+const editUser_action = changes => ({ type: 'EDIT_USER', changes });
 
 /* ------------       DISPATCHERS     ------------------ */
 const defaultUser = {};
@@ -26,6 +26,14 @@ export const auth_dispatch = (email, password, method) => dispatch => {
         })
         .catch(error =>
             dispatch(getUser_action({ error })));
+}
+
+export const editUser_dispatch = (userId, changes) => dispatch => {
+    axios.put(`/api/users/${userId}`, changes)
+        .then(res => {
+            dispatch(editUser_action(res.data));
+        })
+        .catch(console.error);
 }
 
 export const logout_dispatch = () => dispatch => {

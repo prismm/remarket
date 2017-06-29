@@ -10,6 +10,7 @@ export default class DeleteDialog extends PureComponent {
     this.openDialog = this.openDialog.bind(this);
     this.closeDialogandArchive = this.closeDialogandArchive.bind(this);
     this.closeDialogandDelete = this.closeDialogandDelete.bind(this);
+    this.closeDialog = this.closeDialog.bind(this);
   }
 
   openDialog() {
@@ -40,6 +41,7 @@ export default class DeleteDialog extends PureComponent {
           title="Are you sure?"
           onHide={this.closeDialog}
           aria-labelledby="speedBoostDescription"
+          className="dialog-delete"
           modal
           actions={[{
             onClick: this.closeDialogandArchive,
@@ -52,7 +54,7 @@ export default class DeleteDialog extends PureComponent {
           }, {
             onClick: this.closeDialog,
             primary: true,
-            label: 'oops... Never mind',
+            label: 'x'
           }]}
         >
           <p id="speedBoostDescription" className="md-color--secondary-text">

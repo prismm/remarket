@@ -49,16 +49,16 @@ export const createListing_dispatch = listing => dispatch => {
         .catch(console.error);
 }
 
-export const editListing_dispatch = listing => dispatch => {
-    axios.put(`/api/listings/${listing.id}`, listing)
+export const editListing_dispatch = (listingId, changes) => dispatch => {
+    axios.put(`/api/listings/${listingId}`, changes)
         .then(res => {
             dispatch(editListing_action(res.data));
         })
         .catch(console.error);
 }
 
-export const deleteListing_dispatch = listingId => dispatch => {
-    axios.delete(`/api/listings/${listingId}`)
+export const deleteListing_dispatch = listing => dispatch => {
+    axios.delete(`/api/listings/${listing.id}`)
         .then(res => {
             dispatch(deleteListing_action(+res.data));
         })
