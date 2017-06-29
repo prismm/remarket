@@ -35,6 +35,7 @@ const User = db.define('user', {
     scopes: {
         unsanitized: {}
     },
+    getterMethods: {},
     instanceMethods: {
         // this function will omit password and salt from user instance
         sanitize: function() {
@@ -44,7 +45,7 @@ const User = db.define('user', {
             const encryptedPassword = User.encryptPassword(candidatePassword, this.getDataValue('salt'));
             return encryptedPassword === this.password;
         },
-        getMyListings: function() {
+        myListings: function() {
             return this.getListings({ include: [{ all: true }] })
                 .then(listings => listings)
                 .catch(console.error)

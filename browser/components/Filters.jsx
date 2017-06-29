@@ -8,13 +8,12 @@ import LocationDropdown from './LocationDropdown.jsx'
 
 /*------------------- Filters component ----------------------*/
 export default function Filters(props){
-    console.log(props)
     return (
         <div>
         <Toolbar
           themed
         >
-        <LocationDropdown key="dropdown" />
+        <LocationDropdown handleLocationChange={props.handleLocationChange} key="dropdown" />
             <TextField
                 onChange={props.handleChange}
                 id="filter"
@@ -38,7 +37,7 @@ Filters.propTypes = {
     generalFilter: PropTypes.func.isRequired,
     filterByCategory: PropTypes.func.isRequired,
     filterByLocation: PropTypes.func.isRequired,
-    filterByNetwork: PropTypes.func.isRequired,
-    handleChange: PropTypes.func,
-    handleSubmit: PropTypes.func
+    handleLocationChange: PropTypes.func.isRequired,
+    handleChange: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func.isRequired
 };

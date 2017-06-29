@@ -12,6 +12,8 @@ class Listings extends Component {
         this.state = {
                         searchTerm: '',
                         filters: [],
+                        networkFilters: [],
+                        location: 'all',
                         filteredListings: props.listings,
                         unfilteredListings: props.listings
                     }
@@ -20,6 +22,8 @@ class Listings extends Component {
         this.filterByLocation = this.filterByLocation.bind(this);  
         this.filterByCategory = this.filterByCategory.bind(this);
         this.handleChange = this.handleChange.bind(this); 
+        this.handleNetworkChange = this.handleNetworkChange.bind(this);
+        this.handleLocationChange = this.handleLocationChange.bind(this);
     }
 
     componentWillReceiveProps(nextProps){
@@ -36,27 +40,36 @@ class Listings extends Component {
         })
     }
 
-    filterByCategory(category){
-        let categoryListings = this.state.filteredListings.filter(listing => (listing.category === category));
+    filterByCategory(category, arr){
+        if (!arr) arr = this.state.filteredListings;
+        let categoryListings = arr.filter(listing => (listing.category === category));
         return categoryListings;
     }
 
-    filterByNetwork(network){
-        let networkListings = network.getAllListings();
+    handleNetworkChange(network){
         this.setState({
-            filters: []
+            networkFilters: this.state.filters.concat([network])
         })
     }
 
-    filterByLocation(location){
-        let locationListings = this.props.listings.filter(listing => (listing.location === location))
+    filterByNetwork(arr, network){
+        if (network) return network.getAllListings();
+        else return arr;
+    }
+
+    handleLocationChange(location){
         this.setState({
-            filters: []
-            // filteredListings: locationListings
+            location: location
         })
     }
 
-    handleSubmit(){
+    filterByLocation(arr, location){
+        console.log(location);
+        if (location === 'all') return arr;
+        return arr.filter(listing => (listing.location === location));
+    }
+
+    handleSubmit(searchTerm){
         this.setState({
             filters: this.state.filters.concat([searchTerm]),
             searchTerm: ''
@@ -68,14 +81,23 @@ class Listings extends Component {
     }
 
     render(){
-        // const filteredListings = generalFilter(filterByLocation(filterByNetwork(this.props.listings)));
+        //filtering listings based on network and location -- should go off props.listings (complete list) or state.filteredListings (list filtered by generalFilter?)
+        let filteredListings = this.state.filteredListings;
+        this.state.networkFilters.forEach( networkFilter => {
+            filteredListings = this.filterByNetwork(filteredListings, networkFilter)
+        });
+        console.log(filteredListings);
+        filteredListings = this.filterByLocation(filteredListings, this.state.location);
+        //filter by Location was tested and appears to work; filter by network not yet tested
+        console.log("FILTERED LISTINGS IN RENDER FUNCTION OF LISTINGS CONTAINER", filteredListings)
+
         return (
             <div>
-                <Filters handleSubmit={this.handleSubmit} handleChange={this.handleChange} searchTerm={this.state.searchTerm} generalFilter={this.generalFilter} filterByCategory={this.filterByCategory} filterByLocation={this.filterByLocation} filterByNetwork={this.filterByNetwork} />
+                <Filters handleLocationChange={this.handleLocationChange} handleSubmit={this.handleSubmit} handleChange={this.handleChange} searchTerm={this.state.searchTerm} generalFilter={this.generalFilter} filterByCategory={this.filterByCategory} filterByLocation={this.filterByLocation} filterByNetwork={this.filterByNetwork} />
                 <div className="md-grid">
-                    <ListingsList className="md-cell" listings={this.filterByCategory('for sale')} category="for sale" />
-                    <ListingsList className="md-cell" listings={this.filterByCategory('housing')} category="housing" />
-                    <ListingsList className="md-cell" listings={this.filterByCategory('community')} category="community" />
+                    <ListingsList className="md-cell" listings={this.filterByCategory('for sale', filteredListings)} category="for sale" />
+                    <ListingsList className="md-cell" listings={this.filterByCategory('housing', filteredListings)} category="housing" />
+                    <ListingsList className="md-cell" listings={this.filterByCategory('community', filteredListings)} category="community" />
                 </div>
             </div>
         )

@@ -14,7 +14,8 @@ import { Login, Signup } from './containers/Auth.jsx'
 import Main from './containers/Main.jsx'
 import ListingsContainer from './containers/ListingsContainer.jsx';
 import ListingDetailContainer from './containers/ListingDetailContainer.jsx'
-import CreateListing from './containers/CreateListing.jsx'
+import CreateListing from './containers/CreateListing.jsx';
+import AccountContainer from './containers/Account.jsx';
 import AddNetwork from './containers/AddNetwork.jsx'
 
 const whoAmI = store.dispatch(me_dispatch());
@@ -47,6 +48,7 @@ ReactDOM.render(
         <Route path="listings/post" component={CreateListing} onEnter={requireLogin} />
         <Route path="listings/:listingId" component={ListingDetailContainer} onEnter={getCurrentListing} />
         <Route path="addnetwork" component={AddNetwork} onEnter={loadEverything} />
+        <Route path="myaccount" component={AccountContainer} />
       </Route>
       <Route path="listings" component={ListingsContainer} />
     </Router>

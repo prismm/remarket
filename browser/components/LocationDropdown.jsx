@@ -1,11 +1,13 @@
 /* LocationDropdown.jsx */
-import React, { PureComponent, PropTypes } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 
 import SelectField from 'react-md/lib/SelectFields';
 import ExpansionPanel from 'react-md/lib/ExpansionPanels';
 import ExpansionList from 'react-md/lib/ExpansionPanels/ExpansionList';
 
 const locations = [
+  'all',
   'New York',
   'New Haven',
   'Boston/Cambridge',
@@ -16,37 +18,35 @@ const locations = [
 export default class LocationDropdown extends PureComponent {
 
   constructor(props) {
-        super(props);
-        this.state = {
-          location: locations[0],
-          tempLocation: locations[0],
-        };
-    }
-
-  setTempLocation(tempLocation){
-    this.setState({ tempLocation });
+    super(props);
+    this.state = {
+      location: locations[0]
+    };
+    this.setLocation = this.setLocation.bind(this);
+    this.resetLocation = this.resetLocation.bind(this)
   }
 
-  setLocation(){
-    this.setState({ location: this.state.tempLocation });
+  setLocation(event){
+    console.log(event);
+    this.setState({ location: event });
+    this.props.handleLocationChange(event);
   }
 
   resetLocation(){
-    this.setState({ tempLocation: this.state.tempLocation });
+    this.setState({ location: '' });
+    this.props.handleLocationChange('');
   }
 
   render() {
-    const { location, tempLocation } = this.state;
+    const { location } = this.state;
     const { focused, columnWidths, mobile } = this.props;
     return (
     <ExpansionList style={{ padding: 16 }}>
       <ExpansionPanel
         focused={focused}
-        flat
         columnWidths={columnWidths}
         label="Location:     "
         secondaryLabel={!mobile ? location : null}
-        onSave={this.setLocation}
         onCancel={this.resetLocation}
       >
         <SelectField
@@ -54,7 +54,7 @@ export default class LocationDropdown extends PureComponent {
           menuItems={locations}
           label="Select a location"
           className="md-cell"
-          value={tempLocation}
+          value={location}
           onChange={this.setLocation}
         />
       </ExpansionPanel>
@@ -62,3 +62,7 @@ export default class LocationDropdown extends PureComponent {
     );
   }
 }
+
+// LocationDropdown.propTypes = {
+//     handleLocationChange: PropTypes.func.isRequired
+// };
