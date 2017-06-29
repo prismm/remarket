@@ -5,16 +5,22 @@ import { Link } from 'react-router';
 import PropTypes from 'prop-types';
 import AddNetwork from './AddNetwork.jsx'
 
+import { fetchListingsByUser_dispatch } from '../actions/listing';
+
 import DataTable from 'react-md/lib/DataTables/DataTable';
 import TableHeader from 'react-md/lib/DataTables/TableHeader';
 import TableBody from 'react-md/lib/DataTables/TableBody';
 import TableRow from 'react-md/lib/DataTables/TableRow';
 import TableColumn from 'react-md/lib/DataTables/TableColumn';
 
-/*----------------------- Account Component ---------------------------*/
+/*----------------------- Profile Component ---------------------------*/
 class Profile extends Component {
     constructor(props){
         super(props);
+    }
+
+    componentDidMount(){
+        this.props.getMyListings(this.props.user.id);
     }
 
     render(){
@@ -80,8 +86,16 @@ Profile.propTypes = {
 };
 
 /*----------------------- Container ---------------------------*/
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
         user: state.user,
     });
 
-export default connect(mapStateToProps)(Profile);
+const mapDispatchToProps = dispatch => {
+    return {
+        getMyListings: userId => {
+            dispatch(fetchListingsByUser_dispatch(userId))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

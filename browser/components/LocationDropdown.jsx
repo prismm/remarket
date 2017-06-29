@@ -6,6 +6,7 @@ import SelectField from 'react-md/lib/SelectFields';
 import ExpansionPanel from 'react-md/lib/ExpansionPanels';
 import ExpansionList from 'react-md/lib/ExpansionPanels/ExpansionList';
 
+/*------------------- LocationDropdown component ----------------------*/
 const locations = [
   '<all>',
   'New York',

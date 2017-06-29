@@ -1,6 +1,7 @@
 /*------------------- managing state.listing ----------------------*/
 const initialState = {
     listings: [],
+    myListings: [],
     currentListing: {}
 };
 
@@ -9,6 +10,9 @@ const listingReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'SET_LISTINGS':
             newState.listings = action.listings;
+            break;
+        case 'SET_MY_LISTINGS':
+            newState.myListings = action.listings;
             break;
         case 'SET_CURRENT_LISTING':
         case 'ARCHIVE_LISTING':

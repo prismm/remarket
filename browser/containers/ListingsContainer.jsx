@@ -65,7 +65,6 @@ class Listings extends Component {
     }
 
     filterByLocation(arr, location){
-        console.log(location);
         if (location === '<all>') return arr;
         return arr.filter(listing => (listing.location === location));
     }

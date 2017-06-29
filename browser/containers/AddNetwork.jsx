@@ -37,8 +37,8 @@ class AddNetwork extends Component {
     }
     //value={this.state.network.id}
     render(){
-        console.log("PROPS", this.props);
-        console.log('STATE', this.state.network);
+        // console.log("PROPS", this.props);
+        // console.log('STATE', this.state.network);
         return (
         // <div className="add-network-container md-grid">
         //     <div className="add-network md-cell-8">
@@ -89,7 +89,7 @@ AddNetwork.propTypes = {
 };
 
 /*----------------------- Container ---------------------------*/
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
         user: state.user,
         networks: state.network.networks
     });

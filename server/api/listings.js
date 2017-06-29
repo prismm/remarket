@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 const model = require('../db');
 const Listing = model.Listing;
-const listingNotFound = () => (new Error('We can\'t find that listing, sorry!'))
+const listingNotFound = () => (new Error('Sorry, something went wrong ... We can\'t seem to find that listing!'))
 
 
 router.get('/', (req, res, next) => {
@@ -16,6 +16,16 @@ router.get('/', (req, res, next) => {
 router.get('/:id', (req, res, next) => {
     Listing.findById(req.params.id, { include: [{ all: true }] })
         .then(listing => res.json(listing))
+        .catch(next)
+})
+
+//gets all listings by user
+router.get('/user/:userId', (req, res, next) => {
+    Listing.findAll({
+            where: { authorId: req.params.userId },
+            include: [{ all: true }]
+        })
+        .then(listings => res.json(listings))
         .catch(next)
 })
 
@@ -46,7 +56,8 @@ router.delete('/:id', (req, res, next) => {
     Listing.destroy({
             where: {
                 id: req.params.id
-            }
+            },
+            paranoid: true
         })
         .then(result => {
             if (!result) {

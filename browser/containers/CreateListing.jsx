@@ -18,13 +18,13 @@ class CreateListing extends Component {
         this.setExpirationDate = this.setExpirationDate.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
-                        category: 'for sale',
-                        name: '',
-                        location: '',
-                        description: '',
-                        floorPrice: 0,
-                        askingPrice: null,
-                        expirationDate: new Date(),
+                        category: props.currentListing ? props.currentListing.category : 'for sale',
+                        name: props.currentListing ? props.currentListing.name : '',
+                        location: props.currentListing ? props.currentListing.location : '',
+                        description: props.currentListing ? props.currentListing.description : '',
+                        floorPrice: props.currentListing ? props.currentListing.floorPrice : 0,
+                        askingPrice: props.currentListing ? props.currentListing.askingPrice : '?',
+                        expirationDate: props.currentListing ? props.currentListing.expirationDate : new Date(),
                         authorId: props.user.id
                     };
     }
@@ -83,6 +83,7 @@ class CreateListing extends Component {
                             <TextField
                                 id="name"
                                 name="name"
+                                value={this.state.name}
                                 label="What are you selling?"
                                 className="md-cell md-cell--12"
                                 required
@@ -91,6 +92,7 @@ class CreateListing extends Component {
                                 id="location"
                                 label="Location?"
                                 name="location"
+                                value={this.state.location}
                                 className="location md-cell md-cell--1-phone md-cell--4"
                             />
                             <TextField
@@ -98,7 +100,7 @@ class CreateListing extends Component {
                                 label="Asking Price"
                                 name="askingPrice"
                                 type="number"
-                                defaultValue="?"
+                                value={this.state.askingPrice}
                                 step={1.00}
                                 min={0}
                                 pattern="^\d+(\.|\,)\d{2}"
@@ -109,6 +111,7 @@ class CreateListing extends Component {
                                 id="floorPrice"
                                 label="Floor Price"
                                 name="floorPrice"
+                                value={this.state.floorPrice}
                                 type="number"
                                 defaultValue={0}
                                 step={1.00}
@@ -120,6 +123,7 @@ class CreateListing extends Component {
                                 id="description"
                                 label="Description"
                                 name="description"
+                                value={this.state.description}
                                 rows={3}
                                 className="md-cell md-cell--12"
                                 required
@@ -128,6 +132,7 @@ class CreateListing extends Component {
                                 id="inline"
                                 label="Post expiration date?"
                                 name="expirationDate"
+                                value={this.state.expirationDate}
                                 inline
                                 className="md-cell date-picker"
                                 required
@@ -218,7 +223,8 @@ class CreateListing extends Component {
 
 CreateListing.propTypes = {
   user: PropTypes.object.isRequired,
-  createListing: PropTypes.func.isRequired
+  createListing: PropTypes.func.isRequired,
+  currentListing: PropTypes.object
 };
 
 /*------------------- Container ----------------------*/

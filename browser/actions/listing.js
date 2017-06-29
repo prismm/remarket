@@ -6,6 +6,7 @@ import { browserHistory } from 'react-router';
 
 const setListings_action = listings => ({ type: 'SET_LISTINGS', listings });
 const setCurrentListing_action = listing => ({ type: 'SET_CURRENT_LISTING', listing });
+const setMyListings_action = listings => ({ type: 'SET_MY_LISTINGS', listings });
 const archiveListing_action = listing => ({ type: 'ARCHIVE_LISTING', listing });
 const createListing_action = listing => ({ type: 'CREATE_LISTING', listing });
 const editListing_action = listing => ({ type: 'EDIT_LISTING', listing });
@@ -26,6 +27,14 @@ export const fetchSingleListing_dispatch = listingId => dispatch => {
     return axios.get(`/api/listings/${listingId}`)
         .then(res => {
             dispatch(setCurrentListing_action(res.data));
+        })
+        .catch(console.error);
+}
+
+export const fetchListingsByUser_dispatch = userId => dispatch => {
+    return axios.get(`/api/listings/user/${userId}`)
+        .then(res => {
+            dispatch(setMyListings_action(res.data));
         })
         .catch(console.error);
 }
