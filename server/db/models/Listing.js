@@ -41,11 +41,13 @@ const Listing = db.define('listing', {
         type: Sequelize.DATE
     }
 }, {
+    paranoid: true,
+    timestamps: true,
     getterMethods: {
         expiresIn: function() {
             if (this.expirationDate && this.status === 'active') return this.expirationDate + ' (' + (new Date() - this.expirationDate) + ')';
             else if (this.status === 'archived') return 'expired';
-            else return 'something'
+            else return '---'
         }
     },
     instanceMethods: {

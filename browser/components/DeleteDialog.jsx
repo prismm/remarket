@@ -22,7 +22,7 @@ export default class DeleteDialog extends PureComponent {
   }
   closeDialogandArchive(){
     this.setState({ visible: false });
-    this.props.archiveListing(this.props.currentListing);
+    this.props.archiveListing(this.props.currentListing.id);
   }
 
   closeDialogandDelete(){
@@ -34,7 +34,7 @@ export default class DeleteDialog extends PureComponent {
     const { visible } = this.state;
     return (
       <div className="my-listing-button-container">
-        <Button raised secondary onClick={this.openDialog} label="Delete Listing" className="my-listing-button" />
+        <Button raised secondary onClick={this.openDialog} label="Delete" className="my-listing-button" />
         <Dialog
           id="speedBoost"
           visible={visible}

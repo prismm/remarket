@@ -13,9 +13,9 @@ export function EditListingButton({currentListing, editListing}) {
             <Button
                 raised
                 secondary
-                label="Edit Listing"
+                label="Edit"
                 className="my-listing-button"
-                onClick={() => editListing(currentListing)}
+                onClick={() => editListing(currentListing.id, currentListing)}
             />
         </div>
     )
@@ -44,14 +44,15 @@ DeleteListingButton.propTypes = {
 
 //should launch date-picker to edit expiration date of listing;
 export function RenewListingButton({currentListing, renewListing}) {
+    const newDate = 'something';
     return (
         <div className="my-listing-button-container">
             <Button
                 raised
                 secondary
-                label="Renew Listing"
+                label="Renew"
                 className="my-listing-button"
-                onClick={() => renewListing(currentListing)}
+                onClick={() => renewListing(currentListing.id, newDate)}
             />
         </div>
     )
@@ -60,27 +61,6 @@ export function RenewListingButton({currentListing, renewListing}) {
 RenewListingButton.propTypes = {
   currentListing: PropTypes.object.isRequired,
   renewListing: PropTypes.func.isRequired
-};
-
-/*-------- ContinueDeleteListingButton component ---------*/
-
-//
-export function ContinueDeleteListingButton({currentListing, continueDeleteListing}) {
-    return (
-        <div className="my-listing-button-container">
-            <Button
-                raised
-                secondary
-                label="Continue with Delete Listing"
-                className="my-listing-button"
-                onClick={() => continueDeleteListing(currentListing)}
-            />
-        </div>
-    )
-}
-ContinueDeleteListingButton.propTypes = {
-  currentListing: PropTypes.object.isRequired,
-  continueDeleteListing: PropTypes.func.isRequired
 };
 
 /*-------- ArchiveListingButton component ---------*/

@@ -24,6 +24,7 @@ const listingReducer = (state = initialState, action) => {
             break;
         case 'EDIT_LISTING':
             newState.listings = newState.listings.map(listing => (listing.id === action.listing.id ? action.listing : listing));
+            newState.myListings = newState.myListings.map(listing => (listing.id === action.listing.id ? action.listing : listing));
             break;
         case 'DELETE_LISTING':
             newState.listings = newState.listings.filter(listing => (listing.id !== action.listingId));

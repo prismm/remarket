@@ -61,7 +61,7 @@ passport.serializeUser((user, done) => {
 
 // runs when a user has already initiated a session and we want to re-obtain user info from the db
 passport.deserializeUser((id, done) => {
-    User.findById(id)
+    User.findById(id, { include: [{ all: true }] })
         .then(user => done(null, user))
         .catch(done);
 });

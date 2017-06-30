@@ -1,9 +1,10 @@
-import React from 'react';
+/* eslint-disable camelcase */
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Listing from './Listing.jsx';
 import PropTypes from 'prop-types';
 
-import { fetchListingsByUser_dispatch, editListing_dispatch, deleteListing_dispatch} from '../actions/listing';
+import { editListing_dispatch, deleteListing_dispatch} from '../actions/listing';
 
 import DataTable from 'react-md/lib/DataTables/DataTable';
 import TableHeader from 'react-md/lib/DataTables/TableHeader';
@@ -13,9 +14,15 @@ import TableColumn from 'react-md/lib/DataTables/TableColumn';
 import { EditListingButton, DeleteListingButton, RenewListingButton } from './Buttons.jsx'
 
 /*------------------- MyListings component ----------------------*/
-function MyListings({myListings, editListing, renewListing, deleteListing, archiveListing}) {
+class MyListings extends Component {
+    constructor(props){
+        super(props);
+        this.state = {  
+        }
+    }
 
-    return (
+    render(){
+        return (
         <div className="my-listings">
             <h3>My Listings</h3>
             <DataTable plain>
@@ -31,16 +38,16 @@ function MyListings({myListings, editListing, renewListing, deleteListing, archi
                 </TableRow>
                 </TableHeader>
                 <TableBody>
-                { myListings && myListings.length ?
-                    (myListings.map(listing => (      
+                { this.props.myListings && this.props.myListings.length ?
+                    (this.props.myListings.map(listing => (      
                                 <TableRow key={listing.id}>
                                     <TableColumn><Listing listing={listing}/></TableColumn>
                                     <TableColumn>{listing.category}</TableColumn>
-                                    <TableColumn>{listing.status}</TableColumn>
-                                    <TableColumn>{listing.expiresIn}</TableColumn>
-                                    <TableColumn>{listing.status !== 'deleted' ? <RenewListingButton renewListing={renewListing} currentListing={listing} /> : null}</TableColumn>
-                                    <TableColumn><EditListingButton editListing={editListing} currentListing={listing} /></TableColumn>
-                                    <TableColumn><DeleteListingButton deleteListing={deleteListing} archiveListing={archiveListing} currentListing={listing} /></TableColumn>
+                                    <TableColumn>{listing.status !== 'active' ? <i>{listing.status}</i> : listing.status}</TableColumn>
+                                    <TableColumn>{listing.status !== 'active' ? <i>{listing.expiresIn}</i> : listing.expiresIn}</TableColumn>
+                                    <TableColumn>{listing.status !== 'deleted' ? <RenewListingButton renewListing={this.props.renewListing} currentListing={listing} /> : null}</TableColumn>
+                                    <TableColumn>{listing.status !== 'deleted' ? <EditListingButton editListing={this.props.editListing} currentListing={listing} /> : null}</TableColumn>
+                                    <TableColumn>{listing.status !== 'deleted' ? <DeleteListingButton deleteListing={this.props.deleteListing} archiveListing={this.props.archiveListing} currentListing={listing} /> : null}</TableColumn>
                                 </TableRow>
                         )
                     )
@@ -51,7 +58,8 @@ function MyListings({myListings, editListing, renewListing, deleteListing, archi
                 </TableBody>
             </DataTable>
         </div>
-    )
+        )
+    }
 }
 
 MyListings.propTypes = {
