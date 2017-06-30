@@ -19,7 +19,7 @@ class Profile extends Component {
     constructor(props){
         console.log("PROPS", props.user)
         super(props);
-        this.state = Object.assign({}, props.user, {error: false, password: "hidden"});
+        this.state = Object.assign({}, props.user, {error: false, password: 'actualpasswordishidden'});
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handleBioChange = this.handleBioChange.bind(this);

@@ -49,7 +49,8 @@ class CreateListing extends Component {
     render(){
         const category = this.state.category;
         return (
-            <div>
+            <div className="md-grid create-listing">
+            <div className="md-cell md-cell--8">
                 <fieldset onChange={this.handleChange}>
                     <legend className="md-subheading-1">What kind of post?</legend>
                     <Radio
@@ -218,6 +219,7 @@ class CreateListing extends Component {
                         </form>
                     </div>
                 : null}
+            </div>
             </div>
             )
     }

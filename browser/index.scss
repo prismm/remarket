@@ -62,4 +62,21 @@
         .renew-picker .md-text-field-container--input {
             display: none;
         }
+        .create-listing {
+            align-items: center;
+            justify-content: center;
+        }
+        .item-img {
+            width: 100%;
+            padding: 10px;
+        }
+        .listing-images {
+            padding: 0 10px 10px 10px;
+        }
+        .file-title {
+            font-size: 14px;
+        }
+        .md-card-title--title {
+            font-size: 14px;
+        }
     }
