@@ -17,7 +17,7 @@ import ListingDetailContainer from './containers/ListingDetailContainer.jsx'
 import CreateListing from './containers/CreateListing.jsx';
 import AccountContainer from './containers/Account.jsx';
 import AddNetwork from './containers/AddNetwork.jsx';
-import Profile from './containers/profile.jsx';
+import Profile from './containers/Profile.jsx';
 import MyListings from './components/MyListings.jsx';
 import MyOffers from './components/MyOffers.jsx';
 import MySavedListings from './components/MySavedListings.jsx';
