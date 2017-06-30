@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 export default function ListingDetail({currentListing}){
     return (
         currentListing && (
-        <div className="md-grid listing-detail-container"><h1>Yo</h1>
+        <div className="md-grid listing-detail-container">
         <div className="listing-detail-breadcrumbs md-cell md-cell--12">
             <Link to="/">breadcrumbs</Link> > here > here > here
         </div>

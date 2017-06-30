@@ -4,7 +4,7 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const models = require('../db');
 const User = models.User;
-const secrets = require('../../google_api.js');
+const secrets = process.env.GOOGLE_CLIENT_ID ? null : require('../../google_api.js');
 
 // configure the strategy with our config object
 const googleConfig = {
