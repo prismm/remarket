@@ -46,7 +46,7 @@ class MyListings extends Component {
                                     <TableColumn>{listing.category}</TableColumn>
                                     <TableColumn>{listing.status !== 'active' ? <i>{listing.status}</i> : listing.status}</TableColumn>
                                     <TableColumn>{listing.status !== 'active' ? <i>{listing.expiresIn}</i> : listing.expiresIn}</TableColumn>
-                                    <TableColumn>{listing.status !== 'deleted' ? <RenewListing renewListing={this.props.renewListing} expirationDate={listing.expirationDate} /> : null}</TableColumn>
+                                    <TableColumn>{listing.status !== 'deleted' ? <RenewListing renewListing={this.props.renewListing} currentListing={listing} /> : null}</TableColumn>
                                     <TableColumn>{listing.status !== 'deleted' ? <EditListingButton editListing={this.props.editListing} currentListing={listing} /> : null}</TableColumn>
                                     <TableColumn>{listing.status !== 'deleted' ? <DeleteListingButton deleteListing={this.props.deleteListing} archiveListing={this.props.archiveListing} currentListing={listing} /> : null}</TableColumn>
                                 </TableRow>
@@ -79,20 +79,19 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
         editListing: (listingId, changes) => {
-            console.log('editing listing...');
             dispatch(editListing_dispatch(listingId, changes))
         },
         renewListing: (listingId, newDate) => {
-            console.log('renewing listing...');
-            dispatch(editListing_dispatch(listingId, {expirationDate: newDate}))
+            dispatch(editListing_dispatch(listingId, {
+                expirationDate: newDate,
+                status: 'active'
+            }))
         },
         deleteListing: listing => {
-            console.log('deleting listing...');
             dispatch(deleteListing_dispatch(listing));
             dispatch(editListing_dispatch(listing.id, {status: 'deleted'}))
         },
         archiveListing: listingId => {
-            console.log('editing listing...');
             dispatch(editListing_dispatch(listingId, {status: 'archived'}))
         }
 });

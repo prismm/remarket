@@ -1,13 +1,10 @@
 /* eslint-disable camelcase */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
 import PropTypes from 'prop-types';
 
-import AddNetwork from './AddNetwork.jsx'
 import { UpdateNameButton, UpdateUsernameButton, UpdateBioButton, UpdateEmailButton, UpdatePasswordButton } from '../components/Buttons.jsx'
 
-import { fetchListingsByUser_dispatch } from '../actions/listing';
 import { editUser_dispatch } from '../actions/user';
 
 import TextField from 'react-md/lib/TextFields'
@@ -20,15 +17,45 @@ import TableColumn from 'react-md/lib/DataTables/TableColumn';
 /*----------------------- Profile Component ---------------------------*/
 class Profile extends Component {
     constructor(props){
+        console.log("PROPS", props.user)
         super(props);
-        this.state = props.user;
+        this.state = Object.assign({}, props.user, {error: false, password: "hidden"});
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleUsernameChange = this.handleUsernameChange.bind(this);
+        this.handleBioChange = this.handleBioChange.bind(this);
+        this.handleEmailChange = this.handleEmailChange.bind(this);
+        this.handlePasswordChange = this.handlePasswordChange.bind(this)
     }
 
-    // componentDidMount(){
-    //     this.props.getMyListings(this.props.user.id);
-    // }
+    handleNameChange(newName) {
+        this.setState({name: newName});
+    }
+
+    handleUsernameChange(newUsername) {
+        this.setState({username: newUsername});
+    }
+
+    handleBioChange(newBio) {
+        this.setState({bio: newBio});
+    }
+
+    handleEmailChange(newEmail) {
+        this.setState({email: newEmail});
+    }
+
+    handlePasswordChange(newPassword) {
+        this.state.password.length > 7 ? this.setState({
+            error: false,
+            password: newPassword
+        }) : this.setState({
+            error: true,
+            password: newPassword
+        })
+        console.log(this.state.error)
+    }
 
     render(){
+        console.log(this.state)
         return (
             <div className="md-grid profile-form">
             <div className="md-cell md-cell--10">
@@ -49,10 +76,11 @@ class Profile extends Component {
                                 id="name"
                                 name="name"
                                 value={this.state.name}
+                                onChange={this.handleNameChange}
                                 required
                                 />
                             </TableColumn>
-                            <TableColumn className="md-cell--bottom"><UpdateNameButton updateName={this.props.updateName} currentUser={this.props.user} /></TableColumn>
+                            <TableColumn className="md-cell--bottom"><UpdateNameButton newName={this.state.name} updateName={this.props.updateName} currentUser={this.props.user} /></TableColumn>
                         </TableRow>
                         <TableRow key={2}>
                             <TableColumn className="md-cell--bottom">Username</TableColumn>
@@ -61,10 +89,11 @@ class Profile extends Component {
                                 id="username"
                                 name="username"
                                 value={this.state.username ? this.state.username : this.state.userId}
+                                onChange={this.handleUsernameChange}
                                 required
                                 />
                                 </TableColumn>
-                            <TableColumn className="md-cell--bottom"><UpdateUsernameButton updateUsername={this.props.updateUsername} currentUser={this.props.user} /></TableColumn>
+                            <TableColumn className="md-cell--bottom"><UpdateUsernameButton newUsername={this.state.username} updateUsername={this.props.updateUsername} currentUser={this.props.user} /></TableColumn>
                         </TableRow>
                         <TableRow key={3}>
                             <TableColumn>Bio</TableColumn>
@@ -76,9 +105,10 @@ class Profile extends Component {
                                 rows={2}
                                 name="bio"
                                 value={this.state.bio}
+                                onChange={this.handleBioChange}
                                 />
                             </TableColumn>
-                            <TableColumn><UpdateBioButton updateBio={this.props.updateBio} currentUser={this.props.user} /></TableColumn>
+                            <TableColumn><UpdateBioButton newBio={this.state.bio} updateBio={this.props.updateBio} currentUser={this.props.user} /></TableColumn>
                         </TableRow>
                     </TableBody>
                 </DataTable>
@@ -98,15 +128,27 @@ class Profile extends Component {
                                 id="email"
                                 name="email"
                                 value={this.state.email}
+                                onChange={this.handleEmailChange}
                                 required
                                 />
                                 </TableColumn>
-                            <TableColumn><UpdateEmailButton updateEmail={this.props.updateEmail} currentUser={this.props.user} /></TableColumn>
+                            <TableColumn><UpdateEmailButton newEmail={this.state.email} updateEmail={this.props.updateEmail} currentUser={this.props.user} /></TableColumn>
                         </TableRow>
                         <TableRow key={2}>
                             <TableColumn>Password</TableColumn>
-                            <TableColumn><i>hidden</i></TableColumn>
-                            <TableColumn><UpdatePasswordButton updatePassword={this.props.updatePassword} currentUser={this.props.user} /></TableColumn>
+                            <TableColumn>
+                                <TextField
+                                id="password"
+                                name="password"
+                                type="password"
+                                error={this.state.error}
+                                errorText="To reset, your new password must be at least 7 characters"
+                                value={this.state.password}
+                                onChange={this.handlePasswordChange}
+                                required
+                                />
+                            </TableColumn>
+                            <TableColumn><UpdatePasswordButton newPassword={this.state.password} updatePassword={this.props.updatePassword} currentUser={this.props.user} /></TableColumn>
                         </TableRow>
                     </TableBody>
                 </DataTable>
@@ -132,22 +174,21 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
     return {
+        updateName: (userId, newName) => {
+            dispatch(editUser_dispatch(userId, {name: newName}))
+        },
         updateUsername: (userId, newUsername) => {
-            console.log('updating username...');
             dispatch(editUser_dispatch(userId, {username: newUsername}))
         },
         updateBio: (userId, newBio) => {
-            console.log('updating bio...');
             dispatch(editUser_dispatch(userId, {bio: newBio}))
         },
         //need to do email verification
         updateEmail: (userId, newEmail) => {
-            console.log('updating email...');
             dispatch(editUser_dispatch(userId, {email: newEmail}))
         },
         //need to do password validation
         updatePassword: (userId, newPassword) => {
-            console.log('updating password...');
             dispatch(editUser_dispatch(userId, {password: newPassword}))
         }
     }

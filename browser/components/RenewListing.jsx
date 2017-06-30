@@ -3,12 +3,13 @@ import React, { Component } from 'react';
 import DatePicker from 'react-md/lib/Pickers/DatePickerContainer';
 import PropTypes from 'prop-types';
 
+/*----------------------- RenewListing Component ---------------------------*/
 export default class RenewListing extends Component {
   constructor(props) {
     super(props);
-
-    this.state = { 
-            value: props.expirationDate,
+    const today = new Date();
+    this.state = {
+            value: today,
             visible: false
             };
     this._reset = this._reset.bind(this);
@@ -26,6 +27,7 @@ export default class RenewListing extends Component {
   }
 
   _handleChange(value) {
+    this.props.renewListing(this.props.currentListing.id, value);
     this.setState({ value });
   }
 
@@ -36,7 +38,6 @@ export default class RenewListing extends Component {
   render() {
     const { value, visible } = this.state;
     const today = new Date();
-    // const dayAfterTomorrow = new Date(new Date().setDay(today.getDay() + 2));
     const twoMonthsLater = new Date(new Date().setMonth(today.getMonth() + 2));
     return (
       <div>
@@ -59,6 +60,6 @@ export default class RenewListing extends Component {
 }
 
 RenewListing.propTypes = {
-  expirationDate: PropTypes.object,
+  currentListing: PropTypes.object,
   renewListing: PropTypes.func
 };

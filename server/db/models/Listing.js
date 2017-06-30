@@ -38,7 +38,12 @@ const Listing = db.define('listing', {
         }
     },
     expirationDate: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: new Date(new Date().setMonth(new Date().getMonth() + 2))
+            // get() {
+            //     const dateStr = this.getDataValue('expirationDate').toLocaleDateString();
+            //     return dateStr;
+            // }
     }
 }, {
     paranoid: true,

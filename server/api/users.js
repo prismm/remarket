@@ -30,9 +30,11 @@ router.get('/:id/networks', (req, res, next) => {
 router.post('/:userId/networks/:networkId', (req, res, next) => {
     User.findById(req.params.userId)
         .then(user => {
+            console.log("USER IN API ROUTE", user)
             return user.addNetwork(req.params.networkId);
         })
         .then(result => {
+            console.log("RESULT OF API CALL", result)
             res.status(201).send(result);
         })
         .catch(next)

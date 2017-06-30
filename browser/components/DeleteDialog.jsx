@@ -3,6 +3,7 @@ import Dialog from 'react-md/lib/Dialogs';
 import Button from 'react-md/lib/Buttons/Button';
 import PropTypes from 'prop-types';
 
+/*----------------------- Delete Dialog Component ---------------------------*/
 export default class DeleteDialog extends PureComponent {
   constructor(props) {
     super(props);

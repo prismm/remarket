@@ -33,13 +33,14 @@ class AddNetwork extends Component {
 
     handleSubmit(event){
         event.preventDefault();
-        this.props.addNetwork(this.state.network);
+        this.props.addNetwork(this.props.user, this.state.network);
     }
 
     render(){
+        console.log(this.state.network);
         return (
                 <div className="md-cell--8 md-grid my-networks">
-                    <div className="md-cell--6">
+                    <div>
                         <h3>My Networks</h3>
                         { (this.props.user.networks && this.props.user.networks.length) ?
                             this.props.user.networks.map(network => <li className="network-li" key={network.id}>{network.name}</li>)
@@ -47,7 +48,7 @@ class AddNetwork extends Component {
                             <h5>You currently are not affiliated with any networks on remarket. <br /><br />But are you in real life? Add yourself to your network here.</h5>
                         }
                     </div>
-                    <div className="add-a-network md-cell--6">
+                    <div>
                         <h3>Add a Network</h3>
                         <form onSubmit={this.handleSubmit}>
                             <div className="add-network-fields">
@@ -91,8 +92,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
     return {
-        addNetwork: network => {
-            dispatch(addMyNetwork_dispatch(this.props.user, network))
+        addNetwork: (user, network) => {
+            dispatch(addMyNetwork_dispatch(user, network))
         }
     }
 }
