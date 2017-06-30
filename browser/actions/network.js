@@ -6,7 +6,7 @@ import axios from 'axios';
 const setNetworks_action = networks => ({ type: 'SET_NETWORKS', networks });
 const getMyNetworks_action = user => ({ type: 'GET_MY_NETWORKS', user });
 const setCurrentNetwork_action = network => ({ type: 'SET_CURRENT_NETWORK', network });
-const addMyNetwork_action = (user, network) => ({ type: 'ADD_NETWORK', network });
+const addMyNetwork_action = user => ({ type: 'ADD_NETWORK', user });
 const removeNetwork_action = network => ({ type: 'REMOVE_NETWORK', network })
 
 /* ------------       DISPATCHERS     ------------------ */
@@ -38,7 +38,8 @@ export const fetchSingleNetwork_dispatch = networkId => dispatch => {
 export const addMyNetwork_dispatch = (user, network) => dispatch => {
     axios.post(`/api/users/${user.id}/networks/${network.id}`)
         .then((updatedUser) => {
-            dispatch(addMyNetwork_action(updatedUser, network));
+            console.log("UPDATED USER DATA", updatedUser.data)
+            dispatch(addMyNetwork_action(updatedUser.data));
             dispatch(setCurrentNetwork_action(network));
         })
         .catch(console.error);

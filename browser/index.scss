@@ -62,4 +62,8 @@
         .renew-picker .md-text-field-container--input {
             display: none;
         }
+        .md-list md-layover-child md-layover-child--tl md-list--menu md-list--menu-restricted md-paper md-paper--2 {
+            left: 0;
+            top: 0;
+        }
     }

@@ -29,13 +29,11 @@ router.get('/:id/networks', (req, res, next) => {
 //a route for POST: /api/users/${user.id}/networks/${network.id} that adds a network to a user's networks
 router.post('/:userId/networks/:networkId', (req, res, next) => {
     User.findById(req.params.userId)
-        .then(user => {
-            console.log("USER IN API ROUTE", user)
-            return user.addNetwork(req.params.networkId);
-        })
+        .then(user => user.addNetwork(req.params.networkId))
+        .then(() => User.findById(req.params.userId, { include: [{ all: true }] }))
         .then(result => {
-            console.log("RESULT OF API CALL", result)
-            res.status(201).send(result);
+            console.log("HELLO!!! RESULT.dataValues", result.dataValues)
+            res.json(result.dataValues);
         })
         .catch(next)
 })

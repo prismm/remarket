@@ -9,6 +9,8 @@ export default function(state = initialState, action) {
             return {};
         case 'EDIT_USER':
             return Object.assign({}, state, action.changes)
+        case 'ADD_NETWORK':
+            return action.user;
         default:
             return state;
     }
