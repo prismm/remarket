@@ -26,8 +26,10 @@
         "bluebird": "^3.5.0",
         "body-parser": "^1.17.2",
         "connect-session-sequelize": "^4.1.0",
+        "css-loader": "^0.28.4",
         "express": "^4.15.3",
         "express-session": "^1.15.3",
+        "node-sass": "^4.5.3",
         "passport": "^0.3.2",
         "passport-google-oauth": "^1.0.0",
         "pg": "^6.2.3",
@@ -42,6 +44,7 @@
         "redux": "^3.7.0",
         "redux-devtools-extension": "^2.13.2",
         "redux-thunk": "^2.2.0",
+        "sass-loader": "^6.0.6",
         "sequelize": "^3.30.4",
         "style-loader": "^0.18.2",
         "webpack": "^2.6.1"
