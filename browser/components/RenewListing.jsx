@@ -35,20 +35,23 @@ export default class RenewListing extends Component {
 
   render() {
     const { value, visible } = this.state;
+    const today = new Date();
+    // const dayAfterTomorrow = new Date(new Date().setDay(today.getDay() + 2));
+    const twoMonthsLater = new Date(new Date().setMonth(today.getMonth() + 2));
     return (
       <div>
-        <Button label="Open the Picker" raised onClick={this._openPicker} />
-        <div className="md-grid">
+        <Button label="RENEW" raised className="md-inline-block md-btn md-btn--raised md-background--secondary md-background--secondary-hover md-pointer--hover md-btn--text md-btn--raised-pressed my-listing-button" onClick={this._openPicker} />
+        <div className="renew-picker">
           <DatePicker
             id="fully-controlled"
-            label="Select some date"
             className="md-cell"
+            minDate={today}
+            maxDate={twoMonthsLater}
             visible={visible}
             value={value}
             onChange={this._handleChange}
             onVisibilityChange={this._handleVisibilityChange}
           />
-          <Button icon onClick={this._reset} className="md-cell--bottom">close</Button>
         </div>
       </div>
     );

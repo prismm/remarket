@@ -94,7 +94,7 @@ export function UpdateNameButton({currentUser, updateName}) {
             <Button
                 raised
                 secondary
-                label="update NAME"
+                label="update"
                 className="user-button"
                 onClick={() => updateName(currentUser)}
             />
@@ -115,7 +115,7 @@ export function UpdateUsernameButton({currentUser, updateUsername}) {
             <Button
                 raised
                 secondary
-                label="update USERNAME"
+                label="update"
                 className="user-button"
                 onClick={() => updateUsername(currentUser)}
             />
@@ -136,7 +136,7 @@ export function UpdateBioButton({currentUser, updateBio}) {
             <Button
                 raised
                 secondary
-                label="update BIO"
+                label="update"
                 className="user-button"
                 onClick={() => updateBio(currentUser)}
             />
@@ -157,7 +157,7 @@ export function UpdateEmailButton({currentUser, updateEmail}) {
             <Button
                 raised
                 secondary
-                label="update EMAIL"
+                label="update"
                 className="user-button"
                 onClick={() => updateEmail(currentUser)}
             />
@@ -178,7 +178,7 @@ export function UpdatePasswordButton({currentUser, updatePassword}) {
             <Button
                 raised
                 secondary
-                label="update PASSWORD"
+                label="update"
                 className="user-button"
                 onClick={() => updatePassword(currentUser)}
             />

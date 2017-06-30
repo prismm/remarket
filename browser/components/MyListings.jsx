@@ -11,7 +11,8 @@ import TableHeader from 'react-md/lib/DataTables/TableHeader';
 import TableBody from 'react-md/lib/DataTables/TableBody';
 import TableRow from 'react-md/lib/DataTables/TableRow';
 import TableColumn from 'react-md/lib/DataTables/TableColumn';
-import { EditListingButton, DeleteListingButton, RenewListingButton } from './Buttons.jsx'
+import { EditListingButton, DeleteListingButton } from './Buttons.jsx'
+import RenewListing from './RenewListing.jsx'
 
 /*------------------- MyListings component ----------------------*/
 class MyListings extends Component {
@@ -23,7 +24,7 @@ class MyListings extends Component {
 
     render(){
         return (
-        <div className="my-listings">
+        <div className="my-listings md-cell-10">
             <h3>My Listings</h3>
             <DataTable plain>
                 <TableHeader>
@@ -45,7 +46,7 @@ class MyListings extends Component {
                                     <TableColumn>{listing.category}</TableColumn>
                                     <TableColumn>{listing.status !== 'active' ? <i>{listing.status}</i> : listing.status}</TableColumn>
                                     <TableColumn>{listing.status !== 'active' ? <i>{listing.expiresIn}</i> : listing.expiresIn}</TableColumn>
-                                    <TableColumn>{listing.status !== 'deleted' ? <RenewListingButton renewListing={this.props.renewListing} currentListing={listing} /> : null}</TableColumn>
+                                    <TableColumn>{listing.status !== 'deleted' ? <RenewListing renewListing={this.props.renewListing} expirationDate={listing.expirationDate} /> : null}</TableColumn>
                                     <TableColumn>{listing.status !== 'deleted' ? <EditListingButton editListing={this.props.editListing} currentListing={listing} /> : null}</TableColumn>
                                     <TableColumn>{listing.status !== 'deleted' ? <DeleteListingButton deleteListing={this.props.deleteListing} archiveListing={this.props.archiveListing} currentListing={listing} /> : null}</TableColumn>
                                 </TableRow>

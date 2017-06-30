@@ -84,6 +84,8 @@ class CreateListing extends Component {
                                 id="name"
                                 name="name"
                                 value={this.state.name}
+                                maxLength={55}
+                                errorText="Must be no more than 55 characters"
                                 label="What are you selling?"
                                 className="md-cell md-cell--12"
                                 required

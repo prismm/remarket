@@ -35,43 +35,44 @@ class AddNetwork extends Component {
         event.preventDefault();
         this.props.addNetwork(this.state.network);
     }
-    //value={this.state.network.id}
+
     render(){
-
         return (
-                <div className="your-networks">
-                    <h3>My Networks</h3>
-                    { (this.props.user.networks && this.props.user.networks.length) ?
-                        this.props.user.networks.map(network => <li key={network.id}>{network.name}</li>)
-                        :
-                        <h5>You currently are not affiliated with any networks on remarket. <br /><br />But are you in real life? Add yourself to your network below.</h5>
-                    }
-
-                    <h3>Add a Network</h3>
-                    <form onSubmit={this.handleSubmit}>
-                        <div className="add-network-fields">
-                        <SelectField
-                            id="chooseNetwork"
-                            placeholder="Choose your Network"
-                            itemLabel="name"
-                            itemValue="id"
-                            onChange={this.handleNetworkChange}
-                            menuItems={this.props.networks}
-                        />
-                        <TextField
-                            id="verificationEmail"
-                            name="verificationEmail"
-                            onChange={this.handleChange} 
-                            label="Verify your network with your associated email address"
-                            value={this.state.network.suggestedDomain}
-                            className={this.state.network.suggestedDomain}
-                            required
-                        />
-                        </div>
-                        <Button flat primary label="Submit" type="submit" className="submit" />
-                    </form>
-
-        </div>
+                <div className="md-cell--8 md-grid my-networks">
+                    <div className="md-cell--6">
+                        <h3>My Networks</h3>
+                        { (this.props.user.networks && this.props.user.networks.length) ?
+                            this.props.user.networks.map(network => <li className="network-li" key={network.id}>{network.name}</li>)
+                            :
+                            <h5>You currently are not affiliated with any networks on remarket. <br /><br />But are you in real life? Add yourself to your network here.</h5>
+                        }
+                    </div>
+                    <div className="add-a-network md-cell--6">
+                        <h3>Add a Network</h3>
+                        <form onSubmit={this.handleSubmit}>
+                            <div className="add-network-fields">
+                            <SelectField
+                                id="chooseNetwork"
+                                placeholder="Choose your Network"
+                                itemLabel="name"
+                                itemValue="id"
+                                onChange={this.handleNetworkChange}
+                                menuItems={this.props.networks}
+                            />
+                            <TextField
+                                id="verificationEmail"
+                                name="verificationEmail"
+                                onChange={this.handleChange} 
+                                label="Verify your network with your associated email address"
+                                value={this.state.network.suggestedDomain}
+                                className={this.state.network.suggestedDomain}
+                                required
+                            />
+                            </div>
+                            <Button flat primary label="Submit" type="submit" className="submit" />
+                        </form>
+                    </div>
+                </div>
         )
     }
 }

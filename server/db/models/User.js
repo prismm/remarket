@@ -13,6 +13,10 @@ const User = db.define('user', {
     username: {
         type: Sequelize.STRING
     },
+    bio: {
+        type: Sequelize.TEXT,
+        defaultValue: ''
+    },
     salt: {
         type: Sequelize.STRING
     },

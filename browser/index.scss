@@ -30,7 +30,8 @@
         }
         .submit {
             border: 2px solid black;
-            margin: auto;
+            clear: both;
+            margin-top: 15px;
             background-color: yellow;
         }
         .md-dialog--centered {
@@ -38,7 +39,26 @@
         }
         .account-nav li {
             list-style: none;
+            font-size: 18px;
+            font-weight: bold;
+            line-height: 2em;
+            padding-left: 20px;
+        }
+        .add-a-network {}
+        .profile-form {
+            align-items: center;
+            justify-content: center;
+        }
+        .my-networks {
+            // justify-content: center;
+        }
+        .network-li {
+            list-style: none;
+            color: black;
             font-size: 14px;
             line-height: 2em;
+        }
+        .renew-picker .md-text-field-container--input {
+            display: none;
         }
     }

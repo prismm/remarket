@@ -10,7 +10,7 @@ import { UpdateNameButton, UpdateUsernameButton, UpdateBioButton, UpdateEmailBut
 import { fetchListingsByUser_dispatch } from '../actions/listing';
 import { editUser_dispatch } from '../actions/user';
 
-
+import TextField from 'react-md/lib/TextFields'
 import DataTable from 'react-md/lib/DataTables/DataTable';
 import TableHeader from 'react-md/lib/DataTables/TableHeader';
 import TableBody from 'react-md/lib/DataTables/TableBody';
@@ -21,6 +21,7 @@ import TableColumn from 'react-md/lib/DataTables/TableColumn';
 class Profile extends Component {
     constructor(props){
         super(props);
+        this.state = props.user;
     }
 
     // componentDidMount(){
@@ -29,11 +30,8 @@ class Profile extends Component {
 
     render(){
         return (
-            <div className="md-grid">
-            <div className="md-cell md-cell--6">
-                <AddNetwork />
-            </div>
-            <div className="md-cell md-cell--6">
+            <div className="md-grid profile-form">
+            <div className="md-cell md-cell--10">
                 <h3>My Profile</h3>
                 <DataTable plain>
                     <TableHeader>
@@ -45,18 +43,41 @@ class Profile extends Component {
                     </TableHeader>
                     <TableBody>
                         <TableRow key={1}>
-                            <TableColumn>Name</TableColumn>
-                            <TableColumn>{this.props.user.name}</TableColumn>
-                            <TableColumn><UpdateNameButton updateName={this.props.updateName} currentUser={this.props.user} /></TableColumn>
+                            <TableColumn className="md-cell--bottom">Name</TableColumn>
+                            <TableColumn>
+                                <TextField
+                                id="name"
+                                name="name"
+                                value={this.state.name}
+                                required
+                                />
+                            </TableColumn>
+                            <TableColumn className="md-cell--bottom"><UpdateNameButton updateName={this.props.updateName} currentUser={this.props.user} /></TableColumn>
                         </TableRow>
                         <TableRow key={2}>
-                            <TableColumn>Username</TableColumn>
-                            <TableColumn>{this.props.user.username ? this.props.user.username : this.props.user.userId}</TableColumn>
-                            <TableColumn><UpdateUsernameButton updateUsername={this.props.updateUsername} currentUser={this.props.user} /></TableColumn>
+                            <TableColumn className="md-cell--bottom">Username</TableColumn>
+                            <TableColumn>
+                                <TextField
+                                id="username"
+                                name="username"
+                                value={this.state.username ? this.state.username : this.state.userId}
+                                required
+                                />
+                                </TableColumn>
+                            <TableColumn className="md-cell--bottom"><UpdateUsernameButton updateUsername={this.props.updateUsername} currentUser={this.props.user} /></TableColumn>
                         </TableRow>
                         <TableRow key={3}>
                             <TableColumn>Bio</TableColumn>
-                            <TableColumn></TableColumn>
+                            <TableColumn>
+                                <TextField
+                                id="bio"
+                                maxLength={240}
+                                errorText="Bio must be no more than 240 characters. Less is more!"
+                                rows={2}
+                                name="bio"
+                                value={this.state.bio}
+                                />
+                            </TableColumn>
                             <TableColumn><UpdateBioButton updateBio={this.props.updateBio} currentUser={this.props.user} /></TableColumn>
                         </TableRow>
                     </TableBody>
@@ -71,13 +92,20 @@ class Profile extends Component {
                     </TableHeader>
                     <TableBody>
                         <TableRow key={1}>
-                            <TableColumn>Email Address</TableColumn>
-                            <TableColumn>{this.props.user.email}</TableColumn>
+                            <TableColumn>Email</TableColumn>
+                            <TableColumn>
+                                <TextField
+                                id="email"
+                                name="email"
+                                value={this.state.email}
+                                required
+                                />
+                                </TableColumn>
                             <TableColumn><UpdateEmailButton updateEmail={this.props.updateEmail} currentUser={this.props.user} /></TableColumn>
                         </TableRow>
                         <TableRow key={2}>
                             <TableColumn>Password</TableColumn>
-                            <TableColumn>[hidden]</TableColumn>
+                            <TableColumn><i>hidden</i></TableColumn>
                             <TableColumn><UpdatePasswordButton updatePassword={this.props.updatePassword} currentUser={this.props.user} /></TableColumn>
                         </TableRow>
                     </TableBody>

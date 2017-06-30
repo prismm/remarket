@@ -7,7 +7,7 @@ export default function MySavedListings(){
     return (
         <div>
         <h3>My Saved Listings</h3>
-        <RenewListing renewListing={renewListing} expirationDate={new Date()}/>
+        <RenewListing renewListing={renewListing} expirationDate={new Date()} />
         </div>
     )
 }

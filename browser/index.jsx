@@ -16,6 +16,7 @@ import ListingsContainer from './containers/ListingsContainer.jsx';
 import ListingDetailContainer from './containers/ListingDetailContainer.jsx'
 import CreateListing from './containers/CreateListing.jsx';
 import AccountContainer from './containers/Account.jsx';
+import AddNetwork from './containers/AddNetwork.jsx';
 import Profile from './containers/profile.jsx';
 import MyListings from './components/MyListings.jsx';
 import MyOffers from './components/MyOffers.jsx';
@@ -62,7 +63,8 @@ ReactDOM.render(
         <Route path="listings/post" component={CreateListing} onEnter={requireLogin} />
         <Route path="listings/:listingId" component={ListingDetailContainer} onEnter={getCurrentListing} />
         <Route path="account" component={AccountContainer} onEnter={getMyListings} >
-           <IndexRoute component={Profile} />
+          <IndexRoute component={Profile} />
+          <Route path="/account/managenetworks" component={AddNetwork} />
           <Route path="/account/managelistings" component={MyListings} />
           <Route path="/account/manageoffers" component={MyOffers} />
           <Route path="/account/savedlistings" component={MySavedListings} />

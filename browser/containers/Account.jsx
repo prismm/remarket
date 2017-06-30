@@ -17,9 +17,10 @@ class Account extends Component {
             <h3> account > </h3>
             <ul className="account-nav">
                 <li><Link className="account-nav-link" to="/account">My Profile</Link></li>
+                <li><Link className="account-nav-link" to="/account/managenetworks">My Networks</Link></li>
                 <li><Link className="account-nav-link" to="/account/managelistings">My Listings</Link></li>
                 <li><Link className="account-nav-link" to="/account/manageoffers">Offer History</Link></li>
-                <li><Link className="account-nav-link" to="/account/savedlistings">My Saved Listings</Link></li>
+                <li><Link className="account-nav-link" to="/account/savedlistings">Saved Listings</Link></li>
             </ul>
             </div>
             <div className="md-cell md-cell--10">
