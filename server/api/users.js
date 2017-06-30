@@ -31,10 +31,7 @@ router.post('/:userId/networks/:networkId', (req, res, next) => {
     User.findById(req.params.userId)
         .then(user => user.addNetwork(req.params.networkId))
         .then(() => User.findById(req.params.userId, { include: [{ all: true }] }))
-        .then(result => {
-            console.log("HELLO!!! RESULT.dataValues", result.dataValues)
-            res.json(result.dataValues);
-        })
+        .then(result => res.json(result))
         .catch(next)
 })
 
