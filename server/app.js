@@ -6,6 +6,10 @@ const models = require('./db');
 const db = models.db;
 const session = require('express-session');
 
+//secures app by setting http headers
+const helmet = require('helmet');
+app.use(helmet());
+
 //loggingware
 const morgan = require('morgan');
 app.use(morgan('dev'));
