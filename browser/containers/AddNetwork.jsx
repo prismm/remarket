@@ -29,7 +29,7 @@ class AddNetwork extends Component {
     handleNetworkChange(value, index, event) { // eslint-disable-line no-unused-vars
         let thisNetwork = this.props.networks.filter(network => (network.id === value))[0];
         this.setState({ network: thisNetwork });
-    };
+    }
 
     handleSubmit(event){
         event.preventDefault();
@@ -43,7 +43,9 @@ class AddNetwork extends Component {
                     <div>
                         <h3>My Networks</h3>
                         { (this.props.user.networks && this.props.user.networks.length) ?
-                            this.props.user.networks.map(network => <li className="network-li" key={network.id}>{network.name}</li>)
+                            this.props.user.networks.map(
+                                network => <li className="network-li" key={network.id}>{network.name}</li>
+                                )
                             :
                             <h5>You currently are not affiliated with any networks on remarket. <br /><br />But are you in real life? Add yourself to your network here.</h5>
                         }

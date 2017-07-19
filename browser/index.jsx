@@ -13,7 +13,7 @@ import { fetchAllNetworks_dispatch } from './actions/network';
 import { Login, Signup } from './containers/Auth.jsx'
 import Main from './containers/Main.jsx'
 import ListingsContainer from './containers/ListingsContainer.jsx';
-import ListingDetailContainer from './containers/ListingDetailContainer.jsx'
+import ListingDetail from './components/ListingDetail.jsx'
 import CreateListing from './containers/CreateListing.jsx';
 import AccountContainer from './containers/Account.jsx';
 import AddNetwork from './containers/AddNetwork.jsx';
@@ -61,7 +61,7 @@ ReactDOM.render(
         <Route path="home" component={ListingsContainer} />
         <Route path="signup" component={Signup} />
         <Route path="listings/post" component={CreateListing} onEnter={requireLogin} />
-        <Route path="listings/:listingId" component={ListingDetailContainer} onEnter={getCurrentListing} />
+        <Route path="listings/:listingId" component={ListingDetail} onEnter={getCurrentListing} />
         <Route path="account" component={AccountContainer} onEnter={getMyListings} >
           <IndexRoute component={Profile} />
           <Route path="/account/managenetworks" component={AddNetwork} />

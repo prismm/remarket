@@ -37,7 +37,7 @@ app.use('/', require('./auth'));
 //serves static files from public folder
 app.use(express.static(path.join(__dirname, '../public')));
 
-//matches all requests to api -- should pipe thru something requiring login
+//matches all requests to api -- should pipe thru something requiring login for security
 app.use('/api', require('./api'));
 
 //serves index.html file for non-api routes

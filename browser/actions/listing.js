@@ -31,6 +31,10 @@ export const fetchSingleListing_dispatch = listingId => dispatch => {
         .catch(console.error);
 }
 
+export const clearCurrentListing_dispatch = () => dispatch => {
+    return dispatch(setCurrentListing_action(null));
+}
+
 export const fetchListingsByUser_dispatch = userId => dispatch => {
     return axios.get(`/api/listings/user/${userId}`)
         .then(res => {

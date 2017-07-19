@@ -33,9 +33,9 @@ class MyListings extends Component {
                     <TableColumn>category</TableColumn>
                     <TableColumn>status</TableColumn>
                     <TableColumn>expires on</TableColumn>
-                    <TableColumn></TableColumn>
-                    <TableColumn></TableColumn>
-                    <TableColumn></TableColumn>
+                    <TableColumn />
+                    <TableColumn />
+                    <TableColumn />
                 </TableRow>
                 </TableHeader>
                 <TableBody>

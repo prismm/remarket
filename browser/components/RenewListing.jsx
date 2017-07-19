@@ -41,7 +41,12 @@ export default class RenewListing extends Component {
     const twoMonthsLater = new Date(new Date().setMonth(today.getMonth() + 2));
     return (
       <div>
-        <Button label="RENEW" raised className="md-inline-block md-btn md-btn--raised md-background--secondary md-background--secondary-hover md-pointer--hover md-btn--text md-btn--raised-pressed my-listing-button" onClick={this._openPicker} />
+        <Button
+          label="RENEW"
+          raised
+          className="md-inline-block md-btn md-btn--raised md-background--secondary md-background--secondary-hover md-pointer--hover md-btn--text md-btn--raised-pressed my-listing-button"
+          onClick={this._openPicker}
+        />
         <div className="renew-picker">
           <DatePicker
             id="fully-controlled"
