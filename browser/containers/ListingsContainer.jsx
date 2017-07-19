@@ -1,9 +1,12 @@
+/* eslint-disable camelcase */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import ListingsList from '../components/ListingsList.jsx';
 import Filters from '../components/Filters.jsx';
+
+import { setLocation_action } from '../actions/listing'
 
 /*----------------------- Listings Component ---------------------------*/
 class Listings extends Component {
@@ -13,7 +16,7 @@ class Listings extends Component {
                         searchTerm: '',
                         filters: [],
                         networkFilters: [],
-                        location: '<all>',
+                        location: props.location || '<all>',
                         filteredListings: props.listings,
                         unfilteredListings: props.listings
                     }
@@ -62,11 +65,19 @@ class Listings extends Component {
         this.setState({
             location: location
         })
+        if (location === '<all>') {
+            this.props.setLocation(null);
+        } else {
+            this.props.setLocation(location);
+        }
     }
 
-    filterByLocation(arr, location){
-        if (location === '<all>') return arr;
-        return arr.filter(listing => (listing.location === location));
+    filterByLocation(arr){
+        if (this.state.location === '<all>') {
+            return arr;
+        } else {
+            return arr.filter(listing => (listing.location === this.state.location))
+        }
     }
 
     handleSubmit(searchTerm){
@@ -86,17 +97,35 @@ class Listings extends Component {
         this.state.networkFilters.forEach( networkFilter => {
             filteredListings = this.filterByNetwork(filteredListings, networkFilter)
         });
-        filteredListings = this.filterByLocation(filteredListings, this.state.location);
+        filteredListings = this.filterByLocation(filteredListings);
         //filter by Location was tested and appears to work; filter by network not yet tested
         // console.log("FILTERED LISTINGS IN RENDER FUNCTION OF LISTINGS CONTAINER", filteredListings)
 
         return (
             <div>
-                <Filters handleLocationChange={this.handleLocationChange} handleSubmit={this.handleSubmit} handleChange={this.handleChange} searchTerm={this.state.searchTerm} generalFilter={this.generalFilter} filterByCategory={this.filterByCategory} filterByLocation={this.filterByLocation} filterByNetwork={this.filterByNetwork} />
-                <div className="md-grid">
-                    <ListingsList className="md-cell" listings={this.filterByCategory('for sale', filteredListings)} category="for sale" />
-                    <ListingsList className="md-cell" listings={this.filterByCategory('housing', filteredListings)} category="housing" />
-                    <ListingsList className="md-cell" listings={this.filterByCategory('community', filteredListings)} category="community" />
+                <Filters
+                    handleLocationChange={this.handleLocationChange}
+                    handleSubmit={this.handleSubmit}
+                    handleChange={this.handleChange}
+                    searchTerm={this.state.searchTerm}
+                    generalFilter={this.generalFilter}
+                    filterByCategory={this.filterByCategory}
+                    filterByLocation={this.filterByLocation}
+                    filterByNetwork={this.filterByNetwork}
+                    location={this.state.location}
+                />
+                <div>
+                    {this.props.selectedCategory ?                         
+                        (<div className="md-grid">
+                            <ListingsList className="md-cell" listings={this.filterByCategory(this.props.selectedCategory, filteredListings)} category={this.props.selectedCategory} />
+                        </div>) : (
+                        <div className="md-grid">
+                            <ListingsList className="md-cell" listings={this.filterByCategory('for sale', filteredListings)} category="for sale" />
+                            <ListingsList className="md-cell" listings={this.filterByCategory('housing', filteredListings)} category="housing" />
+                            <ListingsList className="md-cell" listings={this.filterByCategory('community', filteredListings)} category="community" />
+                        </div>
+                    )
+                    }
                 </div>
             </div>
         )
@@ -104,14 +133,23 @@ class Listings extends Component {
 }
 
 Listings.propTypes = {
-  listings: PropTypes.array.isRequired
+  listings: PropTypes.array.isRequired,
+  selectedCategory: PropTypes.string,
+  location: PropTypes.string
 };
 
 /*----------------------- Listings Container ---------------------------*/
 const mapStateToProps = ({user, listing, network}) => ({
         listings: listing.listings,
         user: user,
-        network: network
+        network: network,
+        location: listing.location
     });
 
-export default connect(mapStateToProps)(Listings);
+const mapDispatchToProps = dispatch => {
+    return {
+        setLocation: location => dispatch(setLocation_action(location))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Listings);

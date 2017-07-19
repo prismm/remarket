@@ -1,12 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router';
 import Listing from './Listing.jsx';
 import PropTypes from 'prop-types';
 
 /*------------------- ListingsList component ----------------------*/
 export default function ListingsList({listings, category}) {
+const catUrl = category === 'for sale' ? 'for-sale' : category;
+
     return (
         <div className="md-cell md-cell--4">
-            <h2>{category}</h2>
+            <h2><Link to={`/${catUrl}`}>{category}</Link></h2>
             { listings ?
                 listings.map(listing => <Listing listing={listing} key={listing.id} />)
                 :

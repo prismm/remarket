@@ -1,20 +1,9 @@
 import React from 'react';
-import Listing from './Listing.jsx';
-import PropTypes from 'prop-types';
+import ListingsContainer from '../containers/ListingsContainer.jsx';
 
-/*------------------- ListingsList component ----------------------*/
-export default function ListingsList({listings}) {
+/*------------------- HousingListingsList component ----------------------*/
+export default function HousingListingsList() {
     return (
-        <div className="listing-container">
-            { listings ?
-                listings.map(listing => <Listing listing={listing} key={listing.id} />)
-                :
-                <div>No listings to display, sorry!</div>
-            }
-        </div>
+        <ListingsContainer selectedCategory="housing" />
     )
 }
-
-ListingsList.propTypes = {
-  listings: PropTypes.array
-};

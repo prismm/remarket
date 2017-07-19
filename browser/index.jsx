@@ -21,6 +21,9 @@ import Profile from './containers/Profile.jsx';
 import MyListings from './components/MyListings.jsx';
 import MyOffers from './components/MyOffers.jsx';
 import MySavedListings from './components/MySavedListings.jsx';
+import ForSaleListingsList from './components/ForSaleListingsList.jsx';
+import HousingListingsList from './components/HousingListingsList.jsx';
+import CommunityListingsList from './components/CommunityListingsList.jsx'
 
 const whoAmI = store.dispatch(me_dispatch());
 const requireLogin = (nextRouterState, replace, next) =>
@@ -59,6 +62,9 @@ ReactDOM.render(
         <IndexRoute component={ListingsContainer} />
         <Route path="login" component={Login} />
         <Route path="home" component={ListingsContainer} />
+        <Route path="for-sale" component={ForSaleListingsList} />
+        <Route path="housing" component={HousingListingsList} />
+        <Route path="community" component={CommunityListingsList} />
         <Route path="signup" component={Signup} />
         <Route path="listings/post" component={CreateListing} onEnter={requireLogin} />
         <Route path="listings/:listingId" component={ListingDetail} onEnter={getCurrentListing} />

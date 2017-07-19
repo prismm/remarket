@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 
 /*------------------- Breadcrumbs component ----------------------*/
 export default function Breadcrumbs({ currentListing }) {
+    const catUrl = currentListing.category === 'for sale' ? 'for-sale' : currentListing.category;
     return (
         <div className="listing-detail-breadcrumbs md-cell md-cell--12">
-            <Link to="/">breadcrumbs</Link> > here > here > here
+            <Link to="/">listings</Link> > <Link to={`/${catUrl}`}>{currentListing.category}</Link> >
         </div>
     )
 }

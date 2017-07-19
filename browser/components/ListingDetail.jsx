@@ -13,7 +13,7 @@ class ListingDetail extends Component {
     }
 
     componentWillUnmount(){
-        this.props.clearCurrentListing();
+        return this.props.clearCurrentListing();
     }
 
     render(){
@@ -28,14 +28,14 @@ class ListingDetail extends Component {
                 <div className="md-cell md-cell--1" />
                 <div className="listing-body md-cell md-cell--5">
                 <div className='item-descr'>
-                    <h3 className="selectedItemName">{this.props.currentListing.name}</h3>
-                    <h3 className="selectedItemName">{this.props.currentListing.category}</h3>
-                    <p className="selectedItemDescr">{this.props.currentListing.description}</p>
+                    <h3 className="selected-item-name">{this.props.currentListing.name}</h3>
+                    <h3 className="selected-item-category">{this.props.currentListing.category}</h3>
+                    <p className="selected-item-descr">{this.props.currentListing.description}</p>
                 </div>
                 {this.props.currentListing.askingPrice ?
                     <div className="price">
-                        <h2>FLOOR PRICE: {this.props.currentListing.floorPrice}</h2>
-                        <h2>ASKING PRICE: {this.props.currentListing.askingPrice}</h2>
+                        <h5>FLOOR PRICE: {this.props.currentListing.floorPrice}</h5>
+                        <h5>ASKING PRICE: {this.props.currentListing.askingPrice}</h5>
                     </div>
                     :
                     null
@@ -61,9 +61,7 @@ const mapStateToProps = ({user, listing, network}) => ({
 
 const mapDispatchToProps = dispatch => {
     return {
-        clearCurrentListing: () => {
-            dispatch(clearCurrentListing_dispatch())
-        }
+        clearCurrentListing: () => dispatch(clearCurrentListing_dispatch())
     }
 }
 

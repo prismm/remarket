@@ -13,20 +13,26 @@ export default function Filters(props){
         <Toolbar
           themed
         >
-        <LocationDropdown handleLocationChange={props.handleLocationChange} key="dropdown" />
-            <TextField
-                onChange={props.handleChange}
-                id="filter"
-                label="looking for..."
-                name="filter"
-                className="md-cell-6"
-                value={props.searchTerm}
-            />
-            <Button
+        <LocationDropdown
+            handleLocationChange={props.handleLocationChange}
+            key="dropdown"
+            location={props.location}
+        />
+        <TextField
+            onChange={props.handleChange}
+            id="filter"
+            label="looking for..."
+            name="filter"
+            className="md-cell-6"
+            value={props.searchTerm}
+        />
+        <Button
             onSubmit={props.handleSubmit}
             key="search"
             type="submit"
-            icon>search</Button>
+            icon
+            >search
+        </Button>
         </Toolbar>
         <hr />
         </div>

@@ -2,7 +2,8 @@
 const initialState = {
     listings: [],
     myListings: [],
-    currentListing: {}
+    currentListing: {},
+    location: null
 };
 
 const listingReducer = (state = initialState, action) => {
@@ -28,6 +29,9 @@ const listingReducer = (state = initialState, action) => {
             break;
         case 'DELETE_LISTING':
             newState.listings = newState.listings.filter(listing => (listing.id !== action.listingId));
+            break;
+        case 'SET_LOCATION':
+            newState.location = action.location;
             break;
         default:
             break;

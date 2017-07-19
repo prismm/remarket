@@ -11,7 +11,7 @@ const archiveListing_action = listing => ({ type: 'ARCHIVE_LISTING', listing });
 const createListing_action = listing => ({ type: 'CREATE_LISTING', listing });
 const editListing_action = listing => ({ type: 'EDIT_LISTING', listing });
 const deleteListing_action = listingId => ({ type: 'DELETE_LISTING', listingId });
-
+export const setLocation_action = location => ({ type: 'SET_LOCATION', location });
 
 /* ------------       DISPATCHERS     ------------------ */
 

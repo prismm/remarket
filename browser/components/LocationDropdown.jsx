@@ -21,7 +21,7 @@ export default class LocationDropdown extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      location: locations[0]
+      location: props.location || locations[0]
     };
     this.setLocation = this.setLocation.bind(this);
     this.resetLocation = this.resetLocation.bind(this)
@@ -29,6 +29,7 @@ export default class LocationDropdown extends PureComponent {
 
   setLocation(event){
     console.log(event);
+    //causes error "Cannot read property 'type' of undefined" upon close -- doesn't seem to affect functionality -- should resolve this later
     this.setState({ location: event });
     this.props.handleLocationChange(event);
   }
@@ -64,6 +65,6 @@ export default class LocationDropdown extends PureComponent {
   }
 }
 
-// LocationDropdown.propTypes = {
-//     handleLocationChange: PropTypes.func.isRequired
-// };
+LocationDropdown.propTypes = {
+    handleLocationChange: PropTypes.func.isRequired
+};
