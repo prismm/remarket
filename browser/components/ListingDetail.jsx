@@ -4,9 +4,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Breadcrumbs from './Breadcrumbs.jsx';
+import spinner from '../HOC/Spinner.jsx'
 import { clearCurrentListing_dispatch } from '../actions/listing';
 
 /*------------------- ListingDetail component ----------------------*/
+
 class ListingDetail extends Component {
     constructor(props){
         super(props);
@@ -65,7 +67,6 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-const ListingDetailContainer = connect(mapStateToProps, mapDispatchToProps)(ListingDetail);
+const ListingDetailWithSpinner =  spinner('currentListing')(ListingDetail);
 
-export default ListingDetailContainer;
-
+export default connect(mapStateToProps, mapDispatchToProps)(ListingDetailWithSpinner);

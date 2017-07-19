@@ -2,9 +2,10 @@ import React from 'react';
 import { Link } from 'react-router';
 import Listing from './Listing.jsx';
 import PropTypes from 'prop-types';
+import spinner from '../HOC/Spinner.jsx'
 
 /*------------------- ListingsList component ----------------------*/
-export default function ListingsList({listings, category}) {
+function ListingsList({listings, category}) {
 const catUrl = category === 'for sale' ? 'for-sale' : category;
 
     return (
@@ -23,3 +24,5 @@ ListingsList.propTypes = {
     category: PropTypes.string,
     listings: PropTypes.array
 };
+
+export default spinner('listings')(ListingsList);

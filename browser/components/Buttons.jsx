@@ -81,7 +81,7 @@ export function UpdateNameButton({currentUser, updateName, newName}) {
 UpdateNameButton.propTypes = {
   currentUser: PropTypes.object.isRequired,
   updateName: PropTypes.func.isRequired,
-  newName: PropTypes.string.isRequired
+  newName: PropTypes.string
 };
 
 /*-------- UpdateUsernameButton component ---------*/
@@ -103,7 +103,7 @@ export function UpdateUsernameButton({currentUser, updateUsername, newUsername})
 UpdateUsernameButton.propTypes = {
   currentUser: PropTypes.object.isRequired,
   updateUsername: PropTypes.func.isRequired,
-  newUsername: PropTypes.string.isRequired
+  newUsername: PropTypes.string
 };
 
 /*-------- UpdateBioButton component ---------*/
@@ -125,7 +125,7 @@ export function UpdateBioButton({currentUser, updateBio, newBio}) {
 UpdateBioButton.propTypes = {
   currentUser: PropTypes.object.isRequired,
   updateBio: PropTypes.func.isRequired,
-  newBio: PropTypes.string.isRequired
+  newBio: PropTypes.string
 };
 
 /*-------- UpdateEmailButton component ---------*/
@@ -147,7 +147,7 @@ export function UpdateEmailButton({currentUser, updateEmail, newEmail}) {
 UpdateEmailButton.propTypes = {
   currentUser: PropTypes.object.isRequired,
   updateEmail: PropTypes.func.isRequired,
-  newEmail: PropTypes.string.isRequired
+  newEmail: PropTypes.string
 };
 
 /*-------- UpdatePassword component ---------*/
