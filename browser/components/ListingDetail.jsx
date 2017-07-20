@@ -1,11 +1,14 @@
 /* eslint-disable camelcase */
 import React, { Component } from 'react';
-// import { Link } from 'react-router';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Breadcrumbs from './Breadcrumbs.jsx';
 import spinner from '../HOC/Spinner.jsx'
 import { clearCurrentListing_dispatch } from '../actions/listing';
+import Button from 'react-md/lib/Buttons/Button'; 
+import TimeAgo from './TimeAgo.jsx';
+import {NyuAvatar} from './Avatars.jsx'
 
 /*------------------- ListingDetail component ----------------------*/
 
@@ -19,6 +22,9 @@ class ListingDetail extends Component {
     }
 
     render(){
+        const isItMyListing = this.props.currentListing.authorId === this.props.user.id;
+        const wasItEdited = this.props.currentListing.createdAt !== this.props.currentListing.updatedAt;
+
         return (
             this.props.currentListing && (
             <div className="md-grid listing-detail-container">
@@ -32,6 +38,21 @@ class ListingDetail extends Component {
                 <div className='item-descr'>
                     <h3 className="selected-item-name">{this.props.currentListing.name}</h3>
                     <h3 className="selected-item-category">{this.props.currentListing.category}</h3>
+                    {isItMyListing ?
+                        <Button
+                            raised
+                            primary
+                            label="edit this listing"
+                            className="my-listing-button edit-listing-button"
+                            onClick={() => {}}
+                        />
+                        : 
+                        <h5 className="selected-item-author">listed by <Link to={`/user/${this.props.currentListing.author.id}`}>{this.props.currentListing.author.userId}</Link></h5>
+                    }
+                    <p className="listing-detail-timestamp">Created on {this.props.currentListing.created} </p><TimeAgo time={this.props.currentListing.createdAt} />
+                    
+                    {wasItEdited ? <p className="listing-detail-timestamp">Updated on {this.props.currentListing.modified}</p> : null}
+                    <NyuAvatar />
                     <p className="selected-item-descr">{this.props.currentListing.description}</p>
                 </div>
                 {this.props.currentListing.askingPrice ?
@@ -51,7 +72,8 @@ class ListingDetail extends Component {
 
 ListingDetail.propTypes = {
   currentListing: PropTypes.object,
-  clearCurrentListing: PropTypes.func.isRequired
+  clearCurrentListing: PropTypes.func.isRequired,
+  user: PropTypes.object
 };
 
 /*------------------- ListingDetail Container ----------------------*/

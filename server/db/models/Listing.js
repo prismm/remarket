@@ -53,6 +53,32 @@ const Listing = db.define('listing', {
             if (this.expirationDate && this.status === 'active') return this.expirationDate + ' (' + (new Date() - this.expirationDate) + ')';
             else if (this.status === 'archived') return 'expired';
             else return '---'
+        },
+        created: function() {
+            const days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
+            let timestamp = new Date(this.createdAt);
+            const time = () => {
+                if (timestamp.getHours() > 12) {
+                    let hours = timestamp.getHours() - 12;
+                    return hours + ':' + timestamp.getMinutes() + 'pm';
+                } else {
+                    return timestamp.getHours() + ':' + timestamp.getMinutes() + 'am';
+                }
+            }
+            return days[timestamp.getDay()] + ' ' + timestamp.toLocaleDateString() + ', ' + time();
+        },
+        modified: function() {
+            const days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
+            let timestamp = new Date(this.updatedAt);
+            const time = () => {
+                if (timestamp.getHours() > 12) {
+                    let hours = timestamp.getHours() - 12;
+                    return hours + ':' + timestamp.getMinutes() + 'pm';
+                } else {
+                    return timestamp.getHours() + ':' + timestamp.getMinutes() + 'am';
+                }
+            }
+            return days[timestamp.getDay()] + ' ' + timestamp.toLocaleDateString() + ', ' + time();
         }
     },
     instanceMethods: {
