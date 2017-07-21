@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-md/lib/Buttons/Button'; 
-import DeleteDialog from './DeleteDialog.jsx'
+import DeleteDialog from './DeleteDialog.jsx';
+import { browserHistory } from 'react-router';
+import { setCurrentListing_action } from '../actions/listing'
 
 //BUTTONS FOR LISTING FUNCTIONS
 /*-------- EditListingButton component ---------*/
 
 //should redirect to editListing form;
-export function EditListingButton({currentListing, editListing}) {
+export function EditListingButton({setCurrentListing, setEditStatus, currentListing}) {
     return (
         <div className="my-listing-button-container">
             <Button
@@ -15,7 +17,11 @@ export function EditListingButton({currentListing, editListing}) {
                 secondary
                 label="Edit"
                 className="my-listing-button"
-                onClick={() => editListing(currentListing.id, currentListing)}
+                onClick={() => {
+                    browserHistory.push(`/listings/${currentListing.id}`);
+                    setCurrentListing(currentListing);
+                    setEditStatus(true);
+                    }}
             />
         </div>
     )

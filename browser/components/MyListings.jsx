@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Listing from './Listing.jsx';
 import PropTypes from 'prop-types';
 
-import { editListing_dispatch, deleteListing_dispatch} from '../actions/listing';
+import { deleteListing_dispatch, setEditStatus_action, setCurrentListing_action } from '../actions/listing';
 
 import DataTable from 'react-md/lib/DataTables/DataTable';
 import TableHeader from 'react-md/lib/DataTables/TableHeader';
@@ -47,7 +47,7 @@ class MyListings extends Component {
                                     <TableColumn>{listing.status !== 'active' ? <i>{listing.status}</i> : listing.status}</TableColumn>
                                     <TableColumn>{listing.status !== 'active' ? <i>{listing.expiresIn}</i> : listing.expiresIn}</TableColumn>
                                     <TableColumn>{listing.status !== 'deleted' ? <RenewListing renewListing={this.props.renewListing} currentListing={listing} /> : null}</TableColumn>
-                                    <TableColumn>{listing.status !== 'deleted' ? <EditListingButton editListing={this.props.editListing} currentListing={listing} /> : null}</TableColumn>
+                                    <TableColumn>{listing.status !== 'deleted' ? <EditListingButton setCurrentListing={this.props.setCurrentListing} setEditStatus={this.props.setEditStatus} currentListing={listing} /> : null}</TableColumn>
                                     <TableColumn>{listing.status !== 'deleted' ? <DeleteListingButton deleteListing={this.props.deleteListing} archiveListing={this.props.archiveListing} currentListing={listing} /> : null}</TableColumn>
                                 </TableRow>
                         )
@@ -65,7 +65,6 @@ class MyListings extends Component {
 
 MyListings.propTypes = {
   myListings: PropTypes.array,
-  editListing: PropTypes.func,
   renewListing: PropTypes.func,
   deleteListing: PropTypes.func,
   archiveListing: PropTypes.func
@@ -78,8 +77,11 @@ const mapStateToProps = state => ({
     });
 
 const mapDispatchToProps = dispatch => ({
-        editListing: (listingId, changes) => {
-            dispatch(editListing_dispatch(listingId, changes))
+        setEditStatus: editStatus => {
+            dispatch(setEditStatus_action(editStatus))
+        },
+        setCurrentListing: listing => {
+            dispatch(setCurrentListing_action(listing))
         },
         renewListing: (listingId, newDate) => {
             dispatch(editListing_dispatch(listingId, {

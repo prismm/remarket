@@ -34,6 +34,9 @@ const listingReducer = (state = initialState, action) => {
         case 'SET_LOCATION':
             newState.location = action.location;
             break;
+        case 'SET_EDIT_STATUS':
+            newState.currentListing.editStatus = action.editStatus;
+            break;
         default:
             break;
     }

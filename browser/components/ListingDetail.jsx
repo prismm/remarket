@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import React, { Component } from 'react';
-import { Link, browserHistory } from 'react-router';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Breadcrumbs from './Breadcrumbs.jsx';
@@ -8,7 +8,7 @@ import spinner from '../HOC/Spinner.jsx'
 import { clearCurrentListing_dispatch } from '../actions/listing';
 import Button from 'react-md/lib/Buttons/Button'; 
 import TimeAgo from './TimeAgo.jsx';
-import {NyuAvatar} from './Avatars.jsx';
+import {NyuAvatar, YaleAvatar, HarvardAvatar, UPennAvatar, ColumbiaAvatar, MitAvatar, PrincetonAvatar} from './Avatars.jsx';
 import CreateListing from '../containers/CreateListing.jsx'
 
 
@@ -18,7 +18,7 @@ class ListingDetail extends Component {
     constructor(props){
         super(props);
         this.state = {
-            edit: false
+            edit: props.currentListing.editStatus || false
         }
         this.onEditClick = this.onEditClick.bind(this);
         this.onPublishClick = this.onPublishClick.bind(this);
@@ -41,7 +41,7 @@ class ListingDetail extends Component {
         const isItMyListing = this.props.currentListing.authorId === this.props.user.id;
         const wasItEdited = this.props.currentListing.createdAt !== this.props.currentListing.updatedAt;
         const shouldRenderDetail = this.props.currentListing && !this.state.edit;
-        const shouldRenderForm = this.props.currentListing && this.state.edit;
+        const shouldRenderForm = isItMyListing && this.props.currentListing && this.state.edit;
         
         return (
             <div>
@@ -73,7 +73,8 @@ class ListingDetail extends Component {
                             :
                             null
                         }
-                        <NyuAvatar />
+                        <NyuAvatar tooltipLabel="NYU" tooltipPosition="top" />
+
                         <p className="selected-item-descr">{this.props.currentListing.description}</p>
                     </div>
                     {this.props.currentListing.askingPrice ?

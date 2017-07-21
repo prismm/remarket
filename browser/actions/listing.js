@@ -5,7 +5,8 @@ import { browserHistory } from 'react-router';
 /* ------------   ACTION CREATORS     ------------------ */
 
 const setListings_action = listings => ({ type: 'SET_LISTINGS', listings });
-const setCurrentListing_action = listing => ({ type: 'SET_CURRENT_LISTING', listing });
+export const setCurrentListing_action = listing => ({ type: 'SET_CURRENT_LISTING', listing });
+export const setEditStatus_action = editStatus => ({ type: 'SET_EDIT_STATUS', editStatus });
 const setMyListings_action = listings => ({ type: 'SET_MY_LISTINGS', listings });
 const archiveListing_action = listing => ({ type: 'ARCHIVE_LISTING', listing });
 const createListing_action = listing => ({ type: 'CREATE_LISTING', listing });
