@@ -18,17 +18,7 @@ class ListingDetail extends Component {
     constructor(props){
         super(props);
         this.state = {
-            edit: false,
-            editName: false,
-            editCategory: false,
-            editDescription: false,
-            editFloorPrice: false,
-            editAskingPrice: false,
-            name: props.currentListing.name,
-            category: props.currentListing.category,
-            description: props.currentListing.description,
-            floorPrice: props.currentListing.floorPrice,
-            askingPrice: props.currentListing.askingPrice
+            edit: false
         }
         this.onEditClick = this.onEditClick.bind(this);
         this.onPublishClick = this.onPublishClick.bind(this);
@@ -39,14 +29,11 @@ class ListingDetail extends Component {
     }
 
     onEditClick(){
-        // browserHistory.push(`/`);
         this.setState({edit: true});
-        console.log("Is this happening?")
     }
 
     onPublishClick(){
         this.setState({edit: false});
-        console.log("Published!")
     }
 
 

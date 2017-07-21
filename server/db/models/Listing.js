@@ -57,12 +57,13 @@ const Listing = db.define('listing', {
         created: function() {
             const days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
             let timestamp = new Date(this.createdAt);
+            let mins = ('0' + timestamp.getMinutes()).slice(-2)
             const time = () => {
                 if (timestamp.getHours() > 12) {
                     let hours = timestamp.getHours() - 12;
-                    return hours + ':' + ('0' + timestamp.getMinutes()).slice(-2) + 'pm';
+                    return hours + ':' + mins + 'pm';
                 } else {
-                    return timestamp.getHours() + ':' + ('0' + timestamp.getMinutes()).slice(-2) + 'am';
+                    return timestamp.getHours() + ':' + mins + 'am';
                 }
             }
             return days[timestamp.getDay()] + ' ' + timestamp.toLocaleDateString() + ', ' + time();
@@ -70,12 +71,13 @@ const Listing = db.define('listing', {
         modified: function() {
             const days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
             let timestamp = new Date(this.updatedAt);
+            let mins = ('0' + timestamp.getMinutes()).slice(-2)
             const time = () => {
                 if (timestamp.getHours() > 12) {
                     let hours = timestamp.getHours() - 12;
-                    return hours + ':' + ('0' + timestamp.getMinutes()).slice(-2) + 'pm';
+                    return hours + ':' + mins + 'pm';
                 } else {
-                    return timestamp.getHours() + ':' + ('0' + timestamp.getMinutes()).slice(-2) + 'am';
+                    return timestamp.getHours() + ':' + mins + 'am';
                 }
             }
             return days[timestamp.getDay()] + ' ' + timestamp.toLocaleDateString() + ', ' + time();
