@@ -8,7 +8,7 @@ import TextField from 'react-md/lib/TextFields';
 import DatePicker from 'react-md/lib/Pickers/DatePickerContainer';
 import Button from 'react-md/lib/Buttons/Button';
 
-import {createListing_dispatch} from '../actions/listing';
+import {createListing_dispatch, editListing_dispatch} from '../actions/listing';
 
 /*------------------- CreateListing component ----------------------*/
 class CreateListing extends Component {
@@ -17,6 +17,7 @@ class CreateListing extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.setExpirationDate = this.setExpirationDate.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.publishEdits = this.publishEdits.bind(this);
         this.state = {
                         category: props.currentListing ? props.currentListing.category : 'for sale',
                         name: props.currentListing ? props.currentListing.name : '',
@@ -35,11 +36,14 @@ class CreateListing extends Component {
 
     handleSubmit(event){
         event.preventDefault();
-        if (!this.state.name || !this.state.description){
-            alert("You must complete required fields in order to post -- Thanks!");
-            return
-        }
         this.props.createListing(this.state);
+    }
+
+    publishEdits(event){
+        event.preventDefault();
+        this.props.editListing(this.props.currentListing.id, this.state);
+        //async problem -- rerenders listing before it's officially updated
+        this.props.onPublishClick();
     }
 
     setExpirationDate(event){
@@ -141,7 +145,11 @@ class CreateListing extends Component {
                                 required
                                 onChange={this.setExpirationDate}
                                 />
-                            <Button flat primary label="Submit" type="submit" className="submit md-cell--12 md-cell--right" />
+                            {this.props.currentListing ?
+                                <Button flat primary label="Publish Edits" onClick={this.publishEdits} className="submit md-cell--12 md-cell--right" />
+                                :
+                                <Button flat primary label="Submit" type="submit" className="submit md-cell--12 md-cell--right" />
+                            }
                         </form>
                     </div>
                     : null}
@@ -151,6 +159,7 @@ class CreateListing extends Component {
                             <TextField
                                 id="Title"
                                 name="name"
+                                value={this.state.name}
                                 label="Title for your housing post?"
                                 className="md-cell md-cell--12"
                                 required
@@ -159,6 +168,7 @@ class CreateListing extends Component {
                                 id="applicationLocation"
                                 name="location"
                                 label="Location?"
+                                value={this.state.location}
                                 className="location md-cell md-cell--1-phone md-cell--4"
                                 required
                             />
@@ -166,12 +176,14 @@ class CreateListing extends Component {
                                 id="askingPrice"
                                 name="askingPrice"
                                 label="Price?"
+                                value={this.state.askingPrice}
                                 className="price md-cell md-cell--1-phone md-cell--8"
                             />
                             <TextField
                                 id="description"
                                 label="Description"
                                 name="description"
+                                value={this.state.description}
                                 rows={3}
                                 className="md-cell md-cell--12"
                                 required
@@ -180,12 +192,17 @@ class CreateListing extends Component {
                                 id="inline"
                                 name="expirationDate"
                                 label="Post expiration date?"
+                                value={this.state.expirationDate}
                                 inline
                                 className="md-cell date-picker"
                                 required
                                 onChange={this.setExpirationDate}
                                 />
-                            <Button flat primary label="Submit" type="submit" className="submit md-cell--12 md-cell--right" />
+                            {this.props.currentListing ?
+                                <Button flat primary label="Publish Edits" onClick={this.publishEdits} className="submit md-cell--12 md-cell--right" />
+                                :
+                                <Button flat primary label="Submit" type="submit" className="submit md-cell--12 md-cell--right" />
+                            }
                         </form>
                     </div>
                     : null}
@@ -195,6 +212,7 @@ class CreateListing extends Component {
                             <TextField
                                 id="Title"
                                 name="name"
+                                value={this.state.name}
                                 label="Title for your post?"
                                 className="md-cell md-cell--12"
                                 required
@@ -203,6 +221,7 @@ class CreateListing extends Component {
                                 id="description"
                                 label="Content"
                                 name="description"
+                                value={this.state.description}
                                 rows={3}
                                 className="md-cell md-cell--12"
                                 required
@@ -211,11 +230,16 @@ class CreateListing extends Component {
                                 id="inline"
                                 label="Post expiration date?"
                                 name="expirationDate"
+                                value={this.state.expirationDate}
                                 className="md-cell date-picker"
                                 required
                                 onChange={this.setExpirationDate}
                                 />
-                            <Button flat primary label="Submit" type="submit" className="submit md-cell--12 md-cell--right" />
+                            {this.props.currentListing ?
+                                <Button flat primary label="Publish Edits" onClick={this.publishEdits} className="submit md-cell--12 md-cell--right" />
+                                :
+                                <Button flat primary label="Submit" type="submit" className="submit md-cell--12 md-cell--right" />
+                            }
                         </form>
                     </div>
                 : null}
@@ -228,7 +252,8 @@ class CreateListing extends Component {
 CreateListing.propTypes = {
   user: PropTypes.object.isRequired,
   createListing: PropTypes.func.isRequired,
-  currentListing: PropTypes.object
+  currentListing: PropTypes.object,
+  onPublishClick: PropTypes.func
 };
 
 /*------------------- Container ----------------------*/
@@ -244,6 +269,9 @@ const mapDispatchToProps = dispatch => {
     return {
         createListing: listing => {
             dispatch(createListing_dispatch(listing))
+        },
+        editListing: (listingId, changes) => {
+            dispatch(editListing_dispatch(listingId, changes))
         }
     }
 }

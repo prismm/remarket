@@ -47,7 +47,7 @@ export const createListing_dispatch = listing => dispatch => {
     axios.post('/api/listings', listing)
         .then(res => {
             dispatch(createListing_action(res.data));
-            console.log("RES DATA", res.data)
+            console.log("RES DATA IN CREATE LISTING", res.data)
             browserHistory.push(`/listings/${res.data.id}`);
         })
         .catch(console.error);
@@ -57,6 +57,8 @@ export const editListing_dispatch = (listingId, changes) => dispatch => {
     axios.put(`/api/listings/${listingId}`, changes)
         .then(res => {
             dispatch(editListing_action(res.data));
+            console.log("RES DATA IN EDIT LISTING", res.data);
+            browserHistory.push(`/listings/${res.data.id}`);
         })
         .catch(console.error);
 }

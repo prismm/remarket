@@ -60,9 +60,9 @@ const Listing = db.define('listing', {
             const time = () => {
                 if (timestamp.getHours() > 12) {
                     let hours = timestamp.getHours() - 12;
-                    return hours + ':' + timestamp.getMinutes() + 'pm';
+                    return hours + ':' + ('0' + timestamp.getMinutes()).slice(-2) + 'pm';
                 } else {
-                    return timestamp.getHours() + ':' + timestamp.getMinutes() + 'am';
+                    return timestamp.getHours() + ':' + ('0' + timestamp.getMinutes()).slice(-2) + 'am';
                 }
             }
             return days[timestamp.getDay()] + ' ' + timestamp.toLocaleDateString() + ', ' + time();
@@ -73,9 +73,9 @@ const Listing = db.define('listing', {
             const time = () => {
                 if (timestamp.getHours() > 12) {
                     let hours = timestamp.getHours() - 12;
-                    return hours + ':' + timestamp.getMinutes() + 'pm';
+                    return hours + ':' + ('0' + timestamp.getMinutes()).slice(-2) + 'pm';
                 } else {
-                    return timestamp.getHours() + ':' + timestamp.getMinutes() + 'am';
+                    return timestamp.getHours() + ':' + ('0' + timestamp.getMinutes()).slice(-2) + 'am';
                 }
             }
             return days[timestamp.getDay()] + ' ' + timestamp.toLocaleDateString() + ', ' + time();

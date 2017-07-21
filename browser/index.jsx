@@ -24,6 +24,7 @@ import MySavedListings from './components/MySavedListings.jsx';
 import ForSaleListingsList from './components/ForSaleListingsList.jsx';
 import HousingListingsList from './components/HousingListingsList.jsx';
 import CommunityListingsList from './components/CommunityListingsList.jsx'
+import EditListing from './components/EditListing.jsx'
 
 const whoAmI = store.dispatch(me_dispatch());
 const requireLogin = (nextRouterState, replace, next) =>
@@ -36,6 +37,10 @@ const requireLogin = (nextRouterState, replace, next) =>
     .catch(err => console.log(err));
 
 const getCurrentListing = (nextRouterState) => {
+  store.dispatch(fetchSingleListing_dispatch(nextRouterState.params.listingId));
+}
+
+const editCurrentListing = (nextRouterState) => {
   store.dispatch(fetchSingleListing_dispatch(nextRouterState.params.listingId));
 }
 
@@ -68,6 +73,7 @@ ReactDOM.render(
         <Route path="signup" component={Signup} />
         <Route path="listings/post" component={CreateListing} onEnter={requireLogin} />
         <Route path="listings/:listingId" component={ListingDetail} onEnter={getCurrentListing} />
+        <Route path="listings/:listingId/edit" component={EditListing} onEnter={getCurrentListing} />
         <Route path="account" component={AccountContainer} onEnter={getMyListings} >
           <IndexRoute component={Profile} />
           <Route path="/account/managenetworks" component={AddNetwork} />
