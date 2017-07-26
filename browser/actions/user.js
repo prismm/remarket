@@ -8,6 +8,10 @@ const getUser_action = user => ({ type: 'GET_USER', user });
 const removeUser_action = () => ({ type: 'REMOVE_USER' });
 const editUser_action = changes => ({ type: 'EDIT_USER', changes });
 
+//sets state.browse, not state.user:
+const viewUser_action = user => ({ type: 'VIEW_USER', user })
+export const clearUser_action = () => ({ type: 'CLEAR_USER' })
+
 /* ------------       DISPATCHERS     ------------------ */
 const defaultUser = {};
 
@@ -15,6 +19,13 @@ export const me_dispatch = () => dispatch => {
     return axios.get('/auth/me')
         .then(res =>
             dispatch(getUser_action(res.data || defaultUser)))
+        .catch(console.error)
+}
+
+export const viewUser_dispatch = userId => dispatch => {
+    return axios.get(`/user/${userId}`)
+        .then(res =>
+            dispatch(viewUser_action(res.data)))
         .catch(console.error)
 }
 

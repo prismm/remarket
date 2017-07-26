@@ -4,6 +4,7 @@ import DatePicker from 'react-md/lib/Pickers/DatePickerContainer';
 import PropTypes from 'prop-types';
 
 /*----------------------- RenewListing Component ---------------------------*/
+//Component is a button which, when clicked, opens a date picker that sets a new expiration date for the listing
 export default class RenewListing extends Component {
   constructor(props) {
     super(props);

@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import SelectField from 'react-md/lib/SelectFields';
 import TextField from 'react-md/lib/TextFields';
 import Button from 'react-md/lib/Buttons/Button';
+import {NYU} from '../components/Avatars.jsx'
 
 import { addMyNetwork_dispatch } from '../actions/network'
 
@@ -44,7 +45,7 @@ class AddNetwork extends Component {
                         <h3>My Networks</h3>
                         { (this.props.user.networks && this.props.user.networks.length) ?
                             this.props.user.networks.map(
-                                network => <li className="network-li" key={network.id}>{network.name}</li>
+                                network => <li className="network-li" key={network.id}><NYU />{network.name}</li>
                                 )
                             :
                             <h5>You currently are not affiliated with any networks on remarket. <br /><br />But are you in real life? Add yourself to your network here.</h5>

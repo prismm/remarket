@@ -8,7 +8,7 @@ import spinner from '../HOC/Spinner.jsx'
 import { clearCurrentListing_dispatch } from '../actions/listing';
 import Button from 'react-md/lib/Buttons/Button'; 
 import TimeAgo from './TimeAgo.jsx';
-import {NyuAvatar, YaleAvatar, HarvardAvatar, UPennAvatar, ColumbiaAvatar, MitAvatar, PrincetonAvatar} from './Avatars.jsx';
+import {NetworkAvatar} from './Avatars.jsx';
 import CreateListing from '../containers/CreateListing.jsx'
 
 
@@ -73,7 +73,13 @@ class ListingDetail extends Component {
                             :
                             null
                         }
-                        <NyuAvatar tooltipLabel="NYU" tooltipPosition="top" />
+                        { (this.props.listing.networks && this.props.listing.networks.length) ?
+                            this.props.listing.networks.map(
+                                network => <NetworkAvatar key={network.id} network={network.name} tooltipLabel={network.name} tooltipPosition="top" />
+                                )
+                            :
+                            null
+                        }
 
                         <p className="selected-item-descr">{this.props.currentListing.description}</p>
                     </div>

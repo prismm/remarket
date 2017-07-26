@@ -5,8 +5,8 @@ import ImgUpload from './ImgUpload.jsx'
 export default function MySavedListings(){
     return (
         <div>
-        <h3>My Saved Listings</h3>
-        <ImgUpload />
+            <h3>My Saved Listings</h3>
+            <ImgUpload />
         </div>
     )
 }

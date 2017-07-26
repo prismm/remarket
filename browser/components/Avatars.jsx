@@ -2,7 +2,21 @@ import React from 'react';
 import Avatar from 'react-md/lib/Avatars';
 import injectTooltip from 'react-md/lib/Tooltips';
 
-export const NyuAvatar = injectTooltip(({ tooltip }) => (
+
+export const NetworkAvatar = injectTooltip(({ tooltip, network }) => (
+        <div className="inline-rel-container">
+            <Avatar
+                className="avatar"
+                src={`/imgs/${network}.png`}
+                role="presentation"
+            />
+            {tooltip}
+        </div>
+    )
+);
+
+
+export const NYU = injectTooltip(({ tooltip }) => (
         <div className="inline-rel-container">
             <Avatar
                 className="avatar"
@@ -14,7 +28,7 @@ export const NyuAvatar = injectTooltip(({ tooltip }) => (
     )
 );
 
-export const YaleAvatar = injectTooltip(({ tooltip }) => (
+export const Yale = injectTooltip(({ tooltip }) => (
         <div className="inline-rel-container">
             <Avatar
                 className="avatar"
@@ -26,7 +40,7 @@ export const YaleAvatar = injectTooltip(({ tooltip }) => (
     )
 );
 
-export const HarvardAvatar = injectTooltip(({ tooltip }) => (
+export const Harvard = injectTooltip(({ tooltip }) => (
         <div className="inline-rel-container">
             <Avatar
                 className="avatar"
@@ -38,7 +52,7 @@ export const HarvardAvatar = injectTooltip(({ tooltip }) => (
     )
 );
 
-export const ColumbiaAvatar = injectTooltip(({ tooltip }) => (
+export const Columbia = injectTooltip(({ tooltip }) => (
         <div className="inline-rel-container">
             <Avatar
                 className="avatar"
@@ -50,7 +64,7 @@ export const ColumbiaAvatar = injectTooltip(({ tooltip }) => (
     )
 );
 
-export const MitAvatar = injectTooltip(({ tooltip }) => (
+export const MIT = injectTooltip(({ tooltip }) => (
         <div className="inline-rel-container">
             <Avatar
                 className="avatar"
@@ -62,7 +76,7 @@ export const MitAvatar = injectTooltip(({ tooltip }) => (
     )
 );
 
-export const UPennAvatar = injectTooltip(({ tooltip }) => (
+export const UPenn = injectTooltip(({ tooltip }) => (
         <div className="inline-rel-container">
             <Avatar
                 className="avatar"
@@ -74,7 +88,7 @@ export const UPennAvatar = injectTooltip(({ tooltip }) => (
     )
 );
 
-export const PrincetonAvatar = injectTooltip(({ tooltip }) => (
+export const Princeton = injectTooltip(({ tooltip }) => (
         <div className="inline-rel-container">
             <Avatar
                 className="avatar"
@@ -89,13 +103,13 @@ export const PrincetonAvatar = injectTooltip(({ tooltip }) => (
 export const AllAvatars = () => {
     return (
         <div>
-            <NyuAvatar tooltipLabel="NYU" tooltipPosition="top" />
-            <HarvardAvatar tooltipLabel="Harvard" tooltipPosition="top" />
-            <YaleAvatar tooltipLabel="Yale" tooltipPosition="top" />
-            <ColumbiaAvatar tooltipLabel="Columbia" tooltipPosition="top" />
-            <PrincetonAvatar tooltipLabel="Princeton" tooltipPosition="top" />
-            <MitAvatar tooltipLabel="MIT" tooltipPosition="top" />
-            <UPennAvatar tooltipLabel="UPenn" tooltipPosition="top" />
+            <NYU tooltipLabel="NYU" tooltipPosition="top" />
+            <Harvard tooltipLabel="Harvard" tooltipPosition="top" />
+            <Yale tooltipLabel="Yale" tooltipPosition="top" />
+            <Columbia tooltipLabel="Columbia" tooltipPosition="top" />
+            <Princeton tooltipLabel="Princeton" tooltipPosition="top" />
+            <MIT tooltipLabel="MIT" tooltipPosition="top" />
+            <UPenn tooltipLabel="UPenn" tooltipPosition="top" />
         </div>
     )
 }

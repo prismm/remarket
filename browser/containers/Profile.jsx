@@ -17,7 +17,6 @@ import TableColumn from 'react-md/lib/DataTables/TableColumn';
 /*----------------------- Profile Component ---------------------------*/
 class Profile extends Component {
     constructor(props){
-        console.log("PROPS", props.user)
         super(props);
         this.state = Object.assign({}, props.user, {error: false, password: 'actualpasswordishidden'});
         this.handleNameChange = this.handleNameChange.bind(this);

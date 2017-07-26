@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import store from './store.jsx';
 
-import { me_dispatch } from './actions/user';
+import { me_dispatch, viewUser_dispatch } from './actions/user';
 import { fetchAllListings_dispatch, fetchSingleListing_dispatch, fetchListingsByUser_dispatch } from './actions/listing';
 import { fetchAllNetworks_dispatch } from './actions/network';
 
@@ -24,6 +24,7 @@ import MySavedListings from './components/MySavedListings.jsx';
 import ForSaleListingsList from './components/ForSaleListingsList.jsx';
 import HousingListingsList from './components/HousingListingsList.jsx';
 import CommunityListingsList from './components/CommunityListingsList.jsx'
+import PublicProfile from './components/PublicProfile.jsx'
 
 
 const whoAmI = store.dispatch(me_dispatch());
@@ -34,7 +35,7 @@ const requireLogin = (nextRouterState, replace, next) =>
       if (!user.id) replace('/login');
       next();
     })
-    .catch(err => console.log(err));
+    .catch(console.error);
 
 const getCurrentListing = (nextRouterState) => {
   store.dispatch(fetchSingleListing_dispatch(nextRouterState.params.listingId));
@@ -46,6 +47,17 @@ const getMyListings = (nextRouterState, replace, next) => {
       const { user } = store.getState();
       if (!user.id) replace('/login');
       store.dispatch(fetchListingsByUser_dispatch(user.id));
+      next();
+    })
+    .catch(console.error)
+}
+
+const viewUser = (nextRouterState, replace, next) => {
+  whoAmI
+    .then(() => {
+      const { user } = store.getState();
+      if (!user.id) replace('/login');
+      store.dispatch(viewUser_dispatch(nextRouterState.params.userId))
       next();
     })
     .catch(console.error)
@@ -67,6 +79,7 @@ ReactDOM.render(
         <Route path="housing" component={HousingListingsList} />
         <Route path="community" component={CommunityListingsList} />
         <Route path="signup" component={Signup} />
+        <Route path="user/:userId" component={PublicProfile} onEnter={viewUser} />
         <Route path="listings/post" component={CreateListing} onEnter={requireLogin} />
         <Route path="listings/:listingId" component={ListingDetail} onEnter={getCurrentListing} />
         <Route path="account" component={AccountContainer} onEnter={getMyListings} >

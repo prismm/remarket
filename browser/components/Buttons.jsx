@@ -1,14 +1,15 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-md/lib/Buttons/Button'; 
 import DeleteDialog from './DeleteDialog.jsx';
 import { browserHistory } from 'react-router';
-import { setCurrentListing_action } from '../actions/listing'
+// import { setCurrentListing_action } from '../actions/listing'
 
 //BUTTONS FOR LISTING FUNCTIONS
 /*-------- EditListingButton component ---------*/
 
-//should redirect to editListing form;
+//should redirect to editListing form (createListing component with editStatus = true);
 export function EditListingButton({setCurrentListing, setEditStatus, currentListing}) {
     return (
         <div className="my-listing-button-container">
@@ -29,7 +30,8 @@ export function EditListingButton({setCurrentListing, setEditStatus, currentList
 
 EditListingButton.propTypes = {
   currentListing: PropTypes.object.isRequired,
-  editListing: PropTypes.func.isRequired
+  setEditStatus: PropTypes.func,
+  setCurrentListing: PropTypes.func
 };
 
 /*-------- DeleteListingButton component ---------*/
