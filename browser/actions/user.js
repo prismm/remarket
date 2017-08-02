@@ -10,9 +10,9 @@ const editUser_action = changes => ({ type: 'EDIT_USER', changes });
 
 //sets state.browse, not state.user:
 const viewUser_action = user => ({ type: 'VIEW_USER', user })
-export const clearUser_action = () => ({ type: 'CLEAR_USER' })
+export const clearViewUser_action = () => ({ type: 'CLEAR_USER' })
 
-/* ------------       DISPATCHERS     ------------------ */
+/* ------------     DISPATCHERS     ------------------ */
 const defaultUser = {};
 
 export const me_dispatch = () => dispatch => {
@@ -23,10 +23,16 @@ export const me_dispatch = () => dispatch => {
 }
 
 export const viewUser_dispatch = userId => dispatch => {
-    return axios.get(`/user/${userId}`)
-        .then(res =>
-            dispatch(viewUser_action(res.data)))
+    return axios.get(`/api/users/${userId}`)
+        .then(res => {
+            dispatch(viewUser_action(res.data))
+        })
         .catch(console.error)
+}
+
+export const clearUser_dispatch = () => dispatch => {
+    console.log('HERE IN CLEAR USER DISPATCH');
+    return dispatch(clearViewUser_action());
 }
 
 export const auth_dispatch = (email, password, method) => dispatch => {

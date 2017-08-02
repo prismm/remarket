@@ -1,4 +1,4 @@
-/*------------------- managing state.user ----------------------*/
+/*------------------- managing state.user (referring to logged in user) ----------------------*/
 const initialState = {}
 
 export default function(state = initialState, action) {

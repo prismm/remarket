@@ -1,4 +1,4 @@
-/*------------------- managing state.browse ----------------------*/
+/*------------------- managing state.browse (referring to user being viewed) ----------------------*/
 const initialState = {
     user: {},
     listing: {}
@@ -16,4 +16,5 @@ export default function(state = initialState, action) {
         default:
             return state;
     }
+    return newState;
 }

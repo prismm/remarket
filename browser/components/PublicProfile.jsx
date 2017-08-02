@@ -15,7 +15,7 @@ import TableBody from 'react-md/lib/DataTables/TableBody';
 import TableRow from 'react-md/lib/DataTables/TableRow';
 import TableColumn from 'react-md/lib/DataTables/TableColumn';
 
-import { clearUser_action } from '../actions/listing';
+import { clearUser_dispatch } from '../actions/user';
 
 /*------------------- PublicProfile component ----------------------*/
 
@@ -32,7 +32,7 @@ class PublicProfile extends Component {
     }
 
     componentWillUnmount(){
-        return this.props.clearUser();
+        return this.props.clearViewUser();
     }
 
     onMessageClick(){
@@ -47,12 +47,12 @@ class PublicProfile extends Component {
     onMessageSubmit(event){
         event.preventDefault();
         //need to write this function -- sendMessage
-        this.props.sendMessage(this.props.user.email, this.props.browse.user.email, this.state.message);
+        this.props.sendMessage(this.props.user.email, this.props.viewedUser.email, this.state.message);
     }
 
     render(){
         //make sure thisUser has .name, .networks, .listings
-        const thisUser = this.props.browse.user;
+        const thisUser = this.props.viewedUser;
         return (
         <div className="md-grid">
             <Card className="md-paper md-paper--8 md-card md-background--card md-cell">
@@ -70,7 +70,7 @@ class PublicProfile extends Component {
                 <h4> Message {thisUser.name} </h4>
                 <hr />
                  <div className="my-listings md-cell-10">
-                    <h3>{thisUser.name}\'s Listings</h3>
+                    <h3>{thisUser.name}'s Listings</h3>
                     <DataTable plain>
                         <TableHeader>
                         <TableRow>
@@ -108,25 +108,25 @@ class PublicProfile extends Component {
 }
 
 PublicProfile.propTypes = {
-  browse: PropTypes.object,
+  viewedUser: PropTypes.object,
   sendMessage: PropTypes.func,
-  clearUser: PropTypes.func
+  clearViewUser: PropTypes.func
 };
 
 /*------------------- PublicProfile Container ----------------------*/
 const mapStateToProps = ({user, browse}) => ({
-        browse: browse,
+        viewedUser: browse.user,
         user: user
     });
 
 const mapDispatchToProps = dispatch => {
     return {
-        clearUser: () => dispatch(clearUser_action()),
+        clearViewUser: () => dispatch(clearUser_dispatch()),
         sendMessage: () => {}
     }
 }
 
-const PublicProfileWithSpinner =  spinner('browse.user')(PublicProfile);
+const PublicProfileWithSpinner =  spinner('viewedUser')(PublicProfile);
 
 export default connect(mapStateToProps, mapDispatchToProps)(PublicProfileWithSpinner);
 
