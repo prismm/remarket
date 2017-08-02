@@ -6,10 +6,6 @@ const model = require('../db');
 const Listing = model.Listing;
 const listingNotFound = () => (new Error('Sorry, something went wrong ... We can\'t seem to find that listing!'))
 
-// function isLoggedIn() {
-//     return true;
-// }
-
 router.get('/', (req, res, next) => {
     Listing.findAll({ include: [{ all: true }] })
         .then(listings => res.json(listings))
@@ -49,7 +45,7 @@ router.put('/:id', (req, res, next) => {
             if (!result[0]) {
                 next(listingNotFound);
             } else {
-                res.json(result[1][0]) //not sure what this -- will have to console log!
+                res.json(result[1][0]) //updated listing
             }
         })
         .catch(next)

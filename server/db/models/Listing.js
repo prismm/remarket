@@ -40,14 +40,11 @@ const Listing = db.define('listing', {
     expirationDate: {
         type: Sequelize.DATE,
         defaultValue: new Date(new Date().setMonth(new Date().getMonth() + 2))
-            // get() {
-            //     const dateStr = this.getDataValue('expirationDate').toLocaleDateString();
-            //     return dateStr;
-            // }
     }
 }, {
     paranoid: true,
     timestamps: true,
+    associations: true,
     getterMethods: {
         expiresIn: function() {
             if (this.expirationDate && this.status === 'active') return this.expirationDate + ' (' + (new Date() - this.expirationDate) + ')';
@@ -85,8 +82,16 @@ const Listing = db.define('listing', {
     },
     instanceMethods: {
         getListingAuthor: () => {
-            return this.getUser({ include: [{ all: true }] })
-                .then(user => Promise.all(user))
+            return this.getAuthor({ include: [{ all: true }] })
+                .catch(console.error)
+        }
+    },
+    hooks: { //this hook adds the author's networks onto the created listings
+        afterCreate: function(listing) {
+            return listing.getAuthor()
+                .then(user => user.getNetworks())
+                .then(networks => listing.addNetworks(networks))
+                .catch(console.error)
         }
     }
 });
