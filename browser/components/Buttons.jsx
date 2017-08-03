@@ -197,7 +197,7 @@ export function MessageUserButton({label, toEmail, replyTo, message}) {
     )
 }
 
-EditListingButton.propTypes = {
+MessageUserButton.propTypes = {
   label: PropTypes.string.isRequired,
   toEmail: PropTypes.string.isRequired,
   replyTo: PropTypes.string.isRequired,

@@ -1,7 +1,7 @@
 /*------------------- managing state.listing ----------------------*/
 const initialState = {
     listings: [],
-    myListings: [],
+    myListings: null, //initialized to null, instead of [], so that spinner can work on myListings view -- not sure if this is good practice
     currentListing: {},
     location: null
 };

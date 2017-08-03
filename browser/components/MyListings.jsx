@@ -2,11 +2,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {TimeLeft} from './TimeLeft.jsx';
 
+import {TimeLeft} from './TimeLeft.jsx';
 import { EditListingButton, DeleteListingButton } from './Buttons.jsx'
 import RenewListing from './RenewListing.jsx'
 import Listing from './Listing.jsx';
+import spinner from '../HOC/Spinner.jsx'
 
 import { deleteListing_dispatch, setEditStatus_action, setCurrentListing_action, editListing_dispatch } from '../actions/listing';
 
@@ -96,4 +97,5 @@ const mapDispatchToProps = dispatch => ({
         }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MyListings);
+const MyListingsWithSpinner = spinner('myListings')(MyListings);
+export default connect(mapStateToProps, mapDispatchToProps)(MyListingsWithSpinner);
