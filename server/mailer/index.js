@@ -1,7 +1,8 @@
 'use strict';
 const nodemailer = require('nodemailer');
+const secrets = process.env.GOOGLE_CLIENT_ID ? null : require('../../google_api.js');
 
-const remarket = '"Remarket 👻" <hello@reuse.market>'
+const remarket = '"Remarket 👻" <hello@coases.com>'
     // create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
     host: 'smtp.example.com',

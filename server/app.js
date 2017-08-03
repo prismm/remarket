@@ -28,7 +28,8 @@ app.use(session({
     secret: process.env.SESSION_SECRET || 'priya is cool',
     store: dbStore,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: { secure: 'auto' } //< --should use this option when the site is live using https, will work on https only
 }));
 
 //hooks up to auth

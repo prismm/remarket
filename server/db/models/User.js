@@ -83,6 +83,8 @@ function setSaltAndPassword(user) {
     if (user.changed('password')) {
         user.salt = User.generateSalt();
         user.password = User.encryptPassword(user.password, user.salt);
+    } else {
+        console.log('password hash and salt not set') //testing occurence of hooks
     }
 }
 
