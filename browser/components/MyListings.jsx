@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import {TimeLeft} from './TimeLeft.jsx';
 
 import { EditListingButton, DeleteListingButton } from './Buttons.jsx'
 import RenewListing from './RenewListing.jsx'
@@ -17,6 +18,7 @@ import TableColumn from 'react-md/lib/DataTables/TableColumn';
 
 /*------------------- MyListings component ----------------------*/
 //in the process of converting this to dumb component
+//<TimeLeft time={listing.expirationDate} />
 const MyListings = (props) => {
     return (
     <div className="my-listings md-cell-10">
@@ -40,7 +42,7 @@ const MyListings = (props) => {
                                 <TableColumn><Listing listing={listing}/></TableColumn>
                                 <TableColumn>{listing.category}</TableColumn>
                                 <TableColumn>{listing.status !== 'active' ? <i>{listing.status}</i> : listing.status}</TableColumn>
-                                <TableColumn>{listing.status !== 'active' ? <i>{listing.expiresIn}</i> : listing.expiresIn}</TableColumn>
+                                <TableColumn>{listing.status !== 'active' ? <i>{listing.expiresIn}</i> : <p>{listing.expiresIn} <TimeLeft time={listing.expirationDate} /></p>}</TableColumn>
                                 <TableColumn>{listing.status !== 'deleted' ? <RenewListing renewListing={props.renewListing} currentListing={listing} /> : null}</TableColumn>
                                 <TableColumn>{listing.status !== 'deleted' ? <EditListingButton setCurrentListing={props.setCurrentListing} setEditStatus={props.setEditStatus} currentListing={listing} /> : null}</TableColumn>
                                 <TableColumn>{listing.status !== 'deleted' ? <DeleteListingButton deleteListing={props.deleteListing} archiveListing={props.archiveListing} currentListing={listing} /> : null}</TableColumn>

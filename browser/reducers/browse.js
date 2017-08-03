@@ -1,7 +1,8 @@
 /*------------------- managing state.browse (referring to user being viewed) ----------------------*/
 const initialState = {
     user: {},
-    listing: {}
+    listing: {},
+    userListings: {}
 }
 
 export default function(state = initialState, action) {
@@ -10,8 +11,12 @@ export default function(state = initialState, action) {
         case 'VIEW_USER':
             newState.user = action.user;
             break;
+        case 'VIEW_USER_LISTINGS':
+            newState.userListings = action.listings;
+            break;
         case 'CLEAR_USER':
             newState.user = {};
+            newState.userListings = {};
             break;
         default:
             return state;

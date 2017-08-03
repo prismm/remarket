@@ -9,7 +9,8 @@ const removeUser_action = () => ({ type: 'REMOVE_USER' });
 const editUser_action = changes => ({ type: 'EDIT_USER', changes });
 
 //sets state.browse, not state.user:
-const viewUser_action = user => ({ type: 'VIEW_USER', user })
+const viewUser_action = user => ({ type: 'VIEW_USER', user });
+const viewUserListings_action = listings => ({ type: 'VIEW_USER_LISTINGS', listings });
 export const clearViewUser_action = () => ({ type: 'CLEAR_USER' })
 
 /* ------------     DISPATCHERS     ------------------ */
@@ -30,8 +31,15 @@ export const viewUser_dispatch = userId => dispatch => {
         .catch(console.error)
 }
 
+export const viewUserListings_dispatch = userId => dispatch => {
+    return axios.get(`/api/listings/user/${userId}`)
+        .then(res => {
+            dispatch(viewUserListings_action(res.data))
+        })
+        .catch(console.error)
+}
+
 export const clearUser_dispatch = () => dispatch => {
-    console.log('HERE IN CLEAR USER DISPATCH');
     return dispatch(clearViewUser_action());
 }
 

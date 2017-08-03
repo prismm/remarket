@@ -4,7 +4,7 @@ import injectTooltip from 'react-md/lib/Tooltips';
 
 
 export const NetworkAvatar = injectTooltip(({ tooltip, network }) => (
-        <div className="inline-rel-container">
+        <div className="inline-rel-container network-avatar">
             <Avatar
                 className="avatar"
                 src={`/imgs/${network}.png`}

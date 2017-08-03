@@ -8,6 +8,7 @@ import spinner from '../HOC/Spinner.jsx'
 import { clearCurrentListing_dispatch } from '../actions/listing';
 import Button from 'react-md/lib/Buttons/Button'; 
 import TimeAgo from './TimeAgo.jsx';
+import {ExpiresIn} from './TimeLeft.jsx';
 import {NetworkAvatar} from './Avatars.jsx';
 import CreateListing from '../containers/CreateListing.jsx'
 
@@ -82,6 +83,7 @@ class ListingDetail extends Component {
                         }
 
                         <p className="selected-item-descr">{this.props.currentListing.description}</p>
+                        <ExpiresIn time={this.props.currentListing.expirationDate} expiry={this.props.currentListing.expiresIn} />
                     </div>
                     {this.props.currentListing.askingPrice ?
                         <div className="price">

@@ -91,4 +91,31 @@
             display: inline-block;
             position: relative;
         }
+        .public-profile-card {
+            padding: 2em;
+            margin: auto
+        }
+        .public-profile-username {
+            font-style: italic;
+            font-weight: bolder;
+            margin-right: 0.5em;
+        }
+        .network-avatar {
+            margin-right: 0.5em
+        }
+        .divider {
+            color: #F50057;
+            margin-right: 0.5em
+        }
+        .no-listings {
+            font-style: italic;
+            margin-top: 0.5em;
+        }
+        .profile-divider {
+            margin: 2em 0 1em 0;
+        }
+        .time-left {
+            color: #F50057;
+            font-style: italic
+        }
     }

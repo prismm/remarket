@@ -47,7 +47,18 @@ const Listing = db.define('listing', {
     associations: true,
     getterMethods: {
         expiresIn: function() {
-            if (this.expirationDate && this.status === 'active') return this.expirationDate + ' (' + (new Date() - this.expirationDate) + ')';
+            const days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
+            let timestamp = new Date(this.expirationDate);
+            let mins = ('0' + timestamp.getMinutes()).slice(-2)
+            const time = () => {
+                if (timestamp.getHours() > 12) {
+                    let hours = timestamp.getHours() - 12;
+                    return hours + ':' + mins + 'pm';
+                } else {
+                    return timestamp.getHours() + ':' + mins + 'am';
+                }
+            }
+            if (this.expirationDate && this.status === 'active') return days[timestamp.getDay()] + ' ' + timestamp.toLocaleDateString() + ', ' + time();
             else if (this.status === 'archived') return 'expired';
             else return '---'
         },

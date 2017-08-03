@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import store from './store.jsx';
 
-import { me_dispatch, viewUser_dispatch } from './actions/user';
+import { me_dispatch, viewUser_dispatch, viewUserListings_dispatch } from './actions/user';
 import { fetchAllListings_dispatch, fetchSingleListing_dispatch, fetchListingsByUser_dispatch } from './actions/listing';
 import { fetchAllNetworks_dispatch } from './actions/network';
 
@@ -57,7 +57,8 @@ const viewUser = (nextRouterState, replace, next) => {
     .then(() => {
       const { user } = store.getState();
       if (!user.id) replace('/login');
-      store.dispatch(viewUser_dispatch(nextRouterState.params.userId))
+      store.dispatch(viewUser_dispatch(nextRouterState.params.userId));
+      store.dispatch(viewUserListings_dispatch(nextRouterState.params.userId));
       next();
     })
     .catch(console.error)

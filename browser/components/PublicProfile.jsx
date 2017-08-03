@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Listing from './Listing.jsx';
-import spinner from '../HOC/Spinner.jsx'
-import {NetworkAvatar} from './Avatars.jsx'
+import spinner from '../HOC/Spinner.jsx';
+import {NetworkAvatar} from './Avatars.jsx';
+import {MessageUserButton} from './Buttons.jsx';
+import {TimeLeft} from './TimeLeft.jsx';
 
 import Card from 'react-md/lib/Cards/Card';
 import CardTitle from 'react-md/lib/Cards/CardTitle';
@@ -53,11 +55,12 @@ class PublicProfile extends Component {
     render(){
         //make sure thisUser has .name, .networks, .listings
         const thisUser = this.props.viewedUser;
+        const label =  'Message ' + thisUser.name;
+
         return (
         <div className="md-grid">
-            <Card className="md-paper md-paper--8 md-card md-background--card md-cell">
-                <CardTitle className="public-profile-username" title={thisUser.userId} />
-                <h4>{thisUser.name}</h4>
+            <Card className="md-card md-background--card md-cell--10 public-profile-card">
+                <h2><span className="public-profile-username divider">{thisUser.userId}</span> <span className="divider"> / </span> {thisUser.name}</h2>
                 { (thisUser.networks && thisUser.networks.length) ?
                     thisUser.networks.map(
                         network => <NetworkAvatar key={network.id} network={network.name} tooltipLabel={network.name} tooltipPosition="top" />
@@ -66,10 +69,9 @@ class PublicProfile extends Component {
                 null
                 }
                 <p>{thisUser.bio}</p>
-                <hr />
-                <h4> Message {thisUser.name} </h4>
-                <hr />
-                 <div className="my-listings md-cell-10">
+                <MessageUserButton label={label} toEmail={thisUser.email} replyTo={this.props.user.email} message={this.state.message} />
+                <hr className="profile-divider"/>
+                 <div className="my-listings-profile md-cell-10">
                     <h3>{thisUser.name}'s Listings</h3>
                     <DataTable plain>
                         <TableHeader>
@@ -82,20 +84,20 @@ class PublicProfile extends Component {
                         </TableRow>
                         </TableHeader>
                         <TableBody>
-                        { thisUser.listings && thisUser.listings.length ?
-                            (thisUser.listings.map(listing => (      
+                        { this.props.viewedUserListings && this.props.viewedUserListings.length ?
+                            (this.props.viewedUserListings.map(listing => (      
                                         <TableRow key={listing.id}>
                                             <TableColumn><Listing listing={listing}/></TableColumn>
                                             <TableColumn>{listing.category}</TableColumn>
-                                            <TableColumn>{listing.createdOn}</TableColumn>
+                                            <TableColumn>{listing.created}</TableColumn>
                                             <TableColumn>{listing.status !== 'active' ? <i>{listing.status}</i> : listing.status}</TableColumn>
-                                            <TableColumn>{listing.status !== 'active' ? <i>{listing.expiresIn}</i> : listing.expiresIn}</TableColumn>
+                                            <TableColumn>{listing.status !== 'active' ? <i>{listing.expiresIn}</i> : <p>{listing.expiresIn} <TimeLeft time={listing.expirationDate} /></p>}</TableColumn>
                                         </TableRow>
                                 )
                             )
                         )
                         :
-                        <div>{thisUser.name} hasn't posted anything yet.</div>
+                        <p className="divider no-listings">{thisUser.name} hasn't posted anything yet.</p>
                         }
                         </TableBody>
                     </DataTable>
@@ -110,12 +112,14 @@ class PublicProfile extends Component {
 PublicProfile.propTypes = {
   viewedUser: PropTypes.object,
   sendMessage: PropTypes.func,
-  clearViewUser: PropTypes.func
+  clearViewUser: PropTypes.func,
+  user: PropTypes.object
 };
 
 /*------------------- PublicProfile Container ----------------------*/
 const mapStateToProps = ({user, browse}) => ({
         viewedUser: browse.user,
+        viewedUserListings: browse.userListings,
         user: user
     });
 

@@ -28,7 +28,9 @@ export default class RenewListing extends Component {
   }
 
   _handleChange(value) {
-    this.props.renewListing(this.props.currentListing.id, value);
+    let newExpDate = new Date(value).setHours(23, 59);
+    console.log(newExpDate);
+    this.props.renewListing(this.props.currentListing.id, newExpDate);
     this.setState({ value });
   }
 
