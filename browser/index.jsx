@@ -10,7 +10,7 @@ import { me_dispatch, viewUser_dispatch, viewUserListings_dispatch } from './act
 import { fetchAllListings_dispatch, fetchSingleListing_dispatch, fetchListingsByUser_dispatch } from './actions/listing';
 import { fetchAllNetworks_dispatch } from './actions/network';
 
-import { Login, Signup } from './containers/Auth.jsx'
+import LoginOrSignup from './components/LoginOrSignup.jsx'
 import Main from './containers/Main.jsx'
 import ListingsContainer from './containers/ListingsContainer.jsx';
 import ListingDetail from './components/ListingDetail.jsx'
@@ -74,12 +74,11 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Route path="/" component={Main} onEnter={loadEverything}>
         <IndexRoute component={ListingsContainer} />
-        <Route path="login" component={Login} />
+        <Route path="login" component={LoginOrSignup} />
         <Route path="home" component={ListingsContainer} />
         <Route path="for-sale" component={ForSaleListingsList} />
         <Route path="housing" component={HousingListingsList} />
         <Route path="community" component={CommunityListingsList} />
-        <Route path="signup" component={Signup} />
         <Route path="user/:userId" component={PublicProfile} onEnter={viewUser} />
         <Route path="listings/post" component={CreateListing} onEnter={requireLogin} />
         <Route path="listings/:listingId" component={ListingDetail} onEnter={getCurrentListing} />

@@ -113,6 +113,7 @@ passport.deserializeUser((id, done) => {
         .catch(done);
 });
 
+//why no local passport.authenticate?
 router.use('/auth', require('./routes'));
 
 module.exports = router;

@@ -19,7 +19,7 @@ const Main = ({ children, handleClick, loggedIn }) => {
           </nav> :
           <nav className="site-nav">
             <Link className="site-nav-link" to="/login">Login</Link>
-            <Link className="site-nav-link" to="/signup">Sign Up</Link>
+            <Link className="site-nav-link" to="/login">Sign Up</Link>
           </nav>
       }
       <hr />
