@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const models = require('../db');
 const User = models.User;
 const secrets = process.env.GOOGLE_CLIENT_ID ? null : require('../../google_api.js');
+
+/*-------------------------------------------GOOGLE-----------------------------------------*/
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 // configure the strategy with our config object
 const googleConfig = {
@@ -15,7 +17,7 @@ const googleConfig = {
 
 // Google will send back the token and profile;
 // Here's the function that passport will invoke after google sends -- generates a strategy
-const strategy = new GoogleStrategy(googleConfig, function(token, refreshToken, profile, done) {
+const googleStrategy = new GoogleStrategy(googleConfig, function(token, refreshToken, profile, callback) {
     const googleId = profile.id;
     const name = profile.displayName;
     const email = profile.emails[0].value;
@@ -25,21 +27,58 @@ const strategy = new GoogleStrategy(googleConfig, function(token, refreshToken, 
             if (!user) {
                 console.log("The user is falsy")
                     //do something over here to note that the user didn't previously exist
-                return User.create({ name, email, googleId })
+                return User.create({ name, email, googleId }) //doesn't it need a password??
                     .then(() => {
                         console.log("We are here to create the user")
-                        done(null, user); //should be sanitized?
+                        callback(null, user); //should be sanitized?
                     });
             } else {
-                done(null, user); //should be sanitized?
+                callback(null, user); //should be sanitized?
             }
         })
-        .catch(done);
+        .catch(callback);
 });
 
+/*------------------------------------------------FACEBOOK------------------------------------------*/
+
+const FacebookStrategy = require('passport-facebook');
+
+// configure the strategy with our config object
+const FacebookConfig = {
+    clientID: process.env.FACEBOOK_CLIENT_ID ? process.env.FACEBOOK_CLIENT_ID : secrets.FacebookAppID,
+    clientSecret: process.env.FACEBOOK_CLIENT_SECRET ? process.env.FACEBOOK_CLIENT_SECRET : secrets.FacebookSecret,
+    callbackURL: process.env.FACEBOOK_CALLBACK ? process.env.FACEBOOK_CALLBACK : '/auth/facebook/callback',
+    enableProof: true,
+    profileFields: ['id', 'displayName', 'photos', 'email']
+}
+
+const facebookStrategy = new FacebookStrategy(FacebookConfig, function(accessToken, refreshToken, profile, callback) {
+    const facebookId = profile.id;
+    const name = profile.displayName;
+    const email = profile.email;
+
+    User.findOne({ facebookId: facebookId })
+        .then(user => {
+            if (!user) {
+                console.log("The user is falsy") //should give user info, not console log
+                    //do something over here to note that the user didn't previously exist
+                return User.create({ name, email, facebookId }) // doesnt it need a password??!
+                    .then(() => {
+                        console.log("We are here to create the user") //should give user info, not console log
+                        callback(null, user); //should be sanitized?
+                    });
+            } else {
+                callback(null, user); //should be sanitized?
+            }
+        })
+        .catch(callback);
+});
+
+/*-------------------------------------GENERAL AUTH & TYING IT TOGETHER -----------------------------------*/
 router.use(passport.initialize());
 router.use(passport.session());
-passport.use(strategy);
+passport.use(googleStrategy);
+passport.use(facebookStrategy);
 
 router.get('/auth/google', passport.authenticate('google', { scope: 'email' }));
 
@@ -47,7 +86,15 @@ router.get('/auth/google/callback',
     passport.authenticate('google', {
         successRedirect: '/home', //should say that you have logged in successfully, and redirect to whereever you were browsing before
         failureRedirect: '/login' //should say it didn't work
-    }))
+    }));
+
+router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['public_profile', 'email'] })); //'publish_actions' will be added once ready to submit to fcbk for review)
+
+router.get('/auth/facebook/callback',
+    passport.authenticate('facebook', {
+        successRedirect: '/home',
+        failureRedirect: '/login'
+    }));
 
 //when do these functions (serializeUser and deserializeUser) run?
 // stores user's id in the session store upon login
