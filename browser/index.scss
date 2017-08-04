@@ -135,9 +135,26 @@
         .login-submit {
             margin: auto;
         }
+        .local-login {
+            margin-bottom: 1em;
+        }
         .md-background--primary {
             background: #fff;
             color: #673ab7
+        }
+        .google-login {
+            // background: 
+        }
+        .google-text {
+            color: #EA4335;
+            font-weight: bold;
+        }
+        .facebook-login {
+            // background: #3b5998;
+        }
+        .facebook-text {
+            color: #3b5998;
+            font-weight: bold;
         }
         .md-tab-label {
             color: #673ab7;

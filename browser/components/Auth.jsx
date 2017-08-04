@@ -22,6 +22,9 @@ class AuthForm extends Component {
 
   render(){
     const { name, displayName, handleSubmit, error } = this.props;
+    const googleSignin = <a className="google-text" href="/auth/google">{ displayName } with Google</a>;
+    const fcbkSignin = <a className="facebook-text" href="/auth/facebook">{ displayName } with Facebook</a>;
+
     return (
       <div>
         <form onSubmit={handleSubmit} name={name}>
@@ -38,13 +41,11 @@ class AuthForm extends Component {
               errorText="Password must be at least 7 characters"
             />
           </div>
-          <div className="md-grid">
-            <Button raised primary label={ displayName } type="submit" className="login-submit md-cell--12" />
-          </div>
+            <Button raised primary label={ displayName } type="submit" className="local-login login-submit md-cell--12" />
           { error &&  <div> { error.response.data } </div> }
         </form>
-        <p><a href="/auth/google">{ displayName } with Google</a></p>
-        <p><a href="/auth/facebook">{ displayName } with Facebook</a></p>
+        <p><Button raised primary label={ googleSignin } type="submit" className="google-login login-submit md-cell--12" /></p>
+        <p><Button raised primary label={ fcbkSignin } type="submit" className="facebook-login login-submit md-cell--12" /></p>
       </div>
     );
   }
