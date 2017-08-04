@@ -47,7 +47,9 @@ class CreateListing extends Component {
     }
 
     setExpirationDate(event){
-        this.setState({expirationDate: event})
+        let newExpDate = new Date(event).setHours(23, 59);
+        console.log(new Date(newExpDate));
+        this.setState({expirationDate: new Date(newExpDate)})
     }
 
     render(){

@@ -55,7 +55,7 @@ class ListingDetail extends Component {
                     </div>
                     <div className="md-cell md-cell--1" />
                     <div className="listing-body md-cell md-cell--5">
-                    <div className='item-descr'>
+                    <div className="item-descr">
                         <h3 className="selected-item-name">{this.props.currentListing.name}</h3>
                         <h3 className="selected-item-category">{this.props.currentListing.category}</h3>
                         {isItMyListing ?

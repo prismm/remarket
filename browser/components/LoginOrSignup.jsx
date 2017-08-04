@@ -44,7 +44,7 @@ class LoginOrSignup extends Component {
                         transitionLeave={false}
                         >
                         <h2>Create an Account</h2>
-                        <h6><i>Add yourself to a network, post, and reply to listings on remarket.</i></h6>
+                        <h6><i>Join your network, post, and reply to listings on remarket.</i></h6>
                         <hr />
                         <div className="login-signup-form">
                         <Signup />

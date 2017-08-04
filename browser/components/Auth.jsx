@@ -22,8 +22,8 @@ class AuthForm extends Component {
 
   render(){
     const { name, displayName, handleSubmit, error } = this.props;
-    const googleSignin = <a className="google-text" href="/auth/google">{ displayName } with Google</a>;
-    const fcbkSignin = <a className="facebook-text" href="/auth/facebook">{ displayName } with Facebook</a>;
+    const googleSignin = <div className="md-ink-container"><img className="logo" src="/imgs/google.png" alt="Google logo" height="24" width="26" /><a className="google-text" href="/auth/google">{ displayName } with Google</a></div>;
+    const fcbkSignin = <div className="md-ink-container"><img className="logo" src="/imgs/facebook.png" alt="Facebook logo" height="24" width="24" /><a className="facebook-text" href="/auth/facebook">{ displayName } with Facebook</a></div>;
 
     return (
       <div>
