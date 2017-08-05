@@ -45,7 +45,6 @@
         }
         .my-networks {
             display: block;
-            text-align: center;
         }
         .network-li {
             list-style: none;
@@ -167,5 +166,11 @@
         .remarket-logo {
             float: left;
             margin-right: 0.5em;
+        }
+        .my-networks-test {
+            float: left;
+        }
+        .add-a-network {
+            padding: 8px;
         }
     }
