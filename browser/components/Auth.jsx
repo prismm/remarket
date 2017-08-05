@@ -61,7 +61,7 @@ AuthForm.propTypes = {
 /*-------------------Login & Signup containers ----------------------*/
 const mapLogin = ({ user }) => ({
   name: 'login',
-  displayName: 'Login',
+  displayName: 'Log In',
   error: user.error
 });
 

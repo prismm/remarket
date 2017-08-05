@@ -6,6 +6,7 @@
         }
         .site-header {
             float: left;
+            margin-bottom: none;
         }
         .site-nav-link {
             float: right;
@@ -137,6 +138,7 @@
         }
         .local-login {
             margin-bottom: 1em;
+            font-weight: bold;
         }
         .md-background--primary {
             background: #fff;
@@ -161,5 +163,9 @@
         }
         .logo {
             margin-right: 8px;
+        }
+        .remarket-logo {
+            float: left;
+            margin-right: 0.5em;
         }
     }

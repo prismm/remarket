@@ -6,6 +6,7 @@ const model = require('../db');
 const User = model.User;
 const Network = model.Network;
 const affiliations = model.network_affiliations;
+const mailer = require('../mailer')
 
 router.get('/', (req, res, next) => {
     User.findAll({ include: [{ all: true }] })
@@ -27,9 +28,16 @@ router.get('/:id/networks', (req, res, next) => {
 })
 
 //a route for POST: /api/users/${user.id}/networks/${network.id} that adds a network to a user's networks
+//mailer note: need to produce url for confirmation, set confirmed on affil table to true, etc.
 router.post('/:userId/networks/:networkId', (req, res, next) => {
-    User.findById(req.params.userId)
-        .then(user => user.addNetwork(req.params.networkId))
+    Promise.all(User.findById(req.params.userId), Network.findById(req.params.networkId))
+        .then(([user, network]) => {
+            mailer.transporter.sendMail(mailer.confirmNetwork(user, network, 'www.google.com'), (error, info) => {
+                if (error) next(error);
+                console.log('Message %s sent: %s', info.messageId, info.response);
+            });
+            return user.addNetwork(req.params.networkId, { through: { networkEmail: 'dummy@email.com', confirmed: false } })
+        })
         .then(() => User.findById(req.params.userId, { include: [{ all: true }] }))
         .then(result => res.json(result))
         .catch(next)

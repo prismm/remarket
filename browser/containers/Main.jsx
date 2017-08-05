@@ -9,7 +9,7 @@ import { logout_dispatch } from '../actions/user';
 const Main = ({ children, handleClick, loggedIn }) => {
   return (
     <div>
-      <h1 className="site-header"><Link to="/">remarket</Link></h1>
+      <Link to="/"><img className="remarket-logo" src="/imgs/recycling-pink.png" alt="" height="40" width="40" /></Link><h1 className="site-header"><Link to="/">remarket</Link></h1>
       { loggedIn ?
           <nav className="site-nav">
             <Link className="site-nav-link" to="/home">Home</Link>

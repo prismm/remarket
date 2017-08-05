@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+const Sequelize = require('sequelize');
 const db = require('./_db');
 const Network = require('./models/Network')
 const Listing = require('./models/Listing');
@@ -6,7 +7,10 @@ const User = require('./models/User');
 const Offer = require('./models/Offer');
 const Comment = require('./models/Comment')
 
-const network_affiliations = db.define('network_affiliations', {}, { freezeTableName: true });
+const network_affiliations = db.define('network_affiliations', {
+    networkEmail: { type: Sequelize.STRING },
+    confirmed: { type: Sequelize.BOOLEAN }
+}, { freezeTableName: true });
 const listing_networks = db.define('listing_networks', {}, { freezeTableName: true });
 
 // User belongs to many Networks and Networks belong to many Users (join table)
