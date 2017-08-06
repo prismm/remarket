@@ -2,6 +2,7 @@
 
 const router = require('express').Router();
 const User = require('../db/models/User');
+const mailer = require('../mailer')
 
 router.post('/login', (req, res, next) => {
     User.scope('unsanitized').findOne({
@@ -25,10 +26,36 @@ router.post('/login', (req, res, next) => {
         .catch(next);
 })
 
+router.put('/forgotpassword', (req, res, next) => {
+    console.log(req.body)
+    User.findOne({
+            where: {
+                email: req.body
+            },
+            include: [{ all: true }]
+        })
+        .then(user => {
+            if (!user) {
+                res.status(401).send('Sorry, we don\'t have an account under that email address.')
+            } else {
+                mailer.transporter.sendMail(mailer.changePassword(user, 'www.google.com'), (error, info) => {
+                    if (error) console.error(error);
+                    if (!error) console.log('Message %s sent: %s', info.messageId, info.response);
+                }); //should wait for confirm email url to be visited before req.login and user creation
+                res.status(200).send('It happens to all of us. \n Check your email for a reset password link.')
+            }
+        })
+        .catch(next);
+})
+
 router.post('/signup', (req, res, next) => {
     User.create(req.body) //should check to see if user already exists -- if email is not unique this will fail quietly
         .then(user => {
-            req.login(user, err => {
+            mailer.transporter.sendMail(mailer.verifyEmail(user, 'www.google.com'), (error, info) => {
+                if (error) console.error(error);
+                if (!error) console.log('Message %s sent: %s', info.messageId, info.response);
+            }); //should wait for confirm email url to be visited before req.login and user creation
+            return req.login(user, err => {
                 if (err) next(err);
                 else res.json(user); //add sanitize?
             });

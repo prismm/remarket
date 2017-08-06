@@ -23,6 +23,15 @@ export const me_dispatch = () => dispatch => {
         .catch(console.error)
 }
 
+export const forgotPassword_dispatch = email => () => {
+    return axios.put('/auth/forgotpassword', email)
+        .then(res => {
+            console.log("RES DATA !!!!!!!!!  HELLLOOOOOOO", res.data);
+            browserHistory.push('/forgotpassword');
+        })
+
+}
+
 export const viewUser_dispatch = userId => dispatch => {
     return axios.get(`/api/users/${userId}`)
         .then(res => {
