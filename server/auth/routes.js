@@ -34,7 +34,6 @@ router.post('/forgotpassword', (req, res, next) => {
             include: [{ all: true }]
         })
         .then(user => {
-            console.log("USER FOUND!!!!!!!!!!!!!!!!!!!!!!!", user)
             if (!user) {
                 res.status(401).send('Sorry, we don\'t have an account under that email address.')
             } else {

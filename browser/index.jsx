@@ -20,7 +20,6 @@ import AddNetwork from './containers/AddNetwork.jsx';
 import Profile from './containers/Profile.jsx';
 import MyListings from './components/MyListings.jsx';
 import MyOffers from './components/MyOffers.jsx';
-import ForgotPassword from './components/ForgotPassword.jsx';
 import MySavedListings from './components/MySavedListings.jsx';
 import ForSaleListingsList from './components/ForSaleListingsList.jsx';
 import HousingListingsList from './components/HousingListingsList.jsx';
@@ -76,7 +75,6 @@ ReactDOM.render(
       <Route path="/" component={Main} onEnter={loadEverything}>
         <IndexRoute component={ListingsContainer} />
         <Route path="login" component={LoginOrSignup} />
-        <Route path="forgotpassword" component={ForgotPassword} />
         <Route path="home" component={ListingsContainer} />
         <Route path="for-sale" component={ForSaleListingsList} />
         <Route path="housing" component={HousingListingsList} />
