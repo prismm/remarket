@@ -15,7 +15,7 @@ const devStore = createStore(
 
 const prodStore = createStore(
     rootReducer,
-    enhancer
+    applyMiddleware(thunkMiddleware)
 )
 
 let appStore;
