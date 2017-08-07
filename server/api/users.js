@@ -28,11 +28,10 @@ router.get('/:id/networks', (req, res, next) => {
 })
 
 //a route for POST: /api/users/${user.id}/networks/${network.id} that adds a network to a user's networks
-//mailer note: need to produce url for confirmation, set confirmed on affil table to true, etc.
 router.post('/:userId/networks/:networkId', (req, res, next) => {
     Promise.all([User.findById(req.params.userId), Network.findById(req.params.networkId)])
         .then(([user, network]) => {
-            console.log('!!!!!!ABOUT TO TRY TO MAIL!', user.name, network.name)
+            //mailer note: need to produce url for confirmation, set confirmed on affil table to true, etc.
             mailer.transporter.sendMail(mailer.confirmNetwork(user, network, 'www.google.com'), (error, info) => {
                 if (error) console.error(error);
                 if (!error) console.log('Message %s sent: %s', info.messageId, info.response);
@@ -56,7 +55,7 @@ router.put('/:id', (req, res, next) => {
             if (!result[0]) {
                 next();
             } else {
-                res.json(result[1][0]) //not sure what this -- will have to console log!
+                res.json(result[1][0]) //updated user obj
             }
         })
         .catch(next)

@@ -4,7 +4,9 @@ const express = require('express');
 const router = express.Router();
 const model = require('../db');
 const Listing = model.Listing;
+const User = model.User;
 const listingNotFound = () => (new Error('Sorry, something went wrong ... We can\'t seem to find that listing!'))
+const mailer = require('../mailer')
 
 router.get('/', (req, res, next) => {
     Listing.findAll({ include: [{ all: true }] })
@@ -30,7 +32,14 @@ router.get('/user/:userId', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
     Listing.create(req.body)
-        .then(newListing => res.json(newListing))
+        .then(newListing => Promise.all([User.findById(newListing.authorId), newListing]))
+        .then(([user, newListing]) => {
+            mailer.transporter.sendMail(mailer.newListing(user, newListing), (error, info) => {
+                if (error) console.error(error);
+                if (!error) console.log('Message %s sent: %s', info.messageId, info.response);
+            });
+            return res.json(newListing);
+        })
         .catch(next)
 })
 
@@ -45,7 +54,18 @@ router.put('/:id', (req, res, next) => {
             if (!result[0]) {
                 next(listingNotFound);
             } else {
-                res.json(result[1][0]) //updated listing
+                let updatedListing = result[1][0];
+                res.json(updatedListing) //updated listing
+                return updatedListing;
+            }
+        })
+        .then(updatedListing => Promise.all([updatedListing, User.findById(updatedListing.authorId)]))
+        .then(([updatedListing, author]) => {
+            if (req.body.status) { //checks to see if status was updated
+                mailer.transporter.sendMail(mailer.listingStatusChange(author, updatedListing, req.body.status), (error, info) => {
+                    if (error) console.error(error);
+                    if (!error) console.log('Message %s sent: %s', info.messageId, info.response);
+                });
             }
         })
         .catch(next)

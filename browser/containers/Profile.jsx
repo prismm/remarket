@@ -50,11 +50,9 @@ class Profile extends Component {
             error: true,
             password: newPassword
         })
-        console.log(this.state.error)
     }
 
     render(){
-        console.log(this.state)
         return (
             <div className="md-grid profile-form">
             <div className="md-cell md-cell--10">
