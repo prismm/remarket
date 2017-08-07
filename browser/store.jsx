@@ -4,12 +4,10 @@ import { createLogger } from 'redux-logger'; // https://github.com/evgenyrodiono
 import thunkMiddleware from 'redux-thunk'; // https://github.com/gaearon/redux-thunk
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-const enhancer = applyMiddleware(thunkMiddleware, createLogger())
-
 const devStore = createStore(
     rootReducer,
     composeWithDevTools(
-        enhancer
+        applyMiddleware(thunkMiddleware, createLogger())
     )
 )
 
@@ -19,7 +17,7 @@ const prodStore = createStore(
 )
 
 let appStore;
-
+console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'production'){
     appStore = prodStore;
 } else {
