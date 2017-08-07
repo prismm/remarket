@@ -11,8 +11,8 @@ const helmet = require('helmet');
 app.use(helmet());
 
 //loggingware
-const morgan = require('morgan');
-app.use(morgan('dev'));
+//const morgan = require('morgan');
+//app.use(morgan('dev'));
 
 //body-parser middleware set-up for reading req.body
 app.use(bodyParser.json());
