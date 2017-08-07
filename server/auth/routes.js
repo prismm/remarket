@@ -13,7 +13,7 @@ router.post('/login', (req, res, next) => {
         })
         .then(user => {
             if (!user) {
-                res.status(401).send('We don\'t have an account under that email address') //should link to create an account
+                res.status(401).send('Oops, we don\'t have an account under that email address.') //should link to create an account
             } else if (!user.correctPassword(req.body.password)) {
                 res.status(401).send('That\'s not the right password ... try again!')
             } else { // this will attach the user to our passport, which will save the user in the session store -- req.login() invokes the serialize passport function, it's attached to the req obj
@@ -26,15 +26,15 @@ router.post('/login', (req, res, next) => {
         .catch(next);
 })
 
-router.put('/forgotpassword', (req, res, next) => {
-    console.log(req.body)
+router.post('/forgotpassword', (req, res, next) => {
     User.findOne({
             where: {
-                email: req.body
+                email: req.body.email
             },
             include: [{ all: true }]
         })
         .then(user => {
+            console.log("USER FOUND!!!!!!!!!!!!!!!!!!!!!!!", user)
             if (!user) {
                 res.status(401).send('Sorry, we don\'t have an account under that email address.')
             } else {
@@ -42,7 +42,7 @@ router.put('/forgotpassword', (req, res, next) => {
                     if (error) console.error(error);
                     if (!error) console.log('Message %s sent: %s', info.messageId, info.response);
                 }); //should wait for confirm email url to be visited before req.login and user creation
-                res.status(200).send('It happens to all of us. \n Check your email for a reset password link.')
+                res.status(307).send('It happens to all of us. \n Check your email for a reset password link.')
             }
         })
         .catch(next);

@@ -23,13 +23,16 @@ export const me_dispatch = () => dispatch => {
         .catch(console.error)
 }
 
-export const forgotPassword_dispatch = email => () => {
-    return axios.put('/auth/forgotpassword', email)
+export const forgotPassword_dispatch = email => dispatch => {
+    return axios.post('/auth/forgotpassword', { email })
         .then(res => {
-            console.log("RES DATA !!!!!!!!!  HELLLOOOOOOO", res.data);
-            browserHistory.push('/forgotpassword');
+            // dispatch(getUser_action(res.data));
+            console.log('This should not occur', res.data)
         })
-
+        .catch(error => {
+            console.error(error);
+            dispatch(getUser_action({ error }));
+        })
 }
 
 export const viewUser_dispatch = userId => dispatch => {

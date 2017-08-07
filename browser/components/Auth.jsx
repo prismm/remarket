@@ -27,7 +27,8 @@ class AuthForm extends Component {
         value.length > 7 ? this.setState({pwLenError: false}) : this.setState({pwLenError: true})
   }
   
-  forgotPassword(){
+  forgotPassword(evt){
+    evt.preventDefault();
     this.props.forgotPassword(this.state.email);
   }
 
@@ -58,7 +59,7 @@ class AuthForm extends Component {
             </div>
             : null}
             <Button raised primary label={ displayName } type="submit" className="local-login login-submit md-cell--12" />
-          { error &&  <div> { error.response.data } </div> }
+          { error &&  <div className="login-error"> { error.response.data } </div> }
         </form>
         <p><Button raised primary label={ googleSignin } type="submit" className="google-login login-submit md-cell--12" /></p>
         <p><Button raised primary label={ fcbkSignin } type="submit" className="facebook-login login-submit md-cell--12" /></p>
