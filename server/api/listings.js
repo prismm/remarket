@@ -8,8 +8,16 @@ const User = model.User;
 const listingNotFound = () => (new Error('Sorry, something went wrong ... We can\'t seem to find that listing!'))
 const mailer = require('../mailer')
 
+/*
+(req, res, next) => {
+    if (!req.user || !req.user.isAdmin)throw new Error();
+    else next()
+}
+*/
+
+
 router.get('/', (req, res, next) => {
-    Listing.findAll({ include: [{ all: true }] })
+    Listing.findAll({ where: { status: 'active' }, include: [{ all: true }] })
         .then(listings => res.json(listings))
         .catch(next)
 })

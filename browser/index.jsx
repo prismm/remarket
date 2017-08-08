@@ -75,7 +75,7 @@ ReactDOM.render(
       <Route path="/" component={Main} onEnter={loadEverything}>
         <IndexRoute component={ListingsContainer} />
         <Route path="login" component={LoginOrSignup} />
-        <Route path="home" component={ListingsContainer} />
+        <Route path="home" component={ListingsContainer} onEnter={loadEverything} />
         <Route path="for-sale" component={ForSaleListingsList} />
         <Route path="housing" component={HousingListingsList} />
         <Route path="community" component={CommunityListingsList} />

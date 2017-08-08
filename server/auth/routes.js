@@ -13,13 +13,13 @@ router.post('/login', (req, res, next) => {
         })
         .then(user => {
             if (!user) {
-                res.status(401).send('Oops, we don\'t have an account under that email address.') //should link to create an account
+                return res.status(401).send('Oops, we don\'t have an account under that email address.') //should link to create an account
             } else if (!user.correctPassword(req.body.password)) {
-                res.status(401).send('That\'s not the right password ... try again!')
+                return res.status(401).send('That\'s not the right password ... try again!')
             } else { // this will attach the user to our passport, which will save the user in the session store -- req.login() invokes the serialize passport function, it's attached to the req obj
-                req.login(user, err => {
+                return req.login(user, err => {
                     if (err) next(err);
-                    else res.json(user.sanitize()).status(200);
+                    else return res.json(user.sanitize()).status(200);
                 })
             }
         })
@@ -35,13 +35,13 @@ router.post('/forgotpassword', (req, res, next) => {
         })
         .then(user => {
             if (!user) {
-                res.status(401).send('Sorry, we don\'t have an account under that email address.')
+                return res.status(401).send('Sorry, we don\'t have an account under that email address.')
             } else {
                 mailer.transporter.sendMail(mailer.changePassword(user, 'www.google.com'), (error, info) => {
                     if (error) console.error(error);
                     if (!error) console.log('Message %s sent: %s', info.messageId, info.response);
                 }); //should wait for confirm email url to be visited before req.login and user creation
-                res.status(307).send('It happens to all of us. \n Check your email for a reset password link.')
+                return res.status(307).send('It happens to all of us. \n Check your email for a reset password link.')
             }
         })
         .catch(next);
@@ -56,7 +56,7 @@ router.post('/signup', (req, res, next) => {
             }); //should wait for confirm email url to be visited before req.login and user creation
             return req.login(user, err => {
                 if (err) next(err);
-                else res.json(user); //add sanitize?
+                else return res.json(user); //add sanitize?
             });
         })
         .catch(next);
@@ -64,12 +64,12 @@ router.post('/signup', (req, res, next) => {
 
 router.post('/logout', (req, res, next) => {
     req.logout();
-    res.sendStatus(200);
+    return res.sendStatus(200);
 });
 
 // fetches the logged in user
 router.get('/me', (req, res, next) => {
-    res.json(req.user); //added sanitize?
+    return res.json(req.user); //added sanitize?
 });
 
 module.exports = router;

@@ -43,6 +43,7 @@ const User = db.define('user', {
         attributes: { exclude: ['password', 'salt'] }
     },
     scopes: {
+        noEmail: { exclude: ['email'] },
         unsanitized: {}
     },
     getterMethods: {
