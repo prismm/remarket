@@ -5,7 +5,7 @@ const User = model.User;
 const mailer = require('../mailer')
 
 //prunes listings to convert active --> archived upon expiration
-cron.schedule('*/5 * * * *', function() {
+cron.schedule('*/1 * * * *', function() {
     let now = new Date();
     Listing.findAll({
             where: {
@@ -20,11 +20,10 @@ cron.schedule('*/5 * * * *', function() {
                 listing.update({ status: 'archived' })
             })
         })
-    console.log('running a task every five minutes');
 });
 
 //auto emails users when listings are about to expire, runs at 00:01 every day and checks for listings expiring within the next two days --> many people will get emailed twice
-cron.schedule('1 0 * * *', function() {
+cron.schedule('0 1 * * * ', function() {
     let now = new Date();
     let dayAfterTomorrow = (d => new Date(d.setDate(d.getDate() + 2)))(new Date);
     Listing.findAll({
@@ -48,5 +47,3 @@ cron.schedule('1 0 * * *', function() {
             })
         })
 });
-
-//clears sessions data -- how often?

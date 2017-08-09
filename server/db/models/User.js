@@ -13,6 +13,10 @@ const User = db.define('user', {
     username: {
         type: Sequelize.STRING
     },
+    confirmed: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+    },
     bio: {
         type: Sequelize.TEXT,
         defaultValue: ''

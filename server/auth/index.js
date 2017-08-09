@@ -84,8 +84,8 @@ router.get('/auth/google', passport.authenticate('google', { scope: 'email' }));
 
 router.get('/auth/google/callback',
     passport.authenticate('google', {
-        successRedirect: '/home', //should say that you have logged in successfully, and redirect to whereever you were browsing before
-        failureRedirect: '/login' //should say it didn't work
+        successRedirect: '/home', //should say that you have logged in successfully, and redirect to whereever you were browsing before?
+        failureRedirect: '/login' //should say it didn't work?
     }));
 
 router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['public_profile', 'email'] })); //'publish_actions' will be added once ready to submit to fcbk for review)
@@ -96,7 +96,7 @@ router.get('/auth/facebook/callback',
         failureRedirect: '/login'
     }));
 
-//when do these functions (serializeUser and deserializeUser) run?
+// when do these functions (serializeUser and deserializeUser) run?
 // stores user's id in the session store upon login
 passport.serializeUser((user, done) => {
     try {

@@ -5,13 +5,16 @@ const Network = require('./models/Network')
 const Listing = require('./models/Listing');
 const User = require('./models/User');
 const Offer = require('./models/Offer');
-const Comment = require('./models/Comment')
+const Comment = require('./models/Comment');
+const Token = require('./models/Token');
 
 const network_affiliations = db.define('network_affiliations', {
     networkEmail: { type: Sequelize.STRING },
     confirmed: { type: Sequelize.BOOLEAN }
 }, { freezeTableName: true });
 const listing_networks = db.define('listing_networks', {}, { freezeTableName: true });
+
+//Token belongs to User
 
 // User belongs to many Networks and Networks belong to many Users (join table)
 User.belongsToMany(Network, { through: network_affiliations });

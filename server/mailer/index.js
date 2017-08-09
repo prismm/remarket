@@ -66,7 +66,7 @@ const newListing = function(author, listing) {
         from: remarket,
         to: author.email,
         subject: '[' + listing.name.slice(0, 10) + '...] Your listing was published',
-        text: 'Hi ' + author.name + ', you just published your listing ' + listing.name + ' on remarket. To view or share this listing, access the link below. \n' + listingLink + '\n To manage this listing, visit My Account -> My Listings (you can edit, renew, or archive/delete the listing there). Please keep your listing updated, and make sure to archive it if it\'s no longer applicable. Thanks and good luck!',
+        text: 'Hi ' + author.name + ', you just published your listing "' + listing.name + '" on remarket. To view or share this listing, access the link below. \n' + listingLink + '\n To manage this listing, visit My Account -> My Listings (you can edit, renew, or archive/delete the listing there). Please keep your listing updated, and make sure to archive it if it\'s no longer applicable. Thanks and good luck!',
         html: '<p>Hi ' + author.name + ', you just published your listing <a href="' + listingLink + '">' + listing.name + '</a> on remarket. To manage this listing, visit My Account -> My Listings (you can edit, renew, or archive/delete the listing there). Please keep your listing updated, and make sure to archive it if it\'s no longer applicable. Thanks and good luck!</p>'
     }
 };
@@ -78,8 +78,8 @@ const newComment = function(listingAuthor, commenter, listing) {
         from: remarket, // sender address
         to: listingAuthor.email, // list of receivers
         subject: '[' + listing.name.slice(0, 10) + '...] New comment on your listing',
-        text: 'Hi ' + listingAuthor.name + ', ' + commenter.username || commenter.userId + ' made a new comment on your listing ' + listing.name + '. View it here. \n' + listingLink, //{To opt out of future messages like this, please click here.}',
-        html: '<p>Hi ' + listingAuthor.name + ', ' + commenter.username || commenter.userId + ' made a new comment on your listing ' + listing.name + '. <a href="' + listingLink + '">View it here.</a></p>', //<a href="{email prefs link}">To opt out of future messages like this, please click here.</a>'
+        text: 'Hi ' + listingAuthor.name + ', ' + commenter.username || commenter.userId + ' made a new comment on your listing "' + listing.name + '". View it here. \n' + listingLink, //{To opt out of future messages like this, please click here.}',
+        html: '<p>Hi ' + listingAuthor.name + ', ' + commenter.username || commenter.userId + ' made a new comment on your listing "' + listing.name + '". <a href="' + listingLink + '">View it here.</a></p>', //<a href="{email prefs link}">To opt out of future messages like this, please click here.</a>'
     }
 };
 
@@ -123,23 +123,24 @@ const youAcceptedOffer = {
 
 const listingStatusChange = function(listingAuthor, listing, newStatus) {
     let newStatusVerb = newStatus === 'active' ? 'reactivated' : newStatus;
+    const listingLink = domainUrl + 'listings/' + listing.id;
     return {
         from: remarket,
         to: listingAuthor.email,
         subject: '[' + listing.name.slice(0, 14) + '...] Your listing has been ' + newStatusVerb,
         text: 'Hi ' + listingAuthor.name + ', your listing "' + listing.name + '" has been ' + newStatusVerb + ' on remarket. \n To manage your listings, visit My Account -> My Listings. Thanks and good luck!',
-        html: '<p>Hi ' + listingAuthor.name + ', your listing "' + listing.name + '" has been ' + newStatusVerb + ' on remarket. \n To manage your listings, visit My Account -> My Listings. Thanks and good luck!</p>'
+        html: '<p>Hi ' + listingAuthor.name + ', your listing <a href="' + listingLink + '">' + listing.name + '</a> has been ' + newStatusVerb + ' on remarket. \n To manage your listings, visit My Account -> My Listings. Thanks and good luck!</p>'
     }
 };
 
-//this one is tricky -- has to be triggered by a setTimeout in db?
 let listingAboutToArchive = function(listingAuthor, listing, renewUrl) {
+    const listingLink = domainUrl + 'listings/' + listing.id;
     return {
         from: remarket,
         to: listingAuthor.email,
         subject: '[' + listing.name.slice(0, 10) + '...] Your listing is about to expire',
-        text: 'Hi ' + listingAuthor.name + ', your listing ' + listing.name + 'is about to expire on remarket. \n To manage this listing, visit My Account -> My Listings (you can edit, renew, or archive/delete the listing there). Thanks and good luck!',
-        html: '<p>Hi ' + listingAuthor.name + ', your listing ' + listing.name + 'is about to expire on remarket. \n To manage this listing, visit My Account -> My Listings (you can edit, renew, or archive/delete the listing there). Thanks and good luck!</p>'
+        text: 'Hi ' + listingAuthor.name + ', your listing "' + listing.name + '" is about to expire in ' + listing.expiresIn + ' on remarket. \n To manage this listing, visit My Account -> My Listings (you can edit, renew, or archive/delete the listing there). Thanks and good luck!',
+        html: '<p>Hi ' + listingAuthor.name + ', your listing <a href="' + listingLink + '">' + listing.name + '</a> is about to expire in ' + listing.expiresIn + ' on remarket. \n To manage this listing, visit My Account -> My Listings (you can edit, renew, or archive/delete the listing there). Thanks and good luck!</p>'
     }
 };
 
