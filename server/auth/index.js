@@ -18,6 +18,7 @@ const googleConfig = {
 // Google will send back the token and profile;
 // Here's the function that passport will invoke after google sends -- generates a strategy
 const googleStrategy = new GoogleStrategy(googleConfig, function(token, refreshToken, profile, callback) {
+    console.log(profile);
     const googleId = profile.id;
     const name = profile.displayName;
     const email = profile.emails[0].value;
@@ -53,6 +54,7 @@ const FacebookConfig = {
 }
 
 const facebookStrategy = new FacebookStrategy(FacebookConfig, function(accessToken, refreshToken, profile, callback) {
+    console.log(profile);
     const facebookId = profile.id;
     const name = profile.displayName;
     const email = profile.email;
@@ -120,17 +122,17 @@ module.exports = router;
 
 /*
 security concerns to consider: 
--- when does the user need to be sanitized and when not? X
--- can we prevent "private information" (email, etc) from being included on req/res headers? X
--- preventing CSRF attacks --> 
+-- when does the user need to be sanitized and when not? 
+X-- can we prevent "private information" (email, etc) from being included on req/res headers? 
+X-- preventing CSRF attacks --> 
     (1) is this a real concern on a SPA? We don't use req.query for anything as far as i know;
     (2) we should verify that our get requests are safe and not "state-changing" 
         in that they simply produce public info (not private info)
         and that no db changes are made
     (3) consider protecting "post" and "put" and "delete" requests by piping api routes thru a requireLogin function
     (4) protect all mailer requests with requireLogin function
--- verify that app XHR requests are secure under CORS and SOP
--- can api routes be casually protected by changing '/api/' to something a little more customized?
+X-- verify that app XHR requests are secure under CORS and SOP
+X-- can api routes be casually protected by changing '/api/' to something a little more customized?
 -- should we track HTTP referrers?
 -- get HTTPS
 X-- get bundle off of git

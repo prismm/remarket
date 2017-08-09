@@ -43,10 +43,13 @@ const User = db.define('user', {
         defaultValue: false
     }
 }, {
+    paranoid: true,
     defaultScope: {
+        // where: { confirmed: true },
         attributes: { exclude: ['password', 'salt'] }
     },
     scopes: {
+        confirmed: { where: { confirmed: true } },
         noEmail: { exclude: ['email'] },
         unsanitized: {}
     },

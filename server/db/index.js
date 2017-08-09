@@ -14,7 +14,9 @@ const network_affiliations = db.define('network_affiliations', {
 }, { freezeTableName: true });
 const listing_networks = db.define('listing_networks', {}, { freezeTableName: true });
 
-//Token belongs to User
+//Token belongs to User (every token has one user, not all users have tokens)
+Token.belongsTo(User);
+// Token.belongsTo(network_affiliations);
 
 // User belongs to many Networks and Networks belong to many Users (join table)
 User.belongsToMany(Network, { through: network_affiliations });
@@ -49,5 +51,6 @@ module.exports = {
     Offer,
     Comment,
     network_affiliations,
-    listing_networks
+    listing_networks,
+    Token
 }
