@@ -189,4 +189,25 @@
             color: #F50057;
             font-style: italic;
         }
+        .uploaded-pic {
+            height: 160px;
+        }
+        .uploaded-pic-img {
+            height: auto
+        }
+        .uploaded-pics-container {
+            max-width: 600px
+        }
+        .md-card-title:last-child {
+            padding: 1em;
+        }
+        .file-title {
+            float: right
+        }
+        .md-media {
+            height: 160px;
+        }
+        .abort-upload {
+            margin-right: 1em;
+        }
     }
