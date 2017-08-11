@@ -5,8 +5,11 @@ const router = require('express').Router();
 const model = require('../db');
 const User = model.User;
 const Network = model.Network;
+const Token = model.Token;
 const affiliations = model.network_affiliations;
-const mailer = require('../mailer')
+const mailer = require('../mailer');
+const crypto = require('crypto');
+const domainUrl = process.env.GOOGLE_CLIENT_ID ? 'https://reuse.market/' : 'http://localhost:1337/';
 
 router.get('/', (req, res, next) => {
     User.findAll({ include: [{ all: true }] })
@@ -29,17 +32,27 @@ router.get('/:id/networks', (req, res, next) => {
 
 //a route for POST: /api/users/${user.id}/networks/${network.id} that adds a network to a user's networks
 router.post('/:userId/networks/:networkId', (req, res, next) => {
-    Promise.all([User.findById(req.params.userId), Network.findById(req.params.networkId)])
+    Promise.all([User.findById(req.params.userId, { include: [{ all: true }] }), Network.findById(req.params.networkId)])
         .then(([user, network]) => {
-            //mailer note: need to produce url for confirmation, set confirmed on affil table to true, etc.
-            mailer.transporter.sendMail(mailer.confirmNetwork(user, network, 'www.google.com'), (error, info) => {
-                if (error) console.error(error);
-                if (!error) console.log('Message %s sent: %s', info.messageId, info.response);
-            });
-            return user.addNetwork(req.params.networkId, { through: { networkEmail: 'dummy@email.com', confirmed: false } })
+            // user.addNetwork(network, { through: { networkEmail: 'dummy@email.com', confirmed: false } });
+            affiliations.create({ userId: user.id, networkId: network.id, networkEmail: req.body.email, confirmed: false })
+            let authToken = crypto.randomBytes(16).toString('hex');
+            return Token.create({ token: authToken, userId: user.id })
+                .then(newToken => {
+                    let confirmUrl = domainUrl + 'auth/networkverify?token=' + newToken.token + '&networkId=' + network.id;
+                    mailer.transporter.sendMail(mailer.confirmNetwork(user, network, confirmUrl, req.body.email), (error, info) => {
+                        if (error) {
+                            console.error(error);
+                            res.status(401).send('Something went wrong. Try again or <a href="priya@coases.com">contact us</a>.');
+                        } else {
+                            res.status(307).send('Great! Check your email and follow the confirmation link to confirm your network affiliation.')
+                            console.log('Message %s sent: %s', info.messageId, info.response);
+                        }
+                    });
+                })
+                .then(() => res.json(user))
+                .catch(console.error)
         })
-        .then(() => User.findById(req.params.userId, { include: [{ all: true }] }))
-        .then(result => res.json(result))
         .catch(next)
 })
 

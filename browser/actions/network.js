@@ -35,8 +35,8 @@ export const fetchSingleNetwork_dispatch = networkId => dispatch => {
         .catch(console.error);
 }
 
-export const addMyNetwork_dispatch = (user, network) => dispatch => {
-    axios.post(`/api/users/${user.id}/networks/${network.id}`)
+export const addMyNetwork_dispatch = (user, network, email) => dispatch => {
+    axios.post(`/api/users/${user.id}/networks/${network.id}`, { email })
         .then(res => {
             dispatch(addMyNetwork_action(res.data));
             dispatch(setCurrentNetwork_action(network));

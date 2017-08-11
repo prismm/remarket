@@ -38,13 +38,13 @@ const changePassword = function(user, resetPwUrl) {
     }
 };
 
-const confirmNetwork = function(user, network, confirmNetworkUrl) {
+const confirmNetwork = function(user, network, confirmNetworkUrl, verificationEmail) {
     return {
         from: remarket,
-        to: user.email, //actually should send to supplied network email, and should capture network email in db
+        to: verificationEmail, //actually should send to supplied network email, and should capture network email in db
         subject: 'Confirm network',
         text: 'Hi ' + user.name + ', please confirm your affiliation to ' + network.name + ' by clicking here: ' + confirmNetworkUrl,
-        html: '<p>Hi ' + user.name + ', please confirm your affiliation to ' + network.name + 'by <a href="' + confirmNetworkUrl + '">clicking here</a>.</p>'
+        html: '<p>Hi ' + user.name + ', please confirm your affiliation to ' + network.name + ' by <a href="' + confirmNetworkUrl + '">clicking here</a>.</p>'
     }
 };
 

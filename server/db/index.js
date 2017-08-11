@@ -22,7 +22,7 @@ Token.belongsTo(User);
 User.belongsToMany(Network, { through: network_affiliations });
 Network.belongsToMany(User, { through: network_affiliations });
 
-// // Networks belong to many Listings and Listings belong to many Networks (join table)
+// Networks belong to many Listings and Listings belong to many Networks (join table)
 Listing.belongsToMany(Network, { through: listing_networks });
 Network.belongsToMany(Listing, { through: listing_networks });
 

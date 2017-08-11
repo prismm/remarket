@@ -15,7 +15,7 @@ class AddNetwork extends Component {
     constructor(props){
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+        this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handleNetworkChange = this.handleNetworkChange.bind(this);
         this.state = {
                         network: {suggestedDomain: '...'},
@@ -23,22 +23,22 @@ class AddNetwork extends Component {
                     };
     }
 
-    handleChange(event) {
-        this.setState({[event.target.name]: event.target.value});
+    handleEmailChange(event) {
+        this.setState({verificationEmail: event});
     }
 
     handleNetworkChange(value, index, event) { // eslint-disable-line no-unused-vars
         let thisNetwork = this.props.networks.filter(network => (network.id === value))[0];
-        this.setState({ network: thisNetwork });
+        this.setState({ network: thisNetwork, verificationEmail: thisNetwork.suggestedDomain });
     }
 
     handleSubmit(event){
         event.preventDefault();
-        this.props.addNetwork(this.props.user, this.state.network);
+        this.props.addNetwork(this.props.user, this.state.network, this.state.verificationEmail);
     }
 
     render(){
-        console.log(this.state.network);
+        console.log(this.state);
         return (
                 <div className="md-grid">
                 <div className="md-cell--2 my-networks-test" />
@@ -58,10 +58,9 @@ class AddNetwork extends Component {
                             <TextField
                                 id="verificationEmail"
                                 name="verificationEmail"
-                                onChange={this.handleChange} 
+                                onChange={this.handleEmailChange}
                                 label="Verify your network with your associated email address"
-                                value={this.state.network.suggestedDomain}
-                                className={this.state.network.suggestedDomain}
+                                value={this.state.verificationEmail}
                                 required
                             />
                             </div>
@@ -101,8 +100,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
     return {
-        addNetwork: (user, network) => {
-            dispatch(addMyNetwork_dispatch(user, network))
+        addNetwork: (user, network, email) => {
+            dispatch(addMyNetwork_dispatch(user, network, email))
         }
     }
 }

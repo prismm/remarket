@@ -1,8 +1,11 @@
 /* ROUTES FOR PATH '/auth' BELOW */
 
 const router = require('express').Router();
-const User = require('../db/models/User');
-const Token = require('../db/models/Token');
+const model = require('../db');
+const User = model.User;
+const Network = model.Network;
+const Token = model.Token;
+const affiliations = model.network_affiliations;
 const mailer = require('../mailer')
 const crypto = require('crypto');
 const domainUrl = process.env.GOOGLE_CLIENT_ID ? 'https://reuse.market/' : 'http://localhost:1337/';
@@ -145,5 +148,39 @@ router.get('/verify', (req, res, next) => {
         .catch(next)
 });
 
+/*ADD NETWORK VERIFY*/
+router.get('/networkverify', (req, res, next) => {
+    let resendConfirmation = domainUrl + 'login/' //this is a placeholder; it needs to be better, actually a confirm link for a particular user -- not sure how to do it
+    console.log(req.query);
+    Token.findOne({ where: { token: req.query.token } })
+        .then(token => {
+            if (!token) {
+                res.status(401).send('Sorry, could not locate this token. Click <a href="' + resendConfirmation + '">here</a> to resend the confirmation email.')
+            } else if (token.expired) {
+                res.status(401).send('Sorry, this confirmation link has expired. Click <a href="' + resendConfirmation + '">here</a> to resend the confirmation email.')
+            } else {
+                affiliations.findOne({ where: { networkId: req.query.networkId, userId: token.userId } })
+                    .then(affiliation => {
+                        if (!affiliation) {
+                            res.status('404').send('Sorry, affiliation not found.')
+                            next();
+                        } else {
+                            token.update({ expired: true });
+                            return affiliation.update({ confirmed: true })
+                        }
+                    })
+                    .then(confirmedAffiliation => {
+                        if (!confirmedAffiliation) {
+                            next();
+                        } else {
+                            //some page to say 'success -- redirecting to login'
+                            res.redirect('/account/managenetworks')
+                        }
+                    })
+                    .catch(next)
+            }
+        })
+        .catch(next)
+})
 
 module.exports = router;
