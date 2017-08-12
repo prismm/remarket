@@ -23,6 +23,7 @@ class AuthForm extends Component {
     this.setState({email: value})
   }
 
+  //LENGTH VALIDATION NEEDS TESTING
   checkPasswordChange(value){
         value.length > 7 ? this.setState({pwLenError: false}) : this.setState({pwLenError: true})
   }

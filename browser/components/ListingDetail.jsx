@@ -40,13 +40,16 @@ class ListingDetail extends Component {
 
 
     render(){
+        const error = this.props.currentListing.error || null;
         const isItMyListing = this.props.currentListing.authorId === this.props.user.id;
         const wasItEdited = this.props.currentListing.createdAt !== this.props.currentListing.updatedAt;
-        const shouldRenderDetail = this.props.currentListing && !this.state.edit;
-        const shouldRenderForm = isItMyListing && this.props.currentListing && this.state.edit;
+        const shouldRenderDetail = this.props.currentListing.id && !this.state.edit;
+        const shouldRenderForm = isItMyListing && this.props.currentListing.id && this.state.edit;
         
         return (
             <div>
+            { error &&  <h3 className="error"> { error.response.status } / { error.response.statusText } </h3> }
+            { error &&  <div className="error listing-not-found"> { error.response.data } </div> }
             {shouldRenderDetail && (
                 <div className="md-grid listing-detail-container">
                 <Breadcrumbs currentListing={this.props.currentListing} />

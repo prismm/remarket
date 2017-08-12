@@ -38,12 +38,14 @@ const requireLogin = (nextRouterState, replace, next) =>
     .catch(console.error);
 
 const getCurrentListing = (nextRouterState) => {
+  console.log("HELLOOOOOOOO", browserHistory);
   store.dispatch(fetchSingleListing_dispatch(nextRouterState.params.listingId));
 }
 
 const getMyListings = (nextRouterState, replace, next) => {
   whoAmI
     .then(() => {
+      console.log("HELLOOOOOOOO", browserHistory);
       const { user } = store.getState();
       if (!user.id) replace('/login');
       store.dispatch(fetchListingsByUser_dispatch(user.id));

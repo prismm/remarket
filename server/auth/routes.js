@@ -173,7 +173,7 @@ router.get('/networkverify', (req, res, next) => {
                         if (!confirmedAffiliation) {
                             next();
                         } else {
-                            //some page to say 'success -- redirecting to login'
+                            //some page to say 'success -- redirecting to account'
                             res.redirect('/account/managenetworks')
                         }
                     })

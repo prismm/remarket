@@ -185,6 +185,16 @@
             font-weight: bold;
             font-style: italic;
         }
+        .error {
+            margin-left: 1em;
+            margin-top: 1em;
+            margin-bottom: 2em;
+            color: #FC0096;
+        }
+        .listing-not-found {
+            font-weight: normal;
+            font-style: italic;
+        }
         .expired {
             color: #F50057;
             font-style: italic;

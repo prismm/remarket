@@ -29,7 +29,8 @@ export const fetchSingleListing_dispatch = listingId => dispatch => {
         .then(res => {
             dispatch(setCurrentListing_action(res.data));
         })
-        .catch(console.error);
+        .catch(error =>
+            dispatch(setCurrentListing_action({ error })));
 }
 
 export const clearCurrentListing_dispatch = () => dispatch => {

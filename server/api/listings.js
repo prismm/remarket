@@ -24,7 +24,13 @@ router.get('/', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
     Listing.findById(req.params.id, { include: [{ all: true }] })
-        .then(listing => res.json(listing))
+        .then(listing => {
+            if (!listing) {
+                res.status('404').send('Failing to fetch me at first keep encouraged, Missing me one place search another, I stop somewhere waiting for you.');
+            } else {
+                res.json(listing);
+            }
+        })
         .catch(next)
 })
 
@@ -36,6 +42,12 @@ router.get('/user/:userId', (req, res, next) => {
         })
         .then(listings => res.json(listings))
         .catch(next)
+})
+
+//MUST BE LAST GET REQUEST -- ERROR HANDLING!
+router.get('/', (req, res, next) => {
+    console.log('hitting tihs route!')
+    res.status('404').json('/404 Listing Not Found! \n \n Failing to fetch me at first keep encouraged, Missing me one place search another, I stop somewhere waiting for you.')
 })
 
 router.post('/', (req, res, next) => {
