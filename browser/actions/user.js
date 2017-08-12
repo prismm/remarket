@@ -40,7 +40,8 @@ export const viewUser_dispatch = userId => dispatch => {
         .then(res => {
             dispatch(viewUser_action(res.data))
         })
-        .catch(console.error)
+        .catch(error =>
+            dispatch(viewUser_action({ error })));
 }
 
 export const viewUserListings_dispatch = userId => dispatch => {

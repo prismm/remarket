@@ -44,12 +44,6 @@ router.get('/user/:userId', (req, res, next) => {
         .catch(next)
 })
 
-//MUST BE LAST GET REQUEST -- ERROR HANDLING!
-router.get('/', (req, res, next) => {
-    console.log('hitting tihs route!')
-    res.status('404').json('/404 Listing Not Found! \n \n Failing to fetch me at first keep encouraged, Missing me one place search another, I stop somewhere waiting for you.')
-})
-
 router.post('/', (req, res, next) => {
     Listing.create(req.body)
         .then(newListing => Promise.all([User.findById(newListing.authorId), newListing]))

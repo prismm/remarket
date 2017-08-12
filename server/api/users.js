@@ -19,7 +19,13 @@ router.get('/', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
     User.findById(req.params.id, { include: [{ all: true }] })
-        .then(user => res.json(user))
+        .then(user => {
+            if (!user) {
+                res.status('404').send('Failing to fetch me at first keep encouraged, Missing me one place search another, I stop somewhere waiting for you.');
+            } else {
+                res.json(user)
+            }
+        })
         .catch(next)
 })
 

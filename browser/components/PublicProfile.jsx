@@ -55,11 +55,17 @@ class PublicProfile extends Component {
     render(){
         //make sure thisUser has .name, .networks, .listings
         const thisUser = this.props.viewedUser;
+        const error = thisUser.error || null;
         const label =  'Message ' + thisUser.name;
 
         return (
         <div className="md-grid">
-            <Card className="md-card md-background--card md-cell--10 public-profile-card">
+            { error &&
+                <div>
+                    <h3 className="error"> { error.response.status } / { error.response.statusText } </h3>
+                    <div className="error listing-not-found"> { error.response.data } </div>
+                </div> }
+            {thisUser.id && <Card className="md-card md-background--card md-cell--10 public-profile-card">
                 <h2><span className="public-profile-username divider">{thisUser.userId}</span> <span className="divider"> / </span> {thisUser.name}</h2>
                 { (thisUser.networks && thisUser.networks.length) ?
                     thisUser.networks.map(
@@ -102,7 +108,7 @@ class PublicProfile extends Component {
                         </TableBody>
                     </DataTable>
                 </div>
-            </Card>
+            </Card>}
         </div>
         )
     }
