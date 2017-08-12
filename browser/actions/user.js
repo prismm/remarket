@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import axios from 'axios';
+import store from '../store.jsx';
 import { browserHistory } from 'react-router';
 
 /* ------------   ACTION CREATORS     ------------------ */
@@ -11,7 +12,8 @@ const editUser_action = changes => ({ type: 'EDIT_USER', changes });
 //sets state.browse, not state.user:
 const viewUser_action = user => ({ type: 'VIEW_USER', user });
 const viewUserListings_action = listings => ({ type: 'VIEW_USER_LISTINGS', listings });
-export const clearViewUser_action = () => ({ type: 'CLEAR_USER' })
+export const clearViewUser_action = () => ({ type: 'CLEAR_USER' });
+export const setDestination_action = destination => ({ type: 'SET_DESTINATION', destination });
 
 /* ------------     DISPATCHERS     ------------------ */
 const defaultUser = {};
@@ -57,10 +59,11 @@ export const clearUser_dispatch = () => dispatch => {
 }
 
 export const auth_dispatch = (email, password, method) => dispatch => {
+    let currentDestination = store.getState().browse.destination;
     return axios.post(`/auth/${method}`, { email, password })
         .then(res => {
             dispatch(getUser_action(res.data));
-            browserHistory.push('/home');
+            browserHistory.push(currentDestination); //get this destination from the store! browse.destination
         })
         .catch(error =>
             dispatch(getUser_action({ error })));

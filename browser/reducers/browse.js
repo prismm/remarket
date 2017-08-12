@@ -2,7 +2,8 @@
 const initialState = {
     user: {},
     listing: {},
-    userListings: {}
+    userListings: {},
+    destination: '/home'
 }
 
 export default function(state = initialState, action) {
@@ -17,6 +18,9 @@ export default function(state = initialState, action) {
         case 'CLEAR_USER':
             newState.user = {};
             newState.userListings = {};
+            break;
+        case 'SET_DESTINATION':
+            newState.destination = action.destination;
             break;
         default:
             return state;

@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import store from './store.jsx';
 
-import { me_dispatch, viewUser_dispatch, viewUserListings_dispatch } from './actions/user';
+import { me_dispatch, viewUser_dispatch, viewUserListings_dispatch, setDestination_action } from './actions/user';
 import { fetchAllListings_dispatch, fetchSingleListing_dispatch, fetchListingsByUser_dispatch } from './actions/listing';
 import { fetchAllNetworks_dispatch } from './actions/network';
 
@@ -26,28 +26,33 @@ import HousingListingsList from './components/HousingListingsList.jsx';
 import CommunityListingsList from './components/CommunityListingsList.jsx'
 import PublicProfile from './components/PublicProfile.jsx'
 
-
 const whoAmI = store.dispatch(me_dispatch());
-const requireLogin = (nextRouterState, replace, next) =>
+
+const requireLogin = (nextRouterState, replace, next) => {
   whoAmI
     .then(() => {
       const { user } = store.getState();
-      if (!user.id) replace('/login');
+      if (!user.id) {
+        store.dispatch(setDestination_action(nextRouterState.location.pathname)); //captures destination for post-login route
+        replace('/login');
+      }
       next();
     })
-    .catch(console.error);
+    .catch(console.error)
+  }
 
 const getCurrentListing = (nextRouterState) => {
-  console.log("HELLOOOOOOOO", browserHistory);
   store.dispatch(fetchSingleListing_dispatch(nextRouterState.params.listingId));
 }
 
 const getMyListings = (nextRouterState, replace, next) => {
   whoAmI
     .then(() => {
-      console.log("HELLOOOOOOOO", browserHistory);
       const { user } = store.getState();
-      if (!user.id) replace('/login');
+      if (!user.id) {
+        store.dispatch(setDestination_action(nextRouterState.location.pathname));  //captures destination for post-login route
+        replace('/login')
+      }
       store.dispatch(fetchListingsByUser_dispatch(user.id));
       next();
     })
@@ -58,7 +63,10 @@ const viewUser = (nextRouterState, replace, next) => {
   whoAmI
     .then(() => {
       const { user } = store.getState();
-      if (!user.id) replace('/login');
+      if (!user.id) {
+        store.dispatch(setDestination_action(nextRouterState.location.pathname));  //captures destination for post-login route
+        replace('/login')
+      }
       store.dispatch(viewUser_dispatch(nextRouterState.params.userId));
       store.dispatch(viewUserListings_dispatch(nextRouterState.params.userId));
       next();
