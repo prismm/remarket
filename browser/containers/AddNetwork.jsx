@@ -17,19 +17,31 @@ class AddNetwork extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handleNetworkChange = this.handleNetworkChange.bind(this);
+        this.matchDomain = this.matchDomain.bind(this);
         this.state = {
                         network: {suggestedDomain: '...'},
-                        verificationEmail: ''
+                        verificationEmail: '',
+                        error: null
                     };
     }
 
     handleEmailChange(event) {
+        console.log("EVENT", event)
         this.setState({verificationEmail: event});
+        this.matchDomain(event);
+    }
+
+    matchDomain(verificationEmail){
+        let domain = this.state.network.suggestedDomain.slice(this.state.network.suggestedDomain.indexOf('@')).toLowerCase();
+        let inputDomain = verificationEmail.slice(domain.length * -1).toLowerCase();
+        let match = (domain === inputDomain);
+        this.setState( {error: !match })
+
     }
 
     handleNetworkChange(value, index, event) { // eslint-disable-line no-unused-vars
         let thisNetwork = this.props.networks.filter(network => (network.id === value))[0];
-        this.setState({ network: thisNetwork, verificationEmail: thisNetwork.suggestedDomain });
+        this.setState({ network: thisNetwork, verificationEmail: thisNetwork.suggestedDomain, error: false });
     }
 
     handleSubmit(event){
@@ -38,7 +50,7 @@ class AddNetwork extends Component {
     }
 
     render(){
-        //still need to: (1) check to make sure domain is correct on front end before submit; (2) default scope {confirmed: true} for all my networks queries, (3) display errors on component as needed, (4) success redirect
+        //still need to: default scope {confirmed: true} for all my networks queries!
         return (
                 <div className="md-grid">
                 <div className="md-cell--2 my-networks-test" />
@@ -61,10 +73,12 @@ class AddNetwork extends Component {
                                 onChange={this.handleEmailChange}
                                 label="Verify your network with your associated email address"
                                 value={this.state.verificationEmail}
+                                error={this.state.error}
+                                errorText="Your email domain must match network domain in order to verify affiliation."
                                 required
                             />
                             </div>
-                            <Button flat primary label="Submit" type="submit" className="submit" />
+                            <Button flat primary label="Submit" type="submit" disabled={this.state.error} className="submit" />
                         </form>
                     </div>
                     <div className="md-cell--4 md-grid my-networks my-networks-test">

@@ -11,7 +11,14 @@ const Token = require('./models/Token');
 const network_affiliations = db.define('network_affiliations', {
     networkEmail: { type: Sequelize.STRING },
     confirmed: { type: Sequelize.BOOLEAN }
-}, { freezeTableName: true });
+}, {
+    freezeTableName: true,
+    defaultScope: {
+        where: {
+            confirmed: true
+        }
+    },
+});
 const listing_networks = db.define('listing_networks', {}, { freezeTableName: true });
 
 //Token belongs to User (every token has one user, not all users have tokens)
