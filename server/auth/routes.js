@@ -139,7 +139,7 @@ router.get('/verify', (req, res, next) => {
                             next();
                         } else {
                             //some page to say 'success -- redirecting to login'
-                            res.redirect('/login')
+                            res.redirect('/account-created')
                         }
                     })
                     .catch(next)
@@ -174,7 +174,7 @@ router.get('/networkverify', (req, res, next) => {
                             next();
                         } else {
                             //some page to say 'success -- redirecting to account'
-                            res.redirect('/account/managenetworks')
+                            res.redirect('/network-added')
                         }
                     })
                     .catch(next)

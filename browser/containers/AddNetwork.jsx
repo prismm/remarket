@@ -38,7 +38,7 @@ class AddNetwork extends Component {
     }
 
     render(){
-        //still need to: (1) check to make sure domain is correct on front end before submit; (2) defaul scope {confirmed: true} for all my networks queries, (3) display errors on component as needed, (4) success redirect
+        //still need to: (1) check to make sure domain is correct on front end before submit; (2) default scope {confirmed: true} for all my networks queries, (3) display errors on component as needed, (4) success redirect
         return (
                 <div className="md-grid">
                 <div className="md-cell--2 my-networks-test" />

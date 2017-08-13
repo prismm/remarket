@@ -11,6 +11,7 @@ import { fetchAllListings_dispatch, fetchSingleListing_dispatch, fetchListingsBy
 import { fetchAllNetworks_dispatch } from './actions/network';
 
 import LoginOrSignup from './components/LoginOrSignup.jsx'
+import Success from './components/Success.jsx'
 import Main from './containers/Main.jsx'
 import ListingsContainer from './containers/ListingsContainer.jsx';
 import ListingDetail from './components/ListingDetail.jsx'
@@ -84,6 +85,8 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Route path="/" component={Main} onEnter={loadEverything}>
         <IndexRoute component={ListingsContainer} />
+        <Route path="account-created" redirectTo="/login" redirectToName="login" component={Success} />
+        <Route path="network-added" redirectTo="/account/managenetworks" redirectToName="your account" component={Success} />
         <Route path="login" component={LoginOrSignup} />
         <Route path="home" component={ListingsContainer} onEnter={loadEverything} />
         <Route path="for-sale" component={ForSaleListingsList} />
