@@ -12,12 +12,10 @@ const network_affiliations = db.define('network_affiliations', {
     networkEmail: { type: Sequelize.STRING },
     confirmed: { type: Sequelize.BOOLEAN }
 }, {
-    freezeTableName: true,
-    defaultScope: {
-        where: {
-            confirmed: true
-        }
-    },
+    freezeTableName: true
+        // defaultScope: {
+        //     attributes: { where: { confirmed: true } }
+        // },
 });
 const listing_networks = db.define('listing_networks', {}, { freezeTableName: true });
 

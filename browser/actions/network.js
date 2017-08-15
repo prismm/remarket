@@ -19,6 +19,7 @@ export const fetchAllNetworks_dispatch = () => dispatch => {
         .catch(console.error);
 }
 
+//will return entries in join table now
 export const getMyNetworks_dispatch = user => dispatch => {
     axios.get(`/api/users/${user.id}/networks`)
         .then(res => {

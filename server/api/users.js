@@ -5,7 +5,10 @@ const router = require('express').Router();
 const model = require('../db');
 const User = model.User;
 const Network = model.Network;
+const Listing = model.Listing;
+const Offer = model.Offer;
 const Token = model.Token;
+const Comment = model.Comment;
 const affiliations = model.network_affiliations;
 const mailer = require('../mailer');
 const crypto = require('crypto');
@@ -17,6 +20,7 @@ router.get('/', (req, res, next) => {
         .catch(next)
 })
 
+//filtering networks {confirmed: true} on front end
 router.get('/:id', (req, res, next) => {
     User.findById(req.params.id, { include: [{ all: true }] })
         .then(user => {
@@ -29,9 +33,9 @@ router.get('/:id', (req, res, next) => {
         .catch(next)
 })
 
-//a route for GET: /api/users/${user.id}/networks that returns a user's networks
+//a route for GET: /api/users/${user.id}/networks that returns a user's networks -- as entries in join table
 router.get('/:id/networks', (req, res, next) => {
-    Network.findAll({ where: { userId: req.params.id } })
+    affiliations.findAll({ where: { userId: req.params.id, confirmed: true } })
         .then(userNetworks => res.json(userNetworks))
         .catch(next)
 })

@@ -26,7 +26,6 @@ class AddNetwork extends Component {
     }
 
     handleEmailChange(event) {
-        console.log("EVENT", event)
         this.setState({verificationEmail: event});
         this.matchDomain(event);
     }
@@ -50,7 +49,7 @@ class AddNetwork extends Component {
     }
 
     render(){
-        //still need to: default scope {confirmed: true} for all my networks queries!
+        //still need to: default scope {confirmed: true} for all my networks queries! using front-end workaround right now
         return (
                 <div className="md-grid">
                 <div className="md-cell--2 my-networks-test" />

@@ -101,7 +101,10 @@ const Listing = db.define('listing', {
         afterCreate: function(listing) {
             return listing.getAuthor()
                 .then(user => user.getNetworks())
-                .then(networks => listing.addNetworks(networks))
+                .then(networks => {
+                    let confirmedNetworks = networks.filter(network => network.network_affiliations.confirmed);
+                    return listing.addNetworks(confirmedNetworks)
+                })
                 .catch(console.error)
         }
     }

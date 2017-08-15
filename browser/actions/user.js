@@ -20,8 +20,11 @@ const defaultUser = {};
 
 export const me_dispatch = () => dispatch => {
     return axios.get('/auth/me')
-        .then(res =>
-            dispatch(getUser_action(res.data || defaultUser)))
+        .then(res => {
+            let user = res.data;
+            user.networks = user.networks.filter(network => network.network_affiliations.confirmed);
+            dispatch(getUser_action(user || defaultUser))
+        })
         .catch(console.error)
 }
 
@@ -40,7 +43,9 @@ export const forgotPassword_dispatch = email => dispatch => {
 export const viewUser_dispatch = userId => dispatch => {
     return axios.get(`/api/users/${userId}`)
         .then(res => {
-            dispatch(viewUser_action(res.data))
+            let user = res.data;
+            user.networks = user.networks.filter(network => network.network_affiliations.confirmed);
+            dispatch(viewUser_action(user))
         })
         .catch(error =>
             dispatch(viewUser_action({ error })));

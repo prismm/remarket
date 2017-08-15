@@ -4,6 +4,9 @@ const router = require('express').Router();
 const model = require('../db');
 const User = model.User;
 const Network = model.Network;
+const Listing = model.Listing;
+const Offer = model.Offer;
+const Comment = model.Comment;
 const Token = model.Token;
 const affiliations = model.network_affiliations;
 const mailer = require('../mailer')
@@ -11,14 +14,15 @@ const crypto = require('crypto');
 const domainUrl = process.env.GOOGLE_CLIENT_ID ? 'https://reuse.market/' : 'http://localhost:1337/';
 //links in RES don't seem to work
 
+//filtering networks {confirmed: true} on front end
 router.post('/login', (req, res, next) => {
-    User.scope('unsanitized').findOne({
+    User.scope('unsanitized').findAll({
             where: {
                 email: req.body.email
             },
             include: [{ all: true }]
         })
-        .then(user => {
+        .then(([user]) => {
             if (!user) {
                 return res.status(401).send('Oops, we don\'t have an account under that email address.') //should link to create an account
             } else if (!user.confirmed) {
