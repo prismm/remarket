@@ -3,6 +3,7 @@ const initialState = {
     user: {},
     listing: {},
     userListings: {},
+    message: {},
     destination: '/home'
 }
 
@@ -16,7 +17,7 @@ export default function(state = initialState, action) {
             newState.userListings = action.listings;
             break;
         case 'MESSAGE_SENT':
-            newState.user.sent = action.response;
+            newState.message = action.response;
             break;
         case 'CLEAR_USER':
             newState.user = {};

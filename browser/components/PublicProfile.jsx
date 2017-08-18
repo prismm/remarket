@@ -53,7 +53,9 @@ class PublicProfile extends Component {
                 null
                 }
                 <p>{thisUser.bio}</p>
+                <div className="md-cell--9">
                 <MessageUser label={label} />
+                </div>
                 <hr className="profile-divider" />
                  <div className="my-listings-profile md-cell-10">
                     <h3>{thisUser.name}'s Listings</h3>

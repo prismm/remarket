@@ -40,19 +40,19 @@ class MessageUser extends Component {
     }
 
     render(){
-        const sent = this.props.receiver.sent;
+        const sent = this.props.messageSent;
         return (
-        <div className="user-button-container">
+        <div className="message-button-container">
             {!this.state.on &&
             <Button
                 raised
                 secondary
                 label={this.props.label}
-                className="user-button"
+                className="message-button"
                 onClick={() => this.showMessage()}
             />}
             {this.state.on &&
-            <Card className="md-card md-background--card md-cell--6">
+            <Card className="md-card md-background--card md-cell--12 message-card">
             <form onSubmit={this.handleSubmit} name={this.props.label}>
                 <div>
                     <label htmlFor="subject"><small>subject</small></label>
@@ -67,9 +67,9 @@ class MessageUser extends Component {
                     primary
                     label="Send Message"
                     type="submit"
-                    className="user-button"
+                    className="message-button send-message"
                 />
-                { sent &&  <div> { sent.response.data } </div> }
+                { sent.response &&  <div> { sent.response.data } </div> }
             </form>
             </Card>
             }
@@ -88,7 +88,8 @@ MessageUser.propTypes = {
 /*----------------------- Container ---------------------------*/
 const mapStateToProps = state => ({
     receiver: state.browse.user,
-    sender: state.user
+    sender: state.user,
+    messageSent: state.browse.message
 });
 
 const mapDispatchToProps = dispatch => {

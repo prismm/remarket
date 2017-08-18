@@ -2,7 +2,7 @@ import { Login, Signup } from './Auth.jsx';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import CSSTransitionGroup from 'react-addons-css-transition-group';
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import Tabs from 'react-md/lib/Tabs/Tabs';
 import Tab from 'react-md/lib/Tabs/Tab';
 import TabsContainer from 'react-md/lib/Tabs/TabsContainer';
