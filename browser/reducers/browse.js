@@ -15,6 +15,9 @@ export default function(state = initialState, action) {
         case 'VIEW_USER_LISTINGS':
             newState.userListings = action.listings;
             break;
+        case 'MESSAGE_SENT':
+            newState.user.sent = action.response;
+            break;
         case 'CLEAR_USER':
             newState.user = {};
             newState.userListings = {};

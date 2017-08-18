@@ -12,6 +12,7 @@ const editUser_action = changes => ({ type: 'EDIT_USER', changes });
 //sets state.browse, not state.user:
 const viewUser_action = user => ({ type: 'VIEW_USER', user });
 const viewUserListings_action = listings => ({ type: 'VIEW_USER_LISTINGS', listings });
+const messageSent_action = response => ({ type: 'MESSAGE_SENT', response });
 export const clearViewUser_action = () => ({ type: 'CLEAR_USER' });
 export const setDestination_action = destination => ({ type: 'SET_DESTINATION', destination });
 
@@ -49,6 +50,15 @@ export const viewUser_dispatch = userId => dispatch => {
         })
         .catch(error =>
             dispatch(viewUser_action({ error })));
+}
+
+export const messageUser_dispatch = (sender, receiver, message, subject) => dispatch => {
+    return axios.post('/api/users/msg', { sender, receiver, message, subject })
+        .then(res => {
+            dispatch(messageSent_action(res.data))
+        })
+        .catch(error =>
+            dispatch(messageSent_action({ error })))
 }
 
 export const viewUserListings_dispatch = userId => dispatch => {

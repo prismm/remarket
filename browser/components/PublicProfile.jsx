@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Listing from './Listing.jsx';
 import spinner from '../HOC/Spinner.jsx';
 import {NetworkAvatar} from './Avatars.jsx';
-import {MessageUserButton} from './Buttons.jsx';
+import MessageUser from './MessageUser.jsx';
 import {TimeLeft} from './TimeLeft.jsx';
 
 import Card from 'react-md/lib/Cards/Card';
@@ -24,32 +24,10 @@ import { clearUser_dispatch } from '../actions/user';
 class PublicProfile extends Component {
     constructor(props){
         super(props);
-        this.state = {
-            writeMessage: false,
-            message: ''
-        }
-        this.onMessageClick = this.onMessageClick.bind(this);
-        this.onMessageChange = this.onMessageChange.bind(this);
-        this.onMessageSubmit = this.onMessageSubmit.bind(this);
     }
 
     componentWillUnmount(){
         return this.props.clearViewUser();
-    }
-
-    onMessageClick(){
-        this.setState({writeMessage: true})
-    }
-
-    onMessageChange(event){
-        //check whether e.target.value is what we want
-        this.setState({message: event.target.value})
-    }
-
-    onMessageSubmit(event){
-        event.preventDefault();
-        //need to write this function -- sendMessage
-        this.props.sendMessage(this.props.user.email, this.props.viewedUser.email, this.state.message);
     }
 
     render(){
@@ -75,8 +53,8 @@ class PublicProfile extends Component {
                 null
                 }
                 <p>{thisUser.bio}</p>
-                <MessageUserButton label={label} toEmail={thisUser.email} replyTo={this.props.user.email} message={this.state.message} />
-                <hr className="profile-divider"/>
+                <MessageUser label={label} />
+                <hr className="profile-divider" />
                  <div className="my-listings-profile md-cell-10">
                     <h3>{thisUser.name}'s Listings</h3>
                     <DataTable plain>
@@ -117,7 +95,6 @@ class PublicProfile extends Component {
 
 PublicProfile.propTypes = {
   viewedUser: PropTypes.object,
-  sendMessage: PropTypes.func,
   clearViewUser: PropTypes.func,
   user: PropTypes.object
 };
@@ -132,7 +109,6 @@ const mapStateToProps = ({user, browse}) => ({
 const mapDispatchToProps = dispatch => {
     return {
         clearViewUser: () => dispatch(clearUser_dispatch()),
-        sendMessage: () => {}
     }
 }
 

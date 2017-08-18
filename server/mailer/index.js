@@ -48,6 +48,19 @@ const confirmNetwork = function(user, network, confirmNetworkUrl, verificationEm
     }
 };
 
+const sendMessage = function(sender, receiver, message, subject) {
+    const senderId = sender.username || sender.userId;
+    const senderUrl = domainUrl + 'user/' + sender.id;
+    return {
+        from: remarket,
+        to: receiver.email,
+        subject: subject,
+        replyTo: sender.email,
+        text: senderId + ' (' + senderUrl + ') wrote: \n' + message + '\n Sent from remarket',
+        html: '<div><a href="' + senderUrl + '">' + senderId + '</a> wrote: \n' + message + '</div><p>\n Sent from remarket</p>'
+    }
+}
+
 //havent incorporated this one yet, since the delete route isnt written
 const deleteAccount = function(user, deleteFormUrl) {
     return {
@@ -154,5 +167,6 @@ module.exports = {
     newListing,
     newComment,
     listingStatusChange,
-    listingAboutToArchive
+    listingAboutToArchive,
+    sendMessage
 }

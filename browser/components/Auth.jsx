@@ -43,7 +43,12 @@ class AuthForm extends Component {
         <form onSubmit={handleSubmit} name={name}>
           <div>
             <label htmlFor="email"><small>Email</small></label>
-            <TextField name="email" type="text" value={this.state.email} onChange={this.handleEmailChange} />
+            <TextField
+              name="email"
+              type="text"
+              value={this.state.email}
+              onChange={this.handleEmailChange} 
+            />
           </div>
           <div>
             <label htmlFor="password"><small>Password</small></label>

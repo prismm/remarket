@@ -66,6 +66,20 @@ router.post('/:userId/networks/:networkId', (req, res, next) => {
         .catch(next)
 })
 
+//a POST route for sending message from user to user
+router.post('/msg', (req, res, next) => {
+    console.log(req.body.receiver);
+    mailer.transporter.sendMail(mailer.sendMessage(req.body.sender, req.body.receiver, req.body.message, req.body.subject), (error, info) => {
+        if (error) {
+            console.error(error);
+            res.status(401).send('Something went wrong -- try again later.');
+        } else {
+            res.status(200).send('Message sent. Replies will be directed to your email inbox.')
+            console.log('Message %s sent: %s', info.messageId, info.response);
+        }
+    });
+})
+
 //a route for PUT: /api/users/${userId} that updates the user info
 router.put('/:id', (req, res, next) => {
     User.update(req.body, {

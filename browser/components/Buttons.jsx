@@ -180,26 +180,3 @@ UpdatePasswordButton.propTypes = {
   newPassword: PropTypes.string
 };
 
-/*-------- MessageUser component ---------*/
-
-//should redirect to editListing form (createListing component with editStatus = true);
-export function MessageUserButton({label, toEmail, replyTo, message}) {
-    return (
-        <div className="user-button-container">
-            <Button
-                raised
-                secondary
-                label={label}
-                className="user-button"
-                onClick={() => {}}
-            />
-        </div>
-    )
-}
-
-MessageUserButton.propTypes = {
-  label: PropTypes.string.isRequired,
-  toEmail: PropTypes.string.isRequired,
-  replyTo: PropTypes.string.isRequired,
-  message: PropTypes.string
-};

@@ -3,15 +3,18 @@ import React, { Component } from 'react';
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
 import Breadcrumbs from './Breadcrumbs.jsx';
 import spinner from '../HOC/Spinner.jsx'
-import { clearCurrentListing_dispatch } from '../actions/listing';
-import Button from 'react-md/lib/Buttons/Button'; 
+import CreateListing from '../containers/CreateListing.jsx'
 import TimeAgo from './TimeAgo.jsx';
 import {ExpiresIn} from './TimeLeft.jsx';
 import {NetworkAvatar} from './Avatars.jsx';
-import CreateListing from '../containers/CreateListing.jsx'
+import MessageUser from './MessageUser.jsx';
 
+import { clearCurrentListing_dispatch } from '../actions/listing';
+
+import Button from 'react-md/lib/Buttons/Button'
 
 /*------------------- ListingDetail component ----------------------*/
 
@@ -45,7 +48,8 @@ class ListingDetail extends Component {
         const wasItEdited = this.props.currentListing.createdAt !== this.props.currentListing.updatedAt;
         const shouldRenderDetail = this.props.currentListing.id && !this.state.edit;
         const shouldRenderForm = isItMyListing && this.props.currentListing.id && this.state.edit;
-        
+        const label =  'Message ' + this.props.currentListing.author.userId;
+        const subject = '[' + this.props.currentListing.name.slice(0, 10) + '...] ';
         return (
             <div>
             { error &&  <h3 className="error"> { error.response.status } / { error.response.statusText } </h3> }
@@ -71,7 +75,10 @@ class ListingDetail extends Component {
                                 onClick={this.onEditClick}
                             />
                             :
+                            <div>
                             <h5 className="selected-item-author">listed by <Link to={`/user/${this.props.currentListing.author.id}`}>{this.props.currentListing.author.userId}</Link></h5>
+                            <MessageUser label={label} subject={subject} />
+                            </div>
                         }
                         <p className="listing-detail-timestamp">Created on {this.props.currentListing.created} </p><TimeAgo time={this.props.currentListing.createdAt} />
                         {wasItEdited ? <div className="modified-timestamp"><p className="listing-detail-timestamp">Updated on {this.props.currentListing.modified}</p><TimeAgo time={this.props.currentListing.updatedAt} /></div>

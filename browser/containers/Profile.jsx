@@ -97,8 +97,8 @@ class Profile extends Component {
                             <TableColumn>
                                 <TextField
                                 id="bio"
-                                maxLength={240}
-                                errorText="Bio must be no more than 240 characters. Less is more!"
+                                maxLength={140}
+                                errorText="Bio must be no more than 140 characters. Less is more!"
                                 rows={2}
                                 name="bio"
                                 value={this.state.bio}
