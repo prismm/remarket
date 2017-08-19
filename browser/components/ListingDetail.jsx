@@ -49,7 +49,7 @@ class ListingDetail extends Component {
         const shouldRenderDetail = this.props.currentListing.id && !this.state.edit;
         const shouldRenderForm = isItMyListing && this.props.currentListing.id && this.state.edit;
         const label =  'Message ' + this.props.currentListing.author.userId;
-        const subject = '[' + this.props.currentListing.name.slice(0, 10) + '...] ';
+        const subject = '[' + this.props.currentListing.name.slice(0, 15) + '...] ';
         return (
             <div>
             { error &&  <h3 className="error"> { error.response.status } / { error.response.statusText } </h3> }
