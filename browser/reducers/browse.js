@@ -3,7 +3,7 @@ const initialState = {
     user: {},
     listing: {},
     userListings: {},
-    message: {},
+    message: '',
     destination: '/home'
 }
 

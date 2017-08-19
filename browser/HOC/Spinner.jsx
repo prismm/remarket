@@ -12,7 +12,6 @@ const isEmpty = (prop) => (
 
 const Spinner = (loadingProp) => (WrappedComponent) => {
   return class LoadingHOC extends Component {
-
     render() {
       return isEmpty(this.props[loadingProp]) ? <div className="loader" /> : <WrappedComponent {...this.props} />;
     }

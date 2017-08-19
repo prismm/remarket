@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { messageUser_dispatch } from '../actions/user';
+import { messageUser_dispatch, messageSent_action } from '../actions/user';
 
-import TransitionGroup from 'react-addons-transition-group';
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import Card from 'react-md/lib/Cards/Card';
 import Button from 'react-md/lib/Buttons/Button'; 
 import TextField from 'react-md/lib/TextFields';
@@ -16,10 +16,13 @@ class MessageUser extends Component {
     constructor(props){
         super(props);
         this.state = {
-            on: false
+            on: false,
+            subject: this.props.subject ? this.props.subject : '',
+            waiting: false
         }
         this.showMessage = this.showMessage.bind(this);
         this.hideMessage = this.hideMessage.bind(this);
+        this.handleSubjectChange = this.handleSubjectChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -31,13 +34,29 @@ class MessageUser extends Component {
         this.setState({on: false});
     }
 
+    componentWillReceiveProps(nextProps){
+        if (nextProps.messageSent){
+            console.log("we are in here")
+            this.setState({on: false, waiting: false});
+        }
+    }
+
+    ComponentWillUnmount(){
+        return this.props.clearMessage();
+    }
+
+    handleSubjectChange(subject){
+        this.setState({subject: subject});
+    }
+
     handleSubmit(event){
         event.preventDefault();
         const from = this.props.sender;
         const to = this.props.currentListing.author ? this.props.currentListing.author : this.props.receiver;
         const message = event.target.message.value;
-        const subject = this.props.subject ? this.props.subject + event.target.subject.value  : event.target.subject.value;
+        const subject = event.target.subject.value;
         this.props.messageUser(from, to, message, subject);
+        this.setState({waiting: true});
     }
 
     render(){
@@ -52,13 +71,17 @@ class MessageUser extends Component {
                 className="message-button"
                 onClick={() => this.showMessage()}
             />}
-            <TransitionGroup>
+            <CSSTransitionGroup
+                transitionName="md-cross-fade"
+                transitionEnterTimeout={300}
+                transitionLeaveTimeout={150}
+            >
             {this.state.on &&
             <Card className="md-card md-background--card md-cell--12 message-card md-cross-fade">
             <form onSubmit={this.handleSubmit} name={this.props.label}>
                 <div>
                     <label htmlFor="subject"><small>subject</small></label>
-                    <TextField name="subject" type="text" />
+                    <TextField name="subject" type="text" value={this.state.subject} onChange={this.handleSubjectChange} />
                 </div>
                 <div>
                     <label htmlFor="message"><small>body</small></label>
@@ -71,11 +94,16 @@ class MessageUser extends Component {
                     type="submit"
                     className="message-button send-message"
                 />
-                { sent.response &&  <div> { sent.response.data } </div> }
             </form>
             </Card>
             }
-            </TransitionGroup>
+            </CSSTransitionGroup>
+            { this.state.waiting &&
+                <div>
+                    Sending...
+                </div>
+            }
+            {   sent &&  <div> { sent } </div> }
         </div>
         )}
 }
@@ -101,7 +129,8 @@ const mapDispatchToProps = dispatch => {
 return {
     messageUser: (from, to, message, subject) => {
         dispatch(messageUser_dispatch(from, to, message, subject))
-    }
+    },
+    clearMessage: () => dispatch(messageSent_action(null))
 }
 }
 

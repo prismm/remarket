@@ -49,7 +49,7 @@ class ListingDetail extends Component {
         const shouldRenderDetail = this.props.currentListing.id && !this.state.edit;
         const shouldRenderForm = isItMyListing && this.props.currentListing.id && this.state.edit;
         const label =  'Message ' + this.props.currentListing.author.userId;
-        const subject = '[' + this.props.currentListing.name.slice(0, 15) + '...] ';
+        const subject = '[Re: ' + this.props.currentListing.name + '] ';
         return (
             <div>
             { error &&  <h3 className="error"> { error.response.status } / { error.response.statusText } </h3> }
@@ -62,7 +62,7 @@ class ListingDetail extends Component {
                         <img className="item-img" src={ this.props.currentListing.imageUrl } />
                     </div>
                     <div className="md-cell md-cell--1" />
-                    <div className="listing-body md-cell md-cell--5">
+                    <div className="listing-body md-cell md-cell--6">
                     <div className="item-descr">
                         <h3 className="selected-item-name">{this.props.currentListing.name}</h3>
                         <h3 className="selected-item-category">{this.props.currentListing.category}</h3>

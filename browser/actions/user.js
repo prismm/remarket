@@ -12,7 +12,7 @@ const editUser_action = changes => ({ type: 'EDIT_USER', changes });
 //sets state.browse, not state.user:
 const viewUser_action = user => ({ type: 'VIEW_USER', user });
 const viewUserListings_action = listings => ({ type: 'VIEW_USER_LISTINGS', listings });
-const messageSent_action = response => ({ type: 'MESSAGE_SENT', response });
+export const messageSent_action = response => ({ type: 'MESSAGE_SENT', response });
 export const clearViewUser_action = () => ({ type: 'CLEAR_USER' });
 export const setDestination_action = destination => ({ type: 'SET_DESTINATION', destination });
 
