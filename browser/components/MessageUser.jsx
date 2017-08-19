@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { messageUser_dispatch, messageSent_action } from '../actions/user';
+import Loader from '../HOC/Loader.jsx'
 
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import Card from 'react-md/lib/Cards/Card';
@@ -100,10 +101,10 @@ class MessageUser extends Component {
             </CSSTransitionGroup>
             { this.state.waiting &&
                 <div>
-                    Sending...
+                    <Loader loadingText="Sending...(this may take a few minutes)" />
                 </div>
             }
-            {   sent &&  <div> { sent } </div> }
+            {   sent &&  <div className="response-message"> { sent } </div> }
         </div>
         )}
 }
@@ -130,8 +131,11 @@ return {
     messageUser: (from, to, message, subject) => {
         dispatch(messageUser_dispatch(from, to, message, subject))
     },
-    clearMessage: () => dispatch(messageSent_action(null))
+    clearMessage: () => {
+        console.log("IS THIS EVER HAPPENING");
+        return dispatch(messageSent_action(null))
+    }
 }
 }
-
+//clearMessage not working -- loader message floats over text beneath
 export default connect(mapStateToProps, mapDispatchToProps)(MessageUser);
