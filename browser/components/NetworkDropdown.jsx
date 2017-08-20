@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Dropdown from 'react-toolbox/lib/dropdown';
 
 /*----------------------- MyOffers Component ---------------------------*/
-class MyOffers extends Component {
+class NetworkDropdown extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -12,8 +12,8 @@ class MyOffers extends Component {
     }
 
     handleChange(value){
-        console.log(value);
         this.setState({value: value});
+        console.log(value);
     }
 
     render(){
@@ -26,7 +26,6 @@ class MyOffers extends Component {
 
         return (
         <div>
-            <h3>My Offers</h3>
             <Dropdown
                 auto
                 onChange={this.handleChange}
@@ -37,4 +36,4 @@ class MyOffers extends Component {
     )}
 }
 
-export default MyOffers;
+export default NetworkDropdown;

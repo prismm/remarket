@@ -1,363 +1,378 @@
-    body {
+* {
+    font-family: avenir;
+    color: black
+}
+
+body {
+    color: #F50057;
+    margin: 15px;
+    a {
+        text-decoration: none;
+    }
+    .site-header {
+        float: left;
+        margin-bottom: none;
+    }
+    .site-nav-link {
+        float: right;
+    }
+    hr {
+        clear: both;
+    }
+    nav a {
+        margin: 1em;
+    }
+    .md-text-field-icon-container {
+        margin: -1em;
+    }
+    .listing-container {
+        margin: 20px 30px 20px 0;
+    }
+    .submit {
+        border: 2px solid black;
+        clear: both;
+        margin-top: 15px;
+        background-color: yellow;
+    }
+    .md-dialog--centered {
+        padding: 0 0 20px 20px;
+    }
+    .account-nav li {
+        list-style: none;
+        font-size: 18px;
+        font-weight: bold;
+        line-height: 2em;
+        padding-left: 20px;
+    }
+    .profile-form {
+        align-items: center;
+        justify-content: center;
+    }
+    .my-networks {
+        display: block;
+    }
+    .network-li {
+        list-style: none;
+        color: black;
+        font-size: 14px;
+        line-height: 2em;
+    }
+    .renew-picker .md-text-field-container--input {
+        display: none;
+    }
+    .create-listing {
+        align-items: center;
+        justify-content: center;
+    }
+    .item-img {
+        width: 100%;
+        padding: 10px;
+    }
+    .listing-images {
+        padding: 0 10px 10px 10px;
+    }
+    .file-title {
+        font-size: 14px;
+    }
+    .md-card-title--title {
+        font-size: 14px;
+    }
+    .selected-item-category {
+        font-style: italic;
+    }
+    .edit-listing-button {
+        margin-bottom: 15px;
+    }
+    .listing-detail-timestamp {
+        font-style: italic;
+    }
+    .time-ago {
+        color: hotpink;
+    }
+    .avatar {
+        margin: 5px 0 10px 0;
+    }
+    .inline-rel-container {
+        display: inline-block;
+        position: relative;
+    }
+    .public-profile-card {
+        padding: 2em;
+        margin: auto
+    }
+    .public-profile-username {
+        font-style: italic;
+        font-weight: bolder;
+        margin-right: 0.5em;
+    }
+    .network-avatar {
+        margin-right: 0.5em
+    }
+    .divider {
         color: #F50057;
-        margin: 15px;
-        a {
-            text-decoration: none;
-        }
-        .site-header {
-            float: left;
-            margin-bottom: none;
-        }
-        .site-nav-link {
-            float: right;
-        }
-        hr {
-            clear: both;
-        }
-        nav a {
-            margin: 1em;
-        }
-        .md-text-field-icon-container {
-            margin: -1em;
-        }
-        .listing-container {
-            margin: 20px 30px 20px 0;
-        }
-        .submit {
-            border: 2px solid black;
-            clear: both;
-            margin-top: 15px;
-            background-color: yellow;
-        }
-        .md-dialog--centered {
-            padding: 0 0 20px 20px;
-        }
-        .account-nav li {
-            list-style: none;
-            font-size: 18px;
-            font-weight: bold;
-            line-height: 2em;
-            padding-left: 20px;
-        }
-        .profile-form {
-            align-items: center;
-            justify-content: center;
-        }
-        .my-networks {
-            display: block;
-        }
-        .network-li {
-            list-style: none;
-            color: black;
-            font-size: 14px;
-            line-height: 2em;
-        }
-        .renew-picker .md-text-field-container--input {
-            display: none;
-        }
-        .create-listing {
-            align-items: center;
-            justify-content: center;
-        }
-        .item-img {
-            width: 100%;
-            padding: 10px;
-        }
-        .listing-images {
-            padding: 0 10px 10px 10px;
-        }
-        .file-title {
-            font-size: 14px;
-        }
-        .md-card-title--title {
-            font-size: 14px;
-        }
-        .selected-item-category {
-            font-style: italic;
-        }
-        .edit-listing-button {
-            margin-bottom: 15px;
-        }
-        .listing-detail-timestamp {
-            font-style: italic;
-        }
-        .time-ago {
-            color: hotpink;
-        }
-        .avatar {
-            margin: 5px 0 10px 0;
-        }
-        .inline-rel-container {
-            display: inline-block;
-            position: relative;
-        }
-        .public-profile-card {
-            padding: 2em;
-            margin: auto
-        }
-        .public-profile-username {
-            font-style: italic;
-            font-weight: bolder;
-            margin-right: 0.5em;
-        }
-        .network-avatar {
-            margin-right: 0.5em
-        }
-        .divider {
-            color: #F50057;
-            margin-right: 0.5em
-        }
-        .no-listings {
-            font-style: italic;
-            margin-top: 0.5em;
-        }
-        .profile-divider {
-            margin: 2em 0 1em 0;
-        }
-        .time-left {
-            color: #F50057;
-            font-style: italic
-        }
-        .tab-container {
-            margin: auto;
-            margin-top: 2em;
-            margin-bottom: 2em;
-            border: 2px solid #673ab7;
-            border-radius: 3px;
-            padding: 1em;
-        }
-        .login-panel {
-            padding: 1em
-        }
-        .login-signup-form {
-            padding-top: 1em;
-        }
-        .login-submit {
-            margin: auto;
-        }
-        .local-login {
-            margin-bottom: 1em;
-            font-weight: bold;
-        }
-        .md-background--primary {
-            background: #fff;
-            color: #673ab7
-        }
-        .google-login {
-            // background: 
-        }
-        .google-text {
-            color: #EA4335;
-            font-weight: bold;
-        }
-        .facebook-login {
-            // background: #3b5998;
-        }
-        .facebook-text {
-            color: #3b5998;
-            font-weight: bold;
-        }
-        .md-tab-label {
-            color: #673ab7;
-        }
-        .logo {
-            margin-right: 8px;
-        }
-        .remarket-logo {
-            float: left;
-            margin-right: 0.5em;
-        }
-        .my-networks-test {
-            float: left;
-        }
-        .add-a-network {
-            padding: 8px;
-        }
-        .forgot-pw-link {
-            text-align: left;
-            margin-bottom: 1em;
-            font-style: italic;
-        }
-        .login-error {
-            margin-top: 1em;
-            margin-bottom: 2em;
-            color: #F50057;
-            font-weight: bold;
-            font-style: italic;
-        }
-        .error {
-            margin-left: 1em;
-            margin-top: 1em;
-            margin-bottom: 2em;
-            color: #FC0096;
-        }
-        .success {
-            margin-left: 1em;
-            margin-top: 1em;
-            margin-bottom: 2em;
-            color: #FC0096;
-        }
-        .redirecting {
-            font-weight: normal;
-            font-style: italic;
-        }
-        .listing-not-found {
-            font-weight: normal;
-            font-style: italic;
-        }
-        .expired {
-            color: #F50057;
-            font-style: italic;
-        }
-        .uploaded-pic {
-            height: 160px;
-        }
-        .uploaded-pic-img {
-            height: auto
-        }
-        .uploaded-pics-container {
-            max-width: 600px
-        }
-        .md-card-title:last-child {
-            padding: 1em;
-        }
-        .file-title {
-            float: right
-        }
-        .md-media {
-            height: 160px;
-        }
-        .abort-upload {
-            margin-right: 1em;
-        }
-        .message-button-container {
-            margin-bottom: 1em;
-        }
-        .message-card {
-            padding: 1em;
-            padding-right: 2em;
-        }
-        .send-message {
-            margin-top: 1em;
-        }
-        /* Roll-up transition */
-        .roll-up-leave {
-            transform: translate(0, 0);
-            opacity: 1;
-        }
-        .roll-up-leave.roll-up-leave-active {
-            transform: translate(-100%, 0);
-            opacity: 0;
-            transition: opacity .8s ease-in-out, transform .8s ease-in-out;
-        }
-        .roll-up-enter {
-            transform: translate(-100%, 0);
-            opacity: 0;
-        }
-        .roll-up-enter.roll-up-enter-active {
-            transform: translate(0, 0);
-            opacity: 1;
-            transition: opacity .8s ease-in-out, transform .8s ease-in-out;
-        }
-        .roll-up-height {
-            transition: height .8s ease-in-out;
-        }
-        .vertical-centered-box {
-            // position: absolute;
-            width: 100%;
+        margin-right: 0.5em
+    }
+    .no-listings {
+        font-style: italic;
+        margin-top: 0.5em;
+    }
+    .profile-divider {
+        margin: 2em 0 1em 0;
+    }
+    .time-left {
+        color: #F50057;
+        font-style: italic
+    }
+    .tab-container {
+        margin: auto;
+        margin-top: 2em;
+        margin-bottom: 2em;
+        border: 2px solid #673ab7;
+        border-radius: 3px;
+        padding: 1em;
+    }
+    .login-panel {
+        padding: 1em
+    }
+    .login-signup-form {
+        padding-top: 1em;
+    }
+    .login-submit {
+        margin: auto;
+    }
+    .local-login {
+        margin-bottom: 1em;
+        font-weight: bold;
+    }
+    .md-background--primary {
+        background: #fff;
+        color: #673ab7
+    }
+    .google-login {
+        // background: 
+    }
+    .google-text {
+        color: #EA4335;
+        font-weight: bold;
+    }
+    .facebook-login {
+        // background: #3b5998;
+    }
+    .facebook-text {
+        color: #3b5998;
+        font-weight: bold;
+    }
+    .md-tab-label {
+        color: #673ab7;
+    }
+    .logo {
+        margin-right: 8px;
+    }
+    .remarket-logo {
+        float: left;
+        margin-right: 0.5em;
+    }
+    .my-networks-test {
+        float: left;
+    }
+    .add-a-network {
+        padding: 8px;
+    }
+    .forgot-pw-link {
+        text-align: left;
+        margin-bottom: 1em;
+        font-style: italic;
+    }
+    .login-error {
+        margin-top: 1em;
+        margin-bottom: 2em;
+        color: #F50057;
+        font-weight: bold;
+        font-style: italic;
+    }
+    .error {
+        margin-left: 1em;
+        margin-top: 1em;
+        margin-bottom: 2em;
+        color: #FC0096;
+    }
+    .success {
+        margin-left: 1em;
+        margin-top: 1em;
+        margin-bottom: 2em;
+        color: #FC0096;
+    }
+    .redirecting {
+        font-weight: normal;
+        font-style: italic;
+    }
+    .listing-not-found {
+        font-weight: normal;
+        font-style: italic;
+    }
+    .expired {
+        color: #F50057;
+        font-style: italic;
+    }
+    .uploaded-pic {
+        height: 160px;
+    }
+    .uploaded-pic-img {
+        height: auto
+    }
+    .uploaded-pics-container {
+        max-width: 600px
+    }
+    .md-card-title:last-child {
+        padding: 1em;
+    }
+    .file-title {
+        float: right
+    }
+    .md-media {
+        height: 160px;
+    }
+    .abort-upload {
+        margin-right: 1em;
+    }
+    .message-button-container {
+        margin-bottom: 1em;
+    }
+    .message-card {
+        padding: 1em;
+        padding-right: 2em;
+    }
+    .send-message {
+        margin-top: 1em;
+    }
+    .network-submit-message {
+        margin-top: 1em;
+        font-style: italic;
+        font-weight: bolder;
+    }
+    .network-submit-note {
+        margin-top: 1em;
+        font-weight: bold;
+        font-style: none;
+    }
+    /* Roll-up transition */
+    .roll-up-leave {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+    .roll-up-leave.roll-up-leave-active {
+        transform: translate(-100%, 0);
+        opacity: 0;
+        transition: opacity .8s ease-in-out, transform .8s ease-in-out;
+    }
+    .roll-up-enter {
+        transform: translate(-100%, 0);
+        opacity: 0;
+    }
+    .roll-up-enter.roll-up-enter-active {
+        transform: translate(0, 0);
+        opacity: 1;
+        transition: opacity .8s ease-in-out, transform .8s ease-in-out;
+    }
+    .roll-up-height {
+        transition: height .8s ease-in-out;
+    }
+    .vertical-centered-box {
+        // position: absolute;
+        width: 100%;
+        // height: 100%;
+        text-align: center;
+        margin: 1em 0 2em 0;
+        display: block;
+        overflow: auto;
+        &:after {
+            content: '';
+            // display: inline-block;
             // height: 100%;
-            text-align: center;
-            margin: 1em 0 2em 0;
+            // vertical-align: middle;
+            margin-right: -0.25em;
             display: block;
             overflow: auto;
-            &:after {
-                content: '';
-                // display: inline-block;
-                // height: 100%;
-                // vertical-align: middle;
-                margin-right: -0.25em;
-                display: block;
-                overflow: auto;
-            }
-            section {
-                // display: inline-block;
-                vertical-align: middle;
-                overflow: auto;
-                // width: 10%;
-                text-align: center;
-                // padding-top: 100px;
-            }
         }
-        .dot {
-            border-radius: 50%;
-        }
-        @keyframes loader-1 {
-            0% {
-                transform: translate3d(0, 0, 0);
-                transition-timing-function: ease-out;
-            }
-            50% {
-                transform: translate3d(0, 6px, 0);
-                transition-timing-function: ease-out;
-            }
-        }
-        // @keyframes loader-1{ 
-        //     0% {-webkit-transform: translate3d(0,0,0);
-        //         -moz-transform: translate3d(0,0,0);
-        //         -ms-transform: translate3d(0,0,0);
-        //         transform: translate3d(0,0,0); 
-        //         transition-timing-function: ease-out; 
-        //     } 50% {-webkit-transform: translate3d(0,6px,0);
-        //         -moz-transform: translate3d(0,6px,0);
-        //         -ms-transform: translate3d(0,6px,0);
-        //         transform: translate3d(0,6px,0); 
-        //         transition-timing-function: ease-out; 
-        //     }}
-        .loader-1 {
-            width: 30px;
-            // height: 60px;
-            font-size: 0;
+        section {
+            // display: inline-block;
+            vertical-align: middle;
+            overflow: auto;
+            // width: 10%;
             text-align: center;
-            // margin: 0 auto;
-            float: left
-        }
-        .loader-1 .dot {
-            width: 4px;
-            height: 4px;
-            display: inline-block;
-            margin-right: 3px;
-            background-color: #FC0096;
-            -webkit-animation: loader-1 1s infinite;
-            -moz-animation: loader-1 1s infinite;
-            -o-animation: loader-1 1s infinite;
-            animation: loader-1 1s infinite;
-        }
-        .loader-1 .dot:nth-child(1) {
-            -webkit-animation-delay: 0.48s;
-            -moz-animation-delay: 0.48s;
-            -o-animation-delay: 0.48s;
-            animation-delay: 0.48s;
-        }
-        .loader-1 .dot:nth-child(2) {
-            -webkit-animation-delay: 0.24s;
-            -moz-animation-delay: 0.24s;
-            -o-animation-delay: 0.24s;
-            animation-delay: 0.24s;
-        }
-        .loader-1 .dot:nth-child(3) {
-            -webkit-animation-delay: 0s;
-            -moz-animation-delay: 0s;
-            -o-animation-delay: 0s;
-            animation-delay: 0s;
-        }
-        .loader-text {
-            float: left;
-            font-weight: bolder;
-            color: #FC0096
-        }
-        .response-message {
-            margin-top: 1em;
-            color: #FC0096;
-            font-style: italic;
+            // padding-top: 100px;
         }
     }
+    .dot {
+        border-radius: 50%;
+    }
+    @keyframes loader-1 {
+        0% {
+            transform: translate3d(0, 0, 0);
+            transition-timing-function: ease-out;
+        }
+        50% {
+            transform: translate3d(0, 6px, 0);
+            transition-timing-function: ease-out;
+        }
+    }
+    // @keyframes loader-1{ 
+    //     0% {-webkit-transform: translate3d(0,0,0);
+    //         -moz-transform: translate3d(0,0,0);
+    //         -ms-transform: translate3d(0,0,0);
+    //         transform: translate3d(0,0,0); 
+    //         transition-timing-function: ease-out; 
+    //     } 50% {-webkit-transform: translate3d(0,6px,0);
+    //         -moz-transform: translate3d(0,6px,0);
+    //         -ms-transform: translate3d(0,6px,0);
+    //         transform: translate3d(0,6px,0); 
+    //         transition-timing-function: ease-out; 
+    //     }}
+    .loader-1 {
+        width: 30px;
+        // height: 60px;
+        font-size: 0;
+        text-align: center;
+        // margin: 0 auto;
+        float: left
+    }
+    .loader-1 .dot {
+        width: 4px;
+        height: 4px;
+        display: inline-block;
+        margin-right: 3px;
+        background-color: #FC0096;
+        -webkit-animation: loader-1 1s infinite;
+        -moz-animation: loader-1 1s infinite;
+        -o-animation: loader-1 1s infinite;
+        animation: loader-1 1s infinite;
+    }
+    .loader-1 .dot:nth-child(1) {
+        -webkit-animation-delay: 0.48s;
+        -moz-animation-delay: 0.48s;
+        -o-animation-delay: 0.48s;
+        animation-delay: 0.48s;
+    }
+    .loader-1 .dot:nth-child(2) {
+        -webkit-animation-delay: 0.24s;
+        -moz-animation-delay: 0.24s;
+        -o-animation-delay: 0.24s;
+        animation-delay: 0.24s;
+    }
+    .loader-1 .dot:nth-child(3) {
+        -webkit-animation-delay: 0s;
+        -moz-animation-delay: 0s;
+        -o-animation-delay: 0s;
+        animation-delay: 0s;
+    }
+    .loader-text {
+        float: left;
+        font-weight: bolder;
+        color: #FC0096
+    }
+    .response-message {
+        margin-top: 1em;
+        color: #FC0096;
+        font-style: italic;
+    }
+}

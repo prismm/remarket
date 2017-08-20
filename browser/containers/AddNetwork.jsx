@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import SelectField from 'react-md/lib/SelectFields';
 import TextField from 'react-md/lib/TextFields';
+import Dropdown from 'react-toolbox/lib/dropdown';
 import Button from 'react-md/lib/Buttons/Button';
 import {NetworkAvatar} from '../components/Avatars.jsx'
 
@@ -16,12 +17,15 @@ class AddNetwork extends Component {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleEmailChange = this.handleEmailChange.bind(this);
-        this.handleNetworkChange = this.handleNetworkChange.bind(this);
+        // this.handleNetworkChange = this.handleNetworkChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.matchDomain = this.matchDomain.bind(this);
         this.state = {
+                        value: null,
                         network: {suggestedDomain: '...'},
                         verificationEmail: '',
-                        error: null
+                        error: null,
+                        submit: false
                     };
     }
 
@@ -31,40 +35,49 @@ class AddNetwork extends Component {
     }
 
     matchDomain(verificationEmail){
-        let domain = this.state.network.suggestedDomain.slice(this.state.network.suggestedDomain.indexOf('@')).toLowerCase();
+        let domain = this.state.network.suggestedDomain.slice(this.state.network.suggestedDomain.indexOf('@') + 1).toLowerCase();
         let inputDomain = verificationEmail.slice(domain.length * -1).toLowerCase();
         let match = (domain === inputDomain);
         this.setState( {error: !match })
-
     }
 
-    handleNetworkChange(value, index, event) { // eslint-disable-line no-unused-vars
+    // handleNetworkChange(value, index, event) { // eslint-disable-line no-unused-vars
+    //     let thisNetwork = this.props.networks.filter(network => (network.id === value))[0];
+    //     this.setState({ network: thisNetwork, verificationEmail: thisNetwork.suggestedDomain, error: false });
+    // }
+
+    handleChange(value){
         let thisNetwork = this.props.networks.filter(network => (network.id === value))[0];
-        this.setState({ network: thisNetwork, verificationEmail: thisNetwork.suggestedDomain, error: false });
+        this.setState({value: value, network: thisNetwork, verificationEmail: thisNetwork.suggestedDomain, error: false});
     }
 
     handleSubmit(event){
         event.preventDefault();
+        this.setState({submit: true})
         this.props.addNetwork(this.props.user, this.state.network, this.state.verificationEmail);
     }
 
     render(){
         //still need to: default scope {confirmed: true} for all my networks queries! using front-end workaround right now
+        const networksArr = [];
+        this.props.networks.map(network => {(
+            networksArr.push({
+                value: network.id,
+                label: network.name
+            })
+        )});
         return (
                 <div className="md-grid">
                 <div className="md-cell--2 my-networks-test" />
-                
                     <div className="md-cell--5 add-a-network my-networks-test">
                         <h3>Add a Network</h3>
                         <form onSubmit={this.handleSubmit}>
                             <div className="add-network-fields">
-                            <SelectField
-                                id="chooseNetwork"
-                                placeholder="Choose your Network"
-                                itemLabel="name"
-                                itemValue="id"
-                                onChange={this.handleNetworkChange}
-                                menuItems={this.props.networks}
+                            <Dropdown
+                                auto
+                                onChange={this.handleChange}
+                                source={networksArr}
+                                value={this.state.value}
                             />
                             <TextField
                                 id="verificationEmail"
@@ -73,12 +86,13 @@ class AddNetwork extends Component {
                                 label="Verify your network with your associated email address"
                                 value={this.state.verificationEmail}
                                 error={this.state.error}
-                                errorText="Your email domain must match network domain in order to verify affiliation."
+                                errorText="Your email domain must match the network domain in order to verify affiliation."
                                 required
                             />
                             </div>
-                            <Button flat primary label="Submit" type="submit" disabled={this.state.error} className="submit" />
+                            <Button raised primary label="Submit" type="submit" disabled={this.state.error} />
                         </form>
+                        {this.state.submit &&<div className="network-submit-message"><div>Thank you!</div><div className="network-submit-note">One last step: check your email inbox for {this.state.verificationEmail} to confirm that you're indeed a part of this network.</div></div>}
                     </div>
                     <div className="md-cell--4 md-grid my-networks my-networks-test">
                     <div>
@@ -120,3 +134,14 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddNetwork);
+
+/*
+                            <SelectField
+                                id="chooseNetwork"
+                                placeholder="Choose your Network"
+                                itemLabel="name"
+                                itemValue="id"
+                                onChange={this.handleNetworkChange}
+                                menuItems={this.props.networks}
+                            />
+                            */

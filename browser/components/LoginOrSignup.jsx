@@ -13,13 +13,17 @@ class LoginOrSignup extends Component {
     constructor(props){
         super(props);
         this.state = {
-            activeTabIndex: Number(props.status === 'signup')
+            activeTabIndex: Number(props.route.method === 'signup')
         }
         this.handleTabChange = this.handleTabChange.bind(this);
     }
 
     handleTabChange(activeTabIndex){
         this.setState({activeTabIndex})
+    }
+
+    componentWillReceiveProps(nextProps){
+        this.setState({activeTabIndex: Number(nextProps.route.method === 'signup')})
     }
 
     render (){

@@ -23,7 +23,7 @@ export const me_dispatch = () => dispatch => {
     return axios.get('/auth/me')
         .then(res => {
             let user = res.data;
-            user.networks = user.networks.filter(network => network.network_affiliations.confirmed);
+            if (user) user.networks = user.networks.filter(network => network.network_affiliations.confirmed);
             dispatch(getUser_action(user || defaultUser))
         })
         .catch(console.error)
@@ -45,7 +45,7 @@ export const viewUser_dispatch = userId => dispatch => {
     return axios.get(`/api/users/${userId}`)
         .then(res => {
             let user = res.data;
-            user.networks = user.networks.filter(network => network.network_affiliations.confirmed);
+            if (user) user.networks = user.networks.filter(network => network.network_affiliations.confirmed);
             dispatch(viewUser_action(user))
         })
         .catch(error =>
@@ -77,7 +77,9 @@ export const auth_dispatch = (email, password, method) => dispatch => {
     let currentDestination = store.getState().browse.destination;
     return axios.post(`/auth/${method}`, { email, password })
         .then(res => {
-            dispatch(getUser_action(res.data));
+            let user = res.data;
+            if (user) user.networks = user.networks.filter(network => network.network_affiliations.confirmed);
+            dispatch(getUser_action(user));
             browserHistory.push(currentDestination); //get this destination from the store! browse.destination
         })
         .catch(error =>

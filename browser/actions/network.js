@@ -39,7 +39,9 @@ export const fetchSingleNetwork_dispatch = networkId => dispatch => {
 export const addMyNetwork_dispatch = (user, network, email) => dispatch => {
     axios.post(`/api/users/${user.id}/networks/${network.id}`, { email })
         .then(res => {
-            dispatch(addMyNetwork_action(res.data));
+            let thisUser = res.data;
+            thisUser.networks = thisUser.networks.filter(eachNetwork => eachNetwork.network_affiliations.confirmed);
+            dispatch(addMyNetwork_action(thisUser));
             dispatch(setCurrentNetwork_action(network));
         })
         .catch(console.error);

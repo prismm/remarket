@@ -87,7 +87,8 @@ ReactDOM.render(
         <IndexRoute component={ListingsContainer} />
         <Route path="account-created" redirectTo="/login" redirectToName="login" component={Success} />
         <Route path="network-added" redirectTo="/account/managenetworks" redirectToName="your account" component={Success} />
-        <Route path="login" component={LoginOrSignup} />
+        <Route path="login" method="login" component={LoginOrSignup} />
+        <Route path="signup" method="signup" component={LoginOrSignup} />
         <Route path="home" component={ListingsContainer} onEnter={loadEverything} />
         <Route path="for-sale" component={ForSaleListingsList} />
         <Route path="housing" component={HousingListingsList} />
