@@ -4,6 +4,7 @@ module.exports = {
         path: __dirname,
         filename: './public/bundle.js' // assumes your bundle.js will also be in the root of your project folder
     },
+    resolve: { extensions: ['.scss', '.css', '.js', '.json'] },
     devtool: 'source-map',
     module: {
         rules: [{
@@ -20,6 +21,22 @@ module.exports = {
                     'style-loader',
                     'css-loader',
                     'sass-loader'
+                ]
+            },
+            {
+                test: /\.css?$/, //for the sake of react-toolbox
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: true,
+                            sourceMap: true,
+                            importLoaders: 1,
+                            localIdentName: '[name]--[local]--[hash:base64:8]'
+                        }
+                    },
+                    'postcss-loader'
                 ]
             }
         ]

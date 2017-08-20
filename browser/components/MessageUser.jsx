@@ -132,7 +132,6 @@ return {
         dispatch(messageUser_dispatch(from, to, message, subject))
     },
     clearMessage: () => {
-        console.log("IS THIS EVER HAPPENING");
         return dispatch(messageSent_action(null))
     }
 }
