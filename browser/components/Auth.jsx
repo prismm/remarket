@@ -66,9 +66,9 @@ class AuthForm extends Component {
             : null}
             <Button raised primary label={ displayName } type="submit" className="local-login login-submit md-cell--12" />
           { error &&  <div className="login-error"> { error.response.data } </div> }
+          <p><Button raised primary label={ googleSignin } type="submit" className="google-login login-submit md-cell--12" /></p>
+          <p><Button raised primary label={ fcbkSignin } type="submit" className="facebook-login login-submit md-cell--12" /></p>
         </form>
-        <p><Button raised primary label={ googleSignin } type="submit" className="google-login login-submit md-cell--12" /></p>
-        <p><Button raised primary label={ fcbkSignin } type="submit" className="facebook-login login-submit md-cell--12" /></p>
       </div>
     );
   }
