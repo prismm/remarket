@@ -53,7 +53,7 @@ class MessageUser extends Component {
     handleSubmit(event){
         event.preventDefault();
         const from = this.props.sender;
-        const to = this.props.currentListing.author ? this.props.currentListing.author : this.props.receiver;
+        const to = this.props.currentListing && this.props.currentListing.author ? this.props.currentListing.author : this.props.receiver;
         const message = event.target.message.value;
         const subject = event.target.subject.value;
         this.props.messageUser(from, to, message, subject);

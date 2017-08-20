@@ -17,7 +17,7 @@ import TableBody from 'react-md/lib/DataTables/TableBody';
 import TableRow from 'react-md/lib/DataTables/TableRow';
 import TableColumn from 'react-md/lib/DataTables/TableColumn';
 
-import { clearUser_dispatch } from '../actions/user';
+import { clearUser_dispatch, messageSent_action } from '../actions/user';
 
 /*------------------- PublicProfile component ----------------------*/
 
@@ -27,6 +27,7 @@ class PublicProfile extends Component {
     }
 
     componentWillUnmount(){
+        this.props.clearMessage();
         return this.props.clearViewUser();
     }
 
@@ -111,6 +112,7 @@ const mapStateToProps = ({user, browse}) => ({
 const mapDispatchToProps = dispatch => {
     return {
         clearViewUser: () => dispatch(clearUser_dispatch()),
+        clearMessage: () => dispatch(messageSent_action(null))
     }
 }
 

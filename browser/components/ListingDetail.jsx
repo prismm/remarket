@@ -13,6 +13,7 @@ import {NetworkAvatar} from './Avatars.jsx';
 import MessageUser from './MessageUser.jsx';
 
 import { clearCurrentListing_dispatch } from '../actions/listing';
+import { messageSent_action } from '../actions/user';
 
 import Button from 'react-md/lib/Buttons/Button'
 
@@ -29,6 +30,7 @@ class ListingDetail extends Component {
     }
 
     componentWillUnmount(){
+        this.props.clearMessage();
         return this.props.clearCurrentListing();
     }
 
@@ -132,7 +134,8 @@ const mapStateToProps = ({user, listing, network}) => ({
 
 const mapDispatchToProps = dispatch => {
     return {
-        clearCurrentListing: () => dispatch(clearCurrentListing_dispatch())
+        clearCurrentListing: () => dispatch(clearCurrentListing_dispatch()),
+        clearMessage: () => dispatch(messageSent_action(null))
     }
 }
 
