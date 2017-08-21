@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const model = require('../db');
 const Listing = model.Listing;
+const Photo = model.Photo;
 const User = model.User;
 const listingNotFound = () => (new Error('Sorry, something went wrong ... We can\'t seem to find that listing!'))
 const mailer = require('../mailer')
@@ -45,6 +46,7 @@ router.get('/user/:userId', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
+    // console.log(req.body);
     Listing.create(req.body)
         .then(newListing => Promise.all([User.findById(newListing.authorId), newListing]))
         .then(([user, newListing]) => {
@@ -100,6 +102,22 @@ router.delete('/:id', (req, res, next) => {
             }
         })
         .catch(next)
+})
+
+router.post('/:id/photos', (req, res, next) => {
+    let photos = req.body;
+    if (photos.length) {
+        return Promise.all(
+                photos.map(photo => Photo.create(photo))
+            )
+            .then(() => Listing.findById(req.params.id, { include: [{ all: true }] }))
+            .then(listing => res.json(listing))
+            .catch(next)
+    } else {
+        return Listing.findById(req.params.id, { include: [{ all: true }] })
+            .then(listing => res.json(listing))
+            .catch(next)
+    }
 })
 
 module.exports = router;

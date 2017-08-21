@@ -10,7 +10,6 @@ import UploadedFileCard from './UploadedFileCard.jsx';
 export default class ImgUpload extends PureComponent {
   constructor(props) {
     super(props);
-
     this.state = { files: {} };
     this.timeout = null;
     this.onLoad = this.onLoad.bind(this);
@@ -57,6 +56,7 @@ export default class ImgUpload extends PureComponent {
       this.setState({ progress: null });
     }, 2000);
     this.setState({ files, progress: 100 });
+    return this.props.handleUpload(this.state.files);
   }
 
   setFile(file) {

@@ -23,11 +23,10 @@ class AuthForm extends Component {
     this.setState({email: value})
   }
 
-  //LENGTH VALIDATION NEEDS TESTING
   checkPasswordChange(value){
-        value.length > 7 ? this.setState({pwLenError: false}) : this.setState({pwLenError: true})
+       if (this.props.name === 'signup') value.length > 6 ? this.setState({pwLenError: false}) : this.setState({pwLenError: true})
   }
-  
+
   forgotPassword(evt){
     evt.preventDefault();
     this.props.forgotPassword(this.state.email);
@@ -53,7 +52,7 @@ class AuthForm extends Component {
           <div>
             <label htmlFor="password"><small>Password</small></label>
             <TextField
-              onChange={this.checkPwChange}
+              onChange={this.checkPasswordChange}
               name="password" type="password"
               error={this.state.pwLenError}
               errorText="Password must be at least 7 characters"
@@ -64,7 +63,7 @@ class AuthForm extends Component {
               <a href="" onClick={ this.forgotPassword }>Forgot your password?</a>
             </div>
             : null}
-            <Button raised primary label={ displayName } type="submit" className="local-login login-submit md-cell--12" />
+            <Button raised primary label={ displayName } disabled={this.state.pwLenError} type="submit" className="local-login login-submit md-cell--12" />
           { error &&  <div className="login-error"> { error.response.data } </div> }
           <p><Button raised primary label={ googleSignin } type="submit" className="google-login login-submit md-cell--12" /></p>
           <p><Button raised primary label={ fcbkSignin } type="submit" className="facebook-login login-submit md-cell--12" /></p>

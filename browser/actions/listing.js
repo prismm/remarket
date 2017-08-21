@@ -69,3 +69,12 @@ export const deleteListing_dispatch = listing => dispatch => {
         })
         .catch(console.error);
 }
+
+export const storeUploadedPhotos_dispatch = (listing, photos) => dispatch => {
+    axios.post(`/api/listings/${listing.id}/photos`, photos)
+        .then(res => {
+            dispatch(setCurrentListing_action(res.data));
+        })
+        .catch(error =>
+            dispatch(setCurrentListing_action({ error })));
+}

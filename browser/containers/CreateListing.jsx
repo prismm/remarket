@@ -8,6 +8,8 @@ import TextField from 'react-md/lib/TextFields';
 import DatePicker from 'react-md/lib/Pickers/DatePickerContainer';
 import Button from 'react-md/lib/Buttons/Button';
 
+import ImgUpload from '../components/ImgUpload.jsx'
+
 import {createListing_dispatch, editListing_dispatch} from '../actions/listing';
 
 /*------------------- CreateListing component ----------------------*/
@@ -18,6 +20,7 @@ class CreateListing extends Component {
         this.setExpirationDate = this.setExpirationDate.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.publishEdits = this.publishEdits.bind(this);
+        this.handleFileUpload = this.handleFileUpload.bind(this);
         this.state = {
                         category: props.currentListing ? props.currentListing.category : 'for sale',
                         name: props.currentListing ? props.currentListing.name : '',
@@ -26,7 +29,8 @@ class CreateListing extends Component {
                         floorPrice: props.currentListing ? props.currentListing.floorPrice : 0,
                         askingPrice: props.currentListing ? props.currentListing.askingPrice : '?',
                         expirationDate: props.currentListing ? props.currentListing.expirationDate : new Date(),
-                        authorId: props.user.id
+                        authorId: props.user.id,
+                        files: null
                     };
     }
 
@@ -50,6 +54,12 @@ class CreateListing extends Component {
         let newExpDate = new Date(event).setHours(23, 59);
         console.log(new Date(newExpDate));
         this.setState({expirationDate: new Date(newExpDate)})
+    }
+
+    handleFileUpload(files){
+        console.log(files);
+        // this.setState({files: files});
+        console.log("this is happening");
     }
 
     render(){
@@ -137,16 +147,21 @@ class CreateListing extends Component {
                                 className="md-cell md-cell--12"
                                 required
                             />
+                            <div className="md-grid md-cell--12">
                             <DatePicker
                                 id="inline"
                                 label="Post expiration date?"
                                 name="expirationDate"
                                 value={this.state.expirationDate}
                                 inline
-                                className="md-cell date-picker"
+                                className="md-cell--4 date-picker"
                                 required
                                 onChange={this.setExpirationDate}
                                 />
+                            </div>
+                            <div className="md-grid md-cell--12">
+                                <ImgUpload handleUpload={this.handleFileUpload} />
+                            </div>
                             {this.props.currentListing ?
                                 <Button flat primary label="Publish Edits" onClick={this.publishEdits} className="submit md-cell--12 md-cell--right" />
                                 :

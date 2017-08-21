@@ -41,6 +41,14 @@ app.use(express.static(path.join(__dirname, '../public')));
 //matches all requests to api
 app.use('/api', require('./api'));
 
+//s3 router for amazon s3 requests (image storage)
+app.use('/s3', require('react-s3-uploader/s3router')({
+    bucket: 'remarket-123',
+    region: 'us-east-1',
+    headers: { 'Access-Control-Allow-Origin': '*' }, //optional
+    ACL: 'private', // this is default
+}))
+
 //serves index.html file for non-api routes
 app.get('*', (req, res, next) => {
     res.sendFile(path.join(__dirname, '../index.html'));
