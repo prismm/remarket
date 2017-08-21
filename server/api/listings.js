@@ -106,14 +106,17 @@ router.delete('/:id', (req, res, next) => {
 
 router.post('/:id/photos', (req, res, next) => {
     let photos = req.body;
+    console.log('PHOTOS IN API ROUTE', photos)
     if (photos.length) {
-        return Promise.all(
-                photos.map(photo => Photo.create(photo))
-            )
+        console.log('In the if statement -- photos');
+        let PromiseArr = photos.map(photo => Photo.create(photo));
+        console.log('Promise Arr', PromiseArr)
+        return Promise.all(PromiseArr)
             .then(() => Listing.findById(req.params.id, { include: [{ all: true }] }))
             .then(listing => res.json(listing))
             .catch(next)
     } else {
+        console.log('In the else statement -- no photos');
         return Listing.findById(req.params.id, { include: [{ all: true }] })
             .then(listing => res.json(listing))
             .catch(next)
