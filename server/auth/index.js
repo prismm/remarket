@@ -5,8 +5,9 @@ const models = require('../db');
 const User = models.User;
 const secrets = process.env.GOOGLE_CLIENT_ID ? null : require('../../google_api.js');
 const AWS = require('aws-sdk');
-const config = require('../../aws-config.json')
-    /*--------------------------------------------AWS--------------------------------------------*/
+const config = process.env.AWS_ACCESS_KEY_ID ? null : require('../../aws-config.json')
+
+/*--------------------------------------------AWS--------------------------------------------*/
 AWS.config.credentials = config;
 
 /*-------------------------------------------GOOGLE-----------------------------------------*/
