@@ -7,7 +7,7 @@ import CSSTransitionGroup from 'react-addons-css-transition-group';
 import Button from 'react-md/lib/Buttons';
 import LinearProgress from 'react-md/lib/Progress/LinearProgress';
 import FileUpload from 'react-md/lib/FileInputs/FileUpload';
-import  S3Upload from 'react-s3-uploader/s3upload.js';
+import S3Upload from '../S3Upload/s3upload.js';
 const HOST = window.location.protocol.concat('//').concat(window.location.host);
 
 import {storeUploadedPhotos_dispatch} from '../actions/listing';
@@ -36,6 +36,9 @@ class ImgUpload extends Component {
 
     //submit button handler
     this.publishPhotos = this.publishPhotos.bind(this);
+    this.photoIndexGenerator = this.photoIndexGenerator.bind(this);
+    this.getIndex = this.getIndex.bind(this);
+    this.index = 1;
   }
 
   componentWillUnmount() {
@@ -53,7 +56,12 @@ class ImgUpload extends Component {
     this.setState({ file });
   }
 
-  handleProgress(file, progress) {
+  handleProgress(percent, message){
+    console.log('Upload progress: ' + percent + '% ' + message);
+    this.setState({ progress: percent });
+  }
+
+  handleProgressForReact (file, progress) {
     // The progress event can sometimes happen once more after the abort
     // has been called. So this just a sanity check
     if (this.state.file === file) this.setState({ progress });
@@ -67,13 +75,12 @@ class ImgUpload extends Component {
       return this.abort();
     } else {
       this.setState({error: null});
-      console.log("WE ARE GETTING HERE!")
       this.myUploader = new S3Upload({
         fileElement: file,
         signingUrl: '/s3/sign',
         accept: 'image/*',
         preprocess: this.props.preprocess,
-        onProgress: this.props.onProgress,
+        onProgress: this.handleProgress,
         onFinishS3Put: this.onUploadFinish,
         onError: this.props.onError,
         signingUrlMethod: 'GET',
@@ -85,7 +92,8 @@ class ImgUpload extends Component {
       });
     }
     const files = Object.assign({}, this.state.files);
-    files[name] = { name, type, size, uploadResult};
+    files[name] = { name, type, size, uploadResult, index: this.index};
+    this.photoIndexGenerator();
     //checks total size of upload < 8MB
     let totalSize = 0;
     Object.keys(files).map(function(key){totalSize += files[key].size});
@@ -94,11 +102,7 @@ class ImgUpload extends Component {
     } else {
       this.setState({error: null})
     }
-    this.timeout = setTimeout(() => {
-      this.timeout = null;
-      this.setState({ progress: null });
-    }, 2000);
-    this.setState({ files, progress: 100 });
+    this.setState({ files });
     // return this.props.handleUpload(this.state.files);
   }
 
@@ -110,11 +114,13 @@ class ImgUpload extends Component {
     this.setState({ file: null, progress: null, error: 'Sorry, files must be images and cannot exceed 8MB in total.' });
   }
 
+  //you'll need to use this.state.file to capture some file info (like name) and save unto photo obj so we can filter out that photo on listClick
   /*Removes an uploaded file if the close IconButton is clicked*/
   handleListClick(event) {
     let target = event.target;
     while (target && target.parentNode) {
       if (target.dataset.name) {
+        console.log('LIST CLICK TARGET', target, target.dataset, target.index, target.dataset.index, target.dataset.name)
         const files = Object.assign({}, this.state.files);
         delete files[target.dataset.name];
         this.setState({ files });
@@ -125,16 +131,32 @@ class ImgUpload extends Component {
   }
 
   onUploadFinish(photo) {
+    console.log('what is on this photo', photo)
     let newPhoto = {
       link: HOST.concat(photo.publicUrl),
       listingId: 1 //this.props.currentListing.id
-  };
+    };
     let currentPhotos = this.state.photos;
     currentPhotos.push(newPhoto);
     this.setState({
-        photos: currentPhotos
+        photos: currentPhotos,
+        progress: 100
     })
+    this.timeout = setTimeout(() => {
+      this.timeout = null;
+      this.setState({ progress: null });
+    }, 1000);
     console.log("Upload finished: " + photo.publicUrl)
+  }
+
+  photoIndexGenerator() {
+    this.index++;
+    // console.log(this.index);
+    // return this.index;
+  }
+
+  getIndex(){
+    return this.index;
   }
 
   publishPhotos(){
@@ -145,7 +167,7 @@ class ImgUpload extends Component {
   render() {
     console.log("THIS.STATE", this.state);
     const { files, progress } = this.state;
-    const cards = Object.keys(files).map(key => <UploadedFileCard key={key} file={files[key]} />);
+    const cards = Object.keys(files).map(key => <UploadedFileCard key={key} index={this.getIndex()} file={files[key]} />);
     let stats, submit;
     if (typeof progress === 'number') {
       stats = [
@@ -169,7 +191,6 @@ class ImgUpload extends Component {
           ref={this.setUpload}
           label="Select photos to upload"
           onLoadStart={this.loadStart}
-          onProgress={this.handleProgress}
           onLoad={this.onLoad}
         />
         {this.state.error ? <p className="login-error">{this.state.error}</p> : null}
@@ -198,7 +219,7 @@ ImgUpload.propTypes = {
 const mapState = state => ({
   currentListing: state.listing.currentListing,
   preprocess: function(file, next) {
-    console.log('Pre-process: ' + file.name);
+    file && console.log('Pre-process: ' + file.name);
     next(file);
   },
   onProgress: function(percent, message) {
