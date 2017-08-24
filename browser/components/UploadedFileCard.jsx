@@ -3,14 +3,14 @@ import Card from 'react-md/lib/Cards/Card';
 import Media from 'react-md/lib/Media';
 import Button from 'react-md/lib/Buttons';
 
-const ExpandableMediaCard = ({key, file}) => {
-  const { name, uploadResult } = file;
+const ExpandableMediaCard = ({key, photo}) => {
+  const { name, link } = photo;
   return (
     <Card key= {key} className="md-cell uploaded-background-card">
-        <Media className="uploaded-pic">
-          <img className="uploaded-pic-img" src={uploadResult} alt={name} />
+        <Media className="uploaded-pic" key= {key} >
+          <img className="uploaded-pic-img" key= {key} src={link} alt={name} />
         </Media>
-      <Button icon data-name={name} className="close-btn close-img-button">close</Button>
+      <Button icon data-name={name} key={name} data-link={link} className="close-btn close-img-button">close</Button>
     </Card>
 )};
 

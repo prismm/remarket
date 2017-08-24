@@ -9,16 +9,16 @@ const Network = models.Network;
 const NetworkAffiliation = models.network_affiliations;
 
 const users = [
-    { name: 'Geoff', email: 'Geoff@gmail.com', password: 'hello', isAdmin: false },
-    { name: 'Joon', email: 'Joon@gmail.com', password: 'password', isAdmin: false },
-    { name: 'Kate Bush', email: 'Kate.Bush@gmail.com', password: 'testpw', isAdmin: false },
-    { name: 'Mike', email: 'mike@gmail.com', password: 'hello', isAdmin: false },
-    { name: 'Matt', email: 'matt@gmail.com', password: 'password', isAdmin: false },
-    { name: 'Eli', email: 'eli@gmail.com', password: 'testpw', isAdmin: false },
-    { name: 'Jason', email: 'jason@gmail.com', password: 'hello', isAdmin: false },
-    { name: 'Priya', email: 'priya@gmail.com', password: 'testpw', isAdmin: false },
-    { name: 'Grant', email: 'grant@fullstack.com', password: 'deadoralive', isAdmin: true },
-    { name: 'Candice', email: 'candice@fullstack.com', password: 'deadoralive', isAdmin: true }
+    { confirmed: true, name: 'Geoff', email: 'Geoff@gmail.com', password: 'hello', isAdmin: false },
+    { confirmed: true, name: 'Joon', email: 'Joon@gmail.com', password: 'password', isAdmin: false },
+    { confirmed: true, name: 'Kate Bush', email: 'Kate.Bush@gmail.com', password: 'testpw', isAdmin: false },
+    { confirmed: true, name: 'Mike', email: 'mike@gmail.com', password: 'hello', isAdmin: false },
+    { confirmed: true, name: 'Matt', email: 'matt@gmail.com', password: 'password', isAdmin: false },
+    { confirmed: true, name: 'Eli', email: 'eli@gmail.com', password: 'testpw', isAdmin: false },
+    { confirmed: true, name: 'Jason', email: 'jason@gmail.com', password: 'hello', isAdmin: false },
+    { confirmed: true, name: 'Priya', email: 'priya@gmail.com', password: 'testpw', isAdmin: false },
+    { confirmed: true, name: 'Grant', email: 'grant@fullstack.com', password: 'deadoralive', isAdmin: true },
+    { confirmed: true, name: 'Candice', email: 'candice@fullstack.com', password: 'deadoralive', isAdmin: true }
 ]
 
 const listings = [

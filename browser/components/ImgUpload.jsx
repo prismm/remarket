@@ -11,7 +11,7 @@ import FileUpload from 'react-md/lib/FileInputs/FileUpload';
 import S3Upload from '../S3Upload/s3upload.js';
 const HOST = window.location.protocol.concat('//').concat(window.location.host);
 
-import {storeUploadedPhotos_dispatch} from '../actions/listing';
+import {storeUploadedPhotos_dispatch, deleteUploadedPhotos_dispatch} from '../actions/listing';
 import UploadedFileCard from './UploadedFileCard.jsx';
 
 /*----------------------- ImgUpload Component ---------------------------*/
@@ -22,12 +22,15 @@ class ImgUpload extends Component {
     this.state = {
       file: null, //should hold the individual file being uploaded
       files: {}, //stored here for UI purposes
-      photos: [], //stores photo objects with AWS S3 links for dispatch to database upon submit
+      photos: props.photos || [], //stores photo objects with AWS S3 links for dispatch to database upon submit
+      deletePhotos: [],
       error: null,
       progress: null
+      // photoIndex: props.photos && props.photos.length ? props.photos[props.photos.lastIndexOf()].index : 1
     };
     this.timeout = null; //set by onUploadFinish to clear progress bar
     this.upload = null; //set by setUpload function as reference for file input, preprocessing
+    // this.photoIndex = 1;
 
     //upload lifecycle methods, in order
     this.setUpload = this.setUpload.bind(this); //sets this.upload as ref for file input, proprocessing, aborting
@@ -119,12 +122,16 @@ class ImgUpload extends Component {
       link: HOST.concat(photo.publicUrl),
       listingId: this.props.currentListing.id,
       name: file.name
+      // index: this.state.photoIndex
     };
+    console.log("new photo", newPhoto);
+    // this.setState(this.photoIndex++;
     let currentPhotos = this.state.photos;
     currentPhotos.push(newPhoto);
     this.setState({
         photos: currentPhotos,
-        progress: 100
+        progress: 100,
+        // photoIndex: newPhoto.index++
     })
     //sets progress to 100% and then times out after 1 sec so progress bar disappears
     this.timeout = setTimeout(() => {
@@ -144,16 +151,22 @@ class ImgUpload extends Component {
   }
 
   handleListClick(event) {
+    // console.log("HERE IN LIST CLICK")
     let target = event.target;
+    // console.log("TARGET", target)
+    // console.log(target.parentNode);
     while (target && target.parentNode) {
       if (target.dataset.name) {
         let targetName = target.dataset.name
+        console.log(targetName);
         //removes clicked file from this.state.files
         const files = Object.assign({}, this.state.files);
         delete files[targetName];
         //removes clicked file from this.state.photos
+        const deletePhotos = this.state.photos.filter(photo => photo.name === targetName )
+        console.log(deletePhotos);
         const photos  = this.state.photos.filter(photo => photo.name !== targetName )
-        this.setState({ files, photos });
+        this.setState({ files, photos, deletePhotos });
         return;
       }
       target = target.parentNode;
@@ -161,12 +174,17 @@ class ImgUpload extends Component {
   }
 
   publishPhotos(){
-    return this.props.upload(this.props.currentListing, this.state.photos);
+    console.log("STATE ON PUBLISH", this.state);
+    this.props.upload(this.props.currentListing, this.state.photos);
+    this.props.deletePhotos(this.props.currentListing, this.state.deletePhotos);
+    this.props.onPublishPhotoClick();
   }
 
   render() {
-    const { files, progress } = this.state;
-    const cards = Object.keys(files).map(key => <UploadedFileCard key={key} file={files[key]} />);
+    const { files, photos, progress } = this.state;
+    console.log("PHOTOS", photos)
+    const cards = photos.length ? photos.map(photo => <UploadedFileCard key={photo.name} photo={photo} />) : null;
+    // Object.keys(files).map(key => <UploadedFileCard key={key} file={files[key]} />);
     let stats, submit;
     if (typeof progress === 'number') {
       stats = [
@@ -175,7 +193,8 @@ class ImgUpload extends Component {
       ];
     }
 
-    if (Object.keys(files).length > 0) submit = []
+    if (photos.length > 0) submit = [];
+    // if (Object.keys(files).length > 0) submit = []
 
     return (
       this.props.currentListing && (
@@ -213,6 +232,8 @@ class ImgUpload extends Component {
 ImgUpload.propTypes = {
   currentListing: PropTypes.object.isRequired,
   upload: PropTypes.func.isRequired,
+  onPublishPhotoClick: PropTypes.func.isRequired,
+  photos: PropTypes.array,
   preprocess: PropTypes.func,
   onProgress: PropTypes.func, 
   onFinish: PropTypes.func,
@@ -238,7 +259,8 @@ const mapState = state => ({
 });
 
 const mapDispatch = dispatch => ({
-  upload: (listing, photos) => dispatch(storeUploadedPhotos_dispatch(listing, photos))
+  upload: (listing, photos) => dispatch(storeUploadedPhotos_dispatch(listing, photos)),
+  deletePhotos: (listing, photos) => dispatch(deleteUploadedPhotos_dispatch(listing, photos))
 });
 
 const ImgUploadWithSpinner =  spinner('currentListing')(ImgUpload);

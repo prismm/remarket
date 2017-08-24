@@ -106,11 +106,31 @@ router.delete('/:id', (req, res, next) => {
 
 router.post('/:id/photos', (req, res, next) => {
     let photos = req.body;
-    console.log('PHOTOS IN API ROUTE', photos)
+    // console.log('PHOTOS IN API ROUTE', photos)
     if (photos.length) {
-        console.log('In the if statement -- photos');
-        let PromiseArr = photos.map(photo => Photo.create(photo));
-        console.log('Promise Arr', PromiseArr)
+        // console.log('In the if statement -- photos');
+        let PromiseArr = photos.map(photo => Photo.findOrCreate({ where: { id: photo.id, name: photo.name, listingId: photo.listingId, link: photo.link } }));
+        // console.log('Promise Arr', PromiseArr)
+        return Promise.all(PromiseArr)
+            .then(() => Listing.findById(req.params.id, { include: [{ all: true }] }))
+            .then(listing => res.json(listing))
+            .catch(next)
+    } else {
+        // console.log('In the else statement -- no photos');
+        return Listing.findById(req.params.id, { include: [{ all: true }] })
+            .then(listing => res.json(listing))
+            .catch(next)
+    }
+})
+
+router.put('/:id/photos', (req, res, next) => {
+    console.log("REQ BODY", req.body)
+    let deletePhotos = req.body;
+    console.log('DELETE PHOTOS IN API ROUTE', deletePhotos)
+    if (deletePhotos.length) {
+        console.log('In the if statement -- delete photos');
+        let PromiseArr = deletePhotos.map(photo => Photo.destroy({ where: { id: photo.id, name: photo.name }, paranoid: true }));
+        // console.log('Promise Arr', PromiseArr)
         return Promise.all(PromiseArr)
             .then(() => Listing.findById(req.params.id, { include: [{ all: true }] }))
             .then(listing => res.json(listing))

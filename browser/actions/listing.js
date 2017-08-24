@@ -79,6 +79,16 @@ export const storeUploadedPhotos_dispatch = (listing, photos) => dispatch => {
             dispatch(setCurrentListing_action({ error })));
 }
 
+export const deleteUploadedPhotos_dispatch = (listing, deletedPhotos) => dispatch => {
+    console.log("DELETED PHOTOS IN DISPATCH", deletedPhotos);
+    axios.put(`/api/listings/${listing.id}/photos`, deletedPhotos)
+        .then(res => {
+            dispatch(setCurrentListing_action(res.data));
+        })
+        .catch(error =>
+            dispatch(setCurrentListing_action({ error })));
+}
+
 // export const fetchPhotosByListing_dispatch = listing => dispatch => {
 //     return axios.get(`/api/listings/${listing.id}/photos`)
 //         .then(res => {

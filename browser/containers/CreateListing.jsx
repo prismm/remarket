@@ -43,7 +43,7 @@ class CreateListing extends Component {
     publishEdits(event){
         event.preventDefault();
         this.props.editListing(this.props.currentListing.id, this.state);
-        //async problem -- rerenders listing before it's officially updated
+        //async problem -- rerenders listing before it's officially updated //RESOLVED with browserHistory.push
         this.props.onPublishClick();
     }
 

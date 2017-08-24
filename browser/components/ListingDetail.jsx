@@ -11,7 +11,8 @@ import TimeAgo from './TimeAgo.jsx';
 import {ExpiresIn} from './TimeLeft.jsx';
 import {NetworkAvatar} from './Avatars.jsx';
 import MessageUser from './MessageUser.jsx';
-import ListingImages from './ListingImages.jsx'
+import ListingImages from './ListingImages.jsx';
+import ImgUpload from './ImgUpload.jsx';
 
 import { clearCurrentListing_dispatch } from '../actions/listing';
 import { messageSent_action } from '../actions/user';
@@ -24,10 +25,13 @@ class ListingDetail extends Component {
     constructor(props){
         super(props);
         this.state = {
-            edit: props.currentListing.editStatus || false
+            edit: props.currentListing.editStatus || false,
+            addPhoto: props.currentListing.addPhotoStatus || false
         }
         this.onEditClick = this.onEditClick.bind(this);
         this.onPublishClick = this.onPublishClick.bind(this);
+        this.onAddPhotoClick = this.onAddPhotoClick.bind(this);
+        this.onPublishPhotoClick = this.onPublishPhotoClick.bind(this);
     }
 
     componentWillUnmount(){
@@ -44,6 +48,15 @@ class ListingDetail extends Component {
         browserHistory.push(`/listings/${this.props.currentListing.id}`)
     }
 
+    onAddPhotoClick(){
+        this.setState({addPhoto: true});
+    }
+
+    onPublishPhotoClick(){
+        this.setState({addPhoto: false});
+        browserHistory.push(`/listings/${this.props.currentListing.id}`)
+    }
+
 
     render(){
         // if (this.props.currentListing){ let thisAuthorName = this.props.currentListing.author.username || this.props.currentListing.author.userId}
@@ -51,8 +64,9 @@ class ListingDetail extends Component {
         const error = this.props.currentListing.error || null;
         const isItMyListing = this.props.currentListing.authorId === this.props.user.id;
         const wasItEdited = this.props.currentListing.createdAt !== this.props.currentListing.updatedAt;
-        const shouldRenderDetail = this.props.currentListing.id && !this.state.edit;
+        const shouldRenderDetail = this.props.currentListing.id && !this.state.edit && !this.state.addPhoto;
         const shouldRenderForm = isItMyListing && this.props.currentListing.id && this.state.edit;
+        const shouldRenderAddPhoto = isItMyListing && this.props.currentListing.id && this.state.addPhoto;
         const label =  currentListing => ('Message ' + currentListing.author.userId);
         const subject = '[Re: ' + this.props.currentListing.name + '] ';
         const bodyClassname = this.props.currentListing.photos && this.props.currentListing.photos.length ?  'listing-body md-cell--5' : 'listing-body md-cell--10'
@@ -85,7 +99,7 @@ class ListingDetail extends Component {
                                     primary
                                     label="add / manage photos"
                                     className="my-listing-button edit-listing-button"
-                                    onClick={this.onEditClick}
+                                    onClick={this.onAddPhotoClick}
                                 />
                             </div>
                             :
@@ -124,6 +138,10 @@ class ListingDetail extends Component {
             }
             {shouldRenderForm && (
                 <CreateListing currentListing={this.props.currentListing} onPublishClick={this.onPublishClick} />
+                )
+            }
+            {shouldRenderAddPhoto && (
+                <ImgUpload photos={this.props.currentListing.photos} onPublishPhotoClick={this.onPublishPhotoClick} />
                 )
             }
             </div>
