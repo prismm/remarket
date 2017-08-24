@@ -43,7 +43,7 @@ export default class LocationDropdown extends PureComponent {
     const { location } = this.state;
     const { focused, columnWidths, mobile } = this.props;
     return (
-    <ExpansionList style={{ padding: 16 }}>
+    <ExpansionList style={{ padding: 16, width: '400px' }}>
       <ExpansionPanel
         focused={focused}
         columnWidths={columnWidths}

@@ -69,7 +69,8 @@ body {
         padding: 10px;
     }
     .listing-images {
-        padding: 0 10px 10px 10px;
+        padding: 0 1em 1em 1em;
+        margin-top: -2.5em;
     }
     .file-title {
         font-size: 14px;
@@ -81,7 +82,8 @@ body {
         font-style: italic;
     }
     .edit-listing-button {
-        margin-bottom: 15px;
+        margin-bottom: 2em;
+        margin-right: 1em;
     }
     .listing-detail-timestamp {
         font-style: italic;
@@ -374,5 +376,8 @@ body {
         margin-top: 1em;
         color: #FC0096;
         font-style: italic;
+    }
+    #locations-menu .md-select-field {
+        width: 200px;
     }
 }

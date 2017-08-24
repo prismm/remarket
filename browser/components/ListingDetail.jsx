@@ -11,6 +11,7 @@ import TimeAgo from './TimeAgo.jsx';
 import {ExpiresIn} from './TimeLeft.jsx';
 import {NetworkAvatar} from './Avatars.jsx';
 import MessageUser from './MessageUser.jsx';
+import ListingImages from './ListingImages.jsx'
 
 import { clearCurrentListing_dispatch } from '../actions/listing';
 import { messageSent_action } from '../actions/user';
@@ -45,13 +46,16 @@ class ListingDetail extends Component {
 
 
     render(){
+        // if (this.props.currentListing){ let thisAuthorName = this.props.currentListing.author.username || this.props.currentListing.author.userId}
+        console.log(this.props.currentListing);
         const error = this.props.currentListing.error || null;
         const isItMyListing = this.props.currentListing.authorId === this.props.user.id;
         const wasItEdited = this.props.currentListing.createdAt !== this.props.currentListing.updatedAt;
         const shouldRenderDetail = this.props.currentListing.id && !this.state.edit;
         const shouldRenderForm = isItMyListing && this.props.currentListing.id && this.state.edit;
-        const label =  'Message ' + this.props.currentListing.author.userId;
+        const label =  currentListing => ('Message ' + currentListing.author.userId);
         const subject = '[Re: ' + this.props.currentListing.name + '] ';
+        const bodyClassname = this.props.currentListing.photos && this.props.currentListing.photos.length ?  'listing-body md-cell--5' : 'listing-body md-cell--10'
         return (
             <div>
             { error &&  <h3 className="error"> { error.response.status } / { error.response.statusText } </h3> }
@@ -60,26 +64,34 @@ class ListingDetail extends Component {
                 <div className="md-grid listing-detail-container">
                 <Breadcrumbs currentListing={this.props.currentListing} />
                 <div className="md-cell md-cell--10 currentListing md-grid">
-                    <div className="listing-images md-cell md-cell--5">
-                        <img className="item-img" src={ this.props.currentListing.imageUrl } />
-                    </div>
+                <div className="md-cell md-cell--1" />
+                    {this.props.currentListing.photos && this.props.currentListing.photos.length ? <ListingImages photos={this.props.currentListing.photos} /> : null}
                     <div className="md-cell md-cell--1" />
-                    <div className="listing-body md-cell md-cell--6">
+                    <div className={bodyClassname}>
                     <div className="item-descr">
                         <h3 className="selected-item-name">{this.props.currentListing.name}</h3>
                         <h3 className="selected-item-category">{this.props.currentListing.category}</h3>
                         {isItMyListing ?
-                            <Button
-                                raised
-                                primary
-                                label="edit this listing"
-                                className="my-listing-button edit-listing-button"
-                                onClick={this.onEditClick}
-                            />
+                            <div>
+                                <Button
+                                    raised
+                                    primary
+                                    label="edit this listing"
+                                    className="my-listing-button edit-listing-button"
+                                    onClick={this.onEditClick}
+                                />
+                                <Button
+                                    raised
+                                    primary
+                                    label="add / manage photos"
+                                    className="my-listing-button edit-listing-button"
+                                    onClick={this.onEditClick}
+                                />
+                            </div>
                             :
                             <div>
                             <h5 className="selected-item-author">listed by <Link to={`/user/${this.props.currentListing.author.id}`}>{this.props.currentListing.author.userId}</Link></h5>
-                            <MessageUser label={label} subject={subject} />
+                            <MessageUser label={label(this.props.currentListing)} subject={subject} />
                             </div>
                         }
                         <p className="listing-detail-timestamp">Created on {this.props.currentListing.created} </p><TimeAgo time={this.props.currentListing.createdAt} />

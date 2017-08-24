@@ -55,7 +55,10 @@ const User = db.define('user', {
     },
     getterMethods: {
         userId: function() {
+            if (this.username) return this.username;
             if (this.email) return this.email.slice(0, this.email.indexOf('@'));
+            if (this.name) return this.name;
+            return 'user' + this.id;
         }
     },
     instanceMethods: {

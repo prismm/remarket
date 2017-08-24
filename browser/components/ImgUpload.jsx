@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import spinner from '../HOC/Spinner.jsx'
 import CSSTransitionGroup from 'react-addons-css-transition-group';
 import Button from 'react-md/lib/Buttons';
 import LinearProgress from 'react-md/lib/Progress/LinearProgress';
@@ -35,7 +36,7 @@ class ImgUpload extends Component {
     this.onLoad = this.onLoad.bind(this); //this.abort() if error or !image; checks totalSize > 8mb and if so this.abort(), else initiates S3Upload requests and adds file to this.state.files
     this.onUploadFinish = this.onUploadFinish.bind(this); //creates photo obj for db dispatch using response from AWS S3, adds to this.state.photos array, sets progress to 100% then clears progress
 
-    //react-mdl abort & stop methods
+    //abort & stop methods
     this.onError = this.onError.bind(this); //invoked by S3Upload if there is an error; passes error message to this.abort() to abort
     this.abort = this.abort.bind(this); //aborts HTTP request to AWS S3, aborts upload of file ref for file input on UI, sets this.state({progress: null, file: null, error})
     this.checkForError = this.checkForError.bind(this); // on react upload, the progress event can sometimes happen once more after the abort has been called -- so this just a sanity check
@@ -52,7 +53,6 @@ class ImgUpload extends Component {
   }
 
   setUpload(upload, next) {
-    console.log("HERE WE ARE TRYING")
     if (!next) next = console.log;
     this.upload = upload;
     this.props.preprocess(upload, next);
@@ -178,7 +178,8 @@ class ImgUpload extends Component {
     if (Object.keys(files).length > 0) submit = []
 
     return (
-      <div className="uploaded-pics-container">
+      this.props.currentListing && (
+        <div className="uploaded-pics-container">
         {stats}
         <FileUpload
           id="multiFileUpload"
@@ -204,6 +205,7 @@ class ImgUpload extends Component {
         </CSSTransitionGroup>
         {this.state.photos && this.state.photos.length ? <Button raised primary label="Publish Photos" onClick={this.publishPhotos} className="md-cell--12 md-cell--right" /> : null}
       </div>
+      )
     );
   }
 }
@@ -239,4 +241,5 @@ const mapDispatch = dispatch => ({
   upload: (listing, photos) => dispatch(storeUploadedPhotos_dispatch(listing, photos))
 });
 
-export default connect(mapState, mapDispatch)(ImgUpload);
+const ImgUploadWithSpinner =  spinner('currentListing')(ImgUpload);
+export default connect(mapState, mapDispatch)(ImgUploadWithSpinner);
