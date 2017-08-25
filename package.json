@@ -9,7 +9,7 @@
         "db-test": "mocha ./tests/db_tests/*.test.js --compilers js:babel-register",
         "postinstall": "webpack",
         "test": "npm run api-test component-test db-test",
-        "start": "export NODE_ENV=production; node seed; node './server/tasks/index.js'; node './server/index.js'",
+        "start": "export NODE_ENV=production; node seed; node './server/index.js'", //node './server/tasks/index.js'; 
         "dev-start": "export NODE_ENV=development; webpack -w & nodemon './server/index.js'",
         "seed": "node seed"
     },
