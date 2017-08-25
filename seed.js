@@ -6,7 +6,10 @@ const User = models.User;
 const Comment = models.Comment;
 const Offer = models.Offer;
 const Network = models.Network;
+const Token = models.Token;
+const Photo = models.Photo;
 const NetworkAffiliation = models.network_affiliations;
+const ListingNetworks = models.listing_networks;
 
 const users = [
     { confirmed: true, name: 'Geoff', email: 'Geoff@gmail.com', password: 'hello', isAdmin: false },
@@ -79,6 +82,10 @@ const offers = [];
 
 const comments = [];
 
+const tokens = [];
+
+const photos = [];
+
 function createUsers() {
     return Promise.map(users, function(user) {
         return User.create(user);
@@ -109,9 +116,27 @@ function createListings() {
     })
 }
 
+function createListingNetworks() {
+    return Promise.map(ListingNetworks, function(connection) {
+        return ListingNetworks.create(connection);
+    })
+}
+
 function createComments() {
     return Promise.map(comments, function(comment) {
         return Comment.create(comment);
+    })
+}
+
+function createTokens() {
+    return Promise.map(tokens, function(token) {
+        return Token.create(token);
+    })
+}
+
+function createPhotos() {
+    return Promise.map(photos, function(photo) {
+        return Photo.create(photo);
     })
 }
 
@@ -137,6 +162,18 @@ function seed() {
         .then(function() {
             console.log('...creating comments...');
             return createComments()
+        })
+        .then(function() {
+            console.log('...creating photos...');
+            return createPhotos()
+        })
+        .then(function() {
+            console.log('...creating tokens...');
+            return createTokens()
+        })
+        .then(function() {
+            console.log('...creating listing-network connections...');
+            return createListingNetworks()
         })
         .catch(console.error)
 }
