@@ -120,18 +120,20 @@ class ListingDetail extends Component {
                             :
                             null
                         }
-
+                        <hr />
                         <p className="selected-item-descr">{this.props.currentListing.description}</p>
+                        {this.props.currentListing.askingPrice ?
+                            <div className="price">
+                                <hr />
+                                <p>floor price: {'$' + this.props.currentListing.floorPrice}</p>
+                                <p>asking price: {'$' + this.props.currentListing.askingPrice}</p>
+                            </div>
+                            :
+                            null
+                        }
+                        <hr />
                         <ExpiresIn time={this.props.currentListing.expirationDate} expiry={this.props.currentListing.expiresIn} />
                     </div>
-                    {this.props.currentListing.askingPrice ?
-                        <div className="price">
-                            <p>floor price: {this.props.currentListing.floorPrice}</p>
-                            <p>asking price: {this.props.currentListing.askingPrice}</p>
-                        </div>
-                        :
-                        null
-                    }
                     </div>
                 </div>
                 </div>)
