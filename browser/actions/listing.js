@@ -80,7 +80,6 @@ export const storeUploadedPhotos_dispatch = (listing, photos) => dispatch => {
 }
 
 export const deleteUploadedPhotos_dispatch = (listing, deletedPhotos) => dispatch => {
-    console.log("DELETED PHOTOS IN DISPATCH", deletedPhotos);
     axios.put(`/api/listings/${listing.id}/photos`, deletedPhotos)
         .then(res => {
             dispatch(setCurrentListing_action(res.data));

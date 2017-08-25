@@ -19,7 +19,8 @@ class MessageUser extends Component {
         this.state = {
             on: false,
             subject: this.props.subject ? this.props.subject : '',
-            waiting: false
+            waiting: false,
+            error: null
         }
         this.showMessage = this.showMessage.bind(this);
         this.hideMessage = this.hideMessage.bind(this);
@@ -28,7 +29,8 @@ class MessageUser extends Component {
     }
 
     showMessage(){
-        this.setState({on: true});
+        if (this.props.sender && this.props.sender.id) this.setState({on: true});
+        else this.setState({error: 'Please log in to message this user.'})
     }
 
     hideMessage(){
@@ -37,8 +39,10 @@ class MessageUser extends Component {
 
     componentWillReceiveProps(nextProps){
         if (nextProps.messageSent){
-            console.log("we are in here")
             this.setState({on: false, waiting: false});
+        }
+        if (nextProps.sender && nextProps.sender.id){
+            this.setState({error: false})
         }
     }
 
@@ -62,6 +66,7 @@ class MessageUser extends Component {
 
     render(){
         const sent = this.props.messageSent;
+        const error = this.state.error;
         return (
         <div className="message-button-container">
             {!this.state.on &&
@@ -105,6 +110,7 @@ class MessageUser extends Component {
                 </div>
             }
             {   sent &&  <div className="response-message"> { sent } </div> }
+            {   error &&  <div className="response-message"> { error } </div> }
         </div>
         )}
 }
