@@ -106,7 +106,7 @@ class MessageUser extends Component {
             </CSSTransitionGroup>
             { this.state.waiting &&
                 <div>
-                    <Loader loadingText="Sending...(this may take a few minutes)" />
+                    <Loader loadingText="Sending...(this may take a few minutes, the message is on its way)" />
                 </div>
             }
             {   sent &&  <div className="response-message"> { sent } </div> }
@@ -142,5 +142,5 @@ return {
     }
 }
 }
-//clearMessage not working -- loader message floats over text beneath
+
 export default connect(mapStateToProps, mapDispatchToProps)(MessageUser);

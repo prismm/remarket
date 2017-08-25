@@ -3,7 +3,7 @@ import Card from 'react-md/lib/Cards/Card';
 import Media from 'react-md/lib/Media';
 import Button from 'react-md/lib/Buttons';
 
-const ExpandableMediaCard = ({key, photo}) => {
+const UploadedFileCard = ({key, photo}) => {
   const { name, link } = photo;
   return (
     <Card key= {key} className="md-cell uploaded-background-card">
@@ -14,4 +14,4 @@ const ExpandableMediaCard = ({key, photo}) => {
     </Card>
 )};
 
-export default ExpandableMediaCard;
+export default UploadedFileCard;

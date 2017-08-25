@@ -19,7 +19,9 @@ export const setLocation_action = location => ({ type: 'SET_LOCATION', location 
 export const fetchAllListings_dispatch = () => dispatch => {
     return axios.get('/api/listings')
         .then(res => {
-            dispatch(setListings_action(res.data));
+            let listings = res.data;
+            //sort listings
+            dispatch(setListings_action(listings));
         })
         .catch(console.error);
 }

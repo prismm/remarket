@@ -67,6 +67,7 @@ body {
     .item-img {
         width: 100%;
         padding: 10px;
+        border: 0;
     }
     .listing-images {
         padding: 0 1em 1em 1em;
@@ -222,8 +223,19 @@ body {
     .uploaded-pic-img {
         height: auto
     }
-    .uploaded-pics-container {
-        // max-width: 900px;
+    .md-file-input-container>.md-fake-btn {
+        // margin: 0em 0em 1em 0em;
+        margin-left: 1em;
+        // font-family: Roboto, sans-serif;
+        background-color: #F50057;
+    }
+    .content-title-header {
+        font-family: Roboto, sans-serif;
+        font-weight: 500;
+        color: #F50057;
+    }
+    .image-upload-header {
+        margin: 2em 0 1em 1em;
     }
     .md-card-title:last-child {
         padding: 1em;

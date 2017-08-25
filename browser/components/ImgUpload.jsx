@@ -180,7 +180,7 @@ class ImgUpload extends Component {
     if (typeof progress === 'number') {
       stats = [
         <LinearProgress id="progress" key="progress" value={progress} />,
-        <Button raised key="abort" className="abort-upload" label="Stop Upload" onClick={() => this.abort('Upload stopped.')} />,
+        <Button raised key="abort" className="abort-upload md-fake-btn" label="Stop Upload" onClick={() => this.abort('Upload stopped.')} />,
       ];
     }
 
@@ -189,36 +189,42 @@ class ImgUpload extends Component {
 
     return (
       this.props.currentListing && (
-        <div className="uploaded-pics-container">
-        {stats}
-        <FileUpload
-          id="multiFileUpload"
-          multiple
-          secondary
-          name="mutlipart-file-upload"
-          accept="image/*"
-          maxSize = {4000000}
-          onError = {(file, error, event) => {return this.onError(error)}}
-          onSizeError = {() => this.abort('Sorry, the upload was stopped. Please note that individual files cannot exceed 4MB in total size.')}
-          ref={this.setUpload}
-          label="Select photos to upload"
-          onLoadStart={this.loadStart}
-          onProgress={this.checkForError}
-          onLoad={this.onLoad}
-        />
-        {this.state.error ? <p className="login-error">{this.state.error}</p> : null}
-        <CSSTransitionGroup
-          component="output"
-          className="md-grid"
-          transitionName="md-cross-fade"
-          transitionEnterTimeout={300}
-          transitionLeave={false}
-          onClick={this.handleListClick}
-        >
-          {cards}
-        </CSSTransitionGroup>
-        {this.state.photos && this.state.photos.length ? <Button raised primary label="Publish Photos" onClick={this.publishPhotos} className="md-cell--12 md-cell--right" /> : null}
-      </div>
+        // <div className="md-grid">
+          <div className="md-cell-10">
+          <div className="image-upload-header">
+            <h4 className="content-title-header">ADD OR MANAGE PHOTOS</h4>
+            <h3>{this.props.currentListing.name}</h3>
+          </div>
+          {stats}
+          <FileUpload
+            id="multiFileUpload"
+            multiple
+            secondary
+            name="mutlipart-file-upload"
+            accept="image/*"
+            maxSize = {6000000}
+            onError = {(file, error, event) => {return this.onError(error)}}
+            onSizeError = {() => this.abort('Sorry, the upload was stopped. Please note that individual files cannot exceed 4MB in total size.')}
+            ref={this.setUpload}
+            label="Select photos to upload"
+            onLoadStart={this.loadStart}
+            onProgress={this.checkForError}
+            onLoad={this.onLoad}
+          />
+          {this.state.error ? <p className="login-error">{this.state.error}</p> : null}
+          <CSSTransitionGroup
+            component="output"
+            className="md-grid"
+            transitionName="md-cross-fade"
+            transitionEnterTimeout={300}
+            transitionLeave={false}
+            onClick={this.handleListClick}
+          >
+            {cards}
+          </CSSTransitionGroup>
+          {this.state.photos && this.state.photos.length ? <Button raised primary label="Publish Photos" onClick={this.publishPhotos} className="md-cell--12 md-cell--right" /> : null}
+        </div>
+      // </div>
       )
     );
   }

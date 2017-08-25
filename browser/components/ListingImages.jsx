@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import spinner from '../HOC/Spinner.jsx'
 
 /*----------------------- ListingImages Component ---------------------------*/
 function ListingImages({ photos }){
     return (
         <div className="listing-images md-cell md-cell--5">
             { photos ?
-                photos.map(photo => <img className="item-img" key={photo.id} src={ photo.link } />)
+                photos.map(photo => <a href={ photo.link }><img className="item-img" key={photo.id} src={ photo.link } /></a>)
                 :
                 null
             }
@@ -23,4 +24,6 @@ const mapState = state => ({
 //     upload: (listing, photos) => dispatch(storeUploadedPhotos_dispatch(listing, photos))
 //   });
 
-export default connect(mapState)(ListingImages);
+const ListingImagesWithSpinner =  spinner('photos')(ListingImages);
+
+export default connect(mapState)(ListingImagesWithSpinner);
