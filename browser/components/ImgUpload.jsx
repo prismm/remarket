@@ -124,14 +124,12 @@ class ImgUpload extends Component {
       name: file.name
       // index: this.state.photoIndex
     };
-    console.log("new photo", newPhoto);
     // this.setState(this.photoIndex++;
     let currentPhotos = this.state.photos;
     currentPhotos.push(newPhoto);
     this.setState({
         photos: currentPhotos,
-        progress: 100,
-        // photoIndex: newPhoto.index++
+        progress: 100
     })
     //sets progress to 100% and then times out after 1 sec so progress bar disappears
     this.timeout = setTimeout(() => {
@@ -151,20 +149,15 @@ class ImgUpload extends Component {
   }
 
   handleListClick(event) {
-    // console.log("HERE IN LIST CLICK")
     let target = event.target;
-    // console.log("TARGET", target)
-    // console.log(target.parentNode);
     while (target && target.parentNode) {
       if (target.dataset.name) {
         let targetName = target.dataset.name
-        console.log(targetName);
         //removes clicked file from this.state.files
         const files = Object.assign({}, this.state.files);
         delete files[targetName];
         //removes clicked file from this.state.photos
         const deletePhotos = this.state.photos.filter(photo => photo.name === targetName )
-        console.log(deletePhotos);
         const photos  = this.state.photos.filter(photo => photo.name !== targetName )
         this.setState({ files, photos, deletePhotos });
         return;
@@ -174,7 +167,6 @@ class ImgUpload extends Component {
   }
 
   publishPhotos(){
-    console.log("STATE ON PUBLISH", this.state);
     this.props.upload(this.props.currentListing, this.state.photos);
     this.props.deletePhotos(this.props.currentListing, this.state.deletePhotos);
     this.props.onPublishPhotoClick();
@@ -182,7 +174,6 @@ class ImgUpload extends Component {
 
   render() {
     const { files, photos, progress } = this.state;
-    console.log("PHOTOS", photos)
     const cards = photos.length ? photos.map(photo => <UploadedFileCard key={photo.name} photo={photo} />) : null;
     // Object.keys(files).map(key => <UploadedFileCard key={key} file={files[key]} />);
     let stats, submit;
@@ -205,6 +196,10 @@ class ImgUpload extends Component {
           multiple
           secondary
           name="mutlipart-file-upload"
+          accept="image/*"
+          maxSize = {4000000}
+          onError = {(file, error, event) => {return this.onError(error)}}
+          onSizeError = {() => this.abort('Sorry, the upload was stopped. Please note that individual files cannot exceed 4MB in total size.')}
           ref={this.setUpload}
           label="Select photos to upload"
           onLoadStart={this.loadStart}
