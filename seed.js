@@ -86,6 +86,8 @@ const tokens = [];
 
 const photos = [];
 
+const listingNetworks = [];
+
 function createUsers() {
     return Promise.map(users, function(user) {
         return User.create(user);
@@ -117,7 +119,7 @@ function createListings() {
 }
 
 function createListingNetworks() {
-    return Promise.map(ListingNetworks, function(connection) {
+    return Promise.map(listingNetworks, function(connection) {
         return ListingNetworks.create(connection);
     })
 }
