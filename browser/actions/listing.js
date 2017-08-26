@@ -20,7 +20,7 @@ export const fetchAllListings_dispatch = () => dispatch => {
     return axios.get('/api/listings')
         .then(res => {
             let listings = res.data;
-            //sort listings
+            listings.sort((listing1, listing2) => new Date(listing2.updatedAt) - new Date(listing1.updatedAt));
             dispatch(setListings_action(listings));
         })
         .catch(console.error);
@@ -42,7 +42,9 @@ export const clearCurrentListing_dispatch = () => dispatch => {
 export const fetchListingsByUser_dispatch = userId => dispatch => {
     return axios.get(`/api/listings/user/${userId}`)
         .then(res => {
-            dispatch(setMyListings_action(res.data));
+            let listings = res.data;
+            listings.sort((listing1, listing2) => new Date(listing2.updatedAt) - new Date(listing1.updatedAt));
+            dispatch(setMyListings_action(listings));
         })
         .catch(console.error);
 }
