@@ -39,6 +39,7 @@ body {
     }
     .listing-list-time-ago {
         color: #F50057;
+        display: inline;
     }
     .account-nav li {
         list-style: none;
@@ -91,10 +92,12 @@ body {
     }
     .listing-detail-timestamp {
         font-style: italic;
+        // margin-bottom: 0;
     }
     .time-ago {
         color: hotpink;
         font-style: italic;
+        display: inline;
     }
     .avatar {
         margin: 5px 0 10px 0;

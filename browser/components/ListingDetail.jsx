@@ -108,8 +108,8 @@ class ListingDetail extends Component {
                             <MessageUser label={label(this.props.currentListing)} subject={subject} />
                             </div>
                         }
-                        <p className="listing-detail-timestamp">Created on {this.props.currentListing.created} </p><TimeAgo time={this.props.currentListing.createdAt} />
-                        {wasItEdited ? <div className="modified-timestamp"><p className="listing-detail-timestamp">Updated on {this.props.currentListing.modified}</p><TimeAgo time={this.props.currentListing.updatedAt} /></div>
+                        <p className="listing-detail-timestamp">Created on {this.props.currentListing.created}<TimeAgo time={this.props.currentListing.createdAt} /></p>
+                        {wasItEdited ? <div className="modified-timestamp"><p className="listing-detail-timestamp">Updated on {this.props.currentListing.modified}<TimeAgo time={this.props.currentListing.updatedAt} /></p></div>
                             :
                             null
                         }

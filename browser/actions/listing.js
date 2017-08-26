@@ -21,6 +21,7 @@ export const fetchAllListings_dispatch = () => dispatch => {
         .then(res => {
             let listings = res.data;
             listings.sort((listing1, listing2) => new Date(listing2.updatedAt) - new Date(listing1.updatedAt));
+            listings = listings.filter(listing => listing.status === 'active');
             dispatch(setListings_action(listings));
         })
         .catch(console.error);
