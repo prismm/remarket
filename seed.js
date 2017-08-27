@@ -64,18 +64,18 @@ const networks = [
 ]
 
 const networkAffiliations = [
-    { userId: 1, networkId: 1 },
-    { userId: 2, networkId: 1 },
-    { userId: 3, networkId: 1 },
-    { userId: 4, networkId: 1 },
-    { userId: 8, networkId: 1 },
-    { userId: 1, networkId: 6 },
-    { userId: 2, networkId: 4 },
-    { userId: 3, networkId: 3 },
-    { userId: 4, networkId: 3 },
-    { userId: 8, networkId: 7 },
-    { userId: 8, networkId: 4 },
-    { userId: 8, networkId: 2 }
+    { confirmed: true, userId: 1, networkId: 1 },
+    { confirmed: true, userId: 2, networkId: 1 },
+    { confirmed: true, userId: 3, networkId: 1 },
+    { confirmed: true, userId: 4, networkId: 1 },
+    { confirmed: true, userId: 8, networkId: 1 },
+    { confirmed: true, userId: 1, networkId: 6 },
+    { confirmed: true, userId: 2, networkId: 4 },
+    { confirmed: true, userId: 3, networkId: 3 },
+    { confirmed: true, userId: 4, networkId: 3 },
+    { confirmed: true, userId: 8, networkId: 7 },
+    { confirmed: true, userId: 8, networkId: 4 },
+    { confirmed: true, userId: 8, networkId: 2 }
 ]
 
 const offers = [];
@@ -86,7 +86,20 @@ const tokens = [];
 
 const photos = [];
 
-const listingNetworks = [];
+const listingNetworks = [
+    { listingId: 1, networkId: 1 },
+    { listingId: 2, networkId: 1 },
+    { listingId: 3, networkId: 2 },
+    { listingId: 4, networkId: 1 },
+    { listingId: 8, networkId: 1 },
+    { listingId: 1, networkId: 2 },
+    { listingId: 2, networkId: 1 },
+    { listingId: 3, networkId: 2 },
+    { listingId: 4, networkId: 2 },
+    { listingId: 8, networkId: 7 },
+    { listingId: 8, networkId: 1 },
+    { listingId: 8, networkId: 2 }
+];
 
 function createUsers() {
     return Promise.map(users, function(user) {
