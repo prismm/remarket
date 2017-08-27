@@ -55,12 +55,12 @@ const listings = [
 
 const networks = [
     { id: 2, name: 'NYU', location: 'New York' },
-    { id: 1, name: 'Columbia', location: 'New York' },
-    { name: 'UPenn', location: 'Philadelphia' },
-    { name: 'Harvard', location: 'Boston/Cambridge' },
-    { name: 'MIT', location: 'Boston/Cambridge' },
-    { name: 'Yale', location: 'New Haven' },
-    { name: 'Princeton', location: 'Princeton' }
+    { id: 1, name: 'Columbia', location: 'New York' }
+    // { name: 'UPenn', location: 'Philadelphia' },
+    // { name: 'Harvard', location: 'Boston/Cambridge' },
+    // { name: 'MIT', location: 'Boston/Cambridge' },
+    // { name: 'Yale', location: 'New Haven' },
+    // { name: 'Princeton', location: 'Princeton' }
 ]
 
 const networkAffiliations = [
@@ -68,13 +68,9 @@ const networkAffiliations = [
     { confirmed: true, userId: 2, networkId: 1 },
     { confirmed: true, userId: 3, networkId: 1 },
     { confirmed: true, userId: 4, networkId: 1 },
-    { confirmed: true, userId: 8, networkId: 1 },
-    { confirmed: true, userId: 1, networkId: 6 },
-    { confirmed: true, userId: 2, networkId: 4 },
-    { confirmed: true, userId: 3, networkId: 3 },
-    { confirmed: true, userId: 4, networkId: 3 },
-    { confirmed: true, userId: 8, networkId: 7 },
-    { confirmed: true, userId: 8, networkId: 4 },
+    { confirmed: true, userId: 1, networkId: 2 },
+    { confirmed: true, userId: 2, networkId: 2 },
+    { confirmed: true, userId: 4, networkId: 2 },
     { confirmed: true, userId: 8, networkId: 2 }
 ]
 
@@ -87,18 +83,13 @@ const tokens = [];
 const photos = [];
 
 const listingNetworks = [
-    { listingId: 1, networkId: 1 },
-    { listingId: 2, networkId: 1 },
-    { listingId: 3, networkId: 2 },
-    { listingId: 4, networkId: 1 },
-    { listingId: 8, networkId: 1 },
-    { listingId: 1, networkId: 2 },
-    { listingId: 2, networkId: 1 },
-    { listingId: 3, networkId: 2 },
-    { listingId: 4, networkId: 2 },
-    { listingId: 8, networkId: 7 },
-    { listingId: 8, networkId: 1 },
-    { listingId: 8, networkId: 2 }
+    // { listingId: 2, networkId: 1 },
+    // { listingId: 4, networkId: 1 },
+    // { listingId: 8, networkId: 1 },
+    // { listingId: 1, networkId: 2 },
+    // { listingId: 3, networkId: 2 },
+    // { listingId: 4, networkId: 2 },
+    // { listingId: 8, networkId: 2 }
 ];
 
 function createUsers() {

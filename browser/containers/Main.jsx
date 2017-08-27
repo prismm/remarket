@@ -13,7 +13,7 @@ class Main extends Component {
   constructor(props){
     super(props);
     this.state = {
-      selectedNetwork: props.currentNetwork.id
+      selectedNetwork: props.currentNetwork && props.currentNetwork.id
     };
     this.setNetwork = this.setNetwork.bind(this);
   }
