@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const setNetworks_action = networks => ({ type: 'SET_NETWORKS', networks });
 const getMyNetworks_action = user => ({ type: 'GET_MY_NETWORKS', user });
-const setCurrentNetwork_action = network => ({ type: 'SET_CURRENT_NETWORK', network });
+export const setCurrentNetwork_action = network => ({ type: 'SET_CURRENT_NETWORK', network });
 const addMyNetwork_action = user => ({ type: 'ADD_NETWORK', user });
 const removeNetwork_action = network => ({ type: 'REMOVE_NETWORK', network })
 

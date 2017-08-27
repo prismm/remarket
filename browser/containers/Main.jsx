@@ -4,15 +4,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { logout_dispatch } from '../actions/user';
+import { fetchSingleNetwork_dispatch } from '../actions/network';
 import Button from 'react-md/lib/Buttons/Button';
 
 /*------------------- Main component ----------------------*/
-const Main = ({ children, handleClick, loggedIn }) => {
+const Main = ({ children, handleClick, loggedIn, selectNetwork }) => {
   return (
     <div>
       <Link to="/"><img className="remarket-logo" src="/imgs/recycling-pink.png" alt="" height="40" width="40" /></Link><h1 className="site-header"><Link to="/">remarket</Link></h1>
-      <Button raised primary className="network-button network-button-nyu" label="NYU" />
-      <Button raised primary className="network-button network-button-columbia" label="Columbia" />
+      <Button raised primary className="network-button network-button-nyu" onClick={() => selectNetwork(2)} label="NYU" />
+      <Button raised primary className="network-button network-button-columbia" onClick={() => selectNetwork(1)} label="Columbia" />
       { loggedIn ?
           <nav className="site-nav">
             <a className="site-nav-link" href="#" onClick={handleClick}>Logout</a>
@@ -35,7 +36,8 @@ const Main = ({ children, handleClick, loggedIn }) => {
 Main.propTypes = {
   children: PropTypes.object,
   handleClick: PropTypes.func.isRequired,
-  loggedIn: PropTypes.bool.isRequired
+  loggedIn: PropTypes.bool.isRequired,
+  selectNetwork: PropTypes.func.isRequired
 };
 
 /*------------------- Container ----------------------*/
@@ -46,9 +48,8 @@ const mapState = ({ user }) => ({
 });
 
 const mapDispatch = dispatch => ({
-  handleClick () {
-    dispatch(logout_dispatch());
-  }
+  handleClick: () => dispatch(logout_dispatch()),
+  selectNetwork: networkId => dispatch(fetchSingleNetwork_dispatch(networkId))
 });
 
 export default connect(mapState, mapDispatch)(Main);

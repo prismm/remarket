@@ -1,6 +1,6 @@
 * {
     font-family: avenir;
-    // color: black
+    color: black
 }
 
 body {
@@ -198,12 +198,40 @@ body {
     .network-button-columbia {
         border-color: #00BFFF;
         color: #00BFFF;
-         :hover {
+        &:hover {
+            border-color: black;
+            background-color: rgba(0, 191, 255, 0.31);
+            color: black
+        }
+        &:active {
             background-color: #00BFFF;
+            color: white;
+            border-color: black;
         }
     }
     .network-button-nyu {
         border-color: #673ab7;
+        color: #673ab7;
+        &:hover {
+            border-color: black;
+            background-color: rgba(103, 58, 183, 0.34);
+            color: black;
+        }
+        &:active {
+            background-color: #673ab7;
+            color: white;
+            border-color: black;
+        }
+    }
+    .network-button-disabled {
+        color: rgba(0, 0, 0, .38);
+        background-color: rgba(0, 0, 0, .12);
+        border-color: rgba(0, 0, 0, .38);
+    }
+    .columbia-selected {
+        color: rgb(0, 146, 195)
+    }
+    .nyu-selected {
         color: #673ab7;
     }
     .my-networks-test {

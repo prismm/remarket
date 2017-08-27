@@ -96,7 +96,7 @@ class AddNetwork extends Component {
                     </div>
                     <div className="md-cell--4 md-grid my-networks my-networks-test">
                     <div>
-                        <h3>My Networks</h3>
+                        <h3 className="content-title-header">My Networks</h3>
                         { (this.props.user.networks && this.props.user.networks.length) ?
                             this.props.user.networks.map(
                                 network => <li className="network-li" key={network.id}><NetworkAvatar key={network.id} network={network.name} tooltipLabel={network.name} tooltipPosition="top" />{network.name}</li>
