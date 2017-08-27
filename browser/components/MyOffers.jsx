@@ -16,6 +16,7 @@ class MyOffers extends Component {
         return (
         <div>
             <h3>My Offers</h3>
+            <h4 className="coming-soon">Coming soon.</h4>
         </div>
         )
     }
