@@ -12,7 +12,7 @@ const Comment = model.Comment;
 const affiliations = model.network_affiliations;
 const mailer = require('../mailer');
 const crypto = require('crypto');
-const domainUrl = process.env.GOOGLE_CLIENT_ID ? 'https://reuse.market/' : 'http://localhost:1337/';
+const domainUrl = process.env.GOOGLE_CLIENT_ID ? 'https://shielded-earth-43160.herokuapp.com/' : 'http://localhost:1337/';
 
 router.get('/', (req, res, next) => {
     User.findAll({ include: [{ all: true }] })

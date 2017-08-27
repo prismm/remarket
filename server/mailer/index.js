@@ -1,7 +1,6 @@
-'use strict';
 const nodemailer = require('nodemailer');
 const secrets = process.env.GOOGLE_CLIENT_ID ? null : require('../../google_api.js');
-const domainUrl = process.env.GOOGLE_CLIENT_ID ? 'https://reuse.market/' : 'http://localhost:1337/';
+const domainUrl = process.env.GOOGLE_CLIENT_ID ? 'https://shielded-earth-43160.herokuapp.com/' : 'http://localhost:1337/'; //'https://reuse.market/'
 
 const remarket = '"Remarket 👻" <hello@coases.com>';
 
