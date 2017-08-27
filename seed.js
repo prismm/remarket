@@ -54,8 +54,8 @@ const listings = [
 ]
 
 const networks = [
-    { name: 'NYU', location: 'New York' },
-    { name: 'Columbia', location: 'New York' },
+    { id: 2, name: 'NYU', location: 'New York' },
+    { id: 1, name: 'Columbia', location: 'New York' },
     { name: 'UPenn', location: 'Philadelphia' },
     { name: 'Harvard', location: 'Boston/Cambridge' },
     { name: 'MIT', location: 'Boston/Cambridge' },
