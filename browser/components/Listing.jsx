@@ -1,14 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import TimeAgo from './TimeAgo.jsx';
 
 /*------------------- ListingsLink component ----------------------*/
-export default function Listing({ listing }) {
+function Listing({ listing, currentNetwork }) {
+    let networkColoring = '';
+    if (currentNetwork && currentNetwork.name === 'Columbia') networkColoring = 'columbia-selected';
+    if (currentNetwork && currentNetwork.name === 'NYU') networkColoring = 'nyu-selected';
     return (
         listing && (
         <div>
-            <Link to={`/listings/${listing.id}`}>{listing.name}<p className="listing-list-time-ago"><TimeAgo time={listing.updatedAt} /></p></Link>
+            <Link className={networkColoring} to={`/listings/${listing.id}`}>{listing.name}<p className="listing-list-time-ago"><TimeAgo time={listing.updatedAt} /></p></Link>
         </div>)
     )
 }
@@ -16,3 +20,10 @@ export default function Listing({ listing }) {
 Listing.propTypes = {
   listing: PropTypes.object.isRequired
 };
+/*------------------- Container ----------------------*/
+
+const mapState = state => ({
+    currentNetwork: state.network.currentNetwork
+  });
+
+export default connect(mapState)(Listing);

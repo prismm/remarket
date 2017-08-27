@@ -195,20 +195,6 @@ body {
         border: 1px solid;
         box-shadow: none;
     }
-    .network-button-columbia {
-        border-color: #00BFFF;
-        color: #00BFFF;
-        &:hover {
-            border-color: black;
-            background-color: rgba(0, 191, 255, 0.31);
-            color: black
-        }
-        &:active {
-            background-color: #00BFFF;
-            color: white;
-            border-color: black;
-        }
-    }
     .network-button-nyu {
         border-color: #673ab7;
         color: #673ab7;
@@ -223,10 +209,79 @@ body {
             border-color: black;
         }
     }
-    .network-button-disabled {
+    .network-button-nyu-selected {
+        background-color: #673ab7;
+        color: white;
+        border-color: black;
+        &:hover {
+            border-color: black;
+            background-color: rgba(103, 58, 183, 0.34);
+            color: black;
+        }
+        &:active {
+            background-color: #673ab7;
+            color: white;
+            border-color: black;
+        }
+    }
+    .network-button-columbia {
+        border-color: #00BFFF;
+        color: #00BFFF;
+        &:hover {
+            border-color: black;
+            background-color: rgba(0, 191, 255, 0.31);
+            color: black
+        }
+        &:active {
+            background-color: #00BFFF;
+            color: white;
+            border-color: black;
+        }
+    }
+    .network-button-columbia-selected {
+        background-color: #00BFFF;
+        color: white;
+        border-color: black;
+        &:hover {
+            border-color: black;
+            background-color: rgba(0, 191, 255, 0.31);
+            color: black
+        }
+        &:active {
+            background-color: #00BFFF;
+            color: white;
+            border-color: black;
+        }
+    }
+    .network-button-disabled-nyu {
         color: rgba(0, 0, 0, .38);
         background-color: rgba(0, 0, 0, .12);
         border-color: rgba(0, 0, 0, .38);
+        &:hover {
+            border-color: black;
+            background-color: rgba(103, 58, 183, 0.34);
+            color: black;
+        }
+        &:active {
+            background-color: #673ab7;
+            color: white;
+            border-color: black;
+        }
+    }
+    .network-button-disabled-columbia {
+        color: rgba(0, 0, 0, .38);
+        background-color: rgba(0, 0, 0, .12);
+        border-color: rgba(0, 0, 0, .38);
+        &:hover {
+            border-color: black;
+            background-color: rgba(0, 191, 255, 0.31);
+            color: black
+        }
+        &:active {
+            background-color: #00BFFF;
+            color: white;
+            border-color: black;
+        }
     }
     .columbia-selected {
         color: rgb(0, 146, 195)
