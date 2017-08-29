@@ -2,9 +2,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { auth_dispatch, forgotPassword_dispatch } from '../actions/user';
+import { auth_dispatch, forgotPassword_dispatch, resendConfirmLink_dispatch } from '../actions/user';
 import TextField from 'react-md/lib/TextFields';
 import Button from 'react-md/lib/Buttons/Button';
+import Loader from '../HOC/Loader.jsx'
 
 /*-------------------Auth Form component ----------------------*/
 class AuthForm extends Component {
@@ -12,11 +13,21 @@ class AuthForm extends Component {
     super(props);
     this.state = {
       pwLenError: false,
-      email: ''
+      email: '',
+      error: null,
+      waiting: false
     }
     this.checkPasswordChange = this.checkPasswordChange.bind(this);
     this.forgotPassword = this.forgotPassword.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps){
+    if (nextProps.error){
+      console.log(nextProps.error);
+      this.setState({error: nextProps.error, waiting: false});
+    }
   }
 
   handleEmailChange(value){
@@ -32,10 +43,24 @@ class AuthForm extends Component {
     this.props.forgotPassword(this.state.email);
   }
 
+  resendConfirmLink(){
+    this.props.resendConfirmLink(this.state.email);
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const formName = event.target.name;
+    const email = this.state.email;
+    const password = event.target.password.value;
+    this.setState({waiting: true});
+    this.props.loginOrSignup(email, password, formName);
+  }
+
   render(){
-    const { name, displayName, handleSubmit, error } = this.props;
-    const googleSignin = <div className="md-ink-container"><img className="logo" src="/imgs/google.png" alt="Google logo" height="24" width="26" /><a className="google-text" href="/auth/google">{ displayName } with Google</a></div>;
-    const fcbkSignin = <div className="md-ink-container"><img className="logo" src="/imgs/facebook.png" alt="Facebook logo" height="24" width="24" /><a className="facebook-text" href="/auth/facebook">{ displayName } with Facebook</a></div>;
+    const { name, displayName, error } = this.props;
+    const handleSubmit = this.handleSubmit;
+    const googleSignin = <div className="md-ink-container"><img className="logo" src="/imgs/google.png" alt="Google" height="24" width="26" /><a className="google-text" href="/auth/google">{ displayName } with Google</a></div>;
+    const fcbkSignin = <div className="md-ink-container"><img className="logo" src="/imgs/facebook.png" alt="Facebook" height="24" width="24" /><a className="facebook-text" href="/auth/facebook">{ displayName } with Facebook</a></div>;
 
     return (
       <div>
@@ -46,7 +71,7 @@ class AuthForm extends Component {
               name="email"
               type="text"
               value={this.state.email}
-              onChange={this.handleEmailChange} 
+              onChange={this.handleEmailChange}
             />
           </div>
           <div>
@@ -64,7 +89,17 @@ class AuthForm extends Component {
             </div>
             : null}
             <Button raised primary label={ displayName } disabled={this.state.pwLenError} type="submit" className="local-login login-submit md-cell--12" />
-          { error &&  <div className="login-error"> { error.response.data } </div> }
+            { this.state.waiting &&
+                <div>
+                    <Loader loadingText="One moment, please..." />
+                </div>
+            }
+            {error && error.response && error.response.data ? <div className="login-error"> { error.response.data } </div> : null}
+            {error && error.response && error.response.data === 'Your account is not yet confirmed -- check your email or click below to resend the confirmation email.' ?
+            <div className="forgot-pw-link">
+              <a href="" onClick={ this.resendConfirmLink }>Resend confirmation link</a>
+            </div>
+            : null}
           <p><Button raised primary label={ googleSignin } type="submit" className="google-login login-submit md-cell--12" /></p>
           <p><Button raised primary label={ fcbkSignin } type="submit" className="facebook-login login-submit md-cell--12" /></p>
         </form>
@@ -76,7 +111,7 @@ class AuthForm extends Component {
 AuthForm.propTypes = {
   name: PropTypes.string.isRequired,
   displayName: PropTypes.string.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
+  loginOrSignup: PropTypes.func.isRequired,
   error: PropTypes.object,
   forgotPassword: PropTypes.func
 };
@@ -95,16 +130,9 @@ const mapSignup = ({ user }) => ({
 });
 
 const mapDispatch = dispatch => ({
-  handleSubmit (evt) {
-    evt.preventDefault();
-    const formName = evt.target.name;
-    const email = evt.target.email.value;
-    const password = evt.target.password.value;
-    dispatch(auth_dispatch(email, password, formName));
-  },
-  forgotPassword: function(email){
-    dispatch(forgotPassword_dispatch(email));
-  }
+  loginOrSignup: (email, password, formName) => dispatch(auth_dispatch(email, password, formName)),
+  forgotPassword: email => dispatch(forgotPassword_dispatch(email)),
+  resendConfirmLink: email => dispatch(resendConfirmLink_dispatch(email))
 });
 
 export const Login = connect(mapLogin, mapDispatch)(AuthForm);

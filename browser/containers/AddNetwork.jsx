@@ -17,7 +17,6 @@ class AddNetwork extends Component {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleEmailChange = this.handleEmailChange.bind(this);
-        // this.handleNetworkChange = this.handleNetworkChange.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.matchDomain = this.matchDomain.bind(this);
         this.state = {
@@ -40,11 +39,6 @@ class AddNetwork extends Component {
         let match = (domain === inputDomain);
         this.setState( {error: !match })
     }
-
-    // handleNetworkChange(value, index, event) { // eslint-disable-line no-unused-vars
-    //     let thisNetwork = this.props.networks.filter(network => (network.id === value))[0];
-    //     this.setState({ network: thisNetwork, verificationEmail: thisNetwork.suggestedDomain, error: false });
-    // }
 
     handleChange(value){
         let thisNetwork = this.props.networks.filter(network => (network.id === value))[0];
@@ -108,7 +102,6 @@ class AddNetwork extends Component {
                     </div>
                     <div className="md-cell--1 my-networks-test" />
                 </div>
-                
         )
     }
 }
@@ -134,14 +127,3 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddNetwork);
-
-/*
-                            <SelectField
-                                id="chooseNetwork"
-                                placeholder="Choose your Network"
-                                itemLabel="name"
-                                itemValue="id"
-                                onChange={this.handleNetworkChange}
-                                menuItems={this.props.networks}
-                            />
-                            */

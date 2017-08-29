@@ -13,27 +13,27 @@ export default class RenewListing extends Component {
             value: today,
             visible: false
             };
-    this._reset = this._reset.bind(this);
-    this._openPicker = this._openPicker.bind(this);
-    this._handleChange = this._handleChange.bind(this);
-    this._handleVisibilityChange = this._handleVisibilityChange.bind(this);
+    this.reset = this.reset.bind(this);
+    this.openPicker = this.openPicker.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
   }
 
-  _reset() {
+  reset() {
     this.setState({ value: null });
   }
 
-  _openPicker() {
+  openPicker() {
     this.setState({ visible: true });
   }
 
-  _handleChange(value) {
+  handleChange(value) {
     let newExpDate = new Date(value).setHours(23, 59);
     this.props.renewListing(this.props.currentListing.id, newExpDate);
     this.setState({ value });
   }
 
-  _handleVisibilityChange(visible) {
+  handleVisibilityChange(visible) {
     this.setState({ visible });
   }
 
@@ -47,7 +47,7 @@ export default class RenewListing extends Component {
           label="RENEW"
           raised
           className="md-inline-block md-btn md-btn--raised md-background--secondary md-background--secondary-hover md-pointer--hover md-btn--text md-btn--raised-pressed my-listing-button"
-          onClick={this._openPicker}
+          onClick={this.openPicker}
         />
         <div className="renew-picker">
           <DatePicker
@@ -57,8 +57,8 @@ export default class RenewListing extends Component {
             maxDate={twoMonthsLater}
             visible={visible}
             value={value}
-            onChange={this._handleChange}
-            onVisibilityChange={this._handleVisibilityChange}
+            onChange={this.handleChange}
+            onVisibilityChange={this.handleVisibilityChange}
           />
         </div>
       </div>

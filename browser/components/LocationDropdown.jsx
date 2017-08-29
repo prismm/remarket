@@ -13,7 +13,7 @@ const locations = [
   'New Haven',
   'Boston/Cambridge',
   'Philadelphia',
-  'Princeton'
+  'Washington DC'
 ];
 
 export default class LocationDropdown extends PureComponent {

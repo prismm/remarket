@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Button from 'react-md/lib/Buttons/Button'; 
 import DeleteDialog from './DeleteDialog.jsx';
 import { browserHistory } from 'react-router';
-// import { setCurrentListing_action } from '../actions/listing'
 
 //BUTTONS FOR LISTING FUNCTIONS
 /*-------- EditListingButton component ---------*/

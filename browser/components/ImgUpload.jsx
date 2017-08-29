@@ -189,7 +189,6 @@ class ImgUpload extends Component {
 
     return (
       this.props.currentListing && (
-        // <div className="md-grid">
           <div className="md-cell-10">
           <div className="image-upload-header">
             <h4 className="content-title-header">ADD OR MANAGE PHOTOS</h4>
@@ -224,7 +223,6 @@ class ImgUpload extends Component {
           </CSSTransitionGroup>
           {this.state.photos && this.state.photos.length ? <Button raised primary label="Publish Photos" onClick={this.publishPhotos} className="md-cell--12 md-cell--right" /> : null}
         </div>
-      // </div>
       )
     );
   }

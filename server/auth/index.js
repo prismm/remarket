@@ -126,12 +126,12 @@ router.use('/auth', require('./routes'));
 module.exports = router;
 
 /*
-security concerns to consider: 
--- when does the user need to be sanitized and when not? 
-X-- can we prevent "private information" (email, etc) from being included on req/res headers? 
-X-- preventing CSRF attacks --> 
+security concerns to consider:
+-- when does the user need to be sanitized and when not?
+X-- can we prevent "private information" (email, etc) from being included on req/res headers?
+X-- preventing CSRF attacks -->
     (1) is this a real concern on a SPA? We don't use req.query for anything as far as i know;
-    (2) we should verify that our get requests are safe and not "state-changing" 
+    (2) we should verify that our get requests are safe and not "state-changing"
         in that they simply produce public info (not private info)
         and that no db changes are made
     (3) consider protecting "post" and "put" and "delete" requests by piping api routes thru a requireLogin function

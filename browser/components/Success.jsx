@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
 
+
+/*----------------------- Success Component ---------------------------*/
+
 class Success extends Component {
     constructor(props){
         super(props);

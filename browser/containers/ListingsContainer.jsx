@@ -21,11 +21,11 @@ class Listings extends Component {
                         unfilteredListings: props.listings
                     }
         this.generalFilter = this.generalFilter.bind(this);
-        this.filterByNetwork = this.filterByNetwork.bind(this);
+        // this.filterByNetwork = this.filterByNetwork.bind(this);
         this.filterByLocation = this.filterByLocation.bind(this);  
         this.filterByCategory = this.filterByCategory.bind(this);
         this.handleChange = this.handleChange.bind(this); 
-        this.handleNetworkChange = this.handleNetworkChange.bind(this);
+        // this.handleNetworkChange = this.handleNetworkChange.bind(this);
         this.handleLocationChange = this.handleLocationChange.bind(this);
     }
 
@@ -50,16 +50,17 @@ class Listings extends Component {
         return categoryListings;
     }
 
-    handleNetworkChange(network){
-        this.setState({
-            networkFilters: this.state.filters.concat([network])
-        })
-    }
+    // handleNetworkChange(network){
+    //     this.setState({
+    //         networkFilters: this.state.filters.concat([network])
+    //     })
+    // }
 
-    filterByNetwork(arr, network){
-        if (network) return network.getAllListings();
-        else return arr;
-    }
+    //filter by network logic is currently handled in Main component; some draft logic is stored here as comments
+    // filterByNetwork(arr, network){
+    //     if (network) return network.getAllListings();
+    //     else return arr;
+    // }
 
     handleLocationChange(location){
         this.setState({
@@ -94,12 +95,12 @@ class Listings extends Component {
     render(){
         //filtering listings based on network and location -- should go off props.listings (complete list) or state.filteredListings (list filtered by generalFilter?)
         let filteredListings = this.state.filteredListings;
-        this.state.networkFilters.forEach( networkFilter => {
-            filteredListings = this.filterByNetwork(filteredListings, networkFilter)
-        });
+        // this.state.networkFilters.forEach( networkFilter => {
+        //     filteredListings = this.filterByNetwork(filteredListings, networkFilter)
+        // });
         filteredListings = this.filterByLocation(filteredListings);
-        //filter by Location was tested and appears to work; filter by network not yet tested
-        // console.log("FILTERED LISTINGS IN RENDER FUNCTION OF LISTINGS CONTAINER", filteredListings)
+        //filter by network logic is handled in Main component; some draft logic is stored here in comments
+
 
         return (
             <div>

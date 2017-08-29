@@ -7,6 +7,8 @@ import { UpdateNameButton, UpdateUsernameButton, UpdateBioButton, UpdateEmailBut
 
 import { editUser_dispatch } from '../actions/user';
 
+import Snackbar from '../HOC/Snackbar.jsx'
+
 import TextField from 'react-md/lib/TextFields'
 import DataTable from 'react-md/lib/DataTables/DataTable';
 import TableHeader from 'react-md/lib/DataTables/TableHeader';
@@ -43,7 +45,7 @@ class Profile extends Component {
     }
 
     handlePasswordChange(newPassword) {
-        this.state.password.length > 7 ? this.setState({
+        newPassword.length >= 7 ? this.setState({
             error: false,
             password: newPassword
         }) : this.setState({
@@ -53,6 +55,7 @@ class Profile extends Component {
     }
 
     render(){
+        let success = this.props.success;
         return (
             <div className="md-grid profile-form">
             <div className="md-cell md-cell--10">
@@ -150,6 +153,7 @@ class Profile extends Component {
                     </TableBody>
                 </DataTable>
             </div>
+            {success ? <Snackbar /> : null}
         </div>
         )
     }
@@ -167,6 +171,7 @@ Profile.propTypes = {
 /*----------------------- Container ---------------------------*/
 const mapStateToProps = state => ({
         user: state.user,
+        success: state.browse.success
     });
 
 const mapDispatchToProps = dispatch => {
@@ -184,8 +189,8 @@ const mapDispatchToProps = dispatch => {
         updateEmail: (userId, newEmail) => {
             dispatch(editUser_dispatch(userId, {email: newEmail}))
         },
-        //need to do password validation
         updatePassword: (userId, newPassword) => {
+            console.log(newPassword);
             dispatch(editUser_dispatch(userId, {password: newPassword}))
         }
     }

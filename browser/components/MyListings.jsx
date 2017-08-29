@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -18,8 +18,7 @@ import TableRow from 'react-md/lib/DataTables/TableRow';
 import TableColumn from 'react-md/lib/DataTables/TableColumn';
 
 /*------------------- MyListings component ----------------------*/
-//in the process of converting this to dumb component
-//<TimeLeft time={listing.expirationDate} />
+
 const MyListings = (props) => {
     return (
     <div className="my-listings md-cell-10">

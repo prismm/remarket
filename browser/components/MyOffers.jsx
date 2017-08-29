@@ -6,9 +6,6 @@ class MyOffers extends Component {
     constructor(props){
         super(props);
         this.state = {
-            progressFlag: false,
-            error: null,
-            photos: []
         }
     }
 

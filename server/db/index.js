@@ -22,7 +22,6 @@ const listing_networks = db.define('listing_networks', {}, { freezeTableName: tr
 
 //Token belongs to User (every token has one user, not all users have tokens)
 Token.belongsTo(User);
-// Token.belongsTo(network_affiliations);
 
 // User belongs to many Networks and Networks belong to many Users (join table)
 User.belongsToMany(Network, { through: network_affiliations });

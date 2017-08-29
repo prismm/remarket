@@ -47,7 +47,7 @@ router.post('/:userId/networks/:networkId', (req, res, next) => {
             // user.addNetwork(network, { through: { networkEmail: 'dummy@email.com', confirmed: false } });
             affiliations.create({ userId: user.id, networkId: network.id, networkEmail: req.body.email, confirmed: false })
             let authToken = crypto.randomBytes(16).toString('hex');
-            return Token.create({ token: authToken, userId: user.id })
+            return Token.create({ token: authToken, userId: user.id, type: 'confirm-network' })
                 .then(newToken => {
                     let confirmUrl = domainUrl + 'auth/networkverify?token=' + newToken.token + '&networkId=' + network.id;
                     mailer.transporter.sendMail(mailer.confirmNetwork(user, network, confirmUrl, req.body.email), (error, info) => {
@@ -68,7 +68,7 @@ router.post('/:userId/networks/:networkId', (req, res, next) => {
 
 //a POST route for sending message from user to user
 router.post('/msg', (req, res, next) => {
-    console.log(req.body.receiver);
+    // console.log(req.body.receiver);
     mailer.transporter.sendMail(mailer.sendMessage(req.body.sender, req.body.receiver, req.body.message, req.body.subject), (error, info) => {
         if (error) {
             console.error(error);
@@ -93,6 +93,26 @@ router.put('/:id', (req, res, next) => {
                 next();
             } else {
                 res.json(result[1][0]) //updated user obj
+            }
+        })
+        .catch(next)
+})
+
+//a route for PUT: /api/users/pw/${userId} that updates the user password
+router.put('/pw/:id', (req, res, next) => {
+    User.update(req.body, {
+            where: {
+                id: req.params.id
+            },
+            individualHooks: true,
+            returning: true
+        })
+        .then(result => {
+            if (!result[0]) {
+                next();
+            } else {
+                let user = result[1][0];
+                return res.json(user.sanitize()).status(200);
             }
         })
         .catch(next)

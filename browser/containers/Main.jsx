@@ -18,8 +18,6 @@ class Main extends Component {
     this.setNetwork = this.setNetwork.bind(this);
   }
 
-  // toggleNetwork(){}
-
   setNetwork(networkId){
     if (networkId !== this.state.selectedNetwork) {
       this.props.selectNetwork(networkId);
@@ -32,6 +30,7 @@ class Main extends Component {
 
   render(){
     const { children, handleClick, loggedIn } = this.props;
+    //logic to determine button styling below
     let NyuClassNames = this.state.selectedNetwork === 2 ? 'network-button network-button-nyu-selected' : 'network-button network-button-nyu';
     NyuClassNames = this.state.selectedNetwork === 1 ? 'network-button network-button-disabled-nyu' : NyuClassNames;
     NyuClassNames = this.state.selectedNetwork === 0 ? 'network-button network-button-nyu' : NyuClassNames;

@@ -8,7 +8,6 @@ const setListings_action = listings => ({ type: 'SET_LISTINGS', listings });
 export const setCurrentListing_action = listing => ({ type: 'SET_CURRENT_LISTING', listing });
 export const setEditStatus_action = editStatus => ({ type: 'SET_EDIT_STATUS', editStatus });
 const setMyListings_action = listings => ({ type: 'SET_MY_LISTINGS', listings });
-const archiveListing_action = listing => ({ type: 'ARCHIVE_LISTING', listing });
 const createListing_action = listing => ({ type: 'CREATE_LISTING', listing });
 const editListing_action = listing => ({ type: 'EDIT_LISTING', listing });
 const deleteListing_action = listingId => ({ type: 'DELETE_LISTING', listingId });
@@ -92,12 +91,3 @@ export const deleteUploadedPhotos_dispatch = (listing, deletedPhotos) => dispatc
         .catch(error =>
             dispatch(setCurrentListing_action({ error })));
 }
-
-// export const fetchPhotosByListing_dispatch = listing => dispatch => {
-//     return axios.get(`/api/listings/${listing.id}/photos`)
-//         .then(res => {
-//             dispatch(setCurrentListing_action(res.data));
-//         })
-//         .catch(error =>
-//             dispatch(setCurrentListing_action({ error })));
-// }

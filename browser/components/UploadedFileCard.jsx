@@ -3,6 +3,8 @@ import Card from 'react-md/lib/Cards/Card';
 import Media from 'react-md/lib/Media';
 import Button from 'react-md/lib/Buttons';
 
+/*----------------------- UploadedFileCard Component ---------------------------*/
+
 const UploadedFileCard = ({key, photo}) => {
   const { name, link } = photo;
   return (

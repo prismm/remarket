@@ -10,6 +10,7 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import Card from 'react-md/lib/Cards/Card';
 import Button from 'react-md/lib/Buttons/Button'; 
 import TextField from 'react-md/lib/TextFields';
+import Snackbar from '../HOC/Snackbar.jsx'
 
 /*-------- MessageUser component ---------*/
 
@@ -67,6 +68,7 @@ class MessageUser extends Component {
     render(){
         const sent = this.props.messageSent;
         const error = this.state.error;
+        let success = this.props.success;
         return (
         <div className="message-button-container">
             {!this.state.on &&
@@ -111,6 +113,7 @@ class MessageUser extends Component {
             }
             {   sent &&  <div className="response-message"> { sent } </div> }
             {   error &&  <div className="response-message"> { error } </div> }
+            {success ? <Snackbar /> : null}
         </div>
         )}
 }
@@ -129,7 +132,8 @@ const mapStateToProps = state => ({
     receiver: state.browse.user,
     currentListing: state.listing.currentListing,
     sender: state.user,
-    messageSent: state.browse.message
+    messageSent: state.browse.message,
+    success: state.browse.success
 });
 
 const mapDispatchToProps = dispatch => {

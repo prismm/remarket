@@ -40,7 +40,7 @@ const changePassword = function(user, resetPwUrl) {
 const confirmNetwork = function(user, network, confirmNetworkUrl, verificationEmail) {
     return {
         from: remarket,
-        to: verificationEmail, //actually should send to supplied network email, and should capture network email in db
+        to: verificationEmail, //should send to supplied network email, and should capture network email in db
         subject: 'Confirm network',
         text: 'Hi ' + user.name + ', please confirm your affiliation to ' + network.name + ' by clicking here: ' + confirmNetworkUrl,
         html: '<p>Hi ' + user.name + ', please confirm your affiliation to ' + network.name + ' by <a href="' + confirmNetworkUrl + '">clicking here</a>.</p>'
@@ -60,7 +60,7 @@ const sendMessage = function(sender, receiver, message, subject) {
     }
 }
 
-//havent incorporated this one yet, since the delete route isnt written
+//havent incorporated this one yet, since the delete route isn't written
 const deleteAccount = function(user, deleteFormUrl) {
     return {
         from: remarket,
@@ -83,7 +83,7 @@ const newListing = function(author, listing) {
     }
 };
 
-//hasnt been incorporated yet, comments have not been implemented
+//hasn't been incorporated yet, comments have not been implemented
 const newComment = function(listingAuthor, commenter, listing) {
     const listingLink = domainUrl + 'listings/' + listing.id;
     return {

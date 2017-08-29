@@ -1,17 +1,12 @@
 /* eslint-disable camelcase */
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import PropTypes from 'prop-types';
 
 /*----------------------- Account Component ---------------------------*/
-class Account extends Component {
-    constructor(props){
-        super(props);
-    }
-
-    render(){
-        return (
+function Account () {
+    return (
         <div className="md-grid">
             <div className="md-cell md-cell--2">
             <h3> account > </h3>
@@ -24,15 +19,14 @@ class Account extends Component {
             </ul>
             </div>
             <div className="md-cell md-cell--10">
-                {this.props.children}
+                { this.props.children }
             </div>
         </div>
-        )
-    }
+    )
 }
 
 Account.propTypes = {
-    user: PropTypes.object.isRequired
+    user: PropTypes.object
 };
 
 /*----------------------- Container ---------------------------*/

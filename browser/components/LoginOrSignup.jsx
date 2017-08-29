@@ -1,6 +1,9 @@
 import { Login, Signup } from './Auth.jsx';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+import Snackbar from '../HOC/Snackbar.jsx'
 
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import Tabs from 'react-md/lib/Tabs/Tabs';
@@ -27,6 +30,7 @@ class LoginOrSignup extends Component {
     }
 
     render (){
+        let success = this.props.success;
         return (
             <div className="login-or-signup md-grid">
             <div className="tab-container md-cell--6">
@@ -58,6 +62,7 @@ class LoginOrSignup extends Component {
                 </Tabs>
                 </TabsContainer>
                 </div>
+                {success ? <Snackbar /> : null}
             </div>
     )
     }
@@ -67,4 +72,10 @@ LoginOrSignup.propTypes = {
     status: PropTypes.string
 }
 
-export default LoginOrSignup;
+/*----------------------- Container ---------------------------*/
+const mapStateToProps = state => ({
+    success: state.browse.success
+});
+
+
+export default connect(mapStateToProps)(LoginOrSignup);

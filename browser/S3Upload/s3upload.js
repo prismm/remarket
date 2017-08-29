@@ -40,21 +40,17 @@ function S3Upload(options) {
             this[option] = options[option];
         }
     }
-    // var files = this.fileElement ? this.fileElement.files : this.files || [];
     var file = this.fileElement;
     this.handleFileSelect(file);
 }
 
 S3Upload.prototype.handleFileSelect = function(file) {
     var result = [];
-    // for (var i in files) {
-    // var file = files[i];
     this.preprocess(file, function(processedFile) {
         this.onProgress(0, 'Waiting', processedFile);
         result.push(this.uploadFile(processedFile));
         return result;
     }.bind(this));
-    // }
 };
 
 S3Upload.prototype.createCORSRequest = function(method, url, opts) {

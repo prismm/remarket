@@ -15,6 +15,7 @@ const viewUserListings_action = listings => ({ type: 'VIEW_USER_LISTINGS', listi
 export const messageSent_action = response => ({ type: 'MESSAGE_SENT', response });
 export const clearViewUser_action = () => ({ type: 'CLEAR_USER' });
 export const setDestination_action = destination => ({ type: 'SET_DESTINATION', destination });
+export const interactionSuccess_action = interaction => ({ type: 'SUCCESS', interaction })
 
 /* ------------     DISPATCHERS     ------------------ */
 const defaultUser = {};
@@ -32,12 +33,24 @@ export const me_dispatch = () => dispatch => {
 export const forgotPassword_dispatch = email => dispatch => {
     return axios.post('/auth/forgotpassword', { email })
         .then(res => {
-            // dispatch(getUser_action(res.data));
-            console.log('This should not occur', res.data)
+            console.log('This should not occur', res.data) //should not occur because axios request should only return error status codes (401 or 307)
         })
         .catch(error => {
+            dispatch(interactionSuccess_action('Password reset link sent'));
             console.error(error);
             dispatch(getUser_action({ error }));
+        })
+}
+
+export const resendConfirmLink_dispatch = email => dispatch => {
+    return axios.post('/auth/resendconfirmlink', { email })
+        .then(res => {
+            dispatch(getUser_action(res.data)); //unlikely to occur -- would mean that the user was in fact already confirmed
+        })
+        .catch(error => {
+            dispatch(interactionSuccess_action('Confirmation link sent'));
+            console.error(error);
+            dispatch(getUser_action({ error })); //the error message will let the user know that the email is on its way.
         })
 }
 
@@ -56,6 +69,7 @@ export const messageUser_dispatch = (sender, receiver, message, subject) => disp
     return axios.post('/api/users/msg', { sender, receiver, message, subject })
         .then(res => {
             dispatch(messageSent_action(res.data))
+            dispatch(interactionSuccess_action('Message sent'));
         })
         .catch(error =>
             dispatch(messageSent_action({ error })))
@@ -80,18 +94,32 @@ export const auth_dispatch = (email, password, method) => dispatch => {
             let user = res.data;
             if (user) user.networks = user.networks.filter(network => network.network_affiliations.confirmed);
             dispatch(getUser_action(user));
-            browserHistory.push(currentDestination); //get this destination from the store! browse.destination
+            browserHistory.push(currentDestination); //routes user back to original browse destination
         })
-        .catch(error =>
-            dispatch(getUser_action({ error })));
+        .catch(error => {
+            if (error.response && error.response.status === 307) {
+                dispatch(interactionSuccess_action('Account created'));
+            }
+            dispatch(getUser_action({ error }));
+        })
 }
 
 export const editUser_dispatch = (userId, changes) => dispatch => {
-    axios.put(`/api/users/${userId}`, changes)
-        .then(res => {
-            dispatch(editUser_action(res.data));
-        })
-        .catch(console.error);
+    if (changes.password) {
+        axios.put(`/api/users/pw/${userId}`, changes)
+            .then(res => {
+                dispatch(editUser_action(res.data));
+                dispatch(interactionSuccess_action('Updated password'));
+            })
+            .catch(console.error);
+    } else {
+        axios.put(`/api/users/${userId}`, changes)
+            .then(res => {
+                dispatch(editUser_action(res.data));
+                dispatch(interactionSuccess_action('Updated user info'));
+            })
+            .catch(console.error);
+    }
 }
 
 export const logout_dispatch = () => dispatch => {
@@ -99,6 +127,7 @@ export const logout_dispatch = () => dispatch => {
         .then(() => {
             dispatch(removeUser_action());
             browserHistory.push('/login');
+            dispatch(interactionSuccess_action('Logged out'));
         })
         .catch(err => console.log(err));
 }

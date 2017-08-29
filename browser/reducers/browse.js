@@ -4,7 +4,8 @@ const initialState = {
     listing: {},
     userListings: {},
     message: '',
-    destination: '/home'
+    destination: '/home',
+    success: ''
 }
 
 export default function(state = initialState, action) {
@@ -25,6 +26,9 @@ export default function(state = initialState, action) {
             break;
         case 'SET_DESTINATION':
             newState.destination = action.destination;
+            break;
+        case 'SUCCESS':
+            newState.success = action.interaction;
             break;
         default:
             return state;

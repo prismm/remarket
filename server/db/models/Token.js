@@ -6,6 +6,9 @@ const Token = db.define('token', {
         type: Sequelize.STRING,
         allowNull: false
     },
+    type: {
+        type: Sequelize.ENUM('confirm-account', 'confirm-network', 'retrieve-password')
+    },
     expired: {
         type: Sequelize.BOOLEAN,
         defaultValue: false

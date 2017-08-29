@@ -448,6 +448,12 @@ body {
             transition-timing-function: ease-out;
         }
     }
+    .snackbar-success {
+        color: white;
+        background-color: #ff82af;
+        opacity: 0.9;
+        font-weight: bolder;
+    }
     // @keyframes loader-1{ 
     //     0% {-webkit-transform: translate3d(0,0,0);
     //         -moz-transform: translate3d(0,0,0);

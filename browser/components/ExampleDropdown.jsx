@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Dropdown from 'react-toolbox/lib/dropdown';
 
-/*----------------------- MyOffers Component ---------------------------*/
-class NetworkDropdown extends Component {
+/*----------------------- ExampleDropdown Component ---------------------------*/
+class ExampleDropdown extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -36,4 +36,4 @@ class NetworkDropdown extends Component {
     )}
 }
 
-export default NetworkDropdown;
+export default ExampleDropdown;

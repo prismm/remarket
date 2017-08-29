@@ -20,10 +20,6 @@ const mapState = state => ({
     currentListing: state.listing.currentListing
   });
 
-// const mapDispatch = dispatch => ({
-//     upload: (listing, photos) => dispatch(storeUploadedPhotos_dispatch(listing, photos))
-//   });
-
 const ListingImagesWithSpinner =  spinner('photos')(ListingImages);
 
 export default connect(mapState)(ListingImagesWithSpinner);

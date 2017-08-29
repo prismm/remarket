@@ -17,7 +17,7 @@ const Network = db.define('network', {
     instanceMethods: {
         getAllListings: function() {
             return this.getUsers({ include: [{ all: true }] })
-                .then(users => users.map(user => user.listings)) // map listings by users and Promise.all the mapped arr?
+                .then(users => users.map(user => user.listings))
                 .then(listings => listings)
                 .catch(console.error)
         }

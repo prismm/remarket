@@ -59,8 +59,6 @@ class ListingDetail extends Component {
 
 
     render(){
-        // if (this.props.currentListing){ let thisAuthorName = this.props.currentListing.author.username || this.props.currentListing.author.userId}
-        console.log(this.props.currentListing);
         const error = this.props.currentListing.error || null;
         const isItMyListing = this.props.currentListing.authorId === this.props.user.id;
         const wasItEdited = this.props.currentListing.createdAt !== this.props.currentListing.updatedAt;

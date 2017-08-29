@@ -10,7 +10,6 @@ import MessageUser from './MessageUser.jsx';
 import {TimeLeft} from './TimeLeft.jsx';
 
 import Card from 'react-md/lib/Cards/Card';
-import CardTitle from 'react-md/lib/Cards/CardTitle';
 import DataTable from 'react-md/lib/DataTables/DataTable';
 import TableHeader from 'react-md/lib/DataTables/TableHeader';
 import TableBody from 'react-md/lib/DataTables/TableBody';

@@ -28,8 +28,8 @@ const User = db.define('user', {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-            isEmail: true
-                // unique: true
+            isEmail: true,
+            unique: true
         }
     },
     googleId: {
@@ -97,8 +97,6 @@ function setSaltAndPassword(user) {
     if (user.changed('password')) {
         user.salt = User.generateSalt();
         user.password = User.encryptPassword(user.password, user.salt);
-    } else {
-        console.log('password hash and salt not set') //testing occurence of hooks
     }
 }
 
