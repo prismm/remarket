@@ -46,7 +46,6 @@ router.get('/user/:userId', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-    // console.log(req.body);
     Listing.create(req.body)
         .then(newListing => Promise.all([User.findById(newListing.authorId), newListing]))
         .then(([user, newListing]) => {
