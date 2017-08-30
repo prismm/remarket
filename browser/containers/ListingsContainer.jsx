@@ -100,8 +100,7 @@ class Listings extends Component {
         // });
         filteredListings = this.filterByLocation(filteredListings);
         //filter by network logic is handled in Main component; some draft logic is stored here in comments
-
-
+        const subcategories = this.props.subcategories ? this.props.subcategories : null;
         return (
             <div>
                 <Filters
@@ -116,9 +115,9 @@ class Listings extends Component {
                     location={this.state.location}
                 />
                 <div>
-                    {this.props.selectedCategory ?                         
+                    {this.props.selectedCategory ?
                         (<div className="md-grid">
-                            <ListingsList className="md-cell" listings={this.filterByCategory(this.props.selectedCategory, filteredListings)} category={this.props.selectedCategory} />
+                            <ListingsList className="md-cell" listings={this.filterByCategory(this.props.selectedCategory, filteredListings)} category={this.props.selectedCategory} subcategories={subcategories}/>
                         </div>) : (
                         <div className="md-grid">
                             <ListingsList className="md-cell" listings={this.filterByCategory('for sale', filteredListings)} category="for sale" />

@@ -86,7 +86,7 @@ class AddNetwork extends Component {
                             </div>
                             <Button raised primary label="Submit" type="submit" disabled={this.state.error} />
                         </form>
-                        {this.state.submit &&<div className="network-submit-message"><div>Thank you!</div><div className="network-submit-note">One last step: check your email inbox for {this.state.verificationEmail} to confirm that you're indeed a part of this network.</div></div>}
+                        {this.state.submit && <div className="network-submit-message"><div>Thank you!</div><div className="network-submit-note">One last step: check your email inbox for {this.state.verificationEmail} to confirm that you're indeed a part of this network.</div></div>}
                     </div>
                     <div className="md-cell--4 md-grid my-networks my-networks-test">
                     <div>

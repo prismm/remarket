@@ -16,12 +16,13 @@ class ListingsList extends Component {
     render(){
         let {listings, category, currentNetwork} = this.props;
         const catUrl = category === 'for sale' ? 'for-sale' : category;
-
+        const subcategories = this.props.subcategories ? this.props.subcategories : null;
         if (currentNetwork && currentNetwork.id) listings = listings.filter(listing => listing.networks.some(network => network.id === currentNetwork.id));
 
     return (
         <div className="md-cell md-cell--4">
             <h2><Link to={`/${catUrl}`}>{category}</Link></h2>
+            {subcategories ? <h3>Subcategories Dropdown</h3> : null}
             { listings ?
                 listings.map(listing => <div key={listing.id}><Listing listing={listing} /></div>)
                 :
