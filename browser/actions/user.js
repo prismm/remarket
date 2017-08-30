@@ -30,6 +30,27 @@ export const me_dispatch = () => dispatch => {
         .catch(console.error)
 }
 
+// export const googleAuth_dispatch = () => dispatch => {
+//     return axios.get('/auth/google')
+//         .then(res => {
+//             console.log("google", res);
+//             let user = res.data;
+//             if (user) user.networks = user.networks.filter(network => network.network_affiliations.confirmed);
+//             dispatch(getUser_action(user || defaultUser))
+//         })
+//         .catch(console.error)
+// }
+
+// export const facebookAuth_dispatch = () => dispatch => {
+//     return axios.get('/auth/facebook')
+//         .then(res => {
+//             let user = res.data;
+//             if (user) user.networks = user.networks.filter(network => network.network_affiliations.confirmed);
+//             dispatch(getUser_action(user || defaultUser))
+//         })
+//         .catch(console.error)
+// }
+
 export const forgotPassword_dispatch = email => dispatch => {
     return axios.post('/auth/forgotpassword', { email })
         .then(res => {

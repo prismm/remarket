@@ -2,10 +2,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { auth_dispatch, forgotPassword_dispatch, resendConfirmLink_dispatch } from '../actions/user';
+import { auth_dispatch, forgotPassword_dispatch, resendConfirmLink_dispatch, googleAuth_dispatch, facebookAuth_dispatch } from '../actions/user';
 import TextField from 'react-md/lib/TextFields';
 import Button from 'react-md/lib/Buttons/Button';
-import Loader from '../HOC/Loader.jsx'
+import Loader from '../HOC/Loader.jsx';
+import { browserHistory } from 'react-router';
 
 /*-------------------Auth Form component ----------------------*/
 class AuthForm extends Component {
@@ -28,6 +29,10 @@ class AuthForm extends Component {
       console.log(nextProps.error);
       this.setState({error: nextProps.error, waiting: false});
     }
+  }
+
+  componentWillUnmount(){
+    this.setState({error: null, waiting: false})
   }
 
   handleEmailChange(value){
@@ -100,8 +105,8 @@ class AuthForm extends Component {
               <a href="" onClick={ this.resendConfirmLink }>Resend confirmation link</a>
             </div>
             : null}
-          <p><Button raised primary label={ googleSignin } type="submit" className="google-login login-submit md-cell--12" /></p>
-          <p><Button raised primary label={ fcbkSignin } type="submit" className="facebook-login login-submit md-cell--12" /></p>
+          <p><Button raised primary label={ googleSignin } onClick={() => {}} className="google-login login-submit md-cell--12" /></p>
+          <p><Button raised primary label={ fcbkSignin } onClick={() => {}} className="facebook-login login-submit md-cell--12" /></p>
         </form>
       </div>
     );

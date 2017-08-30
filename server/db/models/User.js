@@ -28,8 +28,8 @@ const User = db.define('user', {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-            isEmail: true,
-            unique: true
+            isEmail: true
+                // unique: true
         }
     },
     googleId: {

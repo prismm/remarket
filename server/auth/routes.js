@@ -127,6 +127,10 @@ router.post('/signup', (req, res, next) => {
                                 })
                             })
                     })
+                    .catch(error => {
+                        console.log(error);
+                        res.status(401).send('Something went wrong. Make sure to use a valid email address & contact us if you believe you\'re seeing this message in error.')
+                    })
             }
         })
         .catch(next)
@@ -182,6 +186,13 @@ router.get('/forgotpassword', (req, res, next) => {
                             res.status('401').send('Your account is not yet confirmed -- check your email or click below to resend the confirmation email.') //FYI -- if you change text of this error message, edit corresponding text in route above and in Auth component
                         } else {
                             token.update({ expired: true });
+                            mailer.transporter.sendMail(mailer.passwordReset(user), (error, info) => {
+                                if (error) {
+                                    console.error(user, error);
+                                } else {
+                                    console.log('Message %s sent: %s', info.messageId, info.response)
+                                }
+                            })
                             return req.login(user, err => {
                                 if (err) next(err);
                                 // else return res.json(user.sanitize()).status(200);

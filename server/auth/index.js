@@ -66,6 +66,7 @@ const facebookStrategy = new FacebookStrategy(FacebookConfig, function(accessTok
 
     User.findOne({ facebookId: facebookId })
         .then(user => {
+            console.log("IN THE FACEBOOK ROUTE")
             if (!user) {
                 console.log("The user is falsy") //should give user info, not console log
                     //do something over here to note that the user didn't previously exist
@@ -93,7 +94,12 @@ router.get('/auth/google/callback',
     passport.authenticate('google', {
         successRedirect: '/home', //should say that you have logged in successfully, and redirect to whereever you were browsing before?
         failureRedirect: '/login' //should say it didn't work?
-    }));
+    }),
+    (req, res) => {
+        const redirect = req.session.oauth2return || '/';
+        delete req.session.oauth2return;
+        res.redirect(redirect);
+    });
 
 router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['public_profile', 'email'] })); //'publish_actions' will be added once ready to submit to fcbk for review)
 

@@ -42,32 +42,41 @@ const confirmNetwork = function(user, network, confirmNetworkUrl, verificationEm
         from: remarket,
         to: verificationEmail, //should send to supplied network email, and should capture network email in db
         subject: 'Confirm network',
-        text: 'Hi ' + user.name + ', please confirm your affiliation to ' + network.name + ' by clicking here: ' + confirmNetworkUrl,
-        html: '<p>Hi ' + user.name + ', please confirm your affiliation to ' + network.name + ' by <a href="' + confirmNetworkUrl + '">clicking here</a>.</p>'
+        text: 'Hi ' + user.userId + ', please confirm your affiliation to ' + network.name + ' by clicking here: ' + confirmNetworkUrl,
+        html: '<p>Hi ' + user.userId + ', please confirm your affiliation to ' + network.name + ' by <a href="' + confirmNetworkUrl + '">clicking here</a>.</p>'
     }
 };
 
 const sendMessage = function(sender, receiver, message, subject) {
-    const senderId = sender.username || sender.userId;
-    const senderUrl = domainUrl + 'user/' + sender.id;
-    return {
-        from: remarket,
-        to: receiver.email,
-        subject: subject,
-        replyTo: sender.email,
-        text: senderId + ' (' + senderUrl + ') wrote: \n' + message + '\n Sent from remarket',
-        html: '<div><a href="' + senderUrl + '">' + senderId + '</a> wrote: \n' + message + '</div><p>\n Sent from remarket</p>'
+        const senderId = sender.userId;
+        const senderUrl = domainUrl + 'user/' + sender.id;
+        return {
+            from: remarket,
+            to: receiver.email,
+            subject: subject,
+            replyTo: sender.email,
+            text: senderId + ' (' + senderUrl + ') wrote: \n' + message + '\n Sent from remarket',
+            html: '<div><a href="' + senderUrl + '">' + senderId + '</a> wrote: \n' + message + '</div><p>\n Sent from remarket</p>'
+        }
     }
-}
-
-//havent incorporated this one yet, since the delete route isn't written
+    //havent incorporated this one yet, since the delete route isn't written
+const passwordReset = function(user) {
+        return {
+            from: remarket,
+            to: user.email,
+            subject: 'Your password was reset',
+            text: 'Hi ' + user.userId + ', we wanted to let you know that your password was recently reset on remarket. If you did not reset your password, reply to this email to let us know. Otherwise, you can disregard this message. Thanks!',
+            html: '<p>Hi' + user.userId + ', we wanted to let you know that your password was recently reset on remarket. If you did not reset your password, reply to this email to let us know. Otherwise, you can disregard this message. Thanks!</p>' // html body
+        }
+    }
+    //havent incorporated this one yet, since the delete route isn't written
 const deleteAccount = function(user, deleteFormUrl) {
     return {
         from: remarket,
         to: user.email,
         subject: 'Sad to see you go',
-        text: 'Hi ' + user.name + ', your account with us has successfully been deleted. Can you let us know why? \n' + deleteFormUrl + '\n Thank you for using remarket.',
-        html: '<p>Hi' + user.name + ', your account with us has successfully been deleted. <a href="' + deleteFormUrl + '">Can you let us know why?</a>.</p> Thank you for using remarket.</p>' // html body
+        text: 'Hi ' + user.userId + ', your account with us has successfully been deleted. Can you let us know why? \n' + deleteFormUrl + '\n Thank you for using remarket.',
+        html: '<p>Hi ' + user.userId + ', your account with us has successfully been deleted. <a href="' + deleteFormUrl + '">Can you let us know why?</a>.</p> Thank you for using remarket.</p>' // html body
     }
 }
 
@@ -78,8 +87,8 @@ const newListing = function(author, listing) {
         from: remarket,
         to: author.email,
         subject: '[' + listing.name.slice(0, 10) + '...] Your listing was published',
-        text: 'Hi ' + author.name + ', you just published your listing "' + listing.name + '" on remarket. To view or share this listing, access the link below. \n' + listingLink + '\n To manage this listing, visit My Account -> My Listings (you can edit, renew, or archive/delete the listing there). Please keep your listing updated, and make sure to archive it if it\'s no longer applicable. Thanks and good luck!',
-        html: '<p>Hi ' + author.name + ', you just published your listing <a href="' + listingLink + '">' + listing.name + '</a> on remarket. To manage this listing, visit My Account -> My Listings (you can edit, renew, or archive/delete the listing there). Please keep your listing updated, and make sure to archive it if it\'s no longer applicable. Thanks and good luck!</p>'
+        text: 'Hi ' + author.userId + ', you just published your listing "' + listing.name + '" on remarket. To view or share this listing, access the link below. \n' + listingLink + '\n To manage this listing, visit My Account -> My Listings (you can edit, renew, or archive/delete the listing there). Please keep your listing updated, and make sure to archive it if it\'s no longer applicable. Thanks and good luck!',
+        html: '<p>Hi ' + author.userId + ', you just published your listing <a href="' + listingLink + '">' + listing.name + '</a> on remarket. To manage this listing, visit My Account -> My Listings (you can edit, renew, or archive/delete the listing there). Please keep your listing updated, and make sure to archive it if it\'s no longer applicable. Thanks and good luck!</p>'
     }
 };
 
@@ -90,8 +99,8 @@ const newComment = function(listingAuthor, commenter, listing) {
         from: remarket, // sender address
         to: listingAuthor.email, // list of receivers
         subject: '[' + listing.name.slice(0, 10) + '...] New comment on your listing',
-        text: 'Hi ' + listingAuthor.name + ', ' + commenter.username || commenter.userId + ' made a new comment on your listing "' + listing.name + '". View it here. \n' + listingLink, //{To opt out of future messages like this, please click here.}',
-        html: '<p>Hi ' + listingAuthor.name + ', ' + commenter.username || commenter.userId + ' made a new comment on your listing "' + listing.name + '". <a href="' + listingLink + '">View it here.</a></p>', //<a href="{email prefs link}">To opt out of future messages like this, please click here.</a>'
+        text: 'Hi ' + listingAuthor.userId + ', ' + commenter.userId + ' made a new comment on your listing "' + listing.name + '". View it here. \n' + listingLink, //{To opt out of future messages like this, please click here.}',
+        html: '<p>Hi ' + listingAuthor.userId + ', ' + commenter.userId + ' made a new comment on your listing "' + listing.name + '". <a href="' + listingLink + '">View it here.</a></p>', //<a href="{email prefs link}">To opt out of future messages like this, please click here.</a>'
     }
 };
 
@@ -100,8 +109,8 @@ const newOffer = {
     from: remarket, // sender address
     to: author, // list of receivers
     subject: '[{listing.name}] New offer on your listing', // Subject line
-    text: 'Hi ' + author.name + ', {buyer.name} made a new offer on your listing {listing.name}. {View it here.} {To opt out of future messages like this, please click here.}', // plain text body
-    html: '<p>Hi ' + author.name + ', {buyer.name} made a new offer on your listing {listing.name}. <a href="{confirm email link}">View it here.</a><a href="{email prefs link}">To opt out of future messages like this, please click here.</a>' // html body
+    text: 'Hi ' + author.userId + ', {buyer.userId} made a new offer on your listing {listing.name}. {View it here.} {To opt out of future messages like this, please click here.}', // plain text body
+    html: '<p>Hi ' + author.userId + ', {buyer.userId} made a new offer on your listing {listing.name}. <a href="{confirm email link}">View it here.</a><a href="{email prefs link}">To opt out of future messages like this, please click here.</a>' // html body
 };
 
 const anotherOffer = {
@@ -114,8 +123,8 @@ const offerAccepted = {
     from: remarket, // sender address
     to: buyer, // list of receivers
     subject: '[{listing.name}] Good news!', // Subject line
-    text: 'Hi {buyer.name}, good news! {author.name} has accepted your offer of {offer.amount} for {listing.name}. {Author.name} is cc\'ed, so you two can take it from here. Thanks for using Remarket!', // plain text body
-    html: '<p>Hi {buyer.name}, good news! {author.name} has accepted your offer of {offer.amount} for {listing.name}. {Author.name} is cc\'ed, so you two can take it from here. Thanks for using Remarket!</p>' // html body
+    text: 'Hi {buyer.userId}, good news! {author.userId} has accepted your offer of {offer.amount} for {listing.name}. {Author.name} is cc\'ed, so you two can take it from here. Thanks for using Remarket!', // plain text body
+    html: '<p>Hi {buyer.userId}, good news! {author.userId} has accepted your offer of {offer.amount} for {listing.name}. {Author.name} is cc\'ed, so you two can take it from here. Thanks for using Remarket!</p>' // html body
 };
 
 const anotherOfferAccepted = {
@@ -128,8 +137,8 @@ const youAcceptedOffer = {
     from: remarket, // sender address
     to: author, // list of receivers
     subject: '[{listing.name}] We\'re glad you accepted the offer', // Subject line
-    text: 'Hi {buyer.name}, good news! {author.name} has accepted your offer of {offer.amount} for {listing.name}. {Author.name} is cc\'ed, so you two can take it from here. Thanks for using Remarket!', // plain text body
-    html: '<p>Hi {buyer.name}, good news! {author.name} has accepted your offer of {offer.amount} for {listing.name}. {Author.name} is cc\'ed, so you two can take it from here. Thanks for using Remarket!</p>' // html body
+    text: 'Hi {buyer.userId}, good news! {author.userId} has accepted your offer of {offer.amount} for {listing.name}. {Author.name} is cc\'ed, so you two can take it from here. Thanks for using Remarket!', // plain text body
+    html: '<p>Hi {buyer.userId}, good news! {author.userId} has accepted your offer of {offer.amount} for {listing.name}. {Author.name} is cc\'ed, so you two can take it from here. Thanks for using Remarket!</p>' // html body
 };
 */
 
@@ -140,8 +149,8 @@ const listingStatusChange = function(listingAuthor, listing, newStatus) {
         from: remarket,
         to: listingAuthor.email,
         subject: '[' + listing.name.slice(0, 14) + '...] Your listing has been ' + newStatusVerb,
-        text: 'Hi ' + listingAuthor.name + ', your listing "' + listing.name + '" has been ' + newStatusVerb + ' on remarket. \n To manage your listings, visit My Account -> My Listings. Thanks and good luck!',
-        html: '<p>Hi ' + listingAuthor.name + ', your listing <a href="' + listingLink + '">' + listing.name + '</a> has been ' + newStatusVerb + ' on remarket. \n To manage your listings, visit My Account -> My Listings. Thanks and good luck!</p>'
+        text: 'Hi ' + listingAuthor.userId + ', your listing "' + listing.name + '" has been ' + newStatusVerb + ' on remarket. \n To manage your listings, visit My Account -> My Listings. Thanks and good luck!',
+        html: '<p>Hi ' + listingAuthor.userId + ', your listing <a href="' + listingLink + '">' + listing.name + '</a> has been ' + newStatusVerb + ' on remarket. \n To manage your listings, visit My Account -> My Listings. Thanks and good luck!</p>'
     }
 };
 
@@ -151,8 +160,8 @@ let listingAboutToArchive = function(listingAuthor, listing, renewUrl) {
         from: remarket,
         to: listingAuthor.email,
         subject: '[' + listing.name.slice(0, 10) + '...] Your listing is about to expire',
-        text: 'Hi ' + listingAuthor.name + ', your listing "' + listing.name + '" is about to expire in ' + listing.expiresIn + ' on remarket. \n To manage this listing, visit My Account -> My Listings (you can edit, renew, or archive/delete the listing there). Thanks and good luck!',
-        html: '<p>Hi ' + listingAuthor.name + ', your listing <a href="' + listingLink + '">' + listing.name + '</a> is about to expire in ' + listing.expiresIn + ' on remarket. \n To manage this listing, visit My Account -> My Listings (you can edit, renew, or archive/delete the listing there). Thanks and good luck!</p>'
+        text: 'Hi ' + listingAuthor.userId + ', your listing "' + listing.name + '" is about to expire in ' + listing.expiresIn + ' on remarket. \n To manage this listing, visit My Account -> My Listings (you can edit, renew, or archive/delete the listing there). Thanks and good luck!',
+        html: '<p>Hi ' + listingAuthor.userId + ', your listing <a href="' + listingLink + '">' + listing.name + '</a> is about to expire in ' + listing.expiresIn + ' on remarket. \n To manage this listing, visit My Account -> My Listings (you can edit, renew, or archive/delete the listing there). Thanks and good luck!</p>'
     }
 };
 
@@ -167,5 +176,6 @@ module.exports = {
     newComment,
     listingStatusChange,
     listingAboutToArchive,
-    sendMessage
+    sendMessage,
+    passwordReset
 }

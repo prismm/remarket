@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 import PropTypes from 'prop-types';
 
 /*----------------------- Account Component ---------------------------*/
-function Account () {
+function Account (props) {
     return (
         <div className="md-grid">
             <div className="md-cell md-cell--2">
@@ -19,7 +19,7 @@ function Account () {
             </ul>
             </div>
             <div className="md-cell md-cell--10">
-                { this.props.children }
+                { props.children }
             </div>
         </div>
     )
