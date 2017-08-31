@@ -117,12 +117,12 @@ class Listings extends Component {
                 <div>
                     {this.props.selectedCategory ?
                         (<div className="md-grid">
-                            <ListingsList className="md-cell" listings={this.filterByCategory(this.props.selectedCategory, filteredListings)} category={this.props.selectedCategory} subcategories={subcategories}/>
+                            <ListingsList className="md-cell--10" listings={this.filterByCategory(this.props.selectedCategory, filteredListings)} category={this.props.selectedCategory} subcategories={subcategories}/>
                         </div>) : (
                         <div className="md-grid">
-                            <ListingsList className="md-cell" listings={this.filterByCategory('for sale', filteredListings)} category="for sale" />
-                            <ListingsList className="md-cell" listings={this.filterByCategory('housing', filteredListings)} category="housing" />
-                            <ListingsList className="md-cell" listings={this.filterByCategory('community', filteredListings)} category="community" />
+                            <ListingsList className="md-cell--4" listings={this.filterByCategory('for sale', filteredListings)} category="for sale" />
+                            <ListingsList className="md-cell--4" listings={this.filterByCategory('housing', filteredListings)} category="housing" />
+                            <ListingsList className="md-cell--4" listings={this.filterByCategory('community', filteredListings)} category="community" />
                         </div>
                     )
                     }
