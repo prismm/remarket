@@ -8,6 +8,7 @@ const Offer = models.Offer;
 const Network = models.Network;
 const Token = models.Token;
 const Photo = models.Photo;
+const Message = models.Message;
 const NetworkAffiliation = models.network_affiliations;
 const ListingNetworks = models.listing_networks;
 
@@ -82,6 +83,8 @@ const tokens = [];
 
 const photos = [];
 
+const messages = [];
+
 const listingNetworks = [
     // { listingId: 2, networkId: 1 },
     // { listingId: 4, networkId: 1 },
@@ -146,6 +149,12 @@ function createPhotos() {
     })
 }
 
+function createMessages() {
+    return Promise.map(messages, function(message) {
+        return Message.create(message);
+    })
+}
+
 function seed() {
     console.log('...creating networks...');
     return createNetworks()
@@ -180,6 +189,10 @@ function seed() {
         .then(function() {
             console.log('...creating listing-network connections...');
             return createListingNetworks()
+        })
+        .then(function() {
+            console.log('...creating messages...');
+            return createMessages()
         })
         .catch(console.error)
 }

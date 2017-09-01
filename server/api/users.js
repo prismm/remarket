@@ -5,6 +5,7 @@ const router = require('express').Router();
 const model = require('../db');
 const User = model.User;
 const Network = model.Network;
+const Message = model.Message;
 const Listing = model.Listing;
 const Offer = model.Offer;
 const Token = model.Token;
@@ -68,17 +69,28 @@ router.post('/:userId/networks/:networkId', (req, res, next) => {
 
 //a POST route for sending message from user to user
 router.post('/msg', (req, res, next) => {
-    // console.log(req.body.receiver);
-    mailer.transporter.sendMail(mailer.sendMessage(req.body.sender, req.body.receiver, req.body.message, req.body.subject), (error, info) => {
-        if (error) {
+
+    let sender = User.findById(req.body.sender.id);
+    let receiver = User.findById(req.body.receiver.id);
+    let message = Message.create({ subject: req.body.subject, content: req.body.message, fromId: req.body.sender.id, toId: req.body.receiver.id, listingId: req.body.listingId });
+
+    Promise.all([sender, receiver, message])
+        .then(([fromUser, toUser, msg]) => {
+            mailer.transporter.sendMail(mailer.sendMessage(fromUser, toUser, req.body.message, req.body.subject), (error, info) => {
+                if (error) {
+                    console.error(error);
+                    res.status(401).send('Something went wrong -- try again later.');
+                } else {
+                    res.status(200).send('Message sent. Replies will be directed to your email inbox.')
+                    console.log('Message %s sent: %s', info.messageId, info.response);
+                }
+            })
+        })
+        .catch(error => {
             console.error(error);
-            res.status(401).send('Something went wrong -- try again later.');
-        } else {
-            res.status(200).send('Message sent. Replies will be directed to your email inbox.')
-            console.log('Message %s sent: %s', info.messageId, info.response);
-        }
-    });
-})
+            res.status(400).send('Something went wrong while sending this message.')
+        })
+});
 
 //a route for PUT: /api/users/${userId} that updates the user info
 router.put('/:id', (req, res, next) => {

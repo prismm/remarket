@@ -8,6 +8,7 @@ const Offer = require('./models/Offer');
 const Comment = require('./models/Comment');
 const Token = require('./models/Token');
 const Photo = require('./models/Photo');
+const Message = require('./models/Message');
 
 const network_affiliations = db.define('network_affiliations', {
     networkEmail: { type: Sequelize.STRING },
@@ -34,7 +35,11 @@ Network.belongsToMany(Listing, { through: listing_networks });
 // User has many Listings (Listing table has userId foreign key)
 Listing.belongsTo(User, { as: 'author' });
 Listing.belongsTo(User, { as: 'buyer' });
-// User.hasMany(Listing);
+
+// User has many Messages (Listing table has userId foreign keys as sender and receiver), and Listing has many messages
+Message.belongsTo(User, { as: 'from' });
+Message.belongsTo(User, { as: 'to' });
+Message.belongsTo(Listing)
 
 // User has many Offers (Offer table has userId foreign key)
 Offer.belongsTo(User, { as: 'bidder' });
@@ -62,5 +67,6 @@ module.exports = {
     network_affiliations,
     listing_networks,
     Token,
-    Photo
+    Photo,
+    Message
 }

@@ -61,7 +61,8 @@ class MessageUser extends Component {
         const to = this.props.currentListing && this.props.currentListing.author ? this.props.currentListing.author : this.props.receiver;
         const message = event.target.message.value;
         const subject = event.target.subject.value;
-        this.props.messageUser(from, to, message, subject);
+        const listingId = this.props.currentListing ? this.props.currentListing.id : null;
+        this.props.messageUser(from, to, message, subject, listingId);
         this.setState({waiting: true});
     }
 
@@ -113,7 +114,7 @@ class MessageUser extends Component {
             }
             {   sent &&  <div className="response-message"> { sent } </div> }
             {   error &&  <div className="response-message"> { error } </div> }
-            {success ? <Snackbar /> : null}
+            { success ? <Snackbar /> : null }
         </div>
         )}
 }
@@ -138,8 +139,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
 return {
-    messageUser: (from, to, message, subject) => {
-        dispatch(messageUser_dispatch(from, to, message, subject))
+    messageUser: (from, to, message, subject, listingId) => {
+        dispatch(messageUser_dispatch(from, to, message, subject, listingId))
     },
     clearMessage: () => {
         return dispatch(messageSent_action(null))
