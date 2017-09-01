@@ -1,11 +1,12 @@
 import React, { Component }  from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
-import Listing from './Listing.jsx';
+import { Link, browserHistory } from 'react-router';
 import PropTypes from 'prop-types';
-import spinner from '../HOC/Spinner.jsx';
-import Dropdown from 'react-toolbox/lib/dropdown';
 
+import Listing from './Listing.jsx';
+import spinner from '../HOC/Spinner.jsx';
+
+import Dropdown from 'react-toolbox/lib/dropdown';
 
 /*------------------- ListingsList component ----------------------*/
 
@@ -13,13 +14,16 @@ class ListingsList extends Component {
     constructor(props){
         super(props);
         this.state = {
-            subcategory: null,
+            subcategory: props.subcategory || null,
             listings: props.listings
         }
         this.handleSubcategoryChange = this.handleSubcategoryChange.bind(this);
     }
 
     handleSubcategoryChange(value){
+        const catUrl = this.props.category === 'for sale' ? 'for-sale' : this.props.category;
+        const subcatUrl = value ? value : '';
+        browserHistory.push(`/${catUrl}/${subcatUrl}`);
         this.setState({subcategory: value})
     }
 
@@ -32,7 +36,6 @@ class ListingsList extends Component {
         if (currentNetwork && currentNetwork.id) listings = listings.filter(listing => listing.networks.some(network => network.id === currentNetwork.id));
         //filtering by subcategory
         if (this.state.subcategory) listings = listings.filter(listing => listing.subcategory === this.state.subcategory)
-        console.log(this.state.subcategory)
         return (
             <div className="md-cell">
                 <h2 className="category-header"><Link to={`/${catUrl}`}>{category}</Link></h2>

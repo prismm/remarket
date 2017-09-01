@@ -91,8 +91,18 @@ ReactDOM.render(
         <Route path="signup" method="signup" component={LoginOrSignup} />
         <Route path="home" component={ListingsContainer} onEnter={loadEverything} />
         <Route path="for-sale" component={ForSaleListingsList} />
+          <Route path="for-sale/books" component={ForSaleListingsList} subcategory="books" />
+          <Route path="for-sale/furniture" component={ForSaleListingsList} subcategory="furniture" />
+          <Route path="for-sale/electronics" component={ForSaleListingsList} subcategory="electronics" />
+          <Route path="for-sale/other" component={ForSaleListingsList} subcategory="other" />
         <Route path="housing" component={HousingListingsList} />
+            <Route path="housing/seeking" component={HousingListingsList} subcategory="seeking" />
+            <Route path="housing/available" component={HousingListingsList} subcategory="available" />
+            <Route path="housing/other" component={HousingListingsList} subcategory="other" />
         <Route path="community" component={CommunityListingsList} />
+            <Route path="community/jobs" component={CommunityListingsList} subcategory="books" />
+            <Route path="community/events" component={CommunityListingsList} subcategory="furniture" />
+            <Route path="community/other" component={CommunityListingsList} subcategory="electronics" />
         <Route path="user/:userId" component={PublicProfile} onEnter={viewUser} />
         <Route path="listings/post" component={CreateListing} onEnter={requireLogin} />
         <Route path="listings/:listingId" component={ListingDetail} onEnter={getCurrentListing} />
