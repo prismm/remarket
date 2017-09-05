@@ -104,7 +104,7 @@ class CreateListing extends Component {
                         auto
                         allowBlank={true}
                         label="subcategory"
-                        className="subcategory-dropdown"
+                        className="subcategory-dropdown create-listing-subcategory-dropdown"
                         onChange={this.handleSubcategoryChange}
                         source={this.subcategories}
                         value={this.state.subcategory}
@@ -125,7 +125,7 @@ class CreateListing extends Component {
                                     maxLength={55}
                                     errorText="Must be no more than 55 characters"
                                     label="Title"
-                                    className="create-listing-title md-cell--12"
+                                    className="create-listing-title md-cell md-cell--12"
                                     required
                                 />
                                 <TextField
@@ -213,7 +213,7 @@ class CreateListing extends Component {
                                     maxLength={55}
                                     errorText="Must be no more than 55 characters"
                                     label="Title"
-                                    className="create-listing-title md-cell--12"
+                                    className="create-listing-title md-cell md-cell--12"
                                     required
                                 />
                                 <TextField
@@ -288,7 +288,7 @@ class CreateListing extends Component {
                                     maxLength={55}
                                     errorText="Must be no more than 55 characters"
                                     label="Title"
-                                    className="create-listing-title md-cell--12"
+                                    className="create-listing-title md-cell md-cell--12"
                                     required
                                 />
                                 <TextField

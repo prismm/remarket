@@ -532,6 +532,13 @@ fieldset {
     margin-top: 1em;
 }
 
-.subcategory-dropdown {
+.create-listing-subcategory-dropdown {
     margin-top: -20px;
+    padding-left: 20px;
+}
+
+.time-ago {
+    color: hotpink !important;
+    font-style: italic;
+    display: inline;
 }

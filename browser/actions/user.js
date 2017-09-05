@@ -86,8 +86,8 @@ export const viewUser_dispatch = userId => dispatch => {
             dispatch(viewUser_action({ error })));
 }
 
-export const messageUser_dispatch = (sender, receiver, message, subject) => dispatch => {
-    return axios.post('/api/users/msg', { sender, receiver, message, subject })
+export const messageUser_dispatch = (sender, receiver, message, subject, listingId) => dispatch => {
+    return axios.post('/api/users/msg', { sender, receiver, message, subject, listingId })
         .then(res => {
             dispatch(messageSent_action(res.data))
             dispatch(interactionSuccess_action('Message sent'));

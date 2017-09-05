@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import spinner from '../HOC/Spinner.jsx'
+import spinner from '../HOC/Spinner.jsx';
+import loadImage from 'blueimp-load-image/js'
 
 /*----------------------- ListingImages Component ---------------------------*/
 function ListingImages({ photos }){
@@ -23,3 +24,13 @@ const mapState = state => ({
 const ListingImagesWithSpinner =  spinner('photos')(ListingImages);
 
 export default connect(mapState)(ListingImagesWithSpinner);
+
+/* <div className="listing-images md-cell md-cell--5">
+{ photos ?
+    photos.map(photo => {
+        return loadImage(photo.link, function(img){ console.log(img); return img.toString()}, {maxWidth: 600, orientation: true})
+        })
+    :
+    null
+}
+</div> */
