@@ -2,51 +2,18 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import SelectField from 'react-md/lib/SelectFields';
-import ExpansionPanel from 'react-md/lib/ExpansionPanels';
-import ExpansionList from 'react-md/lib/ExpansionPanels/ExpansionList';
 import Dropdown from 'react-toolbox/lib/dropdown';
 
-/*------------------- LocationDropdown component ----------------------*/
+/*------------------- AltLocationDropdown component ----------------------*/
 const locations = [
-  '',
-  'New York',
-  'New Haven',
-  'Boston/Cambridge',
-  'Philadelphia',
-  'Washington DC'
-];
+  { label: 'all', value: null },
+  { label: 'New York', value: 'New York' },
+  { label: 'Boston/Cambridge', value: 'Boston/Cambridge' },
+  { label: 'Washington DC', value: 'Washington DC' },
+  { label: 'other', value: 'other' }
+]
 
-
-
-const countries = [
-  { value: 'EN-gb', label: 'England' },
-  { value: 'ES-es', label: 'Spain'},
-  { value: 'TH-th', label: 'Thailand' },
-  { value: 'EN-en', label: 'USA'}
-];
-
-class DropdownTest extends React.Component {
-  state = locations[0];
-
-  handleChange = (value) => {
-    this.setState({value: value});
-  };
-
-  render () {
-    return (
-      <Dropdown
-        auto
-        onChange={this.handleChange}
-        source={locations}
-        value={this.state.value}
-      />
-    );
-  }
-}
-
-
-export default class LocationDropdown extends PureComponent {
+export default class AltLocationDropdown extends PureComponent {
 
   constructor(props) {
     super(props);
@@ -61,7 +28,6 @@ export default class LocationDropdown extends PureComponent {
     console.log(event);
     //causes error "Cannot read property 'type' of undefined" upon close -- doesn't seem to affect functionality -- should resolve this later
     this.setState({ location: event });
-    this.props.handleLocationChange(event);
   }
 
   resetLocation(){
@@ -71,30 +37,20 @@ export default class LocationDropdown extends PureComponent {
 
   render() {
     const { location } = this.state;
-    const { focused, columnWidths, mobile } = this.props;
     return (
-    <ExpansionList style={{ padding: 16, width: '400px' }}>
-      <ExpansionPanel
-        focused={focused}
-        columnWidths={columnWidths}
-        label="Location:     "
-        secondaryLabel={!mobile ? location : null}
-        onCancel={this.resetLocation}
-      >
-        <SelectField
-          id="locations"
-          menuItems={locations}
-          label="Select a location"
-          className="md-cell"
-          value={location}
-          onChange={this.setLocation}
-        />
-      </ExpansionPanel>
-    </ExpansionList>
+      <Dropdown
+        auto
+        allowBlank={true}
+        label="location"
+        className="location-dropdown create-listing-location-dropdown"
+        onChange={this.handleLocationChange}
+        source={locations}
+        value={location}
+      />
     );
   }
 }
 
-LocationDropdown.propTypes = {
+AltLocationDropdown.propTypes = {
     handleLocationChange: PropTypes.func.isRequired
 };

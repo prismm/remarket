@@ -8,9 +8,11 @@ import TextField from 'react-md/lib/TextFields';
 import DatePicker from 'react-md/lib/Pickers/DatePickerContainer';
 import Button from 'react-md/lib/Buttons/Button';
 import Dropdown from 'react-toolbox/lib/dropdown';
+import Input from 'react-toolbox/lib/input';
 
 import {createListing_dispatch, editListing_dispatch} from '../actions/listing';
 import {forSaleSubcategories, housingSubcategories, communitySubcategories} from '../subcategories'
+import {locations} from '../locations'
 
 /*------------------- CreateListing component ----------------------*/
 class CreateListing extends Component {
@@ -21,6 +23,7 @@ class CreateListing extends Component {
                         name: props.currentListing ? props.currentListing.name : 'A New Post',
                         subcategory: props.currentListing ? props.currentListing.subcategory : null,
                         location: props.currentListing ? props.currentListing.location : '',
+                        neighborhood: props.currentListing ? props.currentListing.neighborhood : '',
                         description: props.currentListing ? props.currentListing.description : '',
                         floorPrice: props.currentListing ? props.currentListing.floorPrice : 0,
                         askingPrice: props.currentListing ? props.currentListing.askingPrice : null,
@@ -32,6 +35,8 @@ class CreateListing extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.publishEdits = this.publishEdits.bind(this);
         this.handleSubcategoryChange = this.handleSubcategoryChange.bind(this);
+        this.handleLocationChange = this.handleLocationChange.bind(this);
+        this.handleNeighborhoodChange = this.handleNeighborhoodChange.bind(this);
     }
 
     handleChange(event) {
@@ -40,6 +45,14 @@ class CreateListing extends Component {
 
     handleSubcategoryChange(value){
         this.setState({subcategory: value})
+    }
+
+    handleLocationChange(value){
+        this.setState({location: value})
+    }
+
+    handleNeighborhoodChange(name, value){
+        this.setState({neighborhood: value})
     }
 
     handleSubmit(event){
@@ -142,13 +155,27 @@ class CreateListing extends Component {
                         <fieldset className="location">
                             <legend className="md-subheading-1">Where?</legend>
                             <div className="md-grid inner-fieldset">
-                            <TextField
-                                id="location"
-                                label="Location?"
-                                name="location"
-                                value={this.state.location}
-                                className="location md-cell"
-                            />
+                            <div className="md-cell md-cell--6">
+                                <Dropdown
+                                    auto
+                                    allowBlank={true}
+                                    label="location (city)"
+                                    className="location-dropdown create-listing-location-dropdown"
+                                    onChange={this.handleLocationChange}
+                                    source={locations}
+                                    value={this.state.location}
+                                />
+                            </div>
+                            <div className="md-cell md-cell--6">
+                                    <Input
+                                        type="text"
+                                        label="more specifically..."
+                                        name="neighborhood"
+                                        value={this.state.neighborhood}
+                                        onChange={this.handleNeighborhoodChange}
+                                        maxLength={40}
+                                    />
+                                </div>
                             </div>
                         </fieldset>
                         <fieldset className="price">
@@ -226,17 +253,31 @@ class CreateListing extends Component {
                                     required
                                 />
                             </div>
-                        </fieldset>                        
+                        </fieldset>
                         <fieldset className="location">
                             <legend className="md-subheading-1">Where?</legend>
                             <div className="md-grid inner-fieldset">
-                            <TextField
-                                id="location"
-                                label="Location?"
-                                name="location"
-                                value={this.state.location}
-                                className="location md-cell"
-                            />
+                                <div className="md-cell md-cell--6">
+                                    <Dropdown
+                                        auto
+                                        allowBlank={true}
+                                        label="location (city)"
+                                        className="location-dropdown create-listing-location-dropdown"
+                                        onChange={this.handleLocationChange}
+                                        source={locations}
+                                        value={this.state.location}
+                                    />
+                                </div>
+                                <div className="md-cell md-cell--6">
+                                    <Input
+                                        type="text"
+                                        label="more specifically..."
+                                        name="neighborhood"
+                                        value={this.state.neighborhood}
+                                        onChange={this.handleNeighborhoodChange}
+                                        maxLength={40}
+                                    />
+                                </div>
                             </div>
                         </fieldset>
                         <fieldset className="price">

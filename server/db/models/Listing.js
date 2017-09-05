@@ -23,6 +23,9 @@ const Listing = db.define('listing', {
     location: {
         type: Sequelize.STRING
     },
+    neighborhood: {
+        type: Sequelize.STRING
+    },
     floorPrice: {
         type: Sequelize.INTEGER,
         defaultValue: 0,
@@ -36,6 +39,9 @@ const Listing = db.define('listing', {
         validate: {
             min: 0
         }
+    },
+    priceDescriptor: {
+        type: Sequelize.STRING
     },
     expirationDate: {
         type: Sequelize.DATE,
