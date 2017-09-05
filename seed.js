@@ -20,7 +20,7 @@ const users = [
     { confirmed: true, name: 'Matt', email: 'matt@gmail.com', password: 'password', isAdmin: false },
     { confirmed: true, name: 'Eli', email: 'eli@gmail.com', password: 'testpw', isAdmin: false },
     { confirmed: true, name: 'Jason', email: 'jason@gmail.com', password: 'hello', isAdmin: false },
-    { confirmed: true, name: 'Priya', email: 'priya@gmail.com', password: 'testpw', isAdmin: false },
+    { confirmed: true, name: 'Priya', email: 'prismm@gmail.com', password: 'testpw', isAdmin: false },
     { confirmed: true, name: 'Grant', email: 'grant@fullstack.com', password: 'deadoralive', isAdmin: true },
     { confirmed: true, name: 'Candice', email: 'candice@fullstack.com', password: 'deadoralive', isAdmin: true }
 ]

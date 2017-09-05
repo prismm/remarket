@@ -21,12 +21,13 @@ class CreateListing extends Component {
         this.state = {
                         category: props.currentListing ? props.currentListing.category : 'for sale',
                         name: props.currentListing ? props.currentListing.name : 'A New Post',
-                        subcategory: props.currentListing ? props.currentListing.subcategory : null,
+                        subcategory: props.currentListing ? props.currentListing.subcategory : '',
                         location: props.currentListing ? props.currentListing.location : '',
                         neighborhood: props.currentListing ? props.currentListing.neighborhood : '',
                         description: props.currentListing ? props.currentListing.description : '',
                         floorPrice: props.currentListing ? props.currentListing.floorPrice : 0,
-                        askingPrice: props.currentListing ? props.currentListing.askingPrice : null,
+                        askingPrice: props.currentListing ? props.currentListing.askingPrice : '',
+                        priceDescriptor: props.currentListing ? props.currentListing.priceDescriptor : '',
                         expirationDate: props.currentListing ? props.currentListing.expirationDate : new Date(),
                         authorId: props.user.id
                     };
@@ -183,7 +184,7 @@ class CreateListing extends Component {
                             <div className="md-grid inner-fieldset">
                                 <TextField
                                     id="askingPrice"
-                                    label="Asking Price"
+                                    label="Asking Price ( $ )"
                                     name="askingPrice"
                                     type="number"
                                     value={this.state.askingPrice}
@@ -195,7 +196,7 @@ class CreateListing extends Component {
                                 />
                                 <TextField
                                     id="floorPrice"
-                                    label="Floor Price"
+                                    label="Floor Price ( $ )"
                                     name="floorPrice"
                                     value={this.state.floorPrice}
                                     type="number"
@@ -285,7 +286,7 @@ class CreateListing extends Component {
                         <div className="md-grid inner-fieldset">
                             <TextField
                                 id="askingPrice"
-                                label="Asking Price"
+                                label="Asking Price ( $ )"
                                 name="askingPrice"
                                 type="number"
                                 value={this.state.askingPrice}
@@ -293,6 +294,14 @@ class CreateListing extends Component {
                                 min={0}
                                 pattern="^\d+(\.|\,)\d{2}"
                                 className="price md-cell md-cell--1-phone md-cell--4"                            
+                            />
+                            <TextField
+                                id="priceDescriptor"
+                                label="Price Descriptor (e.g., '/month')"
+                                name="priceDescriptor"
+                                value={this.state.priceDescriptor}
+                                className="price md-cell md-cell--1-phone md-cell--4"
+                                maxLength={16}
                             />
                         </div>
                     </fieldset>

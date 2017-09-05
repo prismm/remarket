@@ -36,7 +36,7 @@ class Listings extends Component {
     generalFilter(searchTerm){
         searchTerm = searchTerm.toLowerCase();
         let filteredListings = this.props.listings.filter(listing => {
-            return (listing.name.toLowerCase().indexOf(searchTerm) !== -1) || (listing.description.toLowerCase().indexOf(searchTerm) !== -1)
+            return (listing.name.toLowerCase().indexOf(searchTerm) !== -1) || (listing.description.toLowerCase().indexOf(searchTerm) !== -1) || (listing.neighborhood && listing.neighborhood.toLowerCase().indexOf(searchTerm) !== -1)
         })
         this.setState({
             searchTerm: searchTerm,
