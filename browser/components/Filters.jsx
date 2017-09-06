@@ -5,6 +5,8 @@ import TextField from 'react-md/lib/TextFields';
 import Button from 'react-md/lib/Buttons';
 import Toolbar from 'react-md/lib/Toolbars';
 import LocationDropdown from './LocationDropdown.jsx'
+import Dropdown from 'react-toolbox/lib/dropdown';
+import {locationsForFilter} from '../locations'
 
 /*------------------- Filters component ----------------------*/
 export default function Filters(props){
@@ -12,12 +14,20 @@ export default function Filters(props){
         <div>
         <Toolbar
           themed
+          className="toolbar md-grid"
         >
-        <LocationDropdown
-            handleLocationChange={props.handleLocationChange}
-            key="dropdown"
-            location={props.location}
+        <div className="md-cell--3 listing-container-location-dropdown">
+        <Dropdown
+            auto
+            allowBlank={true}
+            label="location (city)"
+            className="location-dropdown create-listing-location-dropdown"
+            onChange={props.handleLocationChange}
+            source={locationsForFilter}
+            value={props.location}
         />
+        </div>
+        <div className="md-cell--9">
         <TextField
             onChange={props.handleChange}
             id="filter"
@@ -26,13 +36,7 @@ export default function Filters(props){
             className="md-cell-6"
             value={props.searchTerm}
         />
-        <Button
-            onSubmit={props.handleSubmit}
-            key="search"
-            type="submit"
-            icon
-            >search
-        </Button>
+        </div>
         </Toolbar>
         <hr />
         </div>

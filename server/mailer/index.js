@@ -143,7 +143,7 @@ const youAcceptedOffer = {
 */
 
 const listingStatusChange = function(listingAuthor, listing, newStatus) {
-    let newStatusVerb = newStatus === 'active' ? 'reactivated' : newStatus;
+    let newStatusVerb = newStatus === 'active' ? 'renewed' : newStatus;
     const listingLink = domainUrl + 'listings/' + listing.id;
     return {
         from: remarket,

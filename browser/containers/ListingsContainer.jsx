@@ -16,7 +16,7 @@ class Listings extends Component {
                         searchTerm: '',
                         filters: [],
                         networkFilters: [],
-                        location: props.location || '<all>',
+                        location: props.location || null,
                         filteredListings: props.listings,
                         unfilteredListings: props.listings
                     }
@@ -62,19 +62,12 @@ class Listings extends Component {
     //     else return arr;
     // }
 
-    handleLocationChange(location){
-        this.setState({
-            location: location
-        })
-        if (location === '<all>') {
-            this.props.setLocation(null);
-        } else {
-            this.props.setLocation(location);
-        }
+    handleLocationChange(value){
+        this.setState({location: value})
     }
 
     filterByLocation(arr){
-        if (this.state.location === '<all>') {
+        if (!this.state.location) {
             return arr;
         } else {
             return arr.filter(listing => (listing.location === this.state.location))

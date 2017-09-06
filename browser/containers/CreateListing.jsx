@@ -18,6 +18,7 @@ import {locations} from '../locations'
 class CreateListing extends Component {
     constructor(props){
         super(props);
+        let inTwoWeeks = (d => new Date(d.setDate(d.getDate() + 14)))(new Date);
         this.state = {
                         category: props.currentListing ? props.currentListing.category : 'for sale',
                         name: props.currentListing ? props.currentListing.name : 'A New Post',
@@ -26,9 +27,9 @@ class CreateListing extends Component {
                         neighborhood: props.currentListing ? props.currentListing.neighborhood : '',
                         description: props.currentListing ? props.currentListing.description : '',
                         floorPrice: props.currentListing ? props.currentListing.floorPrice : 0,
-                        askingPrice: props.currentListing ? props.currentListing.askingPrice : '',
+                        askingPrice: props.currentListing ? props.currentListing.askingPrice : undefined,
                         priceDescriptor: props.currentListing ? props.currentListing.priceDescriptor : '',
-                        expirationDate: props.currentListing ? props.currentListing.expirationDate : new Date(),
+                        expirationDate: props.currentListing ? props.currentListing.expirationDate : inTwoWeeks,
                         authorId: props.user.id
                     };
         this.handleChange = this.handleChange.bind(this);
@@ -79,6 +80,9 @@ class CreateListing extends Component {
         if (category === 'for sale') this.subcategories = forSaleSubcategories.slice(1);
         if (category === 'housing') this.subcategories = housingSubcategories.slice(1);
         if (category === 'community') this.subcategories = communitySubcategories.slice(1);
+
+        let today = new Date();
+        let twoMonthsLater = new Date(new Date().setMonth(today.getMonth() + 2));
 
         return (
             <div className="md-grid create-listing">
@@ -213,6 +217,8 @@ class CreateListing extends Component {
                                 id="inline"
                                 label="Post expiration date?"
                                 name="expirationDate"
+                                minDate={today}
+                                maxDate={twoMonthsLater}
                                 value={this.state.expirationDate}
                                 inline
                                 className="md-cell--4 date-picker"
@@ -221,9 +227,23 @@ class CreateListing extends Component {
                             />
                         </div>
                         {this.props.currentListing ?
-                            <Button flat primary label="Publish Edits" onClick={this.publishEdits} className="submit md-cell--12 md-cell--right" />
+                            <Button
+                                raised
+                                primary
+                                label="Publish Edits"
+                                onClick={this.publishEdits}
+                                className="submit md-cell--12 md-cell--right"
+                                disabled={!this.state.name || !this.state.description || !this.state.askingPrice}
+                            />
                             :
-                            <Button flat primary label="Submit" type="submit" className="submit md-cell--12 md-cell--right" />
+                            <Button
+                                raised
+                                primary
+                                label="Publish Post"
+                                type="submit"
+                                className="submit md-cell--12 md-cell--right"
+                                disabled={!this.state.name || !this.state.description || !this.state.askingPrice}
+                            />
                         }
                     </form>
                     </div>
@@ -310,6 +330,8 @@ class CreateListing extends Component {
                                 id="inline"
                                 label="Post expiration date?"
                                 name="expirationDate"
+                                minDate={today}
+                                maxDate={twoMonthsLater}
                                 value={this.state.expirationDate}
                                 inline
                                 className="md-cell--4 date-picker"
@@ -318,9 +340,23 @@ class CreateListing extends Component {
                             />
                         </div>
                             {this.props.currentListing ?
-                                <Button flat primary label="Publish Edits" onClick={this.publishEdits} className="submit md-cell--12 md-cell--right" />
+                                <Button
+                                    raised
+                                    primary
+                                    label="Publish Edits"
+                                    onClick={this.publishEdits}
+                                    className="submit md-cell--12 md-cell--right"
+                                    disabled={!this.state.name || !this.state.description || !this.state.askingPrice}
+                                />
                                 :
-                                <Button flat primary label="Submit" type="submit" className="submit md-cell--12 md-cell--right" />
+                                <Button
+                                    raised
+                                    primary
+                                    label="Publish Post"
+                                    type="submit"
+                                    className="submit md-cell--12 md-cell--right"
+                                    disabled={!this.state.name || !this.state.description || !this.state.askingPrice}
+                                />
                             }
                         </form>
                     </div>
@@ -357,6 +393,8 @@ class CreateListing extends Component {
                                 id="inline"
                                 label="Post expiration date?"
                                 name="expirationDate"
+                                minDate={today}
+                                maxDate={twoMonthsLater}
                                 value={this.state.expirationDate}
                                 inline
                                 className="md-cell--4 date-picker"
@@ -365,9 +403,23 @@ class CreateListing extends Component {
                             />
                         </div>
                             {this.props.currentListing ?
-                                <Button flat primary label="Publish Edits" onClick={this.publishEdits} className="submit md-cell--12 md-cell--right" />
+                                <Button
+                                    raised
+                                    primary
+                                    label="Publish Edits"
+                                    onClick={this.publishEdits}
+                                    className="submit md-cell--12 md-cell--right"
+                                    disabled={!this.state.name || !this.state.description}
+                                />
                                 :
-                                <Button flat primary label="Submit" type="submit" className="submit md-cell--12 md-cell--right" />
+                                <Button
+                                    raised
+                                    primary
+                                    label="Publish Post"
+                                    type="submit"
+                                    className="submit md-cell--12 md-cell--right"
+                                    disabled={!this.state.name || !this.state.description}
+                                />
                             }
                         </form>
                     </div>

@@ -1,13 +1,20 @@
+@import '~react-md/src/scss/react-md';
+$md-primary-color: $md-grey-900;
+$md-secondary-color: $md-pink-a-400;
+@include react-md-everything;
 * {
     font-family: avenir;
-    color: black
+    // color: black
 }
 
 body {
-    color: #F50057;
     margin: 15px;
     a {
         text-decoration: none;
+        color: black;
+        &:active {
+            color: $md-secondary-color;
+        }
     }
     .site-header {
         float: left;
@@ -33,23 +40,22 @@ body {
         margin: 20px 30px 20px 0;
     }
     .submit {
-        border: 2px solid black;
         clear: both;
         margin-top: 15px;
         margin-left: 0.5em;
-        background-color: yellow;
+        // background-color: yellow;
     }
     .md-dialog--centered {
         padding: 0 0 20px 20px;
     }
     .listing-list-time-ago {
-        color: #F50057;
+        color: $md-secondary-color;
         display: inline;
     }
     .account-nav li {
         list-style: none;
         font-size: 18px;
-        font-weight: bold;
+        // font-weight: bold;
         line-height: 2em;
         padding-left: 20px;
     }
@@ -100,9 +106,10 @@ body {
         // margin-bottom: 0;
     }
     .time-ago {
-        color: hotpink !important;
+        color: rgb(63, 81, 181);
         font-style: italic;
         display: inline;
+        padding-left: 5px;
     }
     .avatar {
         margin: 5px 0 10px 0;
@@ -124,7 +131,7 @@ body {
         margin-right: 0.5em
     }
     .divider {
-        color: #F50057;
+        color: $md-secondary-color;
         margin-right: 0.5em
     }
     .no-listings {
@@ -135,14 +142,14 @@ body {
         margin: 2em 0 1em 0;
     }
     .time-left {
-        color: #F50057;
+        color: $md-secondary-color;
         font-style: italic
     }
     .tab-container {
         margin: auto;
         margin-top: 2em;
         margin-bottom: 2em;
-        border: 2px solid #673ab7;
+        border: 2px solid rgb(63, 81, 181);
         border-radius: 3px;
         padding: 1em;
     }
@@ -161,8 +168,20 @@ body {
     }
     .md-background--primary {
         background: #fff;
-        color: #673ab7
+        color: rgb(63, 81, 181);
+        &:hover {
+            background: rgb(63, 81, 181);
+            color: white;
+        }
     }
+    // .md-background--primary-hover {
+    //     background: $md-secondary-color;
+    //     color: white;
+    // }
+    // .md-pointer--hover {
+    //     background: $md-secondary-color;
+    //     color: white;
+    // }
     .google-login {
         // background: 
     }
@@ -178,7 +197,7 @@ body {
         font-weight: bold;
     }
     .md-tab-label {
-        color: #673ab7;
+        color: $md-secondary-color;
     }
     .logo {
         margin-right: 8px;
@@ -304,12 +323,12 @@ body {
     .login-error {
         margin-top: 1em;
         margin-bottom: 2em;
-        color: #F50057;
+        color: $md-secondary-color;
         font-weight: bold;
         font-style: italic;
     }
     .coming-soon {
-        color: #F50057;
+        color: $md-secondary-color;
         font-style: italic;
     }
     .error {
@@ -333,7 +352,7 @@ body {
         font-style: italic;
     }
     .expired {
-        color: #F50057;
+        color: $md-secondary-color;
         font-style: italic;
     }
     .uploaded-pic {
@@ -346,12 +365,12 @@ body {
         // margin: 0em 0em 1em 0em;
         margin-left: 1em;
         // font-family: Roboto, sans-serif;
-        background-color: #F50057;
+        background-color: $md-secondary-color;
     }
     .content-title-header {
         font-family: Roboto, sans-serif;
         font-weight: 500;
-        color: #F50057;
+        color: $md-secondary-color;
     }
     .image-upload-header {
         margin: 2em 0 1em 1em;
@@ -451,8 +470,8 @@ body {
     }
     .snackbar-success {
         color: white;
-        background-color: #ff82af;
-        opacity: 0.9;
+        background-color: rgb(63, 81, 181);
+        opacity: 0.8;
         font-weight: bolder;
     }
     // @keyframes loader-1{ 
@@ -538,8 +557,6 @@ fieldset {
     padding-left: 20px;
 }
 
-.time-ago {
-    color: hotpink !important;
-    font-style: italic;
-    display: inline;
+.listing-container-location-dropdown {
+    padding: 0 0.5em 0 0.5em;
 }
