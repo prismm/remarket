@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import loadImage from 'blueimp-load-image/js'
+import loadImage from './blueimp-load-image/js'
 
 class AutoRotateImage extends Component {
     loadImage() {
