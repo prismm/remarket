@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { logout_dispatch } from '../actions/user';
 import { fetchSingleNetwork_dispatch, setCurrentNetwork_action } from '../actions/network';
 import Button from 'react-md/lib/Buttons/Button';
@@ -39,7 +39,7 @@ class Main extends Component {
     ColumbiaClassNames = this.state.selectedNetwork === 0 ? 'network-button network-button-columbia' : ColumbiaClassNames;
     return (
       <div>
-        <Link to="/"><img className="remarket-logo" src="/imgs/recycling-pink.png" alt="" height="40" width="40" /></Link><h1 className="site-header"><Link to="/">remarket</Link></h1>
+        <Link to="/"><img className="remarket-logo" src="/imgs/recycling-pink.png" onClick={() => {browserHistory.push('/')}} alt="" height="40" width="40" /></Link><h1 className="site-header"><Link to="/">remarket</Link></h1>
         <Button raised primary className={NyuClassNames} onClick={() => this.setNetwork(2)} label="NYU" />
         <Button raised primary className={ColumbiaClassNames} onClick={() => this.setNetwork(1)} label="Columbia" />
         { loggedIn ?
