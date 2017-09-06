@@ -30,14 +30,22 @@ const googleStrategy = new GoogleStrategy(googleConfig, function(token, refreshT
 
     User.findOne({ where: { googleId: googleId } })
         .then(user => {
-            if (user) console.log(user)
+            if (user) return callback(null, user); //logs in the user
             if (!user) {
-                return User.create({ name, email, googleId, confirmed: true }) //doesn't it need a password??
-                    .then(createdUser => {
-                        return callback(null, createdUser); //should be sanitized?
-                    });
-            } else {
-                return callback(null, user); //should be sanitized?
+                User.findOne({ where: { email: email } }) //looks for a user with the same email address
+                    .then(emailMatchUser => {
+                        if (emailMatchUser) { //if it finds a user with that email address
+                            emailMatchUser.update({ googleId: googleId }) //it updates that user to include his/her fcbk account
+                                .then(addedGoogleUser => {
+                                    return callback(null, addedGoogleUser)
+                                }) //then logs in that user
+                        } else {
+                            return User.create({ name, email, googleId, confirmed: true }) //creates a new user
+                                .then(createdUser => {
+                                    return callback(null, createdUser); //logs in the new user
+                                });
+                        }
+                    })
             }
         })
         .catch(callback);
@@ -64,14 +72,22 @@ const facebookStrategy = new FacebookStrategy(FacebookConfig, function(accessTok
 
     User.findOne({ where: { facebookId: facebookId } })
         .then(user => {
-            if (user) console.log(user)
+            if (user) return callback(null, user); //logs in the user
             if (!user) {
-                return User.create({ name, email, facebookId, confirmed: true }) // doesnt it need a password??!
-                    .then(createdUser => {
-                        return callback(null, createdUser); //should be sanitized?
-                    });
-            } else {
-                return callback(null, user); //should be sanitized?
+                User.findOne({ where: { email: email } }) //looks for a user with the same email address
+                    .then(emailMatchUser => {
+                        if (emailMatchUser) { //if it finds a user with that email address
+                            emailMatchUser.update({ facebookId: facebookId }) //it updates that user to include his/her fcbk account
+                                .then(addedFacebookUser => {
+                                    return callback(null, addedFacebookUser)
+                                }) //then logs in that user
+                        } else {
+                            return User.create({ name, email, facebookId, confirmed: true }) //creates a new user
+                                .then(createdUser => {
+                                    return callback(null, createdUser); //logs in the new user
+                                });
+                        }
+                    })
             }
         })
         .catch(callback);
