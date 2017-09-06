@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import spinner from '../HOC/Spinner.jsx';
-import loadImage from 'blueimp-load-image/js';
 import AutoRotateImage from '../HOC/LoadImage.jsx'
 
 /*----------------------- ListingImages Component ---------------------------*/

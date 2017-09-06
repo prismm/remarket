@@ -17,8 +17,10 @@ class AutoRotateImage extends Component {
         },
         {
           orientation: true,
-          maxWidth: 1000,
-          maxHeight
+          contain: true
+        // //   maxWidth: 600,
+        //   maxWidth: 600,
+        //   maxHeight
         }
       ); 
     }
@@ -35,7 +37,7 @@ class AutoRotateImage extends Component {
     render() {
       const { src } = this.props;
       return (
-        <div ref="container" />
+        <div ref="container" className="item-img" />
       );
     }
   }

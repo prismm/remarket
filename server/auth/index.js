@@ -30,12 +30,10 @@ const googleStrategy = new GoogleStrategy(googleConfig, function(token, refreshT
 
     User.findOne({ where: { googleId: googleId } })
         .then(user => {
+            if (user) console.log(user)
             if (!user) {
-                console.log("The user is falsy")
-                    //do something over here to note that the user didn't previously exist
                 return User.create({ name, email, googleId, confirmed: true }) //doesn't it need a password??
                     .then(createdUser => {
-                        console.log("We are here to create the user")
                         return callback(null, createdUser); //should be sanitized?
                     });
             } else {
@@ -66,14 +64,10 @@ const facebookStrategy = new FacebookStrategy(FacebookConfig, function(accessTok
 
     User.findOne({ where: { facebookId: facebookId } })
         .then(user => {
-            console.log("IN THE FACEBOOK ROUTE")
-            console.log(user);
+            if (user) console.log(user)
             if (!user) {
-                console.log("The user is falsy -- CREATING THE USER NOW") //should give user info, not console log
-                    //do something over here to note that the user didn't previously exist
                 return User.create({ name, email, facebookId, confirmed: true }) // doesnt it need a password??!
                     .then(createdUser => {
-                        console.log("We are here to create the user") //should give user info, not console log
                         return callback(null, createdUser); //should be sanitized?
                     });
             } else {
