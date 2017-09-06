@@ -7,11 +7,11 @@ const Network = model.Network;
 
 module.exports = router;
 
-// function isLoggedIn() {
-//     return true;
-// }
+function isLoggedIn(req, res, next) {
+    next();
+}
 
-router.get('/', (req, res, next) => {
+router.get('/', isLoggedIn, (req, res, next) => {
     Network.findAll({ include: [{ all: true }] })
         .then(networks => res.json(networks))
         .catch(next)

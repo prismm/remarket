@@ -33,13 +33,13 @@ const googleStrategy = new GoogleStrategy(googleConfig, function(token, refreshT
             if (!user) {
                 console.log("The user is falsy")
                     //do something over here to note that the user didn't previously exist
-                return User.create({ name, email, googleId }) //doesn't it need a password??
-                    .then(() => {
+                return User.create({ name, email, googleId, confirmed: true }) //doesn't it need a password??
+                    .then(createdUser => {
                         console.log("We are here to create the user")
-                        callback(null, user); //should be sanitized?
+                        return callback(null, createdUser); //should be sanitized?
                     });
             } else {
-                callback(null, user); //should be sanitized?
+                return callback(null, user); //should be sanitized?
             }
         })
         .catch(callback);
@@ -62,21 +62,22 @@ const facebookStrategy = new FacebookStrategy(FacebookConfig, function(accessTok
     console.log(profile);
     const facebookId = profile.id;
     const name = profile.displayName;
-    const email = profile.email;
+    const email = profile.emails[0].value;
 
-    User.findOne({ facebookId: facebookId })
+    User.findOne({ where: { facebookId: facebookId } })
         .then(user => {
             console.log("IN THE FACEBOOK ROUTE")
+            console.log(user);
             if (!user) {
-                console.log("The user is falsy") //should give user info, not console log
+                console.log("The user is falsy -- CREATING THE USER NOW") //should give user info, not console log
                     //do something over here to note that the user didn't previously exist
-                return User.create({ name, email, facebookId }) // doesnt it need a password??!
-                    .then(() => {
+                return User.create({ name, email, facebookId, confirmed: true }) // doesnt it need a password??!
+                    .then(createdUser => {
                         console.log("We are here to create the user") //should give user info, not console log
-                        callback(null, user); //should be sanitized?
+                        return callback(null, createdUser); //should be sanitized?
                     });
             } else {
-                callback(null, user); //should be sanitized?
+                return callback(null, user); //should be sanitized?
             }
         })
         .catch(callback);

@@ -105,8 +105,8 @@ class AuthForm extends Component {
               <a href="" onClick={ this.resendConfirmLink }>Resend confirmation link</a>
             </div>
             : null}
-          <p><Button raised primary label={ googleSignin } onClick={() => {}} className="google-login login-submit md-cell--12" /></p>
-          <p><Button raised primary label={ fcbkSignin } onClick={() => {}} className="facebook-login login-submit md-cell--12" /></p>
+          <p><a href='auth/google'><Button raised primary label={ googleSignin } onClick={() => {}} className="google-login login-submit md-cell--12" /></a></p>
+          <p><a href='auth/facebook'><Button raised primary label={ fcbkSignin } onClick={() => {}} className="facebook-login login-submit md-cell--12" /></a></p>
         </form>
       </div>
     );

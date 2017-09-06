@@ -16,8 +16,12 @@ const mailer = require('../mailer')
 }
 */
 
+function isLoggedIn(req, res, next) {
+    next();
+}
 
-router.get('/', (req, res, next) => {
+
+router.get('/', isLoggedIn, (req, res, next) => {
     Listing.findAll({ where: { status: 'active' }, include: [{ all: true }] })
         .then(listings => res.json(listings))
         .catch(next)

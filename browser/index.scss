@@ -81,6 +81,7 @@ body {
     }
     .item-img {
         width: 100%;
+        // max-width: 600px;
         padding: 10px;
         border: 0;
     }
@@ -112,7 +113,7 @@ body {
         padding-left: 5px;
     }
     .avatar {
-        margin: 5px 0 10px 0;
+        // margin: 5px 0 10px 0;
     }
     .inline-rel-container {
         display: inline-block;
@@ -128,7 +129,7 @@ body {
         margin-right: 0.5em;
     }
     .network-avatar {
-        margin-right: 0.5em
+        margin-right: .8em
     }
     .divider {
         color: $md-secondary-color;

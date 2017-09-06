@@ -3,7 +3,8 @@ const initialState = {
     listings: [],
     myListings: null, //initialized to null, instead of [], so that spinner can work on myListings view -- not sure if this is good practice
     currentListing: {},
-    location: null
+    location: null,
+    error: null
 };
 
 const listingReducer = (state = initialState, action) => {
@@ -36,6 +37,9 @@ const listingReducer = (state = initialState, action) => {
             break;
         case 'SET_EDIT_STATUS':
             newState.currentListing.editStatus = action.editStatus;
+            break;
+        case 'SET_ERROR':
+            newState.error = action.error;
             break;
         default:
             break;

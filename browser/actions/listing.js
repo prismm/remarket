@@ -12,6 +12,7 @@ const createListing_action = listing => ({ type: 'CREATE_LISTING', listing });
 const editListing_action = listing => ({ type: 'EDIT_LISTING', listing });
 const deleteListing_action = listingId => ({ type: 'DELETE_LISTING', listingId });
 export const setLocation_action = location => ({ type: 'SET_LOCATION', location });
+const createListingError_action = error => ({ type: 'SET_ERROR', error })
 
 /* ------------       DISPATCHERS     ------------------ */
 
@@ -55,7 +56,8 @@ export const createListing_dispatch = listing => dispatch => {
             dispatch(createListing_action(res.data));
             browserHistory.push(`/listings/${res.data.id}`);
         })
-        .catch(console.error);
+        .catch(error =>
+            dispatch(createListingError_action({ error })))
 }
 
 export const editListing_dispatch = (listingId, changes) => dispatch => {
@@ -63,7 +65,8 @@ export const editListing_dispatch = (listingId, changes) => dispatch => {
         .then(res => {
             dispatch(editListing_action(res.data));
         })
-        .catch(console.error);
+        .catch(error =>
+            dispatch(createListingError_action({ error })))
 }
 
 export const deleteListing_dispatch = listing => dispatch => {

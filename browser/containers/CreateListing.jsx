@@ -30,7 +30,8 @@ class CreateListing extends Component {
                         askingPrice: props.currentListing ? props.currentListing.askingPrice : undefined,
                         priceDescriptor: props.currentListing ? props.currentListing.priceDescriptor : '',
                         expirationDate: props.currentListing ? props.currentListing.expirationDate : inTwoWeeks,
-                        authorId: props.user.id
+                        authorId: props.user.id,
+                        error: null
                     };
         this.handleChange = this.handleChange.bind(this);
         this.setExpirationDate = this.setExpirationDate.bind(this);
@@ -39,6 +40,7 @@ class CreateListing extends Component {
         this.handleSubcategoryChange = this.handleSubcategoryChange.bind(this);
         this.handleLocationChange = this.handleLocationChange.bind(this);
         this.handleNeighborhoodChange = this.handleNeighborhoodChange.bind(this);
+        this.setError = this.setError.bind(this);
     }
 
     handleChange(event) {
@@ -69,6 +71,10 @@ class CreateListing extends Component {
         this.props.onPublishClick();
     }
 
+    setError(error){
+        this.setState(error)
+    }
+
     setExpirationDate(event){
         let newExpDate = new Date(event).setHours(23, 59);
         console.log(new Date(newExpDate));
@@ -83,6 +89,7 @@ class CreateListing extends Component {
 
         let today = new Date();
         let twoMonthsLater = new Date(new Date().setMonth(today.getMonth() + 2));
+        const error = this.state.error;
 
         return (
             <div className="md-grid create-listing">
@@ -245,6 +252,7 @@ class CreateListing extends Component {
                                 disabled={!this.state.name || !this.state.description || !this.state.askingPrice}
                             />
                         }
+                        {   error ?  <div className="response-message"> { error } </div> : null }
                     </form>
                     </div>
                     : null}
@@ -358,6 +366,7 @@ class CreateListing extends Component {
                                     disabled={!this.state.name || !this.state.description || !this.state.askingPrice}
                                 />
                             }
+                            {   error ?  <div className="response-message"> { error } </div> : null }
                         </form>
                     </div>
                     : null}
@@ -421,6 +430,7 @@ class CreateListing extends Component {
                                     disabled={!this.state.name || !this.state.description}
                                 />
                             }
+                            {   error ?  <div className="response-message"> { error } </div> : null }
                         </form>
                     </div>
                 : null}
