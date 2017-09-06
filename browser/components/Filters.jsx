@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import TextField from 'react-md/lib/TextFields';
-import Button from 'react-md/lib/Buttons';
 import Toolbar from 'react-md/lib/Toolbars';
-import LocationDropdown from './LocationDropdown.jsx'
 import Dropdown from 'react-toolbox/lib/dropdown';
 import {locationsForFilter} from '../locations'
 
