@@ -28,7 +28,10 @@ router.post('/login', (req, res, next) => {
                 return res.status(401).send('Your account is not yet confirmed -- check your email or click below to resend the confirmation email.') //FYI -- Do not change error message text without changing corresponding text in Auth component
             } else if (!user.correctPassword(req.body.password)) {
                 return res.status(401).send('That\'s not the right password ... try again!')
+            } else if (user.correctPassword(req.body.password).message) {
+                return res.status(401).send(user.correctPassword(req.body.password).message) //prints error message
             } else { // this will attach the user to our passport, which will save the user in the session store -- req.login() invokes the serialize passport function, it's attached to the req obj
+                console.log(user.correctPassword(req.body.password));
                 return req.login(user, err => {
                     if (err) next(err);
                     else return res.json(user.sanitize()).status(200);

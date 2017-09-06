@@ -11,7 +11,7 @@ const mailer = require('../mailer')
 
 /*
 (req, res, next) => {
-    if (!req.user || !req.user.isAdmin)throw new Error();
+    if (!req.user)throw new Error();
     else next()
 }
 */
@@ -21,7 +21,7 @@ function isLoggedIn(req, res, next) {
 }
 
 
-router.get('/', isLoggedIn, (req, res, next) => {
+router.get('/', (req, res, next) => {
     Listing.findAll({ where: { status: 'active' }, include: [{ all: true }] })
         .then(listings => res.json(listings))
         .catch(next)

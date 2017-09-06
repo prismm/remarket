@@ -67,8 +67,13 @@ const User = db.define('user', {
             return _.omit(this.toJSON(), ['password', 'salt']);
         },
         correctPassword: function(candidatePassword) {
-            const encryptedPassword = User.encryptPassword(candidatePassword, this.getDataValue('salt'));
-            return encryptedPassword === this.password;
+            let encryptedPassword;
+            if (this.password) {
+                encryptedPassword = User.encryptPassword(candidatePassword, this.getDataValue('salt'));
+                return encryptedPassword === this.password;
+            } else {
+                return new Error('You don\'t have a password on file. Try logging in with google or facebook.')
+            }
         },
         myListings: function() {
             return this.getListings({ include: [{ all: true }] })
