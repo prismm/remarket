@@ -45,6 +45,21 @@ body {
         margin-left: 0.5em;
         // background-color: yellow;
     }
+    .general-filter {
+        float: left;
+    }
+    .search-icon {
+        position: absolute;
+        padding-top: 15px;
+        color: rgb(63, 81, 181);
+        &:hover {
+            cursor: pointer;
+        }
+        &:active {
+            cursor: pointer;
+            color: $md-secondary-color
+        }
+    }
     .md-dialog--centered {
         padding: 0 0 20px 20px;
     }
@@ -88,6 +103,16 @@ body {
     .listing-images {
         padding: 0 1em 1em 1em;
         margin-top: -1em;
+    }
+    .selected-item-location {
+        display: inline;
+        font-weight: 500;
+        // font-style: italic;
+        // font-weight: bolder;
+        // color: rgb(63, 81, 181);
+    }
+    .selected-item-descr {
+        padding-top: 1em;
     }
     .file-title {
         font-size: 14px;

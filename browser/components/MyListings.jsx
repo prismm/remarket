@@ -22,7 +22,7 @@ import TableColumn from 'react-md/lib/DataTables/TableColumn';
 const MyListings = (props) => {
     return (
     <div className="my-listings md-cell-10">
-        <h3>My Listings</h3>
+        <h3>My Posts</h3>
         <DataTable plain>
             <TableHeader>
             <TableRow>
