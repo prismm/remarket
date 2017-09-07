@@ -112,7 +112,7 @@ class ListingDetail extends Component {
                         }
                         { (this.props.currentListing.networks && this.props.currentListing.networks.length) ?
                             this.props.currentListing.networks.map(
-                                network => <NetworkAvatar key={network.id} network={network.name} tooltipLabel={network.name} tooltipPosition="top" />
+                                network => <NetworkAvatar key={network.id} network={network.name.toLowerCase()} tooltipLabel={network.name} tooltipPosition="top" />
                                 )
                             :
                             null
