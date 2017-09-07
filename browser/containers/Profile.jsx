@@ -77,6 +77,7 @@ class Profile extends Component {
                                 name="name"
                                 value={this.state.name}
                                 onChange={this.handleNameChange}
+                                className="profile-field"
                                 required
                                 />
                             </TableColumn>
@@ -90,6 +91,7 @@ class Profile extends Component {
                                 name="username"
                                 value={this.state.username ? this.state.username : this.state.userId}
                                 onChange={this.handleUsernameChange}
+                                className="profile-field"
                                 required
                                 />
                                 </TableColumn>
@@ -106,6 +108,7 @@ class Profile extends Component {
                                 name="bio"
                                 value={this.state.bio}
                                 onChange={this.handleBioChange}
+                                className="profile-field"
                                 />
                             </TableColumn>
                             <TableColumn><UpdateBioButton newBio={this.state.bio} updateBio={this.props.updateBio} currentUser={this.props.user} /></TableColumn>
@@ -129,6 +132,7 @@ class Profile extends Component {
                                 name="email"
                                 value={this.state.email}
                                 onChange={this.handleEmailChange}
+                                className="profile-field"
                                 required
                                 />
                                 </TableColumn>
@@ -145,6 +149,7 @@ class Profile extends Component {
                                 errorText="To reset, your new password must be at least 7 characters"
                                 value={this.state.password}
                                 onChange={this.handlePasswordChange}
+                                className="profile-field"
                                 required
                                 />
                             </TableColumn>
