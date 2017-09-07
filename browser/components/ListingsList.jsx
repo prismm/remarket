@@ -51,10 +51,10 @@ class ListingsList extends Component {
                     />
                     :
                     null}
-                { listings ?
+                { listings && listings.length ?
                     listings.map(listing => <div key={listing.id}><Listing listing={listing} /></div>)
                     :
-                    <div>No listings to display, sorry!</div>
+                    <div className="no-posts">No active posts.</div>
                 }
             </div>
         )}

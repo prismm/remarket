@@ -64,8 +64,8 @@ class AuthForm extends Component {
   render(){
     const { name, displayName, error } = this.props;
     const handleSubmit = this.handleSubmit;
-    const googleSignin = <div className="md-ink-container"><img className="logo" src="/imgs/google.png" alt="Google" height="24" width="26" /><a className="google-text" href="/auth/google">{ displayName } with Google</a></div>;
-    const fcbkSignin = <div className="md-ink-container"><img className="logo" src="/imgs/facebook.png" alt="Facebook" height="24" width="24" /><a className="facebook-text" href="/auth/facebook">{ displayName } with Facebook</a></div>;
+    const googleSignin = <div className="md-ink-container"><img className="logo" src="/imgs/google.png" alt="Google" height="24" width="26" /><a className="google-text" href="/auth/google"><p className="google-button-text">Continue with Google</p></a></div>;
+    const fcbkSignin = <div className="md-ink-container"><img className="logo" src="/imgs/facebook.png" alt="Facebook" height="24" width="24" /><a className="facebook-text" href="/auth/facebook"><p className="facebook-button-text">Continue with Facebook</p></a></div>;
 
     return (
       <div>
@@ -105,8 +105,9 @@ class AuthForm extends Component {
               <a href="" onClick={ this.resendConfirmLink }>Resend confirmation link</a>
             </div>
             : null}
-          <p><a href='auth/google'><Button raised primary label={ googleSignin } onClick={() => {}} className="google-login login-submit md-cell--12" /></a></p>
-          <p><a href='auth/facebook'><Button raised primary label={ fcbkSignin } onClick={() => {}} className="facebook-login login-submit md-cell--12" /></a></p>
+          <div className="or-continue">OR</div>
+          <p><a href="auth/google"><Button raised primary label={ googleSignin } onClick={() => {}} className="google-login login-submit md-cell--12" /></a></p>
+          <p><a href="auth/facebook"><Button raised primary label={ fcbkSignin } onClick={() => {}} className="facebook-login login-submit md-cell--12" /></a></p>
         </form>
       </div>
     );

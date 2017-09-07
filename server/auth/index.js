@@ -6,6 +6,7 @@ const User = models.User;
 const secrets = process.env.GOOGLE_CLIENT_ID ? null : require('../../google_api.js');
 const AWS = require('aws-sdk');
 const config = process.env.AWS_ACCESS_KEY_ID ? null : require('../../aws-config.json')
+const mailer = require('../mailer')
 
 /*--------------------------------------------AWS--------------------------------------------*/
 AWS.config.credentials = config;
@@ -42,6 +43,11 @@ const googleStrategy = new GoogleStrategy(googleConfig, function(token, refreshT
                         } else {
                             return User.create({ name, email, googleId, confirmed: true }) //creates a new user
                                 .then(createdUser => {
+                                    console.log("ABOUT TO SEND CREATED USER MAIL")
+                                    mailer.transporter.sendMail(mailer.welcome(createdUser), (error, info) => {
+                                        if (error) console.error(error);
+                                        if (!error) console.log('Message %s sent: %s', info.messageId, info.response);
+                                    });
                                     return callback(null, createdUser); //logs in the new user
                                 });
                         }
@@ -84,6 +90,11 @@ const facebookStrategy = new FacebookStrategy(FacebookConfig, function(accessTok
                         } else {
                             return User.create({ name, email, facebookId, confirmed: true }) //creates a new user
                                 .then(createdUser => {
+                                    console.log("ABOUT TO SEND CREATED USER MAIL")
+                                    mailer.transporter.sendMail(mailer.welcome(createdUser), (error, info) => {
+                                        if (error) console.error(error);
+                                        if (!error) console.log('Message %s sent: %s', info.messageId, info.response);
+                                    });
                                     return callback(null, createdUser); //logs in the new user
                                 });
                         }

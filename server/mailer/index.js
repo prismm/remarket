@@ -27,6 +27,19 @@ const verifyEmail = function(user, confirmUrl) {
     }
 };
 
+const welcome = function(user) {
+    const account = domainUrl + 'account/';
+    const networks = account + 'managenetworks/';
+
+    return {
+        from: remarket,
+        to: user.email,
+        subject: 'Welcome to remarket',
+        text: 'Hello, welcome to remarket! Please take a moment to set up your account and to affiliate with your networks by clicking below.\n ' + account, // plain text body
+        html: '<p>Hello, welcome to remarket! Please take a moment to <a href="' + account + '">set up your account</a> and to <a href="' + networks + '">affiliate with your networks</a>.</p>' // html body
+    }
+};
+
 const changePassword = function(user, resetPwUrl) {
     return {
         from: remarket,
@@ -177,5 +190,6 @@ module.exports = {
     listingStatusChange,
     listingAboutToArchive,
     sendMessage,
-    passwordReset
+    passwordReset,
+    welcome
 }

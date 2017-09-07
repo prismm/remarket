@@ -7,6 +7,11 @@ $md-secondary-color: $md-pink-a-400;
     // color: black
 }
 
+html {
+    // background: #fffbf7;
+    background: #fafafa;
+}
+
 body {
     margin: 15px;
     a {
@@ -137,6 +142,13 @@ body {
         display: inline;
         padding-left: 5px;
     }
+    .or-continue {
+        font-weight: 600;
+        text-align: center;
+        margin: 15px;
+        font-style: italic;
+        padding-right: 15px;
+    }
     .avatar {
         // margin: 5px 0 10px 0;
     }
@@ -185,9 +197,6 @@ body {
     .login-signup-form {
         padding-top: 1em;
     }
-    .login-submit {
-        margin: auto;
-    }
     .local-login {
         margin-bottom: 1em;
         font-weight: bold;
@@ -198,6 +207,25 @@ body {
         &:hover {
             background: rgb(63, 81, 181);
             color: white;
+        }
+    }
+    .md-tabs {
+        &:hover {
+            background: #b2b9e0;
+            color: rgb(63, 81, 181) !important;
+        }
+    }
+    .md-tab-label {
+        color: rgb(63, 81, 181) !important;
+        &:hover {
+            color: rgb(63, 81, 181) !important;
+        }
+    }
+    .login-submit {
+        margin: auto;
+        &:hover {
+            background: #b2b9e0;
+            color: rgb(63, 81, 181);
         }
     }
     // .md-background--primary-hover {
@@ -211,22 +239,30 @@ body {
     .google-login {
         // background: 
     }
-    .google-text {
+    .google-button-text {
         color: #EA4335;
         font-weight: bold;
+        font-family: "Roboto", sans-serif;
+        display: inline-block;
+        vertical-align: middle;
     }
     .facebook-login {
         // background: #3b5998;
     }
-    .facebook-text {
+    .facebook-button-text {
         color: #3b5998;
         font-weight: bold;
+        font-family: "Roboto", sans-serif;
+        display: inline-block;
+        vertical-align: middle;
     }
     .md-tab-label {
         color: $md-secondary-color;
     }
     .logo {
         margin-right: 8px;
+        display: inline-block;
+        margin-top: 3px;
     }
     .remarket-logo {
         float: left;
@@ -240,6 +276,10 @@ body {
         border-radius: 12px;
         border: 1px solid;
         box-shadow: none;
+    }
+    .no-posts {
+        color: rgba(128, 128, 128, 0.68);
+        font-style: italic;
     }
     .network-button-nyu {
         border-color: #673ab7;
