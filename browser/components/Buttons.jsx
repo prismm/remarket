@@ -145,7 +145,7 @@ export function UpdateEmailButton({currentUser, updateEmail, newEmail}) {
                 raised
                 secondary
                 label="update"
-                className="user-button"
+                className="user-button update-email-button"
                 onClick={() => updateEmail(currentUser.id, newEmail)}
             />
         </div>
