@@ -15,6 +15,26 @@ const mailer = require('../mailer');
 const crypto = require('crypto');
 const domainUrl = process.env.GOOGLE_CLIENT_ID ? 'https://shielded-earth-43160.herokuapp.com/' : 'http://localhost:1337/';
 
+function isLoggedIn(req, res, next) {
+    console.log("PIPELINE!!!!!!!!!!!!!!");
+    if (!req.user) {
+        res.status(403).send('Access denied. Contact a system administrator if you believe you\'re seeing this message in error.')
+        throw new Error();
+    } else {
+        next()
+    }
+}
+
+function isRightUserByUserId(req, res, next) {
+    console.log("PIPELINE!!!!!!!!!!!!!!");
+    if (req.user.id === req.params.userId) {
+        return next();
+    } else {
+        res.status(403).send('Access denied. Contact a system administrator if you believe you\'re seeing this message in error.')
+        throw new Error();
+    }
+}
+
 router.get('/', (req, res, next) => {
     User.findAll({ include: [{ all: true }] })
         .then(users => res.json(users))
@@ -42,7 +62,7 @@ router.get('/:id/networks', (req, res, next) => {
 })
 
 //a route for POST: /api/users/${user.id}/networks/${network.id} that adds a network to a user's networks
-router.post('/:userId/networks/:networkId', (req, res, next) => {
+router.post('/:userId/networks/:networkId', isLoggedIn, isRightUserByUserId, (req, res, next) => {
     Promise.all([User.findById(req.params.userId, { include: [{ all: true }] }), Network.findById(req.params.networkId)])
         .then(([user, network]) => {
             // user.addNetwork(network, { through: { networkEmail: 'dummy@email.com', confirmed: false } });
@@ -68,7 +88,7 @@ router.post('/:userId/networks/:networkId', (req, res, next) => {
 })
 
 //a POST route for sending message from user to user
-router.post('/msg', (req, res, next) => {
+router.post('/msg', isLoggedIn, (req, res, next) => {
 
     let sender = User.findById(req.body.sender.id);
     let receiver = User.findById(req.body.receiver.id);
@@ -92,8 +112,18 @@ router.post('/msg', (req, res, next) => {
         })
 });
 
-//a route for PUT: /api/users/${userId} that updates the user info
-router.put('/:id', (req, res, next) => {
+function isRightUserById(req, res, next) {
+    console.log("PIPELINE!!!!!!!!!!!!!!");
+    if (req.user.id === req.params.id) {
+        return next();
+    } else {
+        res.status(403).send('Access denied. Contact a system administrator if you believe you\'re seeing this message in error.')
+        throw new Error();
+    }
+}
+
+//a route for PUT: /api/users/${id} that updates the user info
+router.put('/:id', isLoggedIn, isRightUserById, (req, res, next) => {
     User.update(req.body, {
             where: {
                 id: req.params.id
@@ -111,7 +141,7 @@ router.put('/:id', (req, res, next) => {
 })
 
 //a route for PUT: /api/users/pw/${userId} that updates the user password
-router.put('/pw/:id', (req, res, next) => {
+router.put('/pw/:id', isLoggedIn, isRightUserById, (req, res, next) => {
     User.update(req.body, {
             where: {
                 id: req.params.id
@@ -131,7 +161,7 @@ router.put('/pw/:id', (req, res, next) => {
 })
 
 //a route for DELETE: /api/users/${user.id}/networks/${network.id} that removes a network from a user's networks
-router.delete('/:userId/networks/:networkId', (req, res, next) => {
+router.delete('/:userId/networks/:networkId', isLoggedIn, isRightUserByUserId, (req, res, next) => {
     affiliations.destroy({ where: { userId: req.params.userId, networkId: req.params.networkId } })
         .then(() => {
             res.sendStatus(204);

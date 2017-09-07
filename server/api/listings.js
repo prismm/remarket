@@ -17,7 +17,13 @@ const mailer = require('../mailer')
 */
 
 function isLoggedIn(req, res, next) {
-    next();
+    console.log("PIPELINE!!!!!!!!!!!!!!");
+    if (!req.user) {
+        res.status(403).send('Access denied. Contact a system administrator if you believe you\'re seeing this message in error.')
+        throw new Error();
+    } else {
+        next()
+    }
 }
 
 
@@ -49,7 +55,7 @@ router.get('/user/:userId', (req, res, next) => {
         .catch(next)
 })
 
-router.post('/', (req, res, next) => {
+router.post('/', isLoggedIn, (req, res, next) => {
     Listing.create(req.body)
         .then(newListing => Promise.all([User.findById(newListing.authorId), newListing]))
         .then(([user, newListing]) => {
@@ -62,7 +68,7 @@ router.post('/', (req, res, next) => {
         .catch(next)
 })
 
-router.put('/:id', (req, res, next) => {
+router.put('/:id', isLoggedIn, (req, res, next) => {
     Listing.update(req.body, {
             where: {
                 id: req.params.id
@@ -90,7 +96,7 @@ router.put('/:id', (req, res, next) => {
         .catch(next)
 })
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', isLoggedIn, (req, res, next) => {
     Listing.destroy({
             where: {
                 id: req.params.id
@@ -107,7 +113,7 @@ router.delete('/:id', (req, res, next) => {
         .catch(next)
 })
 
-router.post('/:id/photos', (req, res, next) => {
+router.post('/:id/photos', isLoggedIn, (req, res, next) => {
     let photos = req.body;
     if (photos.length) {
         let PromiseArr = photos.map(photo => Photo.findOrCreate({ where: { id: photo.id, name: photo.name, listingId: photo.listingId, link: photo.link } }));
@@ -122,7 +128,7 @@ router.post('/:id/photos', (req, res, next) => {
     }
 })
 
-router.put('/:id/photos', (req, res, next) => {
+router.put('/:id/photos', isLoggedIn, (req, res, next) => {
     let deletePhotos = req.body;
     if (deletePhotos.length) {
         let PromiseArr = deletePhotos.map(photo => Photo.destroy({ where: { id: photo.id, name: photo.name }, paranoid: true }));

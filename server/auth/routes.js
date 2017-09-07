@@ -102,7 +102,7 @@ router.post('/logout', (req, res, next) => {
 
 // fetches the logged in user
 router.get('/me', (req, res, next) => {
-    return res.json(req.user); //add sanitize?
+    return res.json(req.user);
 });
 
 /* --------------------------- SIGNUP & VERIFY EMAIL ---------------------------------*/
@@ -198,7 +198,6 @@ router.get('/forgotpassword', (req, res, next) => {
                             })
                             return req.login(user, err => {
                                 if (err) next(err);
-                                // else return res.json(user.sanitize()).status(200);
                             })
                         }
                     })
