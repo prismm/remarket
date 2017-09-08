@@ -10,6 +10,7 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import Card from 'react-md/lib/Cards/Card';
 import Button from 'react-md/lib/Buttons/Button'; 
 import TextField from 'react-md/lib/TextFields';
+import {IconButton} from 'react-toolbox/lib/button';
 import Snackbar from '../HOC/Snackbar.jsx'
 
 /*-------- MessageUser component ---------*/
@@ -87,6 +88,7 @@ class MessageUser extends Component {
             >
             {this.state.on &&
             <Card className="md-card md-background--card md-cell--12 message-card md-cross-fade">
+            <IconButton className="close-message-button" icon="clear" onClick={() => this.hideMessage()} accent />
             <form onSubmit={this.handleSubmit} name={this.props.label}>
                 <div>
                     <label htmlFor="subject"><small>subject</small></label>
