@@ -79,7 +79,7 @@ const passwordReset = function(user) {
             to: user.email,
             subject: 'Your password was reset',
             text: 'Hi ' + user.userId + ', we wanted to let you know that your password was recently reset on remarket. If you did not reset your password, reply to this email to let us know. Otherwise, you can disregard this message. Thanks!',
-            html: '<p>Hi' + user.userId + ', we wanted to let you know that your password was recently reset on remarket. If you did not reset your password, reply to this email to let us know. Otherwise, you can disregard this message. Thanks!</p>' // html body
+            html: '<p>Hi ' + user.userId + ', we wanted to let you know that your password was recently reset on remarket. If you did not reset your password, reply to this email to let us know. Otherwise, you can disregard this message. Thanks!</p>' // html body
         }
     }
     //havent incorporated this one yet, since the delete route isn't written

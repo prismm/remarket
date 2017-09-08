@@ -10,7 +10,7 @@ import Button from 'react-md/lib/Buttons/Button';
 import Dropdown from 'react-toolbox/lib/dropdown';
 import Input from 'react-toolbox/lib/input';
 
-import {createListing_dispatch, editListing_dispatch} from '../actions/listing';
+import {createListing_dispatch, editListing_dispatch, createListingError_action} from '../actions/listing';
 import {forSaleSubcategories, housingSubcategories, communitySubcategories} from '../subcategories'
 import {locations} from '../locations'
 
@@ -40,7 +40,11 @@ class CreateListing extends Component {
         this.handleSubcategoryChange = this.handleSubcategoryChange.bind(this);
         this.handleLocationChange = this.handleLocationChange.bind(this);
         this.handleNeighborhoodChange = this.handleNeighborhoodChange.bind(this);
-        this.setError = this.setError.bind(this);
+        // this.setError = this.setError.bind(this);
+    }
+
+    componentWillUnmount(){
+        this.props.clearError();
     }
 
     handleChange(event) {
@@ -66,14 +70,16 @@ class CreateListing extends Component {
 
     publishEdits(event){
         event.preventDefault();
+        if (this.props.error) return;
         this.props.editListing(this.props.currentListing.id, this.state);
+        if (this.props.error) return;
         //async problem -- rerenders listing before it's officially updated //RESOLVED with browserHistory.push?
         this.props.onPublishClick();
     }
 
-    setError(error){
-        this.setState(error)
-    }
+    // setError(error){
+    //     this.setState(error)
+    // }
 
     setExpirationDate(event){
         let newExpDate = new Date(event).setHours(23, 59);
@@ -89,7 +95,7 @@ class CreateListing extends Component {
 
         let today = new Date();
         let twoMonthsLater = new Date(new Date().setMonth(today.getMonth() + 2));
-        const error = this.state.error;
+        const error = this.props.error;
 
         return (
             <div className="md-grid create-listing">
@@ -252,7 +258,7 @@ class CreateListing extends Component {
                                 disabled={!this.state.name || !this.state.description || !this.state.askingPrice}
                             />
                         }
-                        {   error ?  <div className="response-message"> { error } </div> : null }
+                        {   error ?  <div className="response-message">I'm sorry, something went wrong. We are looking into it. Please try again later.</div> : null }
                     </form>
                     </div>
                     : null}
@@ -366,7 +372,7 @@ class CreateListing extends Component {
                                     disabled={!this.state.name || !this.state.description || !this.state.askingPrice}
                                 />
                             }
-                            {   error ?  <div className="response-message"> { error } </div> : null }
+                            {   error ?  <div className="response-message">I'm sorry, something went wrong. We are looking into it. Please try again later.</div> : null }
                         </form>
                     </div>
                     : null}
@@ -430,7 +436,7 @@ class CreateListing extends Component {
                                     disabled={!this.state.name || !this.state.description}
                                 />
                             }
-                            {   error ?  <div className="response-message"> { error } </div> : null }
+                            {   error ?  <div className="response-message">I'm sorry, something went wrong. We are looking into it. Please try again later.</div> : null }
                         </form>
                     </div>
                 : null}
@@ -452,7 +458,8 @@ CreateListing.propTypes = {
 const mapStateToProps = state => {
     return {
         user: state.user,
-        userNetworks: state.user.networks
+        userNetworks: state.user.networks,
+        error: state.listing.error
     }
 }
 
@@ -463,6 +470,9 @@ const mapDispatchToProps = dispatch => {
         },
         editListing: (listingId, changes) => {
             dispatch(editListing_dispatch(listingId, changes))
+        },
+        clearError: () => {
+            dispatch(createListingError_action(null))
         }
     }
 }

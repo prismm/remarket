@@ -44,8 +44,9 @@ class ListingDetail extends Component {
     }
 
     onPublishClick(){
+        if (this.props.error) return;
+        this.forceUpdate();
         this.setState({edit: false});
-        browserHistory.push(`/listings/${this.props.currentListing.id}`)
     }
 
     onAddPhotoClick(){
@@ -70,7 +71,7 @@ class ListingDetail extends Component {
         const bodyClassname = this.props.currentListing.photos && this.props.currentListing.photos.length ?  'listing-body md-cell--5' : 'listing-body md-cell--10'
         return (
             <div>
-            { error &&  <h3 className="error"> { error.response.status } / { error.response.statusText } </h3> }
+            { error &&  <h3 className="error"> { error.response && error.response.status } / { error.response && error.response.statusText } </h3> }
             { error &&  <div className="error listing-not-found"> { error.response.data } </div> }
             {shouldRenderDetail && (
                 <div className="md-grid listing-detail-container">
@@ -117,7 +118,7 @@ class ListingDetail extends Component {
                             :
                             null
                         }
-                        <hr />
+                        <hr className="detail-section-separator" />
                         {this.props.currentListing.location ? <p className="selected-item-location">Location: {this.props.currentListing.location}</p> : null}
                         {this.props.currentListing.neighborhood ? <p className="selected-item-location"> &rarr; {this.props.currentListing.neighborhood}</p> : null}
                         <p className="selected-item-descr">{this.props.currentListing.description}</p>
@@ -160,7 +161,8 @@ ListingDetail.propTypes = {
 const mapStateToProps = ({user, listing, network}) => ({
         currentListing: listing.currentListing,
         user: user,
-        network: network
+        network: network,
+        error: listing.error
     });
 
 const mapDispatchToProps = dispatch => {

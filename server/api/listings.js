@@ -65,7 +65,10 @@ router.post('/', isLoggedIn, (req, res, next) => {
             });
             return res.json(newListing);
         })
-        .catch(next)
+        .catch(error => {
+            console.log(error);
+            res.status(401).send('Something went wrong.')
+        })
 })
 
 router.put('/:id', isLoggedIn, (req, res, next) => {
@@ -93,7 +96,10 @@ router.put('/:id', isLoggedIn, (req, res, next) => {
                 });
             }
         })
-        .catch(next)
+        .catch(error => {
+            console.log(error);
+            res.status(401).send('Something went wrong.')
+        })
 })
 
 router.delete('/:id', isLoggedIn, (req, res, next) => {

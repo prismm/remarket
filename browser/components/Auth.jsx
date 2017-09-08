@@ -6,7 +6,6 @@ import { auth_dispatch, forgotPassword_dispatch, resendConfirmLink_dispatch, goo
 import TextField from 'react-md/lib/TextFields';
 import Button from 'react-md/lib/Buttons/Button';
 import Loader from '../HOC/Loader.jsx';
-import { browserHistory } from 'react-router';
 
 /*-------------------Auth Form component ----------------------*/
 class AuthForm extends Component {

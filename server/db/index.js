@@ -9,6 +9,7 @@ const Comment = require('./models/Comment');
 const Token = require('./models/Token');
 const Photo = require('./models/Photo');
 const Message = require('./models/Message');
+const Endorsement = require('./models/Endorsement')
 
 const network_affiliations = db.define('network_affiliations', {
     networkEmail: { type: Sequelize.STRING },
@@ -20,6 +21,7 @@ const network_affiliations = db.define('network_affiliations', {
         // },
 });
 const listing_networks = db.define('listing_networks', {}, { freezeTableName: true });
+// const listing_feed = db.define('listing_feed', {}, { freezeTableName: true })
 
 //Token belongs to User (every token has one user, not all users have tokens)
 Token.belongsTo(User);
@@ -43,7 +45,7 @@ Message.belongsTo(Listing)
 
 // User has many Offers (Offer table has userId foreign key)
 Offer.belongsTo(User, { as: 'bidder' });
-User.hasMany(Offer);
+// User.hasMany(Offer);
 
 // Listing has many Offers (Offer table has listingId foreign key)
 Offer.belongsTo(Listing);
@@ -53,9 +55,21 @@ Listing.hasMany(Offer);
 Photo.belongsTo(Listing);
 Listing.hasMany(Photo);
 
+// User has many Comments (Comments table has userId foreign key)
+Comment.belongsTo(User, { as: 'author' });
+// User.hasMany(Comment);
+
 //Listing has many Comments
 Comment.belongsTo(Listing);
 Listing.hasMany(Comment);
+
+// User has many Endorsements (Endorsement table has userId foreign key)
+Endorsement.belongsTo(User, { as: 'endorser' });
+// User.hasMany(Endorsement);
+
+//Listing has many Endorsements
+Endorsement.belongsTo(Listing);
+Listing.hasMany(Endorsement);
 
 module.exports = {
     db,
@@ -68,5 +82,6 @@ module.exports = {
     listing_networks,
     Token,
     Photo,
-    Message
+    Message,
+    Endorsement
 }
