@@ -54,7 +54,7 @@ class ListingsList extends Component {
                 { listings && listings.length ?
                     listings.map(listing => <div key={listing.id}><Listing listing={listing} /></div>)
                     :
-                    <div className="no-posts">No active posts.</div>
+                    <div className="no-posts">No posts to display.</div>
                 }
             </div>
         )}

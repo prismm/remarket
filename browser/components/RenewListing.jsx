@@ -52,7 +52,7 @@ export default class RenewListing extends Component {
         <div className="renew-picker">
           <DatePicker
             id="fully-controlled"
-            className="md-cell"
+            className=""
             minDate={today}
             maxDate={twoMonthsLater}
             visible={visible}

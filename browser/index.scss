@@ -584,6 +584,9 @@ body {
         opacity: 0.8;
         font-weight: bolder;
     }
+    .md-picker-header {
+        background: rgb(63, 81, 181);
+    }
     // @keyframes loader-1{ 
     //     0% {-webkit-transform: translate3d(0,0,0);
     //         -moz-transform: translate3d(0,0,0);
@@ -697,6 +700,7 @@ fieldset {
 }
 
 .md-table-column {
+    white-space: normal;
     @media (max-width: 599px) {
         max-width: 100px;
         padding: 10px !important;
