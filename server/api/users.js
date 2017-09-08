@@ -13,7 +13,7 @@ const Comment = model.Comment;
 const affiliations = model.network_affiliations;
 const mailer = require('../mailer');
 const crypto = require('crypto');
-const domainUrl = process.env.GOOGLE_CLIENT_ID ? 'https://shielded-earth-43160.herokuapp.com/' : 'http://localhost:1337/';
+const domainUrl = process.env.GOOGLE_CLIENT_ID ? 'https://www.reuse.market' : 'http://localhost:1337/';
 
 function isLoggedIn(req, res, next) {
     console.log("PIPELINE!!!!!!!!!!!!!!");

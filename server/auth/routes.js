@@ -11,7 +11,7 @@ const Token = model.Token;
 const affiliations = model.network_affiliations;
 const mailer = require('../mailer')
 const crypto = require('crypto');
-const domainUrl = process.env.GOOGLE_CLIENT_ID ? 'https://shielded-earth-43160.herokuapp.com/' : 'http://localhost:1337/';
+const domainUrl = process.env.GOOGLE_CLIENT_ID ? 'https://www.reuse.market' : 'http://localhost:1337/';
 
 //filtering networks {confirmed: true} on front end
 router.post('/login', (req, res, next) => {
