@@ -16,8 +16,9 @@ const crypto = require('crypto');
 const domainUrl = process.env.GOOGLE_CLIENT_ID ? 'https://www.reuse.market' : 'http://localhost:1337/';
 
 function isLoggedIn(req, res, next) {
-    console.log("PIPELINE!!!!!!!!!!!!!!");
+    // console.log("PIPELINE!!!!!!!!!!!!!!");
     if (!req.user) {
+        console.log("FAILED IN isLoggedIn")
         res.status(403).send('Access denied. Contact a system administrator if you believe you\'re seeing this message in error.')
         throw new Error();
     } else {
@@ -26,10 +27,11 @@ function isLoggedIn(req, res, next) {
 }
 
 function isRightUserByUserId(req, res, next) {
-    console.log("PIPELINE!!!!!!!!!!!!!!");
-    if (req.user.id === req.params.userId) {
+    // console.log("PIPELINE!!!!!!!!!!!!!!");
+    if (req.user.id === Number(req.params.userId)) {
         return next();
     } else {
+        // console.log("FAILED IN isRightUserByUserId")
         res.status(403).send('Access denied. Contact a system administrator if you believe you\'re seeing this message in error.')
         throw new Error();
     }
@@ -114,9 +116,13 @@ router.post('/msg', isLoggedIn, (req, res, next) => {
 
 function isRightUserById(req, res, next) {
     console.log("PIPELINE!!!!!!!!!!!!!!");
-    if (req.user.id === req.params.id) {
+    if (req.user.id === Number(req.params.id)) {
         return next();
     } else {
+        // console.log("FAILED IN isRightUserById")
+        // console.log("REQ PARAMS ID", typeof req.params.id);
+        // console.log("REQ USER ID", typeof req.user.id);
+        // console.log(Number(req.params.id) === req.user.id);
         res.status(403).send('Access denied. Contact a system administrator if you believe you\'re seeing this message in error.')
         throw new Error();
     }
