@@ -93,7 +93,7 @@ class AddNetwork extends Component {
                         <h3 className="content-title-header">My Networks</h3>
                         { (this.props.user.networks && this.props.user.networks.length) ?
                             this.props.user.networks.map(
-                                network => <li className="network-li" key={network.id}><NetworkAvatar key={network.id} network={network.name} tooltipLabel={network.name} tooltipPosition="top" />{network.name}</li>
+                                network => <li className="network-li" key={network.id}><NetworkAvatar key={network.id} network={network.name.toLowerCase()} tooltipLabel={network.name} tooltipPosition="top" />{network.name}</li>
                                 )
                             :
                             <h5>You currently are not affiliated with any networks on remarket. <br /><br />But are you in real life? Add yourself to your network here.</h5>

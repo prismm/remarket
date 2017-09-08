@@ -47,7 +47,7 @@ class PublicProfile extends Component {
                 <h2><span className="public-profile-username divider">{thisUser.userId}</span> <span className="divider"> / </span> {thisUser.name}</h2>
                 { (thisUser.networks && thisUser.networks.length) ?
                     thisUser.networks.map(
-                        network => <NetworkAvatar key={network.id} network={network.name} tooltipLabel={network.name} tooltipPosition="top" />
+                        network => <NetworkAvatar key={network.id} network={network.name.toLowerCase()} tooltipLabel={network.name} tooltipPosition="top" />
                     )
                 :
                 null
