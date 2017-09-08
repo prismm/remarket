@@ -50,7 +50,7 @@ class Main extends Component {
             </nav> :
             <nav className="site-nav">
               <Link className="site-nav-link" method="login" to="/login">Login</Link>
-              <Link className="site-nav-link" method="signup" to="/signup">Sign Up</Link>
+              <Link className="site-nav-link signup-link" method="signup" to="/signup">Sign Up</Link>
             </nav>
         }
         <hr />
