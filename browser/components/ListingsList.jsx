@@ -15,7 +15,7 @@ class ListingsList extends Component {
     constructor(props){
         super(props);
         this.state = {
-            waiting: true,
+            waiting: !props.listings.length,
             subcategory: props.subcategory || null,
             listings: props.listings
         }
