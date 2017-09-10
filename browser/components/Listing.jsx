@@ -7,8 +7,8 @@ import TimeAgo from './TimeAgo.jsx';
 /*------------------- ListingsLink component ----------------------*/
 function Listing({ listing, currentNetwork }) {
     let networkColoring = '';
-    if (currentNetwork && currentNetwork.id === '1') networkColoring = 'columbia-selected';
-    if (currentNetwork && currentNetwork.id === '2') networkColoring = 'nyu-selected';
+    if (currentNetwork && currentNetwork.id === 1) networkColoring = 'columbia-selected';
+    if (currentNetwork && currentNetwork.id === 2) networkColoring = 'nyu-selected';
     return (
         listing && (
         <div>
