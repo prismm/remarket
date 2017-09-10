@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import ListingsList from '../components/ListingsList.jsx';
 import Filters from '../components/Filters.jsx';
+import Snackbar from '../HOC/Snackbar.jsx'
 
 import { setLocation_action } from '../actions/listing'
 
@@ -86,6 +87,7 @@ class Listings extends Component {
     }
 
     render(){
+        let success = this.props.success;
         //filtering listings based on network and location -- should go off props.listings (complete list) or state.filteredListings (list filtered by generalFilter?)
         let filteredListings = this.state.filteredListings;
         // this.state.networkFilters.forEach( networkFilter => {
@@ -121,6 +123,7 @@ class Listings extends Component {
                     )
                     }
                 </div>
+                {success ? <Snackbar /> : null}
             </div>
         )
     }
@@ -133,11 +136,12 @@ Listings.propTypes = {
 };
 
 /*----------------------- Listings Container ---------------------------*/
-const mapStateToProps = ({user, listing, network}) => ({
+const mapStateToProps = ({user, listing, network, browse}) => ({
         listings: listing.listings,
         user: user,
         network: network,
-        location: listing.location
+        location: listing.location,
+        success: browse.success
     });
 
 const mapDispatchToProps = dispatch => {

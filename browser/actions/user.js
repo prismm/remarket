@@ -115,6 +115,7 @@ export const auth_dispatch = (email, password, method) => dispatch => {
             let user = res.data;
             if (user) user.networks = user.networks.filter(network => network.network_affiliations.confirmed);
             dispatch(getUser_action(user));
+            dispatch(interactionSuccess_action('Logged in'));
             browserHistory.push(currentDestination); //routes user back to original browse destination
         })
         .catch(error => {

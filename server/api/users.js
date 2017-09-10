@@ -160,6 +160,13 @@ router.put('/pw/:id', isLoggedIn, isRightUserById, (req, res, next) => {
                 next();
             } else {
                 let user = result[1][0];
+                mailer.transporter.sendMail(mailer.passwordReset(user), (error, info) => {
+                    if (error) {
+                        console.error(user, error);
+                    } else {
+                        console.log('Message %s sent: %s', info.messageId, info.response)
+                    }
+                })
                 return res.json(user.sanitize()).status(200);
             }
         })
