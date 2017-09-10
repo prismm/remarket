@@ -81,7 +81,10 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   handleClick: () => dispatch(logout_dispatch()),
-  selectNetwork: networkId => dispatch(fetchSingleNetwork_dispatch(networkId)),
+  selectNetwork: networkId => {
+    dispatch(setCurrentNetwork_action({id: networkId}));
+    dispatch(fetchSingleNetwork_dispatch(networkId))
+  },
   clearNetwork: () => dispatch(setCurrentNetwork_action({}))
 });
 
