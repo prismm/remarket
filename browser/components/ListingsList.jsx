@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import Listing from './Listing.jsx';
 import spinner from '../HOC/Spinner.jsx';
+import Loader from '../HOC/Loader.jsx'
 
 import Dropdown from 'react-toolbox/lib/dropdown';
 
@@ -14,10 +15,30 @@ class ListingsList extends Component {
     constructor(props){
         super(props);
         this.state = {
+            waiting: true,
             subcategory: props.subcategory || null,
             listings: props.listings
         }
         this.handleSubcategoryChange = this.handleSubcategoryChange.bind(this);
+    }
+
+    componentDidMount(){
+        this.timeout = setTimeout(() => {
+            this.timeout = null;
+            this.setState({waiting: false});
+          }, 400);
+    }
+
+    componentWillReceiveProps(nextProps){
+        if (nextProps.listings){
+            this.setState({waiting: false})
+        }
+    }
+
+    componentWillUnmount(){
+        if (this.timeout) {
+            clearTimeout(this.timeout);
+          }
     }
 
     handleSubcategoryChange(value){
@@ -51,10 +72,15 @@ class ListingsList extends Component {
                     />
                     :
                     null}
-                { listings && listings.length ?
+                { listings && !this.state.waiting ?
                     listings.map(listing => <div key={listing.id}><Listing listing={listing} /></div>)
                     :
-                    <div className="no-posts">No posts to display.</div>
+                    <Loader loadingText="" />
+                }
+                { !listings.length && !this.state.waiting ?
+                    <div className="no-posts">No posts to display</div>
+                    :
+                    null
                 }
             </div>
         )}

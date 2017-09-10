@@ -111,7 +111,7 @@ class MessageUser extends Component {
             </CSSTransitionGroup>
             { this.state.waiting &&
                 <div>
-                    <Loader loadingText="Sending...(this may take a few minutes, the message is on its way)" />
+                    <Loader loadingText="Sending...this may take a minute" />
                 </div>
             }
             {   sent &&  <div className="response-message"> { sent } </div> }
