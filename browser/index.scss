@@ -29,6 +29,9 @@ body {
         &:active {
             color: $md-secondary-color;
         }
+        &:hover {
+            font-style: italic;
+        }
     }
     .site-header {
         float: left;
