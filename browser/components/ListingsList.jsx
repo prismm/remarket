@@ -89,7 +89,7 @@ class ListingsList extends Component {
 ListingsList.propTypes = {
     category: PropTypes.string,
     listings: PropTypes.array,
-    currentNetwork: PropTypes.object.isRequired
+    currentNetwork: PropTypes.object
 };
 
 

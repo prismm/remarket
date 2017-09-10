@@ -735,3 +735,21 @@ fieldset {
 .category-list {
     padding-right: 0.5em;
 }
+
+.footer-nav {
+    margin: auto;
+    text-align: center;
+}
+
+.footer-nav-link {
+    padding: 0.5em;
+    color: #FC0096;
+    font-weight: 400;
+    &:hover {
+        font-style: italic;
+    }
+    &:active {
+        color: black;
+        font-style: italic;
+    }
+}

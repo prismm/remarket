@@ -6,6 +6,7 @@ import { Link, browserHistory } from 'react-router';
 import { logout_dispatch } from '../actions/user';
 import { fetchSingleNetwork_dispatch, setCurrentNetwork_action } from '../actions/network';
 import Button from 'react-md/lib/Buttons/Button';
+import Footer from '../components/Footer.jsx'
 
 /*------------------- Main component ----------------------*/
 
@@ -56,7 +57,7 @@ class Main extends Component {
         <hr />
         { children }
         <hr />
-
+      <Footer />
       </div>
     );
     }
@@ -81,7 +82,7 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   handleClick: () => dispatch(logout_dispatch()),
   selectNetwork: networkId => dispatch(fetchSingleNetwork_dispatch(networkId)),
-  clearNetwork: () => dispatch(setCurrentNetwork_action(null))
+  clearNetwork: () => dispatch(setCurrentNetwork_action({}))
 });
 
 export default connect(mapState, mapDispatch)(Main);
