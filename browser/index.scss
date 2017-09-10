@@ -150,6 +150,7 @@ body {
     }
     .selected-item-descr {
         padding-top: 1em;
+        white-space: pre-wrap;
     }
     .file-title {
         font-size: 14px;
@@ -729,4 +730,8 @@ fieldset {
 
 .detail-section-separator {
     margin-top: 1em;
+}
+
+.category-list {
+    padding-right: 0.5em;
 }

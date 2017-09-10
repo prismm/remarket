@@ -34,7 +34,7 @@ class PublicProfile extends Component {
         //make sure thisUser has .name, .networks, .listings
         const thisUser = this.props.viewedUser;
         const error = thisUser.error || null;
-        const label =  'Message ' + thisUser.name;
+        const label =  'Message ' + thisUser.userId;
 
         return (
         <div className="md-grid">
@@ -44,7 +44,7 @@ class PublicProfile extends Component {
                     <div className="error listing-not-found"> { error.response.data } </div>
                 </div> }
             {thisUser.id && <Card className="md-card md-background--card md-cell--10 public-profile-card">
-                <h2><span className="public-profile-username divider">{thisUser.userId}</span> <span className="divider"> / </span> {thisUser.name}</h2>
+                <h2><span className="public-profile-username divider">{thisUser.userId}</span> <span className="divider"> /</span>{thisUser.name && thisUser.name !== 'NULL' ? <span>{thisUser.name}</span> : null}</h2>
                 { (thisUser.networks && thisUser.networks.length) ?
                     thisUser.networks.map(
                         network => <NetworkAvatar key={network.id} network={network.name.toLowerCase()} tooltipLabel={network.name} tooltipPosition="top" />
@@ -58,7 +58,7 @@ class PublicProfile extends Component {
                 </div>
                 <hr className="profile-divider" />
                  <div className="my-listings-profile md-cell-10">
-                    <h3>{thisUser.name}'s Listings</h3>
+                    <h3>{thisUser.userId}'s Listings</h3>
                     <DataTable plain>
                         <TableHeader>
                         <TableRow>

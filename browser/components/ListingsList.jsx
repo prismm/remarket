@@ -28,7 +28,7 @@ class ListingsList extends Component {
     }
 
     render(){
-        let {listings, category, currentNetwork} = this.props;
+        let {listings, category, currentNetwork, classNames} = this.props;
         // let listings = this.props.listings;
         const catUrl = category === 'for sale' ? 'for-sale' : category;
         const subcategories = this.props.subcategories ? this.props.subcategories : null;
@@ -37,7 +37,7 @@ class ListingsList extends Component {
         //filtering by subcategory
         if (this.state.subcategory) listings = listings.filter(listing => listing.subcategory === this.state.subcategory)
         return (
-            <div className="md-cell">
+            <div className={classNames}>
                 <h2 className="category-header"><Link to={`/${catUrl}`}>{category}</Link></h2>
                 {subcategories ?
                     <Dropdown

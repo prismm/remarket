@@ -6,6 +6,7 @@ const mailer = require('../mailer');
 
 //prunes listings to convert active --> archived upon expiration
 (function() {
+    console.log('pruning listings ... ')
     let now = new Date();
     Listing.findAll({
             where: {
@@ -18,12 +19,14 @@ const mailer = require('../mailer');
         .then(expiredListings => {
             expiredListings.forEach(listing => {
                 listing.update({ status: 'archived' })
+                console.log('archived listing: ', listing.name)
             })
         })
 })();
 
 //auto sets tokens {expired: true} that were created before yesterday
 (function() {
+    console.log('setting tokens to expired')
     let yesterday = (d => new Date(d.setDate(d.getDate() - 1)))(new Date);
     Token.findAll({
             where: {

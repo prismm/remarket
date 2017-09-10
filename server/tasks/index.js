@@ -1,9 +1,9 @@
-const cron = require('node-cron');
-const model = require('../db');
-const Listing = model.Listing;
-const User = model.User;
-const Token = model.Token;
-const mailer = require('../mailer')
+// const cron = require('node-cron');
+// const model = require('../db');
+// const Listing = model.Listing;
+// const User = model.User;
+// const Token = model.Token;
+// const mailer = require('../mailer')
 
 
 // //prunes listings to convert active --> archived upon expiration
@@ -60,7 +60,7 @@ const mailer = require('../mailer')
 //     })
 // });
 
-// //auto sets tokens {expired: true} that were created before yesterday
+//auto sets tokens {expired: true} that were created before yesterday
 // cron.schedule('*/1 * * * *', function() {
 //     let yesterday = (d => new Date(d.setDate(d.getDate() - 1)))(new Date);
 //     Token.findAll({
