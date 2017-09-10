@@ -54,7 +54,7 @@ class ListingsList extends Component {
         const catUrl = category === 'for sale' ? 'for-sale' : category;
         const subcategories = this.props.subcategories ? this.props.subcategories : null;
         //filtering by network
-        if (currentNetwork && currentNetwork.id) listings = listings.filter(listing => listing.networks && listing.networks.some(network => network.id === currentNetwork.id));
+        if (currentNetwork && currentNetwork.id) listings = listings.filter(listing => listing.networks.some(network => network.id === currentNetwork.id));
         //filtering by subcategory
         if (this.state.subcategory) listings = listings.filter(listing => listing.subcategory === this.state.subcategory)
         return (
