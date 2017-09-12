@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 require('babel-polyfill');
+// const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
     entry: ['babel-polyfill', './browser/index.jsx'], // assumes your entry point is the index.js in the root of your project folder
@@ -51,5 +52,4 @@ module.exports = {
             }
         })
     ],
-
 };

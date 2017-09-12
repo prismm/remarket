@@ -5,7 +5,8 @@ const initialState = {
     userListings: {},
     message: '',
     destination: '/home',
-    success: ''
+    success: '',
+    waiting: false
 }
 
 export default function(state = initialState, action) {
@@ -29,6 +30,9 @@ export default function(state = initialState, action) {
             break;
         case 'SUCCESS':
             newState.success = action.interaction;
+            break;
+        case 'RECEIVING_DATA':
+            newState.waiting = true;
             break;
         default:
             return state;
