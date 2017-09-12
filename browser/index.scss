@@ -4,7 +4,6 @@ $md-secondary-color: $md-pink-a-400;
 @include react-md-everything;
 * {
     font-family: avenir;
-    // color: black
 }
 
 html {
@@ -56,9 +55,6 @@ body {
     img {
         image-orientation: from-image;
     }
-    .md-text-field-icon-container {
-        // margin: -1em;
-    }
     .listing-container {
         margin: 20px 30px 20px 0;
     }
@@ -66,7 +62,6 @@ body {
         clear: both;
         margin-top: 15px;
         margin-left: 0.5em;
-        // background-color: yellow;
     }
     .general-filter {
         float: left;
@@ -102,11 +97,9 @@ body {
     .account-nav li {
         list-style: none;
         font-size: 18px;
-        // font-weight: bold;
         line-height: 2em;
         padding-left: 20px;
         @media (max-width: 800px) {
-            // padding-left: 0;
             white-space: nowrap;
         }
         @media (max-width: 599px) {
@@ -137,7 +130,6 @@ body {
     }
     .item-img {
         width: 100%;
-        // max-width: 600px;
         padding: 10px;
         border: 0;
     }
@@ -148,9 +140,6 @@ body {
     .selected-item-location {
         display: inline;
         font-weight: 500;
-        // font-style: italic;
-        // font-weight: bolder;
-        // color: rgb(63, 81, 181);
     }
     .selected-item-descr {
         padding-top: 1em;
@@ -268,17 +257,7 @@ body {
             color: rgb(63, 81, 181);
         }
     }
-    // .md-background--primary-hover {
-    //     background: $md-secondary-color;
-    //     color: white;
-    // }
-    // .md-pointer--hover {
-    //     background: $md-secondary-color;
-    //     color: white;
-    // }
-    .google-login {
-        // background: 
-    }
+    .google-login {}
     .google-button-text {
         color: #EA4335;
         font-weight: bold;
@@ -286,9 +265,7 @@ body {
         display: inline-block;
         vertical-align: middle;
     }
-    .facebook-login {
-        // background: #3b5998;
-    }
+    .facebook-login {}
     .facebook-button-text {
         color: #3b5998;
         font-weight: bold;

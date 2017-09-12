@@ -5,8 +5,8 @@ import TextField from 'react-md/lib/TextFields';
 import Toolbar from 'react-md/lib/Toolbars';
 import Dropdown from 'react-toolbox/lib/dropdown';
 import FontIcon from 'react-toolbox/lib/font_icon';
+
 import {locationsForFilter} from '../locations'
-import { Link } from 'react-router';
 
 /*------------------- Filters component ----------------------*/
 export default function Filters(props){
@@ -36,7 +36,7 @@ export default function Filters(props){
             className="general-filter"
             value={props.searchTerm}
         />
-        <FontIcon className="search-icon" value="search" onClick={()=> {console.log("click!")}} />
+        <FontIcon className="search-icon" value="search" onClick={()=> {console.log('click!')}} />
         </div>
         </Toolbar>
         <hr />

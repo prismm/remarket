@@ -4,3 +4,4 @@ public/bundle.js.map
 google_api.js
 aws-config.json
 .env
+seedfile

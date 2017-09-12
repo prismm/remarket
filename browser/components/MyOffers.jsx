@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import FontIcon from 'react-md/lib/FontIcons';
-
 
 /*----------------------- MyOffers Component ---------------------------*/
 class MyOffers extends Component {

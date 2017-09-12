@@ -3,15 +3,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { messageUser_dispatch, messageSent_action } from '../actions/user';
-import Loader from '../HOC/Loader.jsx'
-
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import Card from 'react-md/lib/Cards/Card';
-import Button from 'react-md/lib/Buttons/Button'; 
+import Button from 'react-md/lib/Buttons/Button';
 import TextField from 'react-md/lib/TextFields';
 import {IconButton} from 'react-toolbox/lib/button';
-import Snackbar from '../HOC/Snackbar.jsx'
+
+import Snackbar from '../HOC/Snackbar.jsx';
+import Loader from '../HOC/Loader.jsx';
+
+import { messageUser_dispatch, messageSent_action } from '../actions/user';
 
 /*-------- MessageUser component ---------*/
 

@@ -16,9 +16,8 @@ const crypto = require('crypto');
 const domainUrl = process.env.GOOGLE_CLIENT_ID ? 'https://www.reuse.market/' : 'http://localhost:1337/';
 
 function isLoggedIn(req, res, next) {
-    // console.log("PIPELINE!!!!!!!!!!!!!!");
     if (!req.user) {
-        console.log("FAILED IN isLoggedIn")
+        console.log("FAILED IN isLoggedIn", req)
         res.status(403).send('Access denied. Contact a system administrator if you believe you\'re seeing this message in error.')
         throw new Error();
     } else {
@@ -27,11 +26,10 @@ function isLoggedIn(req, res, next) {
 }
 
 function isRightUserByUserId(req, res, next) {
-    // console.log("PIPELINE!!!!!!!!!!!!!!");
     if (req.user.id === Number(req.params.userId)) {
         return next();
     } else {
-        // console.log("FAILED IN isRightUserByUserId")
+        console.log("FAILED IN isRightUserByUserId", req)
         res.status(403).send('Access denied. Contact a system administrator if you believe you\'re seeing this message in error.')
         throw new Error();
     }
@@ -65,36 +63,32 @@ router.get('/:id/networks', (req, res, next) => {
 
 //a route for POST: /api/users/${user.id}/networks/${network.id} that adds a network to a user's networks
 router.post('/:userId/networks/:networkId', isLoggedIn, isRightUserByUserId, (req, res, next) => {
-        Promise.all([User.findById(req.params.userId, { include: [{ all: true }] }), Network.findById(req.params.networkId)])
-            .then(([user, network]) => {
-                // user.addNetwork(network, { through: { networkEmail: 'dummy@email.com', confirmed: false } });
-                affiliations.create({ userId: user.id, networkId: network.id, networkEmail: req.body.email, confirmed: false })
-                let authToken = crypto.randomBytes(16).toString('hex');
-                return Token.create({ token: authToken, userId: user.id, type: 'confirm-network' })
-                    .then(newToken => {
-                        let confirmUrl = domainUrl + 'auth/networkverify?token=' + newToken.token + '&networkId=' + network.id;
-                        mailer.transporter.sendMail(mailer.confirmNetwork(user, network, confirmUrl, req.body.email), (error, info) => {
-                            if (error) {
-                                console.error(error);
-                                res.status(401).send('Something went wrong. Try again or <a href="priya@coases.com">contact us</a>.');
-                            } else {
-                                res.status(307).send('Great! Check your email and follow the confirmation link to confirm your network affiliation.')
-                                console.log('Message %s sent: %s', info.messageId, info.response);
-                            }
-                        });
-                    })
-                    .then(() => res.json(user))
-                    .catch(console.error)
-            })
-            .catch(next)
-    })
-    //a POST route for sending message from user to user
+    Promise.all([User.findById(req.params.userId, { include: [{ all: true }] }), Network.findById(req.params.networkId)])
+        .then(([user, network]) => {
+            // user.addNetwork(network, { through: { networkEmail: 'dummy@email.com', confirmed: false } });
+            affiliations.create({ userId: user.id, networkId: network.id, networkEmail: req.body.email, confirmed: false })
+            let authToken = crypto.randomBytes(16).toString('hex');
+            return Token.create({ token: authToken, userId: user.id, type: 'confirm-network' })
+                .then(newToken => {
+                    let confirmUrl = domainUrl + 'auth/networkverify?token=' + newToken.token + '&networkId=' + network.id;
+                    mailer.transporter.sendMail(mailer.confirmNetwork(user, network, confirmUrl, req.body.email), (error, info) => {
+                        if (error) {
+                            console.error(error);
+                            res.status(401).send('Something went wrong. Try again or <a href="priya@coases.com">contact us</a>.');
+                        } else {
+                            res.status(307).send('Great! Check your email and follow the confirmation link to confirm your network affiliation.')
+                            console.log('Message %s sent: %s', info.messageId, info.response);
+                        }
+                    });
+                })
+                .then(() => res.json(user))
+                .catch(console.error)
+        })
+        .catch(next)
+})
+
+//a POST route for contacting priya
 router.post('/contact', (req, res, next) => {
-
-    // let sender = User.findById(req.body.sender.id);
-    // let receiver = User.findById(req.body.receiver.id);
-    // let message = Message.create({ subject: req.body.subject, content: req.body.message, fromId: req.body.sender.id, toId: req.body.receiver.id, listingId: req.body.listingId });
-
     mailer.transporter.sendMail(mailer.contact(req.body.replyToEmail, req.body.message, req.body.subject), (error, info) => {
         if (error) {
             console.error(error);
@@ -133,14 +127,10 @@ router.post('/msg', isLoggedIn, (req, res, next) => {
 });
 
 function isRightUserById(req, res, next) {
-    console.log("PIPELINE!!!!!!!!!!!!!!");
     if (req.user.id === Number(req.params.id)) {
         return next();
     } else {
-        // console.log("FAILED IN isRightUserById")
-        // console.log("REQ PARAMS ID", typeof req.params.id);
-        // console.log("REQ USER ID", typeof req.user.id);
-        // console.log(Number(req.params.id) === req.user.id);
+        // console.log("FAILED IN isRightUserById", req)
         res.status(403).send('Access denied. Contact a system administrator if you believe you\'re seeing this message in error.')
         throw new Error();
     }

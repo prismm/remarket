@@ -16,7 +16,7 @@ const network_affiliations = db.define('network_affiliations', {
     confirmed: { type: Sequelize.BOOLEAN }
 }, {
     freezeTableName: true
-        // defaultScope: {
+        // defaultScope: { https://stackoverflow.com/questions/45685981/sequelize-issue-with-filtering-on-the-join-model-for-belongstomany-associations
         //     attributes: { where: { confirmed: true } }
         // },
 });

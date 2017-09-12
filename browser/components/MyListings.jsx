@@ -3,6 +3,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import DataTable from 'react-md/lib/DataTables/DataTable';
+import TableHeader from 'react-md/lib/DataTables/TableHeader';
+import TableBody from 'react-md/lib/DataTables/TableBody';
+import TableRow from 'react-md/lib/DataTables/TableRow';
+import TableColumn from 'react-md/lib/DataTables/TableColumn';
+
 import {TimeLeft} from './TimeLeft.jsx';
 import { EditListingButton, DeleteListingButton } from './Buttons.jsx'
 import RenewListing from './RenewListing.jsx'
@@ -10,12 +16,6 @@ import Listing from './Listing.jsx';
 import spinner from '../HOC/Spinner.jsx'
 
 import { deleteListing_dispatch, setEditStatus_action, setCurrentListing_action, editListing_dispatch } from '../actions/listing';
-
-import DataTable from 'react-md/lib/DataTables/DataTable';
-import TableHeader from 'react-md/lib/DataTables/TableHeader';
-import TableBody from 'react-md/lib/DataTables/TableBody';
-import TableRow from 'react-md/lib/DataTables/TableRow';
-import TableColumn from 'react-md/lib/DataTables/TableColumn';
 
 /*------------------- MyListings component ----------------------*/
 

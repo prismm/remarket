@@ -3,16 +3,18 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import spinner from '../HOC/Spinner.jsx'
 import CSSTransitionGroup from 'react-addons-css-transition-group';
 import Button from 'react-md/lib/Buttons';
 import LinearProgress from 'react-md/lib/Progress/LinearProgress';
 import FileUpload from 'react-md/lib/FileInputs/FileUpload';
+
 import S3Upload from '../S3Upload/s3upload.js';
 const HOST = window.location.protocol.concat('//').concat(window.location.host);
 
-import {storeUploadedPhotos_dispatch, deleteUploadedPhotos_dispatch} from '../actions/listing';
+import spinner from '../HOC/Spinner.jsx'
 import UploadedFileCard from './UploadedFileCard.jsx';
+
+import {storeUploadedPhotos_dispatch, deleteUploadedPhotos_dispatch} from '../actions/listing';
 
 /*----------------------- ImgUpload Component ---------------------------*/
 
@@ -175,7 +177,6 @@ class ImgUpload extends Component {
   render() {
     const { files, photos, progress } = this.state;
     const cards = photos.length ? photos.map(photo => <UploadedFileCard key={photo.name} photo={photo} />) : null;
-    // Object.keys(files).map(key => <UploadedFileCard key={key} file={files[key]} />);
     let stats, submit;
     if (typeof progress === 'number') {
       stats = [

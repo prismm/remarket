@@ -26,7 +26,7 @@ const listingReducer = (state = initialState, action) => {
             break;
         case 'EDIT_LISTING':
             newState.listings = newState.listings.map(listing => (listing.id === action.listing.id ? action.listing : listing));
-            // newState.myListings = newState.myListings.map(listing => (listing.id === action.listing.id ? action.listing : listing));
+            // newState.myListings = newState.myListings.map(listing => (listing.id === action.listing.id ? action.listing : listing)); got typeerror, cannot do map on undefined, was messing up edit listing, currently not using this field in state so just commented out
             newState.currentListing = action.listing;
             break;
         case 'DELETE_LISTING':

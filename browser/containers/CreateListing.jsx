@@ -40,7 +40,6 @@ class CreateListing extends Component {
         this.handleSubcategoryChange = this.handleSubcategoryChange.bind(this);
         this.handleLocationChange = this.handleLocationChange.bind(this);
         this.handleNeighborhoodChange = this.handleNeighborhoodChange.bind(this);
-        // this.setError = this.setError.bind(this);
     }
 
     componentWillUnmount(){
@@ -73,17 +72,12 @@ class CreateListing extends Component {
         if (this.props.error) return;
         this.props.editListing(this.props.currentListing.id, this.state);
         if (this.props.error) return;
-        //async problem -- rerenders listing before it's officially updated //RESOLVED with browserHistory.push?
+        //async problem -- rerenders listing before it's officially updated?
         this.props.onPublishClick();
     }
 
-    // setError(error){
-    //     this.setState(error)
-    // }
-
     setExpirationDate(event){
         let newExpDate = new Date(event).setHours(23, 59);
-        console.log(new Date(newExpDate));
         this.setState({expirationDate: new Date(newExpDate)})
     }
 

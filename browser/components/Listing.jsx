@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
 import TimeAgo from './TimeAgo.jsx';
 
 /*------------------- ListingsLink component ----------------------*/

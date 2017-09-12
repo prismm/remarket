@@ -1,7 +1,8 @@
-import Button from 'react-md/lib/Buttons/Button';
 import React, { Component } from 'react';
-import DatePicker from 'react-md/lib/Pickers/DatePickerContainer';
 import PropTypes from 'prop-types';
+
+import DatePicker from 'react-md/lib/Pickers/DatePickerContainer';
+import Button from 'react-md/lib/Buttons/Button';
 
 /*----------------------- RenewListing Component ---------------------------*/
 //Component is a button which, when clicked, opens a date picker that sets a new expiration date for the listing

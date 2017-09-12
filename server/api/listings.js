@@ -9,23 +9,15 @@ const User = model.User;
 const listingNotFound = () => (new Error('Sorry, something went wrong ... We can\'t seem to find that listing!'))
 const mailer = require('../mailer')
 
-/*
-(req, res, next) => {
-    if (!req.user)throw new Error();
-    else next()
-}
-*/
-
 function isLoggedIn(req, res, next) {
-    console.log("PIPELINE!!!!!!!!!!!!!!");
     if (!req.user) {
+        console.log("FAILED IN isLoggedIn", req)
         res.status(403).send('Access denied. Contact a system administrator if you believe you\'re seeing this message in error.')
         throw new Error();
     } else {
         next()
     }
 }
-
 
 router.get('/', (req, res, next) => {
     Listing.findAll({ where: { status: 'active' }, include: [{ all: true }] })

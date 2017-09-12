@@ -12,12 +12,12 @@ const devStore = createStore(
 )
 
 const prodStore = createStore(
-    rootReducer,
-    applyMiddleware(thunkMiddleware)
+    rootReducer
+    // applyMiddleware(thunkMiddleware)
 )
 
 let appStore;
-console.log(process.env.NODE_ENV);
+
 if (process.env.NODE_ENV === 'production'){
     appStore = prodStore;
 } else {

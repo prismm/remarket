@@ -30,31 +30,10 @@ export const me_dispatch = () => dispatch => {
         .catch(console.error)
 }
 
-// export const googleAuth_dispatch = () => dispatch => {
-//     return axios.get('/auth/google')
-//         .then(res => {
-//             console.log("google", res);
-//             let user = res.data;
-//             if (user) user.networks = user.networks.filter(network => network.network_affiliations.confirmed);
-//             dispatch(getUser_action(user || defaultUser))
-//         })
-//         .catch(console.error)
-// }
-
-// export const facebookAuth_dispatch = () => dispatch => {
-//     return axios.get('/auth/facebook')
-//         .then(res => {
-//             let user = res.data;
-//             if (user) user.networks = user.networks.filter(network => network.network_affiliations.confirmed);
-//             dispatch(getUser_action(user || defaultUser))
-//         })
-//         .catch(console.error)
-// }
-
 export const forgotPassword_dispatch = email => dispatch => {
     return axios.post('/auth/forgotpassword', { email })
         .then(res => {
-            console.log('This should not occur', res.data) //should not occur because axios request should only return error status codes (401 or 307)
+            console.log('This should not occur in forgot passworddispatch', res.data) //should not occur because axios request should only return error status codes (401 or 307)
         })
         .catch(error => {
             dispatch(interactionSuccess_action('Password reset link sent'));
@@ -88,8 +67,7 @@ export const viewUser_dispatch = userId => dispatch => {
 
 export const contact_dispatch = (replyToEmail, message, subject) => dispatch => {
     return axios.post('/api/users/contact', { replyToEmail, message, subject })
-        .then(res => {
-            // dispatch(messageSent_action(res.data))
+        .then(() => {
             dispatch(interactionSuccess_action('Message sent'));
         })
         .catch(error =>
@@ -161,5 +139,5 @@ export const logout_dispatch = () => dispatch => {
             browserHistory.push('/login');
             dispatch(interactionSuccess_action('Logged out'));
         })
-        .catch(err => console.log(err));
+        .catch(console.error);
 }

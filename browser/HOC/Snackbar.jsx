@@ -35,7 +35,7 @@ class SnackbarHOC extends Component {
       let label = this.props.success + ' successfully.'
       console.log(label); //ok to leave in -- gives user update on action
       return (
-        <CSSTransitionGroup
+        <CSSTransitionGroup //not working
             transitionName="md-cross-fade"
             transitionEnterTimeout={300}
             transitionLeaveTimeout={150}

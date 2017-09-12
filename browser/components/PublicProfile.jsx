@@ -3,18 +3,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import Listing from './Listing.jsx';
-import spinner from '../HOC/Spinner.jsx';
-import {NetworkAvatar} from './Avatars.jsx';
-import MessageUser from './MessageUser.jsx';
-import {TimeLeft} from './TimeLeft.jsx';
-
 import Card from 'react-md/lib/Cards/Card';
 import DataTable from 'react-md/lib/DataTables/DataTable';
 import TableHeader from 'react-md/lib/DataTables/TableHeader';
 import TableBody from 'react-md/lib/DataTables/TableBody';
 import TableRow from 'react-md/lib/DataTables/TableRow';
 import TableColumn from 'react-md/lib/DataTables/TableColumn';
+
+import Listing from './Listing.jsx';
+import spinner from '../HOC/Spinner.jsx';
+import {NetworkAvatar} from './Avatars.jsx';
+import MessageUser from './MessageUser.jsx';
+import {TimeLeft} from './TimeLeft.jsx';
 
 import { clearUser_dispatch, messageSent_action } from '../actions/user';
 

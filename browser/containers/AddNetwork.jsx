@@ -7,6 +7,7 @@ import SelectField from 'react-md/lib/SelectFields';
 import TextField from 'react-md/lib/TextFields';
 import Dropdown from 'react-toolbox/lib/dropdown';
 import Button from 'react-md/lib/Buttons/Button';
+
 import {NetworkAvatar} from '../components/Avatars.jsx'
 
 import { addMyNetwork_dispatch } from '../actions/network'
@@ -52,7 +53,7 @@ class AddNetwork extends Component {
     }
 
     render(){
-        //still need to: default scope {confirmed: true} for all my networks queries! using front-end workaround right now
+        //still need to: default scope {confirmed: true} on backend for all my networks queries! using front-end workaround right now
         const networksArr = [];
         this.props.networks.map(network => {(
             networksArr.push({

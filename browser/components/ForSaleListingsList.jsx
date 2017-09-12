@@ -1,5 +1,7 @@
 import React from 'react';
+
 import ListingsContainer from '../containers/ListingsContainer.jsx';
+
 import {forSaleSubcategories} from '../subcategories.js'
 
 /*------------------- ForSaleListingsList component ----------------------*/

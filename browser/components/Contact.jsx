@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React from 'react';
 import { connect } from 'react-redux';
-// import { Link } from 'react-router';
+
 import Card from 'react-md/lib/Cards/Card';
 import Button from 'react-md/lib/Buttons/Button'; 
 import TextField from 'react-md/lib/TextFields';
@@ -13,7 +13,7 @@ import {contact_dispatch, interactionSuccess_action} from '../actions/user'
 function Contact (props) {
     let success = props.success;
 
-    const style= {
+    const style = {
         fontFamily: 'avenir',
         fontWeight: '500',
         color: '#FC0096'

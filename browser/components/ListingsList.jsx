@@ -3,11 +3,12 @@ import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
 import PropTypes from 'prop-types';
 
+import Dropdown from 'react-toolbox/lib/dropdown';
+
 import Listing from './Listing.jsx';
 import spinner from '../HOC/Spinner.jsx';
 import Loader from '../HOC/Loader.jsx'
 
-import Dropdown from 'react-toolbox/lib/dropdown';
 
 /*------------------- ListingsList component ----------------------*/
 

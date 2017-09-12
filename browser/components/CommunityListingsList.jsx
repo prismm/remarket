@@ -1,5 +1,7 @@
 import React from 'react';
+
 import ListingsContainer from '../containers/ListingsContainer.jsx';
+
 import {communitySubcategories} from '../subcategories'
 
 /*------------------- CommunityListingsList component ----------------------*/

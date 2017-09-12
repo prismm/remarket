@@ -2,10 +2,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { auth_dispatch, forgotPassword_dispatch, resendConfirmLink_dispatch, googleAuth_dispatch, facebookAuth_dispatch } from '../actions/user';
+
 import TextField from 'react-md/lib/TextFields';
 import Button from 'react-md/lib/Buttons/Button';
 import Loader from '../HOC/Loader.jsx';
+
+import { auth_dispatch, forgotPassword_dispatch, resendConfirmLink_dispatch } from '../actions/user';
 
 /*-------------------Auth Form component ----------------------*/
 class AuthForm extends Component {

@@ -1,3 +1,4 @@
+//FILE NOT IN USE -- SWITCHED TO HEROKU SCHEDULER (see other files in this directory)
 // const cron = require('node-cron');
 // const model = require('../db');
 // const Listing = model.Listing;

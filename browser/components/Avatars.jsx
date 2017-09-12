@@ -2,7 +2,6 @@ import React from 'react';
 import Avatar from 'react-md/lib/Avatars';
 import injectTooltip from 'react-md/lib/Tooltips';
 
-
 export const NetworkAvatar = injectTooltip(({ tooltip, network }) => (
         <div className="inline-rel-container network-avatar">
             <Avatar
@@ -14,7 +13,6 @@ export const NetworkAvatar = injectTooltip(({ tooltip, network }) => (
         </div>
     )
 );
-
 
 export const NYU = injectTooltip(({ tooltip }) => (
         <div className="inline-rel-container">

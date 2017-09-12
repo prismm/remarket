@@ -4,12 +4,14 @@ import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import Button from 'react-md/lib/Buttons/Button'
+
 import Breadcrumbs from './Breadcrumbs.jsx';
 import spinner from '../HOC/Spinner.jsx'
 import CreateListing from '../containers/CreateListing.jsx'
 import TimeAgo from './TimeAgo.jsx';
-import {ExpiresIn} from './TimeLeft.jsx';
-import {NetworkAvatar} from './Avatars.jsx';
+import { ExpiresIn } from './TimeLeft.jsx';
+import { NetworkAvatar } from './Avatars.jsx';
 import MessageUser from './MessageUser.jsx';
 import ListingImages from './ListingImages.jsx';
 import ImgUpload from './ImgUpload.jsx';
@@ -17,8 +19,6 @@ import Snackbar from '../HOC/Snackbar.jsx'
 
 import { clearCurrentListing_dispatch } from '../actions/listing';
 import { messageSent_action } from '../actions/user';
-
-import Button from 'react-md/lib/Buttons/Button'
 
 /*------------------- ListingDetail component ----------------------*/
 

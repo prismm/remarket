@@ -3,10 +3,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
+
+import Button from 'react-md/lib/Buttons/Button';
+
+import Footer from '../components/Footer.jsx'
+
 import { logout_dispatch } from '../actions/user';
 import { fetchSingleNetwork_dispatch, setCurrentNetwork_action } from '../actions/network';
-import Button from 'react-md/lib/Buttons/Button';
-import Footer from '../components/Footer.jsx'
 
 /*------------------- Main component ----------------------*/
 
@@ -82,7 +85,7 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   handleClick: () => dispatch(logout_dispatch()),
   selectNetwork: networkId => {
-    dispatch(setCurrentNetwork_action({id: networkId}));
+    dispatch(setCurrentNetwork_action({id: networkId})); //doing this on frontend to improve performance
     // dispatch(fetchSingleNetwork_dispatch(networkId))
   },
   clearNetwork: () => dispatch(setCurrentNetwork_action({}))

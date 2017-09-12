@@ -3,18 +3,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { UpdateNameButton, UpdateUsernameButton, UpdateBioButton, UpdateEmailButton, UpdatePasswordButton } from '../components/Buttons.jsx'
-
-import { editUser_dispatch } from '../actions/user';
-
-import Snackbar from '../HOC/Snackbar.jsx'
-
 import TextField from 'react-md/lib/TextFields'
 import DataTable from 'react-md/lib/DataTables/DataTable';
 import TableHeader from 'react-md/lib/DataTables/TableHeader';
 import TableBody from 'react-md/lib/DataTables/TableBody';
 import TableRow from 'react-md/lib/DataTables/TableRow';
 import TableColumn from 'react-md/lib/DataTables/TableColumn';
+
+import { UpdateNameButton, UpdateUsernameButton, UpdateBioButton, UpdateEmailButton, UpdatePasswordButton } from '../components/Buttons.jsx'
+import Snackbar from '../HOC/Snackbar.jsx'
+
+import { editUser_dispatch } from '../actions/user';
 
 /*----------------------- Profile Component ---------------------------*/
 class Profile extends Component {
@@ -190,12 +189,11 @@ const mapDispatchToProps = dispatch => {
         updateBio: (userId, newBio) => {
             dispatch(editUser_dispatch(userId, {bio: newBio}))
         },
-        //need to do email verification
+        //need to do email verification; have commented out update email button until this is addressed
         updateEmail: (userId, newEmail) => {
             dispatch(editUser_dispatch(userId, {email: newEmail}))
         },
         updatePassword: (userId, newPassword) => {
-            console.log(newPassword);
             dispatch(editUser_dispatch(userId, {password: newPassword}))
         }
     }
