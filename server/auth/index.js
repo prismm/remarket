@@ -75,7 +75,7 @@ const facebookStrategy = new FacebookStrategy(FacebookConfig, function(accessTok
     const facebookId = profile.id;
     const name = profile.displayName;
     const email = profile.emails[0].value;
-    // const facebookLink = 
+    const facebookLink = profile.profileUrl;
 
     User.findOne({ where: { facebookId: facebookId } })
         .then(user => {
@@ -84,12 +84,12 @@ const facebookStrategy = new FacebookStrategy(FacebookConfig, function(accessTok
                 User.findOne({ where: { email: email } }) //looks for a user with the same email address
                     .then(emailMatchUser => {
                         if (emailMatchUser) { //if it finds a user with that email address
-                            emailMatchUser.update({ facebookId: facebookId, facebookProfileLink: null }) //it updates that user to include his/her fcbk account
+                            emailMatchUser.update({ facebookId: facebookId, facebookProfileLink: facebookLink }) //it updates that user to include his/her fcbk account
                                 .then(addedFacebookUser => {
                                     return callback(null, addedFacebookUser)
                                 }) //then logs in that user
                         } else {
-                            return User.create({ name, email, facebookId, confirmed: true, facebookProfileLink: null }) //creates a new user
+                            return User.create({ name, email, facebookId, confirmed: true, facebookProfileLink: facebookLink }) //creates a new user
                                 .then(createdUser => {
                                     console.log("ABOUT TO SEND CREATED USER MAIL")
                                     mailer.transporter.sendMail(mailer.welcome(createdUser), (error, info) => {
