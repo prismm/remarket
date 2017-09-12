@@ -26,7 +26,7 @@ class ListingsList extends Component {
         this.timeout = setTimeout(() => {
             this.timeout = null;
             this.setState({waiting: false});
-          }, 400);
+          }, 650);
     }
 
     componentWillReceiveProps(nextProps){
@@ -52,6 +52,7 @@ class ListingsList extends Component {
         let {listings, category, currentNetwork, classNames} = this.props;
         // let listings = this.props.listings;
         const catUrl = category === 'for sale' ? 'for-sale' : category;
+        const catName = category === 'for sale' ? 'free & for sale' : category;
         const subcategories = this.props.subcategories ? this.props.subcategories : null;
         //filtering by network
         if (currentNetwork && currentNetwork.id) listings = listings.filter(listing => listing.networks.some(network => network.id === currentNetwork.id));
@@ -59,7 +60,7 @@ class ListingsList extends Component {
         if (this.state.subcategory) listings = listings.filter(listing => listing.subcategory === this.state.subcategory)
         return (
             <div className={classNames}>
-                <h2 className="category-header"><Link to={`/${catUrl}`}>{category}</Link></h2>
+                <h2 className="category-header"><Link to={`/${catUrl}`}>{catName}</Link></h2>
                 {subcategories ?
                     <Dropdown
                         auto

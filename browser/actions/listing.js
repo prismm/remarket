@@ -14,6 +14,9 @@ const deleteListing_action = listingId => ({ type: 'DELETE_LISTING', listingId }
 export const setLocation_action = location => ({ type: 'SET_LOCATION', location });
 export const createListingError_action = error => ({ type: 'SET_ERROR', error })
 
+//sets state.browse, not state.listing:
+export const interactionSuccess_action = interaction => ({ type: 'SUCCESS', interaction })
+
 /* ------------       DISPATCHERS     ------------------ */
 
 export const fetchAllListings_dispatch = () => dispatch => {
@@ -54,6 +57,7 @@ export const createListing_dispatch = listing => dispatch => {
     axios.post('/api/listings', listing)
         .then(res => {
             dispatch(createListing_action(res.data));
+            dispatch(interactionSuccess_action('Listing created'));
             browserHistory.push(`/listings/${res.data.id}`);
         })
         .catch(error =>
@@ -64,6 +68,7 @@ export const editListing_dispatch = (listingId, changes) => dispatch => {
     axios.put(`/api/listings/${listingId}`, changes)
         .then(res => {
             dispatch(editListing_action(res.data));
+            dispatch(interactionSuccess_action('Listing updated'));
         })
         .catch(error =>
             dispatch(createListingError_action({ error })))

@@ -13,6 +13,7 @@ import {NetworkAvatar} from './Avatars.jsx';
 import MessageUser from './MessageUser.jsx';
 import ListingImages from './ListingImages.jsx';
 import ImgUpload from './ImgUpload.jsx';
+import Snackbar from '../HOC/Snackbar.jsx'
 
 import { clearCurrentListing_dispatch } from '../actions/listing';
 import { messageSent_action } from '../actions/user';
@@ -60,6 +61,7 @@ class ListingDetail extends Component {
 
 
     render(){
+        let success = this.props.success;
         const error = this.props.currentListing.error || null;
         const isItMyListing = this.props.currentListing.authorId === this.props.user.id;
         const wasItEdited = this.props.currentListing.createdAt !== this.props.currentListing.updatedAt;
@@ -146,6 +148,7 @@ class ListingDetail extends Component {
                 <ImgUpload photos={this.props.currentListing.photos} onPublishPhotoClick={this.onPublishPhotoClick} />
                 )
             }
+            {success ? <Snackbar /> : null}
             </div>
         )
     }
@@ -158,11 +161,12 @@ ListingDetail.propTypes = {
 };
 
 /*------------------- ListingDetail Container ----------------------*/
-const mapStateToProps = ({user, listing, network}) => ({
+const mapStateToProps = ({user, listing, network, browse}) => ({
         currentListing: listing.currentListing,
         user: user,
         network: network,
-        error: listing.error
+        error: listing.error,
+        success: browse.success
     });
 
 const mapDispatchToProps = dispatch => {

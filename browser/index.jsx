@@ -10,9 +10,11 @@ import { me_dispatch, viewUser_dispatch, viewUserListings_dispatch, setDestinati
 import { fetchAllListings_dispatch, fetchSingleListing_dispatch, fetchListingsByUser_dispatch } from './actions/listing';
 import { fetchAllNetworks_dispatch } from './actions/network';
 
-import LoginOrSignup from './components/LoginOrSignup.jsx'
-import Success from './components/Success.jsx'
-import Main from './containers/Main.jsx'
+import LoginOrSignup from './components/LoginOrSignup.jsx';
+import Success from './components/Success.jsx';
+import Main from './containers/Main.jsx';
+import About from './components/About.jsx';
+import Contact from './components/Contact.jsx';
 import ListingsContainer from './containers/ListingsContainer.jsx';
 import ListingDetail from './components/ListingDetail.jsx'
 import CreateListing from './containers/CreateListing.jsx';
@@ -90,6 +92,8 @@ ReactDOM.render(
         <Route path="login" method="login" component={LoginOrSignup} />
         <Route path="signup" method="signup" component={LoginOrSignup} />
         <Route path="home" component={ListingsContainer} onEnter={loadEverything} />
+        <Route path="about" component={About} />
+        <Route path="contact" component={Contact} />
         <Route path="for-sale" component={ForSaleListingsList} />
           <Route path="for-sale/books" component={ForSaleListingsList} subcategory="books" />
           <Route path="for-sale/furniture" component={ForSaleListingsList} subcategory="furniture" />

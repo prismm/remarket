@@ -89,7 +89,7 @@ class AuthForm extends Component {
           </div>
           {this.props.name === 'login' ?
             <div className="forgot-pw-link">
-              <a href="" onClick={ this.forgotPassword }>Forgot your password?</a>
+              <a href="" onClick={ this.forgotPassword }>Reset your password</a>
             </div>
             : null}
             <Button raised primary label={ displayName } disabled={this.state.pwLenError} type="submit" className="local-login login-submit md-cell--12" />

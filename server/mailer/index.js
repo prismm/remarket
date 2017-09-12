@@ -61,15 +61,26 @@ const confirmNetwork = function(user, network, confirmNetworkUrl, verificationEm
 };
 
 const sendMessage = function(sender, receiver, message, subject) {
-        const senderId = sender.userId;
-        const senderUrl = domainUrl + 'user/' + sender.id;
+    const senderId = sender.userId;
+    const senderUrl = domainUrl + 'user/' + sender.id;
+    return {
+        from: remarket,
+        to: receiver.email,
+        subject: subject,
+        replyTo: sender.email,
+        text: senderId + ' (' + senderUrl + ') wrote: \n' + message + '\n Sent from remarket',
+        html: '<div><a href="' + senderUrl + '">' + senderId + '</a> wrote: \n' + message + '</div><p>\n Sent from remarket</p>'
+    }
+}
+
+const contact = function(replyToEmail, message, subject) {
         return {
             from: remarket,
-            to: receiver.email,
+            to: 'prismm@gmail.com',
             subject: subject,
-            replyTo: sender.email,
-            text: senderId + ' (' + senderUrl + ') wrote: \n' + message + '\n Sent from remarket',
-            html: '<div><a href="' + senderUrl + '">' + senderId + '</a> wrote: \n' + message + '</div><p>\n Sent from remarket</p>'
+            replyTo: replyToEmail,
+            text: replyToEmail + ' wrote: \n' + message + '\n Sent from remarket',
+            html: '<div>' + replyToEmail + ' wrote: \n' + message + '<p>\n Sent from remarket</p><div>',
         }
     }
     //havent incorporated this one yet, since the delete route isn't written
@@ -191,5 +202,6 @@ module.exports = {
     listingAboutToArchive,
     sendMessage,
     passwordReset,
-    welcome
+    welcome,
+    contact
 }

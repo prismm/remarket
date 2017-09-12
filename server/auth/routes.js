@@ -61,7 +61,7 @@ router.post('/forgotpassword', (req, res, next) => {
                             if (error) console.error(error);
                             if (!error) console.log('Message %s sent: %s', info.messageId, info.response);
                         }); //should wait for confirm email url to be visited before req.login and user creation
-                        return res.status(307).send('It happens to all of us. \n Check your email for a reset password link.')
+                        return res.status(307).send('Check your email for a reset password link.') //('It happens to all of us. \n Check your email for a reset password link.')
                     })
             }
 

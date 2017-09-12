@@ -47,7 +47,7 @@ class Main extends Component {
             <nav className="site-nav">
               <a className="site-nav-link" href="#" onClick={handleClick}>Logout</a>
               <Link className="site-nav-link" to="/account">My Account</Link>
-              <Link className="site-nav-link" to="/listings/post">New Post</Link>
+              <Link className="site-nav-link link-new-post" to="/listings/post">New Post</Link>
             </nav> :
             <nav className="site-nav">
               <Link className="site-nav-link" method="login" to="/login">Login</Link>

@@ -86,6 +86,16 @@ export const viewUser_dispatch = userId => dispatch => {
             dispatch(viewUser_action({ error })));
 }
 
+export const contact_dispatch = (replyToEmail, message, subject) => dispatch => {
+    return axios.post('/api/users/contact', { replyToEmail, message, subject })
+        .then(res => {
+            // dispatch(messageSent_action(res.data))
+            dispatch(interactionSuccess_action('Message sent'));
+        })
+        .catch(error =>
+            console.error(error))
+}
+
 export const messageUser_dispatch = (sender, receiver, message, subject, listingId) => dispatch => {
     return axios.post('/api/users/msg', { sender, receiver, message, subject, listingId })
         .then(res => {

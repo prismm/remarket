@@ -1,5 +1,6 @@
 export const forSaleSubcategories = [
     { label: 'all', value: null },
+    { label: 'free', value: 'free' },
     { label: 'books', value: 'books' },
     { label: 'furniture', value: 'furniture' },
     { label: 'electronics/appliances', value: 'electronics' },

@@ -72,7 +72,7 @@ const User = db.define('user', {
                 encryptedPassword = User.encryptPassword(candidatePassword, this.getDataValue('salt'));
                 return encryptedPassword === this.password;
             } else {
-                return new Error('You don\'t have a password on file. Try logging in with google or facebook.')
+                return new Error('You don\'t have a password on file. Reset your password or try logging in with google or facebook.')
             }
         },
         myListings: function() {
