@@ -27,9 +27,9 @@ export default function About () {
                     through the user's network email address domain (nyu.edu or columbia.edu). To view posts belonging to either network,
                     toggle the 'NYU' and 'Columbia' buttons in the header. <span className="nyu-selected">NYU posts are purple</span> and <span className="columbia-selected">Columbia posts are blue</span>.
                     All posts are flagged with their author's affiliations, and you can find a user's affiliations by clicking on their name and viewing their profile.  </div>
-                <div className="about-note" style={{'font-family': 'avenir'}} >Remarket is free to use and your information privacy/security is important to us.
+                <div className="about-note" style={{'font-family': 'avenir'}} >Remarket is free to use and your information privacy and security are important to us.
                     Remarket is not sponsored by, endorsed by, or affiliated with NYU or Columbia University in any way
-                    (except that <a href="https://www.reuse.market/user/13">its creator</a> is an alumna of both 👻).</div>
+                    (except that <a href="https://www.reuse.market/user/13">its creator</a> is an alumna of both 👻 ).</div>
                 </div>
             </div>
         </div>
