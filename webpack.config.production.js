@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const HtmlMinifierPlugin = require('html-minifier-webpack-plugin');
 require('babel-polyfill');
 
 module.exports = {
@@ -41,6 +42,14 @@ module.exports = {
                     },
                     'postcss-loader'
                 ]
+            },
+            {
+                test: /\.html$/, //for html minification; if you take out minifier you must also take this test out
+                loaders: [
+                    'file-loader?name=[name].html',
+                    'extract-loader',
+                    'html-loader'
+                ]
             }
         ]
     },
@@ -51,6 +60,7 @@ module.exports = {
             }
         }),
         new webpack.optimize.UglifyJsPlugin(),
-        new webpack.optimize.AggressiveMergingPlugin()
+        new webpack.optimize.AggressiveMergingPlugin(),
+        new HtmlMinifierPlugin()
     ],
 };

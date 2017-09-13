@@ -113,12 +113,14 @@ router.post('/logout', (req, res, next) => {
 
 // fetches the logged in user
 router.get('/me', (req, res, next) => {
-    analytics.identify({
-        userId: req.user.id,
-        traits: {
-            email: req.user.email
-        }
-    });
+    if (req.user) {
+        analytics.identify({
+            userId: req.user.id,
+            traits: {
+                email: req.user.email
+            }
+        });
+    }
     return res.json(req.user);
 });
 

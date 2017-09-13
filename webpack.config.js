@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const HtmlMinifierPlugin = require('html-minifier-webpack-plugin');
 
 module.exports = {
     entry: './browser/index.jsx', // assumes your entry point is the index.js in the root of your project folder
@@ -40,11 +41,20 @@ module.exports = {
                     },
                     'postcss-loader'
                 ]
+            },
+            {
+                test: /\.html$/, //for html minification; if you take out minifier you must also take this test out
+                loaders: [
+                    'file-loader?name=[name].html',
+                    'extract-loader',
+                    'html-loader'
+                ]
             }
         ]
-    }
-    // plugins: [
-    //     new webpack.optimize.UglifyJsPlugin(),
-    //     new webpack.optimize.AggressiveMergingPlugin()
-    // ]
+    },
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin(),
+        new webpack.optimize.AggressiveMergingPlugin(),
+        new HtmlMinifierPlugin()
+    ]
 };
