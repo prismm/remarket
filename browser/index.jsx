@@ -29,6 +29,8 @@ import HousingListingsList from './components/HousingListingsList.jsx';
 import CommunityListingsList from './components/CommunityListingsList.jsx'
 import PublicProfile from './components/PublicProfile.jsx'
 
+const recordPageView = (pageName, id) => window.analytics.page(pageName, id);
+
 const whoAmI = store.dispatch(me_dispatch());
 
 const requireLogin = (nextRouterState, replace, next) => {
@@ -39,6 +41,7 @@ const requireLogin = (nextRouterState, replace, next) => {
         store.dispatch(setDestination_action(nextRouterState.location.pathname)); //captures destination for post-login route
         replace('/login');
       }
+      recordPageView('Create Listing', user.id)
       next();
     })
     .catch(console.error)
@@ -46,6 +49,7 @@ const requireLogin = (nextRouterState, replace, next) => {
 
 const getCurrentListing = (nextRouterState) => {
   store.dispatch(fetchSingleListing_dispatch(nextRouterState.params.listingId));
+  recordPageView();
 }
 
 const getMyListings = (nextRouterState, replace, next) => {
@@ -57,6 +61,7 @@ const getMyListings = (nextRouterState, replace, next) => {
         replace('/login')
       }
       store.dispatch(fetchListingsByUser_dispatch(user.id));
+      recordPageView('Account', user.id);
       next();
     })
     .catch(console.error)
@@ -72,6 +77,7 @@ const viewUser = (nextRouterState, replace, next) => {
       }
       store.dispatch(viewUser_dispatch(nextRouterState.params.userId));
       store.dispatch(viewUserListings_dispatch(nextRouterState.params.userId));
+      recordPageView();
       next();
     })
     .catch(console.error)
@@ -79,7 +85,8 @@ const viewUser = (nextRouterState, replace, next) => {
 
 const loadEverything = () => {
   store.dispatch(fetchAllListings_dispatch());
-  store.dispatch(fetchAllNetworks_dispatch())
+  store.dispatch(fetchAllNetworks_dispatch());
+  recordPageView();
 }
 
 ReactDOM.render(
@@ -87,35 +94,36 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Route path="/" component={Main} onEnter={loadEverything}>
         <IndexRoute component={ListingsContainer} />
-        <Route path="account-created" redirectTo="/login" redirectToName="login" component={Success} />
-        <Route path="network-added" redirectTo="/account/managenetworks" redirectToName="your account" component={Success} />
-        <Route path="login" method="login" component={LoginOrSignup} />
-        <Route path="signup" method="signup" component={LoginOrSignup} />
+        <Route path="account-created" redirectTo="/login" redirectToName="login" component={Success} onEnter={recordPageView} />
+        <Route path="network-added" redirectTo="/account/managenetworks" redirectToName="your account" component={Success} onEnter={recordPageView} />
+        <Route path="login" method="login" component={LoginOrSignup} onEnter={recordPageView} />
+        <Route path="signup" method="signup" component={LoginOrSignup} onEnter={recordPageView} />
         <Route path="home" component={ListingsContainer} onEnter={loadEverything} />
-        <Route path="about" component={About} />
-        <Route path="contact" component={Contact} />
-        <Route path="for-sale" component={ForSaleListingsList} />
-          <Route path="for-sale/books" component={ForSaleListingsList} subcategory="books" />
-          <Route path="for-sale/furniture" component={ForSaleListingsList} subcategory="furniture" />
-          <Route path="for-sale/electronics" component={ForSaleListingsList} subcategory="electronics" />
-          <Route path="for-sale/other" component={ForSaleListingsList} subcategory="other" />
-        <Route path="housing" component={HousingListingsList} />
-            <Route path="housing/seeking" component={HousingListingsList} subcategory="seeking" />
-            <Route path="housing/available" component={HousingListingsList} subcategory="available" />
-            <Route path="housing/other" component={HousingListingsList} subcategory="other" />
-        <Route path="community" component={CommunityListingsList} />
-            <Route path="community/jobs" component={CommunityListingsList} subcategory="books" />
-            <Route path="community/events" component={CommunityListingsList} subcategory="furniture" />
-            <Route path="community/other" component={CommunityListingsList} subcategory="electronics" />
+        <Route path="about" component={About} onEnter={recordPageView} />
+        <Route path="contact" component={Contact} onEnter={recordPageView} />
+        <Route path="for-sale" component={ForSaleListingsList} onEnter={recordPageView} />
+          <Route path="for-sale/books" component={ForSaleListingsList} subcategory="books" onEnter={recordPageView} />
+          <Route path="for-sale/furniture" component={ForSaleListingsList} subcategory="furniture" onEnter={recordPageView} />
+          <Route path="for-sale/electronics" component={ForSaleListingsList} subcategory="electronics" onEnter={recordPageView} />
+          <Route path="for-sale/free" component={ForSaleListingsList} subcategory="free" onEnter={recordPageView} />
+          <Route path="for-sale/other" component={ForSaleListingsList} subcategory="other" onEnter={recordPageView} />
+        <Route path="housing" component={HousingListingsList} onEnter={recordPageView}  />
+            <Route path="housing/seeking" component={HousingListingsList} subcategory="seeking" onEnter={recordPageView}  />
+            <Route path="housing/available" component={HousingListingsList} subcategory="available" onEnter={recordPageView}  />
+            <Route path="housing/other" component={HousingListingsList} subcategory="other" onEnter={recordPageView} />
+        <Route path="community" component={CommunityListingsList} onEnter={recordPageView} />
+            <Route path="community/jobs" component={CommunityListingsList} subcategory="jobs" onEnter={recordPageView} />
+            <Route path="community/events" component={CommunityListingsList} subcategory="events" onEnter={recordPageView} />
+            <Route path="community/other" component={CommunityListingsList} subcategory="other" onEnter={recordPageView} />
         <Route path="user/:userId" component={PublicProfile} onEnter={viewUser} />
         <Route path="listings/post" component={CreateListing} onEnter={requireLogin} />
         <Route path="listings/:listingId" component={ListingDetail} onEnter={getCurrentListing} />
         <Route path="account" component={AccountContainer} onEnter={getMyListings} >
           <IndexRoute component={Profile} />
-          <Route path="/account/managenetworks" component={AddNetwork} />
-          <Route path="/account/managelistings" component={MyListings} />
-          <Route path="/account/manageoffers" component={MyOffers} />
-          <Route path="/account/savedlistings" component={MySavedListings} />
+          <Route path="/account/managenetworks" component={AddNetwork} onEnter={recordPageView} />
+          <Route path="/account/managelistings" component={MyListings} onEnter={recordPageView} />
+          <Route path="/account/manageoffers" component={MyOffers} onEnter={recordPageView} />
+          <Route path="/account/savedlistings" component={MySavedListings} onEnter={recordPageView} />
         </Route>
       </Route>
       <Route path="listings" component={ListingsContainer} />

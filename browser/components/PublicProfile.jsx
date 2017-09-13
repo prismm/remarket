@@ -52,7 +52,7 @@ class PublicProfile extends Component {
                 :
                 null
                 }
-                <p>{thisUser.bio}</p>
+                <div className="user-bio">{thisUser.bio}</div>
                 <div className="md-cell--9">
                 <MessageUser label={label} />
                 </div>

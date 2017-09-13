@@ -27,7 +27,7 @@ class ListingsList extends Component {
         this.timeout = setTimeout(() => {
             this.timeout = null;
             this.setState({waiting: false});
-          }, 650);
+          }, 750);
     }
 
     componentWillReceiveProps(nextProps){
