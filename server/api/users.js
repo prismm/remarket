@@ -14,6 +14,8 @@ const affiliations = model.network_affiliations;
 const mailer = require('../mailer');
 const crypto = require('crypto');
 const domainUrl = process.env.GOOGLE_CLIENT_ID ? 'https://www.reuse.market/' : 'http://localhost:1337/';
+var Analytics = require('analytics-node');
+var analytics = new Analytics('NxBhoGdVdYkBQtlIQdvKg2ZRwDNxoaYo');
 
 function isLoggedIn(req, res, next) {
     if (!req.user) {
@@ -68,6 +70,13 @@ router.post('/:userId/networks/:networkId', isLoggedIn, isRightUserByUserId, (re
             // user.addNetwork(network, { through: { networkEmail: 'dummy@email.com', confirmed: false } });
             affiliations.create({ userId: user.id, networkId: network.id, networkEmail: req.body.email, confirmed: false })
             let authToken = crypto.randomBytes(16).toString('hex');
+            analytics.track({
+                userId: user.userId,
+                event: 'Added network (unconfirmed)',
+                properties: {
+                    networkId: network.id
+                }
+            });
             return Token.create({ token: authToken, userId: user.id, type: 'confirm-network' })
                 .then(newToken => {
                     let confirmUrl = domainUrl + 'auth/networkverify?token=' + newToken.token + '&networkId=' + network.id;
@@ -110,6 +119,14 @@ router.post('/msg', isLoggedIn, (req, res, next) => {
 
     Promise.all([sender, receiver, message])
         .then(([fromUser, toUser, msg]) => {
+            analytics.track({
+                userId: fromUser.userId,
+                event: 'Sent message',
+                properties: {
+                    toUser: toUser.id,
+                    listing: req.body.listingId
+                }
+            });
             mailer.transporter.sendMail(mailer.sendMessage(fromUser, toUser, req.body.message, req.body.subject), (error, info) => {
                 if (error) {
                     console.error(error);
@@ -148,6 +165,10 @@ router.put('/:id', isLoggedIn, isRightUserById, (req, res, next) => {
             if (!result[0]) {
                 next();
             } else {
+                analytics.track({
+                    userId: req.params.id,
+                    event: 'Updated user info'
+                });
                 res.json(result[1][0]) //updated user obj
             }
         })
@@ -167,6 +188,10 @@ router.put('/pw/:id', isLoggedIn, isRightUserById, (req, res, next) => {
             if (!result[0]) {
                 next();
             } else {
+                analytics.track({
+                    userId: req.params.id,
+                    event: 'Updated user info'
+                });
                 let user = result[1][0];
                 mailer.transporter.sendMail(mailer.passwordReset(user), (error, info) => {
                     if (error) {

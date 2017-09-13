@@ -12,6 +12,8 @@ const affiliations = model.network_affiliations;
 const mailer = require('../mailer')
 const crypto = require('crypto');
 const domainUrl = process.env.GOOGLE_CLIENT_ID ? 'https://www.reuse.market/' : 'http://localhost:1337/';
+var Analytics = require('analytics-node');
+var analytics = new Analytics('NxBhoGdVdYkBQtlIQdvKg2ZRwDNxoaYo');
 
 //filtering networks {confirmed: true} on front end
 router.post('/login', (req, res, next) => {
@@ -31,6 +33,16 @@ router.post('/login', (req, res, next) => {
             } else if (user.correctPassword(req.body.password).message) {
                 return res.status(401).send(user.correctPassword(req.body.password).message) //prints error message
             } else { // this will attach the user to our passport, which will save the user in the session store -- req.login() invokes the serialize passport function, it's attached to the req obj
+                analytics.identify({
+                    userId: user.id,
+                    traits: {
+                        email: user.email
+                    }
+                });
+                analytics.track({
+                    userId: user.id,
+                    event: 'Logged in'
+                })
                 return req.login(user, err => {
                     if (err) next(err);
                     else return res.json(user.sanitize()).status(200);
@@ -101,6 +113,12 @@ router.post('/logout', (req, res, next) => {
 
 // fetches the logged in user
 router.get('/me', (req, res, next) => {
+    analytics.identify({
+        userId: req.user.id,
+        traits: {
+            email: req.user.email
+        }
+    });
     return res.json(req.user);
 });
 
@@ -114,6 +132,17 @@ router.post('/signup', (req, res, next) => {
             } else {
                 User.create(req.body)
                     .then(newUser => {
+                        analytics.identify({
+                            userId: newUser.id,
+                            traits: {
+                                email: newUser.email,
+                                confirmed: newUser.confirmed
+                            }
+                        });
+                        analytics.track({
+                            userId: newUser.id,
+                            event: 'Signed up'
+                        })
                         let authToken = crypto.randomBytes(16).toString('hex');
                         return Token.create({ token: authToken, userId: newUser.id, type: 'confirm-account' })
                             .then(newToken => {
@@ -161,6 +190,17 @@ router.get('/verify', (req, res, next) => {
                         if (!confirmedUser) {
                             next();
                         } else {
+                            analytics.identify({
+                                userId: confirmedUser.id,
+                                traits: {
+                                    email: confirmedUser.email,
+                                    confirmed: confirmedUser.confirmed
+                                }
+                            });
+                            analytics.track({
+                                userId: confirmedUser.id,
+                                event: 'Confirmed email'
+                            });
                             if (confirmedUser.email.slice(-12).toLowerCase() === 'columbia.edu') {
                                 affiliations.create({ userId: confirmedUser.id, networkId: 1, networkEmail: confirmedUser.email, confirmed: true })
                             } else if (confirmedUser.email.slice(-7).toLowerCase() === 'nyu.edu') {
@@ -193,6 +233,10 @@ router.get('/forgotpassword', (req, res, next) => {
                             res.status('401').send('Your account is not yet confirmed -- check your email or click below to resend the confirmation email.') //FYI -- if you change text of this error message, edit corresponding text in route above and in Auth component
                         } else {
                             token.update({ expired: true });
+                            analytics.track({
+                                userId: user.id,
+                                event: 'Reset password'
+                            });
                             mailer.transporter.sendMail(mailer.passwordReset(user), (error, info) => {
                                 if (error) {
                                     console.error(user, error);
@@ -230,6 +274,13 @@ router.get('/networkverify', (req, res, next) => {
                             next();
                         } else {
                             token.update({ expired: true });
+                            analytics.track({
+                                userId: affiliation.userId,
+                                event: 'Added network confirmed',
+                                properties: {
+                                    networkId: affiliation.networkId
+                                }
+                            });
                             return affiliation.update({ confirmed: true })
                         }
                     })

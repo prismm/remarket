@@ -6,7 +6,9 @@ const User = models.User;
 const secrets = process.env.GOOGLE_CLIENT_ID ? null : require('../../google_api.js');
 const AWS = require('aws-sdk');
 const config = process.env.AWS_ACCESS_KEY_ID ? null : require('../../aws-config.json')
-const mailer = require('../mailer')
+const mailer = require('../mailer');
+var Analytics = require('analytics-node');
+var analytics = new Analytics('NxBhoGdVdYkBQtlIQdvKg2ZRwDNxoaYo');
 
 /*--------------------------------------------AWS--------------------------------------------*/
 AWS.config.credentials = config;
@@ -37,11 +39,33 @@ const googleStrategy = new GoogleStrategy(googleConfig, function(token, refreshT
                         if (emailMatchUser) { //if it finds a user with that email address
                             emailMatchUser.update({ googleId: googleId }) //it updates that user to include his/her fcbk account
                                 .then(addedGoogleUser => {
+                                    analytics.identify({
+                                        userId: addedGoogleUser.id,
+                                        traits: {
+                                            email: addedGoogleUser.email,
+                                            confirmed: addedGoogleUser.confirmed
+                                        }
+                                    });
+                                    analytics.track({
+                                        userId: addedGoogleUser.id,
+                                        event: 'Logged in with Google'
+                                    });
                                     return callback(null, addedGoogleUser)
                                 }) //then logs in that user
                         } else {
                             return User.create({ name, email, googleId, confirmed: true }) //creates a new user
                                 .then(createdUser => {
+                                    analytics.identify({
+                                        userId: createdUser.id,
+                                        traits: {
+                                            email: createdUser.email,
+                                            confirmed: createdUser.confirmed
+                                        }
+                                    });
+                                    analytics.track({
+                                        userId: createdUser.id,
+                                        event: 'Signed up with Google'
+                                    })
                                     mailer.transporter.sendMail(mailer.welcome(createdUser), (error, info) => {
                                         if (error) console.error(error);
                                         if (!error) console.log('Message %s sent: %s', info.messageId, info.response);
@@ -84,11 +108,33 @@ const facebookStrategy = new FacebookStrategy(FacebookConfig, function(accessTok
                         if (emailMatchUser) { //if it finds a user with that email address
                             emailMatchUser.update({ facebookId: facebookId, facebookProfileLink: facebookLink }) //it updates that user to include his/her fcbk account
                                 .then(addedFacebookUser => {
+                                    analytics.identify({
+                                        userId: addedFacebookUser.id,
+                                        traits: {
+                                            email: addedFacebookUser.email,
+                                            confirmed: addedFacebookUser.confirmed
+                                        }
+                                    });
+                                    analytics.track({
+                                        userId: addedFacebookUser.id,
+                                        event: 'Logged in with Facebook'
+                                    })
                                     return callback(null, addedFacebookUser)
                                 }) //then logs in that user
                         } else {
                             return User.create({ name, email, facebookId, confirmed: true, facebookProfileLink: facebookLink }) //creates a new user
                                 .then(createdUser => {
+                                    analytics.identify({
+                                        userId: createdUser.id,
+                                        traits: {
+                                            email: createdUser.email,
+                                            confirmed: createdUser.confirmed
+                                        }
+                                    });
+                                    analytics.track({
+                                        userId: createdUser.id,
+                                        event: 'Signed up with Facebook'
+                                    })
                                     mailer.transporter.sendMail(mailer.welcome(createdUser), (error, info) => {
                                         if (error) console.error(error);
                                         if (!error) console.log('Message %s sent: %s', info.messageId, info.response);

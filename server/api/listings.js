@@ -8,6 +8,8 @@ const Photo = model.Photo;
 const User = model.User;
 const listingNotFound = () => (new Error('Sorry, something went wrong ... We can\'t seem to find that listing!'))
 const mailer = require('../mailer')
+var Analytics = require('analytics-node');
+var analytics = new Analytics('NxBhoGdVdYkBQtlIQdvKg2ZRwDNxoaYo');
 
 function isLoggedIn(req, res, next) {
     if (!req.user) {
@@ -51,6 +53,13 @@ router.post('/', isLoggedIn, (req, res, next) => {
     Listing.create(req.body)
         .then(newListing => Promise.all([User.findById(newListing.authorId), newListing]))
         .then(([user, newListing]) => {
+            analytics.track({
+                userId: user.id,
+                event: 'Created listing',
+                properties: {
+                    listing: newListing.id
+                }
+            });
             mailer.transporter.sendMail(mailer.newListing(user, newListing), (error, info) => {
                 if (error) console.error(error);
                 if (!error) console.log('Message %s sent: %s', info.messageId, info.response);
@@ -75,6 +84,13 @@ router.put('/:id', isLoggedIn, (req, res, next) => {
                 next(listingNotFound);
             } else {
                 let updatedListing = result[1][0];
+                analytics.track({
+                    userId: updatedListing.authorId,
+                    event: 'Updated listing',
+                    properties: {
+                        listing: updatedListing.id
+                    }
+                });
                 res.json(updatedListing) //updated listing
                 return updatedListing;
             }
@@ -82,6 +98,14 @@ router.put('/:id', isLoggedIn, (req, res, next) => {
         .then(updatedListing => Promise.all([updatedListing, User.findById(updatedListing.authorId)]))
         .then(([updatedListing, author]) => {
             if (req.body.status) { //checks to see if status was updated
+                analytics.track({
+                    userId: author.id,
+                    event: 'Updated listing status',
+                    properties: {
+                        listing: updatedListing.id,
+                        status: req.body.status
+                    }
+                });
                 mailer.transporter.sendMail(mailer.listingStatusChange(author, updatedListing, req.body.status), (error, info) => {
                     if (error) console.error(error);
                     if (!error) console.log('Message %s sent: %s', info.messageId, info.response);
