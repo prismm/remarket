@@ -1,3 +1,5 @@
+const webpack = require('webpack');
+
 module.exports = {
     entry: './browser/index.jsx', // assumes your entry point is the index.js in the root of your project folder
     output: {
@@ -41,4 +43,8 @@ module.exports = {
             }
         ]
     }
+    // plugins: [
+    //     new webpack.optimize.UglifyJsPlugin(),
+    //     new webpack.optimize.AggressiveMergingPlugin()
+    // ]
 };
