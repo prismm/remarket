@@ -17,9 +17,11 @@ class Main extends Component {
   constructor(props){
     super(props);
     this.state = {
+      toggle: false,
       selectedNetwork: props.currentNetwork && props.currentNetwork.id
     };
     this.setNetwork = this.setNetwork.bind(this);
+    this.clickLogo = this.clickLogo.bind(this);
   }
 
   setNetwork(networkId){
@@ -30,6 +32,14 @@ class Main extends Component {
       this.setState({selectedNetwork: 0});
       this.props.clearNetwork();
     }
+  }
+
+  clickLogo(){
+    this.props.clearNetwork();
+    if (this.toggle){
+    //do something
+    }
+    browserHistory.push('/');
   }
 
   render(){

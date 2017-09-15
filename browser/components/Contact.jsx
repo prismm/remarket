@@ -23,7 +23,7 @@ function Contact (props) {
         <div className="md-grid">
             <div className="md-cell--5 about-body">
                 <h2 style={style} classNames="category-header about-header">contact</h2>
-                <div className="contact-p">I would love to hear your thoughts & comments.</div>
+                <div className="contact-p">Tell me what we're doing wrong! (I would love to hear any thoughts & comments.)</div>
                 <Card className="md-card md-background--card md-cell--12 message-card md-cross-fade">
                 <form onSubmit={props.handleSubmit}>
                     <div>

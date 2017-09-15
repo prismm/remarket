@@ -20,6 +20,14 @@ module.exports = {
                 }
             },
             {
+                test: /\.html$/, //for html minification; if you take out minifier you must also take this test out
+                loaders: [
+                    'file-loader?name=[name].html',
+                    'extract-loader',
+                    'html-loader'
+                ]
+            },
+            {
                 test: /\.scss?$/,
                 use: [
                     'style-loader',
@@ -41,14 +49,6 @@ module.exports = {
                         }
                     },
                     'postcss-loader'
-                ]
-            },
-            {
-                test: /\.html$/, //for html minification; if you take out minifier you must also take this test out
-                loaders: [
-                    'file-loader?name=[name].html',
-                    'extract-loader',
-                    'html-loader'
                 ]
             }
         ]
