@@ -28,6 +28,7 @@
     "babel-register": "^6.24.1",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
+    "compression-webpack-plugin": "^1.0.0",
     "connect-session-sequelize": "^4.1.0",
     "crypto": "0.0.3",
     "css-loader": "^0.28.4",

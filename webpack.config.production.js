@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const HtmlMinifierPlugin = require('html-minifier-webpack-plugin');
 require('babel-polyfill');
+var CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = {
     entry: ['babel-polyfill', './browser/index.jsx'], // assumes your entry point is the index.js in the root of your project folder
@@ -54,6 +55,7 @@ module.exports = {
         ]
     },
     plugins: [
+        new CompressionPlugin(),
         new webpack.DefinePlugin({
             'process.env': {
                 'NODE_ENV': JSON.stringify('production')
@@ -62,5 +64,5 @@ module.exports = {
         new webpack.optimize.UglifyJsPlugin(),
         new webpack.optimize.AggressiveMergingPlugin(),
         new HtmlMinifierPlugin()
-    ],
+    ]
 };
