@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const HtmlMinifierPlugin = require('html-minifier-webpack-plugin');
-// var CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = {
     entry: './browser/index.jsx', // assumes your entry point is the index.js in the root of your project folder
@@ -54,7 +53,6 @@ module.exports = {
         ]
     },
     plugins: [
-        // new CompressionPlugin(),
         new webpack.optimize.UglifyJsPlugin(),
         new webpack.optimize.AggressiveMergingPlugin(),
         new HtmlMinifierPlugin()

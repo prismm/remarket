@@ -43,9 +43,6 @@ app.use('/', require('./auth'));
 //serves static files from public folder
 app.use(express.static(path.join(__dirname, '../public')));
 
-//serves compressed bundle
-// app.use(expressStaticGzip(path.join(__dirname, '../public')));
-
 //matches all requests to api
 app.use('/api', require('./api'));
 
