@@ -1,5 +1,7 @@
 const express = require('express');
 const app = express();
+// var expressStaticGzip = require('express-static-gzip');
+const compression = require('compression');
 const path = require('path');
 const bodyParser = require('body-parser');
 const models = require('./db');
@@ -13,6 +15,9 @@ app.use(helmet());
 //loggingware
 //const morgan = require('morgan');
 //app.use(morgan('dev'));
+
+//compression -- gzip
+app.use(compression());
 
 //body-parser middleware set-up for reading req.body
 app.use(bodyParser.json());
@@ -37,6 +42,9 @@ app.use('/', require('./auth'));
 
 //serves static files from public folder
 app.use(express.static(path.join(__dirname, '../public')));
+
+//serves compressed bundle
+// app.use(expressStaticGzip(path.join(__dirname, '../public')));
 
 //matches all requests to api
 app.use('/api', require('./api'));
