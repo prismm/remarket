@@ -2,7 +2,7 @@ const app = require('./app');
 const db = require('./db').db;
 
 // adjust port here
-const PORT = 3000;
+const PORT = 1337;
 
 db.sync().then(() => {
         app.listen(process.env.PORT || PORT, () => {
