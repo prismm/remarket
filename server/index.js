@@ -1,9 +1,12 @@
 const app = require('./app');
 const db = require('./db').db;
 
+// adjust port here
+const PORT = 1337;
+
 db.sync().then(() => {
-        app.listen(process.env.PORT || 1337, () => {
-            console.log('Server is listening on port 1337');
+        app.listen(process.env.PORT || PORT, () => {
+            console.log(`Server is listening on port ${PORT}`);
         });
     })
     .catch(console.error.bind(this));

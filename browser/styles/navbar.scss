@@ -1,0 +1,15 @@
+// --- All NavBar Related Styles ---
+
+// --- Logo Spinner ---
+.rotate-logo {
+  -webkit-animation: rotation 0.5s 1 linear;
+}
+
+@-webkit-keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(120deg);
+  }
+}
