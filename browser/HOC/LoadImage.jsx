@@ -12,7 +12,7 @@ class AutoRotateImage extends Component {
           if(img.type === "error") {
             console.log("Error loading image " + url);
           } else {
-            this.refs.container.appendChild(img);
+            if (this.refs && this.refs.container){this.refs.container.appendChild(img)};
           }
         },
         {
