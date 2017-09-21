@@ -36,9 +36,18 @@ class Main extends Component {
   }
 
   clickLogo(){
-    //this.props.clearNetwork();
     this.setState({ rotateLogo: true })
+    this.timeout = setTimeout(() => {
+      this.timeout = null;
+      this.setState({ rotateLogo: false });
+    }, 700);
   }
+
+  componentWillUnmount(){
+    if (this.timeout) {
+        clearTimeout(this.timeout);
+      }
+}
 
   render(){
     const { children, handleClick, loggedIn } = this.props;
@@ -56,15 +65,16 @@ class Main extends Component {
     return (
       <div>
         <Link to="/">
-          <img className={`remarket-logo ${rotateLogo && 'rotate-logo'}`} 
-            src="/imgs/remarket-logo.png" 
-            alt="" height="40" width="40" 
-            onClick={() => this.clickLogo()}  
+          <img
+            className={`remarket-logo ${rotateLogo && 'rotate-logo'}`} 
+            src="/imgs/remarket-logo.png"
+            alt="" height="40" width="40"
+            onClick={() => this.clickLogo()}
           />
         </Link>
         
         <h1 className="site-header">
-          <Link to="/">remarket</Link>
+          <Link to="/" onClick={() => this.clickLogo()}>remarket</Link>
         </h1>
         
         <Button raised primary className={NyuClassNames} onClick={() => this.setNetwork(2)} label="NYU" />
