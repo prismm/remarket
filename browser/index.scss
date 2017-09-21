@@ -37,6 +37,9 @@ body {
         float: left;
         margin-bottom: none;
         margin-right: 1em;
+        &:hover {
+            font-style: none !important;
+        }
         @media (max-width: 800px) {
             float: none;
         }
@@ -813,4 +816,8 @@ fieldset {
 
 .user-bio {
     margin-top: 0.5em;
+}
+
+.site-header :hover {
+    font-style: normal;
 }
