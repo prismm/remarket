@@ -51,10 +51,7 @@ module.exports = {
                 ]
             }
         ]
-    },
-    plugins: [
-        new webpack.optimize.UglifyJsPlugin(),
-        new webpack.optimize.AggressiveMergingPlugin(),
-        new HtmlMinifierPlugin()
-    ]
+    }
+
+    // removed plugins for development build to speed up build process
 };

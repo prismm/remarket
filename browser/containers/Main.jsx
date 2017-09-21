@@ -18,6 +18,7 @@ class Main extends Component {
     super(props);
     this.state = {
       toggle: false,
+      rotateLogo: false,
       selectedNetwork: props.currentNetwork && props.currentNetwork.id
     };
     this.setNetwork = this.setNetwork.bind(this);
@@ -35,25 +36,47 @@ class Main extends Component {
   }
 
   clickLogo(){
-    this.props.clearNetwork();
-    if (this.toggle){
-    //do something
-    }
-    browserHistory.push('/');
+    this.setState({ rotateLogo: true })
+    this.timeout = setTimeout(() => {
+      this.timeout = null;
+      this.setState({ rotateLogo: false });
+    }, 700);
   }
+
+  componentWillUnmount(){
+    if (this.timeout) {
+        clearTimeout(this.timeout);
+      }
+}
 
   render(){
     const { children, handleClick, loggedIn } = this.props;
-    //logic to determine button styling below
+    // logic to determine button styling below
     let NyuClassNames = this.state.selectedNetwork === 2 ? 'network-button network-button-nyu-selected' : 'network-button network-button-nyu';
     NyuClassNames = this.state.selectedNetwork === 1 ? 'network-button network-button-disabled-nyu' : NyuClassNames;
     NyuClassNames = this.state.selectedNetwork === 0 ? 'network-button network-button-nyu' : NyuClassNames;
     let ColumbiaClassNames = this.state.selectedNetwork === 1 ? 'network-button network-button-columbia-selected' : 'network-button network-button-columbia';
     ColumbiaClassNames = this.state.selectedNetwork === 2 ? 'network-button network-button-disabled-columbia' : ColumbiaClassNames;
     ColumbiaClassNames = this.state.selectedNetwork === 0 ? 'network-button network-button-columbia' : ColumbiaClassNames;
+
+    // logic for logo rotation
+    let { rotateLogo } = this.state
+
     return (
       <div>
-        <Link to="/"><img className="remarket-logo" src="/imgs/recycling-pink.png" onClick={() => {browserHistory.push('/')}} alt="" height="40" width="40" /></Link><h1 className="site-header"><Link to="/">remarket</Link></h1>
+        <Link to="/">
+          <img
+            className={`remarket-logo ${rotateLogo && 'rotate-logo'}`} 
+            src="/imgs/remarket-logo.png"
+            alt="" height="40" width="40"
+            onClick={() => this.clickLogo()}
+          />
+        </Link>
+        
+        <h1 className="site-header">
+          <Link to="/" onClick={() => this.clickLogo()}>remarket</Link>
+        </h1>
+        
         <Button raised primary className={NyuClassNames} onClick={() => this.setNetwork(2)} label="NYU" />
         <Button raised primary className={ColumbiaClassNames} onClick={() => this.setNetwork(1)} label="Columbia" />
         { loggedIn ?
