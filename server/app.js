@@ -62,9 +62,10 @@ app.get('*', (req, res, next) => {
 
 //catching all other failed routes
 app.use((err, req, res, next) => {
+    console.log("IN THE ERROR HANDLER");
     console.error(err);
     console.error(err.stack);
-    res.status(err.status || 500).send(err.message || 'oops ... Internal server error. Maybe you hit a route that doesn\'t exist.');
+    res.status(err.status || 500).send(err.message || 'oops ... Internal server error.');
 });
 
 module.exports = app;

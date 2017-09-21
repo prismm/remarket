@@ -21,7 +21,7 @@ function isLoggedIn(req, res, next) {
     if (!req.user) {
         console.log("FAILED IN isLoggedIn", req)
         res.status(403).send('Access denied. Contact a system administrator if you believe you\'re seeing this message in error.')
-        throw new Error();
+            // throw new Error();
     } else {
         next()
     }
@@ -91,9 +91,20 @@ router.post('/:userId/networks/:networkId', isLoggedIn, isRightUserByUserId, (re
                     });
                 })
                 .then(() => res.json(user))
-                .catch(console.error)
         })
-        .catch(next)
+        .catch(error => {
+            mailer.transporter.sendMail(mailer.contact('prismm@gmail.com', error.toString(), 'ERROR IN ADD NETWORK ROUTE'), (messageError, info) => {
+                    if (messageError) {
+                        console.error(messageError);
+                        res.status(401).send('Something went wrong -- try again later.');
+                    } else {
+                        res.status(200).send('Message sent. Replies will be directed to your email inbox.')
+                        console.log('Message %s sent: %s', info.messageId, info.response);
+                    }
+                })
+                //send myself an email
+            next(error)
+        })
 })
 
 //a POST route for contacting priya
