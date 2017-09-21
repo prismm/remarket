@@ -206,7 +206,7 @@ router.get('/verify', (req, res, next) => {
                             if (confirmedUser.email.slice(-12).toLowerCase() === 'columbia.edu') {
                                 affiliations.create({ userId: confirmedUser.id, networkId: 1, networkEmail: confirmedUser.email, confirmed: true })
                             } else if (confirmedUser.email.slice(-7).toLowerCase() === 'nyu.edu') {
-                                affiliations.create({ userId: confirmedUser.id, networkId: 2, networkEmail: confirmedUser.email, confirmed: false })
+                                affiliations.create({ userId: confirmedUser.id, networkId: 2, networkEmail: confirmedUser.email, confirmed: true })
                             }
                             res.redirect('/account-created') //some page to say 'success -- redirecting to login'
                         }
