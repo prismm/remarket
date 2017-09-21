@@ -54,7 +54,7 @@ export const Columbia = injectTooltip(({ tooltip }) => (
         <div className="inline-rel-container">
             <Avatar
                 className="avatar"
-                src={'/imgs/columbia-logo.png'}
+                src={'/imgs/columbia.png'}
                 role="presentation"
             />
             {tooltip}
