@@ -821,3 +821,13 @@ fieldset {
 .site-header :hover {
     font-style: normal;
 }
+
+.selected-item-headers {
+    float: left;
+    margin-bottom: 1em;
+}
+
+.selected-item-actions {
+    float: right;
+    margin-bottom: 1em;
+}

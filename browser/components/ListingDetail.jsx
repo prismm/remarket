@@ -84,42 +84,46 @@ class ListingDetail extends Component {
                     <div className="md-cell md-cell--1" />
                     <div className={bodyClassname}>
                     <div className="item-descr">
-                        <h3 className="selected-item-name">{this.props.currentListing.name}</h3>
-                        <h3 className="selected-item-category">{this.props.currentListing.category}</h3>
-                        {isItMyListing ?
-                            <div>
-                                <Button
-                                    raised
-                                    primary
-                                    label="edit this listing"
-                                    className="my-listing-button edit-listing-button"
-                                    onClick={this.onEditClick}
-                                />
-                                <Button
-                                    raised
-                                    primary
-                                    label="add / manage photos"
-                                    className="my-listing-button edit-listing-button"
-                                    onClick={this.onAddPhotoClick}
-                                />
-                            </div>
-                            :
-                            <div>
-                            <h5 className="selected-item-author">listed by <Link to={`/user/${this.props.currentListing.author.id}`}>{this.props.currentListing.author.userId}</Link></h5>
-                            <MessageUser label={label(this.props.currentListing)} subject={subject} />
-                            </div>
-                        }
-                        {wasItEdited ? <div className="modified-timestamp"><p className="listing-detail-timestamp">Updated on {this.props.currentListing.modified}<TimeAgo time={this.props.currentListing.updatedAt} /></p></div>
-                            :
-                            <p className="listing-detail-timestamp">Created on {this.props.currentListing.created}<TimeAgo time={this.props.currentListing.createdAt} /></p>
-                        }
-                        { (this.props.currentListing.networks && this.props.currentListing.networks.length) ?
-                            this.props.currentListing.networks.map(
-                                network => <NetworkAvatar key={network.id} network={network.name.toLowerCase()} tooltipLabel={network.name} tooltipPosition="top" />
-                                )
-                            :
-                            null
-                        }
+                        <div className="selected-item-headers">
+                            <h3 className="selected-item-name">{this.props.currentListing.name}</h3>
+                            <h3 className="selected-item-category">{this.props.currentListing.category}</h3>
+                            {isItMyListing ?
+                                <div>
+                                    <Button
+                                        raised
+                                        primary
+                                        label="edit this listing"
+                                        className="my-listing-button edit-listing-button"
+                                        onClick={this.onEditClick}
+                                    />
+                                    <Button
+                                        raised
+                                        primary
+                                        label="add / manage photos"
+                                        className="my-listing-button edit-listing-button"
+                                        onClick={this.onAddPhotoClick}
+                                    />
+                                </div>
+                                :
+                                <div>
+                                <h5 className="selected-item-author">listed by <Link to={`/user/${this.props.currentListing.author.id}`}>{this.props.currentListing.author.userId}</Link></h5>
+                                <MessageUser label={label(this.props.currentListing)} subject={subject} />
+                                </div>
+                            }
+                            {wasItEdited ? <div className="modified-timestamp"><p className="listing-detail-timestamp">Updated on {this.props.currentListing.modified}<TimeAgo time={this.props.currentListing.updatedAt} /></p></div>
+                                :
+                                <p className="listing-detail-timestamp">Created on {this.props.currentListing.created}<TimeAgo time={this.props.currentListing.createdAt} /></p>
+                            }
+                            { (this.props.currentListing.networks && this.props.currentListing.networks.length) ?
+                                this.props.currentListing.networks.map(
+                                    network => <NetworkAvatar key={network.id} network={network.name.toLowerCase()} tooltipLabel={network.name} tooltipPosition="top" />
+                                    )
+                                :
+                                null
+                            }
+                        </div>
+                        <div className="selected-item-actions">
+                        </div>
                         <hr className="detail-section-separator" />
                         {this.props.currentListing.location ? <p className="selected-item-location">Location: {this.props.currentListing.location}</p> : null}
                         {this.props.currentListing.neighborhood ? <p className="selected-item-location"> &rarr; {this.props.currentListing.neighborhood}</p> : null}

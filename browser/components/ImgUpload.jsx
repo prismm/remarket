@@ -10,6 +10,7 @@ import FileUpload from 'react-md/lib/FileInputs/FileUpload';
 
 import S3Upload from '../S3Upload/s3upload.js';
 const HOST = window.location.protocol.concat('//').concat(window.location.host);
+const bucket = 'https://remarket-123.s3.us-east-2.amazonaws.com';
 
 import spinner from '../HOC/Spinner.jsx'
 import UploadedFileCard from './UploadedFileCard.jsx';

@@ -150,7 +150,7 @@ router.post('/:id/photos', isLoggedIn, (req, res, next) => {
     }
 })
 
-router.put('/:id/photos', isLoggedIn, (req, res, next) => {
+router.put('/:id/photos', isLoggedIn, (req, res, next) => { //this is a put and not delete because it alters the array of photos and the request has a payload
     let deletePhotos = req.body;
     if (deletePhotos.length) {
         let PromiseArr = deletePhotos.map(photo => Photo.destroy({ where: { id: photo.id, name: photo.name }, paranoid: true }));
