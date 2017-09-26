@@ -30,7 +30,6 @@
             if (loadImage.hasMetaOption(options)) {
                 return fetch(new Request(url, options))
                     .then(function(response) {
-                        console.log("IN HERE");
                         return response.blob()
                     })
                     .then(callback)

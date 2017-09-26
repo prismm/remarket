@@ -12,6 +12,28 @@
     <!-- The 'defer' attribute will ensure that it is run only after the DOM finishes loading -->
     <script src="/bundle.js" defer></script>
     <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: '1809907029339544',
+                autoLogAppEvents: true,
+                xfbml: true,
+                version: 'v2.10'
+            });
+            FB.AppEvents.logPageView();
+        };
+
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <script>
         ! function() {
             var analytics = window.analytics = window.analytics || [];
             if (!analytics.initialize)

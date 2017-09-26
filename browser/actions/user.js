@@ -92,6 +92,15 @@ export const viewUserListings_dispatch = userId => dispatch => {
         .catch(console.error)
 }
 
+export const saveListing_dispatch = (listingId, user) => dispatch => {
+    console.log('in the dispatch!', listingId, user)
+        // return axios.get(`/api/listings/user/${userId}`)
+        //     .then(res => {
+        //         dispatch(viewUserListings_action(res.data))
+        //     })
+        //     .catch(console.error)
+}
+
 export const clearUser_dispatch = () => dispatch => {
     return dispatch(clearViewUser_action());
 }

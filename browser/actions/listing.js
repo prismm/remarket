@@ -24,7 +24,7 @@ export const fetchAllListings_dispatch = () => dispatch => {
         .then(res => {
             let listings = res.data;
             listings.sort((listing1, listing2) => new Date(listing2.updatedAt) - new Date(listing1.updatedAt));
-            listings = listings.filter(listing => listing.status === 'active');
+            // listings = listings.filter(listing => listing.status === 'active'); commented out to prevent home page from empty
             dispatch(setListings_action(listings));
         })
         .catch(console.error);
@@ -57,7 +57,7 @@ export const createListing_dispatch = listing => dispatch => {
     axios.post('/api/listings', listing)
         .then(res => {
             dispatch(createListing_action(res.data));
-            dispatch(interactionSuccess_action('Listing created'));
+            dispatch(interactionSuccess_action('Post created'));
             browserHistory.push(`/listings/${res.data.id}`);
         })
         .catch(error =>
@@ -68,7 +68,7 @@ export const editListing_dispatch = (listingId, changes) => dispatch => {
     axios.put(`/api/listings/${listingId}`, changes)
         .then(res => {
             dispatch(editListing_action(res.data));
-            dispatch(interactionSuccess_action('Listing updated'));
+            dispatch(interactionSuccess_action('Post updated'));
         })
         .catch(error =>
             dispatch(createListingError_action({ error })))
@@ -78,6 +78,14 @@ export const deleteListing_dispatch = listing => dispatch => {
     axios.delete(`/api/listings/${listing.id}`)
         .then(res => {
             dispatch(deleteListing_action(+res.data));
+        })
+        .catch(console.error);
+}
+
+export const flagListing_dispatch = (listingId, user) => dispatch => {
+    return axios.post('/api/users/contact', { replyToEmail: user.email, message: 'user ' + user.id + ' flagged listing ' + listingId, subject: 'FLAGGED LISTING' })
+        .then(() => {
+            dispatch(interactionSuccess_action('Post flagged'));
         })
         .catch(console.error);
 }

@@ -15,7 +15,8 @@ import { NetworkAvatar } from './Avatars.jsx';
 import MessageUser from './MessageUser.jsx';
 import ListingImages from './ListingImages.jsx';
 import ImgUpload from './ImgUpload.jsx';
-import Snackbar from '../HOC/Snackbar.jsx'
+import Snackbar from '../HOC/Snackbar.jsx';
+import SelectedItemActions from './SelectedItemActions.jsx'
 
 import { clearCurrentListing_dispatch } from '../actions/listing';
 import { messageSent_action } from '../actions/user';
@@ -74,7 +75,7 @@ class ListingDetail extends Component {
         return (
             <div>
             { error &&  <h3 className="error"> { error.response && error.response.status } / { error.response && error.response.statusText } </h3> }
-            { error &&  <div className="error listing-not-found"> { error.response.data } </div> }
+            { error &&  <div className="error listing-not-found"> { error.response && error.response.data } </div> }
             {shouldRenderDetail && (
                 <div className="md-grid listing-detail-container">
                 <Breadcrumbs currentListing={this.props.currentListing} />
@@ -84,8 +85,8 @@ class ListingDetail extends Component {
                     <div className="md-cell md-cell--1" />
                     <div className={bodyClassname}>
                     <div className="item-descr">
+                        <h3 className="selected-item-name">{this.props.currentListing.name}</h3>
                         <div className="selected-item-headers">
-                            <h3 className="selected-item-name">{this.props.currentListing.name}</h3>
                             <h3 className="selected-item-category">{this.props.currentListing.category}</h3>
                             {isItMyListing ?
                                 <div>
@@ -123,6 +124,7 @@ class ListingDetail extends Component {
                             }
                         </div>
                         <div className="selected-item-actions">
+                            <SelectedItemActions />
                         </div>
                         <hr className="detail-section-separator" />
                         {this.props.currentListing.location ? <p className="selected-item-location">Location: {this.props.currentListing.location}</p> : null}
@@ -159,7 +161,7 @@ class ListingDetail extends Component {
 }
 
 ListingDetail.propTypes = {
-  currentListing: PropTypes.object,
+  currentListing: PropTypes.object.isRequired,
   clearCurrentListing: PropTypes.func.isRequired,
   user: PropTypes.object
 };

@@ -4,6 +4,6 @@ import Moment from 'react-moment';
 /*----------------------- TimeAgo Component ---------------------------*/
 
 export default function TimeAgo({time}) {
-    return <p className="time-ago"> <Moment fromNow>{time}</Moment></p>
+    return <div className="time-ago"> <Moment fromNow>{time}</Moment></div>
 }
 
