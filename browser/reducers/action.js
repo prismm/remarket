@@ -1,5 +1,7 @@
 /*------------------- managing state.action (referring to user being viewed) ----------------------*/
 const initialState = {
+    listingActions: [],
+    myActions: {},
     myComments: [],
     myOffers: [],
     mySaves: [],
@@ -9,6 +11,12 @@ const initialState = {
 export default function(state = initialState, action) {
     const newState = Object.assign({}, state);
     switch (action.type) {
+        case 'SET_ACTIONS':
+            newState.listingActions = action.listingActions;
+            break;
+        case 'SET_MY_ACTIONS':
+            newState.myActions = action.myActions;
+            break;
         case 'ADD_COMMENT':
             newState.myComments = [action.comment, ...newState.myComments];
             break;

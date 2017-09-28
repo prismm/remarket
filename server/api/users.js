@@ -17,7 +17,7 @@ var analytics = new Analytics('NxBhoGdVdYkBQtlIQdvKg2ZRwDNxoaYo');
 
 function isLoggedIn(req, res, next) {
     if (!req.user) {
-        console.log("FAILED IN isLoggedIn", req)
+        console.log("FAILED IN isLoggedIn")
         res.status(403).send('Access denied. Contact a system administrator if you believe you\'re seeing this message in error.')
             // throw new Error();
     } else {
@@ -35,14 +35,14 @@ function isRightUserByUserId(req, res, next) {
     }
 }
 
-router.get('/', (req, res, next) => {
+router.get('/', isLoggedIn, (req, res, next) => {
     User.findAll({ include: [{ all: true }] })
         .then(users => res.json(users))
         .catch(next)
 })
 
 //filtering networks {confirmed: true} on front end
-router.get('/:id', (req, res, next) => {
+router.get('/:id', isLoggedIn, (req, res, next) => {
     User.findById(req.params.id, { include: [{ all: true }] })
         .then(user => {
             if (!user) {
@@ -54,8 +54,9 @@ router.get('/:id', (req, res, next) => {
         .catch(next)
 })
 
+
 //a route for GET: /api/users/${user.id}/networks that returns a user's networks -- as entries in join table
-router.get('/:id/networks', (req, res, next) => {
+router.get('/:id/networks/', isLoggedIn, (req, res, next) => {
     affiliations.findAll({ where: { userId: req.params.id, confirmed: true } })
         .then(userNetworks => res.json(userNetworks))
         .catch(next)
