@@ -6,6 +6,13 @@ const Offer = db.define('offer', {
         type: Sequelize.INTEGER,
         allowNull: false
     }
+}, {
+    paranoid: true,
+    getterMethods: {
+        type: function() {
+            return 'offer';
+        }
+    },
 });
 
 module.exports = Offer;

@@ -29,13 +29,14 @@ function isRightUserByUserId(req, res, next) {
 
 //GET ALL ACTIONS
 //a route to get all actions by listing
-router.get('/:listingId', (req, res, next) => {
+router.get('/listing/:listingId', (req, res, next) => {
+
     const savesPromise = Endorsement.findAll({
-        where: { listingId: req.params.listingId, issued: null },
+        where: { listingId: req.params.listingId, type: 'save' },
         include: [{ model: User }]
     });
     const endorsementsPromise = Endorsement.findAll({
-        where: { listingId: req.params.listingId, issued: true },
+        where: { listingId: req.params.listingId, type: 'endorse' },
         include: [{ model: User }]
     });
     const commentsPromise = Comment.findAll({
@@ -47,24 +48,13 @@ router.get('/:listingId', (req, res, next) => {
         include: [{ model: User }]
     });
     Promise.all([savesPromise, endorsementsPromise, commentsPromise, offersPromise])
-        .then(([saves, endorsements, comments, offers]) => {
-            const actions = []; //building an array of all actions as objects, with a 'type' key specifying what type of action it is
-            saves.forEach(save => {
-                save.type = 'save';
-                actions.push(save);
-            });
-            endorsements.forEach(endorsement => {
-                endorsement.type = 'endorsement';
-                actions.push(endorsement);
-            });
-            comments.forEach(comment => {
-                comment.type = 'comment';
-                actions.push(comment);
-            });
-            offers.forEach(offer => {
-                offer.type = 'offer';
-                actions.push(offer);
-            });
+        .then(resultsArr => {
+            const actions = []; //building an array of all actions as objects, pushing all actions into it
+            resultsArr.forEach(result => {
+                result.forEach(action => {
+                    actions.push(action)
+                })
+            })
             actions.sort((action1, action2) => new Date(action1.updatedAt) - new Date(action2.updatedAt));
             res.json(actions); //an array of all actions on the listing, sorted by date (newest first)
         })
@@ -73,26 +63,31 @@ router.get('/:listingId', (req, res, next) => {
 
 
 //a route to get all actions by user (actor)
-router.get('/:userId', isLoggedIn, (req, res, next) => {
+router.get('/user/:userId', isLoggedIn, (req, res, next) => {
     const savesPromise = Endorsement.findAll({
-        where: { endorserId: req.params.userId, issued: null },
+        where: { userId: req.params.userId, type: 'save' },
         include: [{ model: Listing }]
     });
     const endorsementsPromise = Endorsement.findAll({
-        where: { endorserId: req.params.userId, issued: true },
+        where: { userId: req.params.userId, type: 'endorse' },
         include: [{ model: Listing }]
     });
     const commentsPromise = Comment.findAll({
-        where: { authorId: req.params.userId },
+        where: { userId: req.params.userId },
         include: [{ model: Listing }]
     });
     const offersPromise = Offer.findAll({
-        where: { bidderId: req.params.userId },
+        where: { userId: req.params.userId },
         include: [{ model: Listing }]
     });
     Promise.all([savesPromise, endorsementsPromise, commentsPromise, offersPromise])
         .then(([saves, endorsements, comments, offers]) => {
-            const actions = { saves, endorsements, comments, offers }; //building an array of all actions as objects, with a 'type' key specifying what type of action it is
+            saves.sort((action1, action2) => new Date(action1.updatedAt) - new Date(action2.updatedAt));
+            endorsements.sort((action1, action2) => new Date(action1.updatedAt) - new Date(action2.updatedAt));
+            comments.sort((action1, action2) => new Date(action1.updatedAt) - new Date(action2.updatedAt));
+            offers.sort((action1, action2) => new Date(action1.updatedAt) - new Date(action2.updatedAt));
+
+            const actions = { saves, endorsements, comments, offers };
             res.json(actions); //an object of all actions, stored as 'type': [], done by user, unsorted
         })
         .catch(next)
@@ -106,6 +101,7 @@ router.get('/comments/listing/:listingId', (req, res, next) => {
             include: [{ model: User }]
         })
         .then(comments => {
+            comments.sort((action1, action2) => new Date(action1.updatedAt) - new Date(action2.updatedAt));
             res.json(comments);
         })
         .catch(next)
@@ -114,10 +110,11 @@ router.get('/comments/listing/:listingId', (req, res, next) => {
 //a route to get all comments by user
 router.get('/comments/user/:userId', isLoggedIn, (req, res, next) => {
     Comment.findAll({
-            where: { authorId: req.params.userId },
+            where: { userId: req.params.userId },
             include: [{ model: Listing }]
         })
         .then(comments => {
+            comments.sort((action1, action2) => new Date(action1.updatedAt) - new Date(action2.updatedAt));
             res.json(comments);
         })
         .catch(next)
@@ -138,13 +135,13 @@ router.get('/comments/:commentId', (req, res, next) => {
 
 //a route to post a comment
 router.post('/comments', isLoggedIn, (req, res, next) => {
-    if (req.body.authorId !== req.user.id) {
+    if (req.body.userId !== req.user.id) { //id check
         res.status(401).send('Something went wrong. You do not have permission to post this comment. Contact a system administrator for details.')
     } else {
         Comment.create(req.body)
             .then(newComment => {
                 analytics.track({
-                    userId: newComment.authorId,
+                    userId: newComment.userId,
                     event: 'Created comment',
                     properties: {
                         listing: newComment.listingId
@@ -159,7 +156,7 @@ router.post('/comments', isLoggedIn, (req, res, next) => {
     }
 })
 
-//a route to edit a comment
+//a route to edit a comment -- needs identity check
 router.put('/comments/:id', isLoggedIn, (req, res, next) => {
     Comment.update(req.body, {
             where: {
@@ -173,7 +170,7 @@ router.put('/comments/:id', isLoggedIn, (req, res, next) => {
             } else {
                 let updatedComment = result[1][0];
                 analytics.track({
-                    userId: updatedComment.authorId,
+                    userId: updatedComment.userId,
                     event: 'Updated comment',
                     properties: {
                         listing: updatedComment.listingId
@@ -188,19 +185,20 @@ router.put('/comments/:id', isLoggedIn, (req, res, next) => {
         })
 })
 
-//a route to delete a comment
+//a route to delete a comment -- needs identity check
 router.delete('/comments/:id', isLoggedIn, (req, res, next) => {
     Comment.destroy({
             where: {
                 id: req.params.id
-            }
+            },
+            paranoid: true
         })
         .then(result => {
             if (!result) {
                 next();
             } else {
                 analytics.track({
-                    userId: result.authorId,
+                    userId: result.userId,
                     event: 'Deleted comment',
                     properties: {
                         comment: req.params.id
@@ -220,6 +218,7 @@ router.get('/offers/listing/:listingId', (req, res, next) => {
             include: [{ model: User }]
         })
         .then(offers => {
+            offers.sort((action1, action2) => new Date(action1.updatedAt) - new Date(action2.updatedAt));
             res.json(offers);
         })
         .catch(next)
@@ -228,10 +227,11 @@ router.get('/offers/listing/:listingId', (req, res, next) => {
 //a route to get all offers by user
 router.get('/offers/user/:userId', isLoggedIn, (req, res, next) => {
     Offer.findAll({
-            where: { bidderId: req.params.userId },
+            where: { userId: req.params.userId },
             include: [{ model: Listing }]
         })
         .then(offers => {
+            offers.sort((action1, action2) => new Date(action1.updatedAt) - new Date(action2.updatedAt));
             res.json(offers);
         })
         .catch(next)
@@ -252,13 +252,13 @@ router.get('/offers/:offerId', (req, res, next) => {
 
 //a route to post an offer
 router.post('/offers', isLoggedIn, (req, res, next) => {
-    if (req.body.bidderId !== req.user.id) {
+    if (req.body.userId !== req.user.id) { //id check
         res.status(401).send('Something went wrong. You do not have permission to post this offer. Contact a system administrator for details.')
     } else {
         Offer.create(req.body)
             .then(newOffer => {
                 analytics.track({
-                    userId: newOffer.bidderId,
+                    userId: newOffer.userId,
                     event: 'Created offer',
                     properties: {
                         listing: newOffer.listingId
@@ -274,7 +274,7 @@ router.post('/offers', isLoggedIn, (req, res, next) => {
 })
 
 //a route to edit an offer
-router.put('/offers/:id', isLoggedIn, (req, res, next) => {
+router.put('/offers/:id', isLoggedIn, (req, res, next) => { //need id check
     Offer.update(req.body, {
             where: {
                 id: req.params.id
@@ -287,7 +287,7 @@ router.put('/offers/:id', isLoggedIn, (req, res, next) => {
             } else {
                 let updatedOffer = result[1][0];
                 analytics.track({
-                    userId: updatedOffer.bidderId,
+                    userId: updatedOffer.userId,
                     event: 'Updated comment',
                     properties: {
                         listing: updatedOffer.listingId
@@ -303,18 +303,19 @@ router.put('/offers/:id', isLoggedIn, (req, res, next) => {
 })
 
 //a route to delete an offer
-router.delete('/offers/:id', isLoggedIn, (req, res, next) => {
+router.delete('/offers/:id', isLoggedIn, (req, res, next) => { //need id check
     Offer.destroy({
             where: {
                 id: req.params.id
-            }
+            },
+            paranoid: true
         })
         .then(result => {
             if (!result) {
                 next();
             } else {
                 analytics.track({
-                    userId: result.bidderId,
+                    userId: result.userId,
                     event: 'Deleted offer',
                     properties: {
                         offer: req.params.id
@@ -326,15 +327,16 @@ router.delete('/offers/:id', isLoggedIn, (req, res, next) => {
         .catch(next)
 })
 
-//ENDORSEMENTS: either 'saves' (saving/favoriting the listing; issued: null) or 'endorsements' (vouching for post; issued: true)
+//ENDORSEMENTS: either 'save' or 'endorse' (vouching for post)
 //ENDORSEMENTS as saves
 //a route to get all saves by listing
 router.get('/saves/listing/:listingId', (req, res, next) => {
     Endorsement.findAll({
-            where: { listingId: req.params.listingId, issued: null },
+            where: { listingId: req.params.listingId, type: 'save' },
             include: [{ model: User }]
         })
         .then(saves => {
+            saves.sort((action1, action2) => new Date(action1.updatedAt) - new Date(action2.updatedAt));
             res.json(saves);
         })
         .catch(next)
@@ -343,7 +345,7 @@ router.get('/saves/listing/:listingId', (req, res, next) => {
 //a route to get all saves by user
 router.get('/saves/user/:userId', isLoggedIn, (req, res, next) => {
     Endorsement.findAll({
-            where: { endorserId: req.params.userId, issued: null },
+            where: { userId: req.params.userId, type: 'save' },
             include: [{ model: Listing }]
         })
         .then(saves => {
@@ -354,13 +356,13 @@ router.get('/saves/user/:userId', isLoggedIn, (req, res, next) => {
 
 //a route to post a save
 router.post('/saves', isLoggedIn, (req, res, next) => {
-    if (req.body.endorserId !== req.user.id) {
+    if (req.body.userId !== req.user.id) { //id check
         res.status(401).send('Something went wrong. You do not have permission to save this listing. Contact a system administrator for details.')
     } else {
         Endorsement.create(req.body)
             .then(newSave => {
                 analytics.track({
-                    userId: newSave.endorserId,
+                    userId: newSave.userId,
                     event: 'Saved listing',
                     properties: {
                         listing: newSave.listingId
@@ -376,18 +378,19 @@ router.post('/saves', isLoggedIn, (req, res, next) => {
 })
 
 //a route to delete a save
-router.delete('/saves/:id', isLoggedIn, (req, res, next) => {
+router.delete('/saves/:id', isLoggedIn, (req, res, next) => { //need id check
     Endorsement.destroy({
             where: {
                 id: req.params.id
-            }
+            },
+            paranoid: true
         })
         .then(result => {
             if (!result) {
                 next();
             } else {
                 analytics.track({
-                    userId: result.endorserId,
+                    userId: result.userId,
                     event: 'Unsaved listing',
                     properties: {
                         save: req.params.id
@@ -403,10 +406,11 @@ router.delete('/saves/:id', isLoggedIn, (req, res, next) => {
 //a route to get all endorsements by listing
 router.get('/endorsements/listing/:listingId', (req, res, next) => {
     Endorsement.findAll({
-            where: { listingId: req.params.listingId, issued: true },
+            where: { listingId: req.params.listingId, type: 'endorse' },
             include: [{ model: User }]
         })
         .then(endorsements => {
+            endorsements.sort((action1, action2) => new Date(action1.updatedAt) - new Date(action2.updatedAt));
             res.json(endorsements);
         })
         .catch(next)
@@ -415,10 +419,11 @@ router.get('/endorsements/listing/:listingId', (req, res, next) => {
 //a route to get all endorsements by user
 router.get('/endorsements/user/:userId', isLoggedIn, (req, res, next) => {
     Endorsement.findAll({
-            where: { endorserId: req.params.userId, issued: true },
+            where: { userId: req.params.userId, type: 'endorse' },
             include: [{ model: Listing }]
         })
         .then(endorsements => {
+            endorsements.sort((action1, action2) => new Date(action1.updatedAt) - new Date(action2.updatedAt));
             res.json(endorsements);
         })
         .catch(next)
@@ -426,13 +431,13 @@ router.get('/endorsements/user/:userId', isLoggedIn, (req, res, next) => {
 
 //a route to post an endorsement
 router.post('/endorsements', isLoggedIn, (req, res, next) => {
-    if (req.body.endorserId !== req.user.id) {
+    if (req.body.userId !== req.user.id) {
         res.status(401).send('Something went wrong. You do not have permission to endorse this listing. Contact a system administrator for details.')
     } else {
         Endorsement.create(req.body)
             .then(newEndorsement => {
                 analytics.track({
-                    userId: newEndorsement.endorserId,
+                    userId: newEndorsement.userId,
                     event: 'Endorsed listing',
                     properties: {
                         listing: newEndorsement.listingId
@@ -452,14 +457,15 @@ router.delete('/endorsements/:id', isLoggedIn, (req, res, next) => {
     Endorsement.destroy({
             where: {
                 id: req.params.id
-            }
+            },
+            paranoid: true
         })
         .then(result => {
             if (!result) {
                 next();
             } else {
                 analytics.track({
-                    userId: result.endorserId,
+                    userId: result.userId,
                     event: 'Unendorsed listing',
                     properties: {
                         endorsement: req.params.id

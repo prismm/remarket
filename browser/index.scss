@@ -20,6 +20,7 @@ html {
 }
 
 h3 {
+    white-space: normal;
     @media (max-width: 800px) {
         white-space: normal;
     }
