@@ -8,6 +8,8 @@ const User = model.User;
 const Listing = model.Listing;
 const Comment = model.Comment;
 const Offer = model.Offer;
+var Analytics = require('analytics-node');
+var analytics = new Analytics('NxBhoGdVdYkBQtlIQdvKg2ZRwDNxoaYo');
 
 function isLoggedIn(req, res, next) {
     if (!req.user) {
@@ -56,7 +58,7 @@ router.get('/listing/:listingId', (req, res, next) => {
                 })
             })
             actions.sort((action1, action2) => new Date(action1.updatedAt) - new Date(action2.updatedAt));
-            res.json(actions); //an array of all actions on the listing, sorted by date (newest first)
+            res.json(actions); //sends an array of all actions on the listing, sorted by date (newest first)
         })
         .catch(next)
 })
@@ -88,7 +90,7 @@ router.get('/user/:userId', isLoggedIn, (req, res, next) => {
             offers.sort((action1, action2) => new Date(action1.updatedAt) - new Date(action2.updatedAt));
 
             const actions = { saves, endorsements, comments, offers };
-            res.json(actions); //an object of all actions, stored as 'type': [], done by user, unsorted
+            res.json(actions); //an object of all actions, stored as 'type': [], done by user, sorted by date(newest first)
         })
         .catch(next)
 })
@@ -141,7 +143,7 @@ router.post('/comments', isLoggedIn, (req, res, next) => {
         Comment.create(req.body)
             .then(newComment => {
                 analytics.track({
-                    userId: newComment.userId,
+                    userId: req.user.id,
                     event: 'Created comment',
                     properties: {
                         listing: newComment.listingId
@@ -170,7 +172,7 @@ router.put('/comments/:id', isLoggedIn, (req, res, next) => {
             } else {
                 let updatedComment = result[1][0];
                 analytics.track({
-                    userId: updatedComment.userId,
+                    userId: req.user.id,
                     event: 'Updated comment',
                     properties: {
                         listing: updatedComment.listingId
@@ -198,7 +200,7 @@ router.delete('/comments/:id', isLoggedIn, (req, res, next) => {
                 next();
             } else {
                 analytics.track({
-                    userId: result.userId,
+                    userId: req.user.id,
                     event: 'Deleted comment',
                     properties: {
                         comment: req.params.id
@@ -258,7 +260,7 @@ router.post('/offers', isLoggedIn, (req, res, next) => {
         Offer.create(req.body)
             .then(newOffer => {
                 analytics.track({
-                    userId: newOffer.userId,
+                    userId: req.user.id,
                     event: 'Created offer',
                     properties: {
                         listing: newOffer.listingId
@@ -287,8 +289,8 @@ router.put('/offers/:id', isLoggedIn, (req, res, next) => { //need id check
             } else {
                 let updatedOffer = result[1][0];
                 analytics.track({
-                    userId: updatedOffer.userId,
-                    event: 'Updated comment',
+                    userId: req.user.id,
+                    event: 'Updated offer',
                     properties: {
                         listing: updatedOffer.listingId
                     }
@@ -315,7 +317,7 @@ router.delete('/offers/:id', isLoggedIn, (req, res, next) => { //need id check
                 next();
             } else {
                 analytics.track({
-                    userId: result.userId,
+                    userId: req.user.id,
                     event: 'Deleted offer',
                     properties: {
                         offer: req.params.id
@@ -362,7 +364,7 @@ router.post('/saves', isLoggedIn, (req, res, next) => {
         Endorsement.create(req.body)
             .then(newSave => {
                 analytics.track({
-                    userId: newSave.userId,
+                    userId: req.user.id,
                     event: 'Saved listing',
                     properties: {
                         listing: newSave.listingId
@@ -390,7 +392,7 @@ router.delete('/saves/:id', isLoggedIn, (req, res, next) => { //need id check
                 next();
             } else {
                 analytics.track({
-                    userId: result.userId,
+                    userId: req.user.id,
                     event: 'Unsaved listing',
                     properties: {
                         save: req.params.id
@@ -437,7 +439,7 @@ router.post('/endorsements', isLoggedIn, (req, res, next) => {
         Endorsement.create(req.body)
             .then(newEndorsement => {
                 analytics.track({
-                    userId: newEndorsement.userId,
+                    userId: req.user.id,
                     event: 'Endorsed listing',
                     properties: {
                         listing: newEndorsement.listingId
@@ -465,7 +467,7 @@ router.delete('/endorsements/:id', isLoggedIn, (req, res, next) => {
                 next();
             } else {
                 analytics.track({
-                    userId: result.userId,
+                    userId: req.user.id,
                     event: 'Unendorsed listing',
                     properties: {
                         endorsement: req.params.id

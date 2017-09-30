@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 import axios from 'axios';
-import { browserHistory } from 'react-router';
 
 /* ------------   ACTION CREATORS     ------------------ */
 
@@ -31,6 +30,10 @@ export const fetchListingActions_dispatch = listingId => dispatch => {
         .catch(console.error);
 }
 
+export const clearListingActions_dispatch = () => dispatch => {
+    dispatch(setActions_action([]))
+}
+
 export const fetchMyActions_dispatch = userId => dispatch => {
     return axios.get(`/api/actions/user/${userId}`)
         .then(res => {
@@ -58,7 +61,14 @@ export const editComment_dispatch = (commentId, changes) => dispatch => {
         .catch(console.error)
 }
 
-export const deleteComment_dispatch = {} //delete comment
+export const deleteComment_dispatch = commentId => dispatch => {
+    return axios.delete(`/api/actions/comments/${commentId}`)
+        .then(() => {
+            dispatch(deleteComment_action(commentId));
+            dispatch(interactionSuccess_action('Comment erased'));
+        })
+        .catch(console.error)
+}
 
 export const addOffer_dispatch = offer => dispatch => {
     return axios.post('/api/actions/offers', offer)
@@ -69,9 +79,23 @@ export const addOffer_dispatch = offer => dispatch => {
         .catch(console.error);
 }
 
-export const revokeOffer_dispatch = {} //revoke offer
+export const revokeOffer_dispatch = offerId => dispatch => {
+    return axios.delete(`/api/actions/offers/${offerId}`)
+        .then(() => {
+            dispatch(revokeOffer_action(offerId));
+            dispatch(interactionSuccess_action('Offer revoked'));
+        })
+        .catch(console.error)
+}
 
-export const editOffer_dispatch = {} //revoke offer
+export const editOffer_dispatch = (offerId, changes) => dispatch => {
+    return axios.put(`/api/actions/offers/${offerId}`, changes)
+        .then(res => {
+            dispatch(editOffer_action(res.data));
+            dispatch(interactionSuccess_action('Offer updated'));
+        })
+        .catch(console.error)
+}
 
 export const addSave_dispatch = save => dispatch => {
     return axios.post('/api/actions/saves', save)
@@ -82,6 +106,14 @@ export const addSave_dispatch = save => dispatch => {
         .catch(console.error);
 }
 
+export const unsave_dispatch = saveId => dispatch => {
+    return axios.delete(`/api/actions/saves/${saveId}`)
+        .then(() => {
+            dispatch(unsavePost_action(saveId));
+        })
+        .catch(console.error)
+};
+
 export const addEndorsement_dispatch = endorse => dispatch => {
     return axios.post('/api/actions/endorsements', endorse)
         .then(res => {
@@ -90,3 +122,11 @@ export const addEndorsement_dispatch = endorse => dispatch => {
         })
         .catch(console.error);
 }
+
+export const unendorse_dispatch = endorseId => dispatch => {
+    return axios.delete(`/api/actions/endorsements/${endorseId}`)
+        .then(() => {
+            dispatch(removeEndorsement_action(endorseId));
+        })
+        .catch(console.error)
+};
