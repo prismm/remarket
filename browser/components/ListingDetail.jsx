@@ -82,10 +82,14 @@ class ListingDetail extends Component {
                 <div className="md-cell md-cell--10 currentListing md-grid">
                 <div className="md-cell md-cell--1" />
                     {this.props.currentListing.photos && this.props.currentListing.photos.length ? <ListingImages photos={this.props.currentListing.photos} /> : null}
+                    {this.props.currentListing.photos && this.props.currentListing.photos.length ? <meta property="og:image" content={this.props.currentListing.photos[0].link} /> : <meta property="og:image" content="https://s3.us-east-2.amazonaws.com/remarket-123/remarket-logo-588.png" /> }
                     <div className="md-cell md-cell--1" />
                     <div className={bodyClassname}>
                     <div className="item-descr">
                         <h3 className="selected-item-name">{this.props.currentListing.name}</h3>
+                        <meta property="og:type" content="product" />
+                        <meta property="fb:app_id" content="1809907029339544" />
+                        <meta property="og:title" content={this.props.currentListing.name} />
                         <div className="selected-item-headers">
                             <h3 className="selected-item-category">{this.props.currentListing.category}</h3>
                             {isItMyListing ?
@@ -130,6 +134,7 @@ class ListingDetail extends Component {
                         {this.props.currentListing.location ? <p className="selected-item-location">Location: {this.props.currentListing.location}</p> : null}
                         {this.props.currentListing.neighborhood ? <p className="selected-item-location"> &rarr; {this.props.currentListing.neighborhood}</p> : null}
                         <p className="selected-item-descr">{this.props.currentListing.description}</p>
+                        <meta property="og:description" content={this.props.currentListing.category + ' - ' + this.props.currentListing.subcategory + ': ' + this.props.currentListing.description.slice(0, 140) + '...'} />
                         {this.props.currentListing.askingPrice ?
                             <div className="price">
                                 <hr />
