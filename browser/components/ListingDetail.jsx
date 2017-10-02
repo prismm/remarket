@@ -111,9 +111,9 @@ class ListingDetail extends Component {
                                 <MessageUser label={label(this.props.currentListing)} subject={subject} />
                                 </div>
                             }
-                            {wasItEdited ? <div className="modified-timestamp"><p className="listing-detail-timestamp">Updated on {this.props.currentListing.modified}<TimeAgo time={this.props.currentListing.updatedAt} /></p></div>
+                            {wasItEdited ? <div className="modified-timestamp"><div className="listing-detail-timestamp">Updated on {this.props.currentListing.modified}<TimeAgo time={this.props.currentListing.updatedAt} /></div></div>
                                 :
-                                <p className="listing-detail-timestamp">Created on {this.props.currentListing.created}<TimeAgo time={this.props.currentListing.createdAt} /></p>
+                                <div className="listing-detail-timestamp">Created on {this.props.currentListing.created}<TimeAgo time={this.props.currentListing.createdAt} /></div>
                             }
                             { (this.props.currentListing.networks && this.props.currentListing.networks.length) ?
                                 this.props.currentListing.networks.map(
