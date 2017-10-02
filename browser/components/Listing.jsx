@@ -13,7 +13,7 @@ function Listing({ listing, currentNetwork }) {
     return (
         listing && (
         <div>
-            <Link className={networkColoring} to={`/listings/${listing.id}`}>{listing.name}<p className="listing-list-time-ago"><TimeAgo time={listing.updatedAt} /></p></Link>
+            <Link className={networkColoring} to={`/listings/${listing.id}`}>{listing.name}<div className="listing-list-time-ago"><TimeAgo time={listing.updatedAt} /></div></Link>
         </div>)
     )
 }
