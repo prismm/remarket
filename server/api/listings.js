@@ -13,12 +13,13 @@ var analytics = new Analytics('NxBhoGdVdYkBQtlIQdvKg2ZRwDNxoaYo');
 
 //setting up google analytics reporting api to query page views
 const google = require('googleapis');
-const key = require('remarket-reporting-api.json'); //will be gitignored -- need to handle thru heroku on deploy
+const clientEmail = process.env.GA_CLIENT_EMAIL ? process.env.GA_CLIENT_EMAIL : require('remarket-reporting-api.json').client_email; //will be gitignored -- need to handle thru heroku on deploy
+const privateKey = process.env.GA_PRIVATE_KEY ? process.env.GA_PRIVATE_KEY : require('remarket-reporting-api.json').private_key;
 const VIEW_ID = 'ga:121605325';
 let jwtClient = new google.auth.JWT(
-    key.client_email,
+    clientEmail,
     null,
-    key.private_key, ['https://www.googleapis.com/auth/analytics.readonly'],
+    privateKey, ['https://www.googleapis.com/auth/analytics.readonly'],
     null
 );
 
@@ -38,10 +39,8 @@ router.get('/googleanalytics/:listingId', (req, res, next) => {
                 console.log(err);
                 return;
             }
-            // return response;
             if (response && response.rows) {
-                // console.log('response', response.rows, response.rows[0][1])
-                res.json(response.rows[0]) //if the route exists send back an array with length = 1, [{listingRoute}, {number of views}]
+                res.json(response.rows[0]) //if the route exists send back a nested array with length = 1, [{listingRoute}, {number of views}]
             } else {
                 res.json([]) //if the route is invalid then send back an empty array
             }

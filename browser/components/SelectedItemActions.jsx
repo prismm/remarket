@@ -48,7 +48,6 @@ class SelectedItemActions extends Component {
         //figure out whether user has saved this listing in the past
         if (nextProps.myActions && nextProps.myActions.saves){
             this.setState({saved: nextProps.myActions.saves.some(save => save.listingId === this.props.currentListing.id)});
-            // this.props.fetchListingActions(this.props.currentListing.id);
         }
         //figure out how many users have saved this listing
         if (this.props.listingSaves.length !== nextProps.listingSaves.length){

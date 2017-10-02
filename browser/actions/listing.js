@@ -23,7 +23,6 @@ export const interactionSuccess_action = interaction => ({ type: 'SUCCESS', inte
 export const fetchPageViews_dispatch = listingId => {
     return axios.get(`/api/listings/googleanalytics/${listingId}`)
         .then(res => {
-            console.log(res.data);
             let pageViewsArr = res.data;
             if (pageViewsArr.length && pageViewsArr[1]) {
                 return Number(pageViewsArr[1]);
