@@ -11,6 +11,7 @@ import store from './store.jsx';
 import { me_dispatch, viewUser_dispatch, viewUserListings_dispatch, setDestination_action } from './actions/user';
 import { fetchAllListings_dispatch, fetchSingleListing_dispatch, fetchListingsByUser_dispatch } from './actions/listing';
 import { fetchAllNetworks_dispatch } from './actions/network';
+import { fetchMySaves_dispatch } from './actions/action';
 
 import LoginOrSignup from './components/LoginOrSignup.jsx';
 import Success from './components/Success.jsx';
@@ -94,6 +95,12 @@ const loadEverything = () => {
   recordPageView();
 }
 
+const loadSavedPosts = () => {
+  const { user } = store.getState();
+  store.dispatch(fetchMySaves_dispatch(user.id));
+  recordPageView();
+}
+
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
@@ -128,7 +135,7 @@ ReactDOM.render(
           <Route path="/account/managenetworks" component={AddNetwork} onEnter={recordPageView} />
           <Route path="/account/managelistings" component={MyListings} onEnter={recordPageView} />
           <Route path="/account/manageoffers" component={MyOffers} onEnter={recordPageView} />
-          <Route path="/account/savedlistings" component={MySavedListings} onEnter={recordPageView} />
+          <Route path="/account/savedlistings" component={MySavedListings} onEnter={loadSavedPosts} />
         </Route>
       </Route>
       <Route path="listings" component={ListingsContainer} />

@@ -13,6 +13,7 @@ const revokeOffer_action = offerId => ({ type: 'REVOKE_OFFER', offerId });
 const editOffer_action = offer => ({ type: 'EDIT_OFFER', offer });
 const savePost_action = save => ({ type: 'SAVE_POST', save });
 const unsavePost_action = saveId => ({ type: 'UNSAVE_POST', saveId });
+const setMySaves_action = mySaves => ({ type: 'SET_MY_SAVES', mySaves });
 const addEndorsement_action = endorse => ({ type: 'ADD_ENDORSEMENT', endorse });
 const removeEndorsement_action = endorseId => ({ type: 'REMOVE_ENDORSEMENT', endorseId });
 
@@ -113,6 +114,15 @@ export const unsave_dispatch = saveId => dispatch => {
         })
         .catch(console.error)
 };
+
+export const fetchMySaves_dispatch = userId => dispatch => {
+    return axios.get(`/api/actions/saves/user/${userId}`)
+        .then(res => {
+            dispatch(setMySaves_action(res.data));
+        })
+        .catch(error =>
+            dispatch(setMySaves_action({ error })));
+}
 
 export const addEndorsement_dispatch = endorse => dispatch => {
     return axios.post('/api/actions/endorsements', endorse)

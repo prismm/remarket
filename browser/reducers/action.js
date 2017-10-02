@@ -17,6 +17,9 @@ export default function(state = initialState, action) {
         case 'SET_MY_ACTIONS':
             newState.myActions = action.myActions;
             break;
+        case 'SET_MY_SAVES':
+            newState.mySaves = action.mySaves;
+            break;
         case 'ADD_COMMENT':
             newState.myComments = [action.comment, ...newState.myComments];
             newState.myActions.comments = [action.comment, ...newState.myActions.comments];

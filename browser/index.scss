@@ -172,13 +172,19 @@ body {
     }
     .listing-detail-timestamp {
         font-style: italic;
-        // margin-bottom: 0;
+        font-family: "Roboto", sans-serif;
+        line-height: 1.42857;
+        margin-bottom: 10px;
+        font-size: 13px;
+        color: rgba(0, 0, 0, 0.87);
     }
     .time-ago {
         color: rgb(63, 81, 181);
         font-style: italic;
         display: inline;
         padding-left: 5px;
+        font-family: "Roboto", sans-serif;
+        line-height: 1.42857;
         @media (max-width: 599px) {
             display: none;
         }
@@ -912,4 +918,8 @@ fieldset {
 .selected-item-error {
     margin-right: 1em;
     color: #FC0096;
+}
+
+.no-posts-yet {
+    margin: 1em 0;
 }
