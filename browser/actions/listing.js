@@ -19,6 +19,20 @@ export const interactionSuccess_action = interaction => ({ type: 'SUCCESS', inte
 
 /* ------------       DISPATCHERS     ------------------ */
 
+
+export const fetchPageViews_dispatch = listingId => {
+    return axios.get(`/api/listings/googleanalytics/${listingId}`)
+        .then(res => {
+            console.log(res.data);
+            let pageViewsArr = res.data;
+            if (pageViewsArr.length && pageViewsArr[1]) {
+                return Number(pageViewsArr[1]);
+            } else {
+                return 0;
+            }
+        })
+        .catch(console.error);
+}
 export const fetchAllListings_dispatch = () => dispatch => {
     return axios.get('/api/listings')
         .then(res => {

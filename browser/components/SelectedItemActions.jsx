@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Dialog from 'react-toolbox/lib/dialog';
 import FontIcon from 'react-toolbox/lib/font_icon';
 
-import {flagListing_dispatch} from '../actions/listing';
+import {flagListing_dispatch, fetchPageViews_dispatch } from '../actions/listing';
 import {clearListingActions_dispatch, fetchMyActions_dispatch, fetchListingActions_dispatch, addSave_dispatch, unsave_dispatch} from '../actions/action'
 
 /*----------------------- MyOffers Component ---------------------------*/
@@ -20,7 +20,8 @@ class SelectedItemActions extends Component {
             dialogActive: false,
             flagged: false,
             error: null,
-            numberOfSaves: 0
+            numberOfSaves: 0,
+            pageViews: 0
         }
         this.saveListing = this.saveListing.bind(this);
         this.showFlagDialog = this.showFlagDialog.bind(this);
@@ -30,12 +31,17 @@ class SelectedItemActions extends Component {
     }
 
     componentDidMount(){
-        console.log('mounted', this.props.saved);
         if (this.props.user.id) this.props.fetchMyActions(this.props.user.id);
-        if (this.props.currentListing.id) this.props.fetchListingActions(this.props.currentListing.id);
-        console.log('postmount', this.props.saved);
-        // let didThisGetSaved = this.props.myActions.saves && this.props.myActions.saves.some(save => save.listingId === this.props.currentListing.id);
-        // console.log('did this get saved? my actions saves', this.props.myActions)
+        if (this.props.currentListing.id) {
+            fetchPageViews_dispatch(this.props.currentListing.id)
+                .then(views => {
+                        this.setState({pageViews: views});
+                    })
+                .catch(error => {
+                    console.error(error)
+                })
+            this.props.fetchListingActions(this.props.currentListing.id);
+        }
     }
 
     componentWillReceiveProps(nextProps){
@@ -47,6 +53,16 @@ class SelectedItemActions extends Component {
         //figure out how many users have saved this listing
         if (this.props.listingSaves.length !== nextProps.listingSaves.length){
             this.setState({numberOfSaves: nextProps.listingSaves.length})
+        }
+        if (this.props.currentListing.id !== nextProps.currentListing.id){
+            fetchPageViews_dispatch(nextProps.currentListing.id)
+            .then(views => {
+                    this.setState({pageViews: views});
+                })
+            .catch(error => {
+                console.error(error)
+            })
+            this.props.fetchListingActions(nextProps.currentListing.id);
         }
     }
 
@@ -65,7 +81,6 @@ class SelectedItemActions extends Component {
             } else {
                 this.setState({saved: false, numberOfSaves: this.state.numberOfSaves - 1 });
                 currentSave = this.props.myActions.saves.find(save => save.listingId === this.props.currentListing.id);
-                console.log('save to be removed', currentSave.id)
                 if (currentSave && currentSave.id) this.props.unsaveListing(currentSave.id);
                 this.props.fetchListingActions(this.props.currentListing.id);
             }
@@ -120,9 +135,10 @@ class SelectedItemActions extends Component {
             { label: 'Cancel', onClick: this.handleDialogCancel },
             { label: 'Yes, Flag it!', className: 'yes-flag-it', onClick: this.flagListing }
           ];
+        const pageViewNote = this.state.pageViews === 1 ? '1 person ' : this.state.pageViews + ' people'
         return (
         <div>
-            <div className="selected-item-error">12 people viewed this post.</div>
+            {this.state.pageViews ? <div className="selected-item-error">{pageViewNote} viewed this post.</div> : null}
             {!this.state.shared ?
                 <div className="action-item-container" onClick={ this.facebookShare }>
                     <span className="action-item">Share on Facebook </span> 
@@ -134,7 +150,7 @@ class SelectedItemActions extends Component {
                     <i className="action-item-icon action-item-icon-done icon ion-social-facebook" />
                 </div>
             }
-            { !isItMyListing ?
+            {!isItMyListing ?
                 <div>
                     {!this.state.saved ?
                         <div className="action-item-container" onClick={ this.saveListing }>
@@ -207,18 +223,15 @@ const mapDispatch = dispatch => ({
         dispatch(flagListing_dispatch(listingId, user))
     },
     saveListing: save => {
-        console.log('trying to save listing!')
         dispatch(addSave_dispatch(save))
     },
     unsaveListing: saveId => {
-        console.log('trying to unsave listing!');
         dispatch(unsave_dispatch(saveId));
     },
     fetchMyActions: userId => {
         dispatch(fetchMyActions_dispatch(userId))
     },
     fetchListingActions: listingId => {
-        console.log("refreshing listing actions from db")
         dispatch(fetchListingActions_dispatch(listingId))
     },
     clearListingActions: () => {
