@@ -30,10 +30,9 @@ class SelectedItemActions extends Component {
     }
 
     componentDidMount(){
-        
         console.log('mounted', this.props.saved);
-        this.props.fetchMyActions(this.props.user.id);
-        this.props.fetchListingActions(this.props.currentListing.id);
+        if (this.props.user.id) this.props.fetchMyActions(this.props.user.id);
+        if (this.props.currentListing.id) this.props.fetchListingActions(this.props.currentListing.id);
         console.log('postmount', this.props.saved);
         // let didThisGetSaved = this.props.myActions.saves && this.props.myActions.saves.some(save => save.listingId === this.props.currentListing.id);
         // console.log('did this get saved? my actions saves', this.props.myActions)

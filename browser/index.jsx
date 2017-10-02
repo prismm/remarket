@@ -42,8 +42,9 @@ const requireLogin = (nextRouterState, replace, next) => {
       if (!user.id) {
         store.dispatch(setDestination_action(nextRouterState.location.pathname)); //captures destination for post-login route
         replace('/login');
+      } else {
+        recordPageView('Create Listing', user.id)
       }
-      recordPageView('Create Listing', user.id)
       next();
     })
     .catch(console.error)
@@ -60,10 +61,11 @@ const getMyListings = (nextRouterState, replace, next) => {
       const { user } = store.getState();
       if (!user.id) {
         store.dispatch(setDestination_action(nextRouterState.location.pathname));  //captures destination for post-login route
-        replace('/login')
+        replace('/login');
+      } else {
+        store.dispatch(fetchListingsByUser_dispatch(user.id));
+        recordPageView('Account', user.id);
       }
-      store.dispatch(fetchListingsByUser_dispatch(user.id));
-      recordPageView('Account', user.id);
       next();
     })
     .catch(console.error)
@@ -75,11 +77,12 @@ const viewUser = (nextRouterState, replace, next) => {
       const { user } = store.getState();
       if (!user.id) {
         store.dispatch(setDestination_action(nextRouterState.location.pathname));  //captures destination for post-login route
-        replace('/login')
+        replace('/login');
+      } else {
+        store.dispatch(viewUser_dispatch(nextRouterState.params.userId));
+        store.dispatch(viewUserListings_dispatch(nextRouterState.params.userId));
+        recordPageView();
       }
-      store.dispatch(viewUser_dispatch(nextRouterState.params.userId));
-      store.dispatch(viewUserListings_dispatch(nextRouterState.params.userId));
-      recordPageView();
       next();
     })
     .catch(console.error)

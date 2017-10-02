@@ -13,7 +13,7 @@ var analytics = new Analytics('NxBhoGdVdYkBQtlIQdvKg2ZRwDNxoaYo');
 
 function isLoggedIn(req, res, next) {
     if (!req.user) {
-        console.log('FAILED IN isLoggedIn', req)
+        console.log('FAILED IN ACTIONS isLoggedIn')
         res.status(403).send('Access denied. Contact a system administrator if you believe you\'re seeing this message in error.')
     } else {
         next()
@@ -24,7 +24,7 @@ function isRightUserByUserId(req, res, next) {
     if (req.user.id === Number(req.params.userId)) {
         next();
     } else {
-        console.log('FAILED in isRightUserByUserId', req)
+        console.log('FAILED in ACTIONS isRightUserByUserId')
         res.status(403).send('Access denied. Contact a system administrator if you believe you\'re seeing this message in error.')
     }
 }

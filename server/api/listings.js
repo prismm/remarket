@@ -11,9 +11,55 @@ const mailer = require('../mailer')
 var Analytics = require('analytics-node');
 var analytics = new Analytics('NxBhoGdVdYkBQtlIQdvKg2ZRwDNxoaYo');
 
+//setting up google analytics reporting api to query page views
+const google = require('googleapis');
+const key = require('remarket-reporting-api.json'); //will be gitignored -- need to handle thru heroku on deploy
+const VIEW_ID = 'ga:121605325';
+let jwtClient = new google.auth.JWT(
+    key.client_email,
+    null,
+    key.private_key, ['https://www.googleapis.com/auth/analytics.readonly'],
+    null
+);
+
+//creating analytics route to query pageviews
+router.get('/googleanalytics/:listingId', (req, res, next) => {
+    function queryData(analyticsObj) {
+        analyticsObj.data.ga.get({
+            auth: jwtClient,
+            ids: VIEW_ID,
+            metrics: 'ga:pageviews', //switch to pageviews for basic views -- this is unique visitors
+            dimensions: 'ga:pagePath',
+            filters: `ga:pagePath==/listings/${req.params.listingId}`,
+            'start-date': '2005-01-01',
+            'end-date': 'today'
+        }, function(err, response) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            // return response;
+            if (response && response.rows) {
+                // console.log('response', response.rows, response.rows[0][1])
+                res.json(response.rows[0]) //if the route exists send back an array with length = 1, [{listingRoute}, {number of views}]
+            } else {
+                res.json([]) //if the route is invalid then send back an empty array
+            }
+        })
+    }
+    jwtClient.authorize(function(err) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        let googleAnalytics = google.analytics('v3');
+        queryData(googleAnalytics);
+    });
+})
+
 function isLoggedIn(req, res, next) {
     if (!req.user) {
-        console.log("FAILED IN isLoggedIn", req)
+        console.log("FAILED IN isLoggedIn")
         res.status(403).send('Access denied. Contact a system administrator if you believe you\'re seeing this message in error.')
         throw new Error();
     } else {

@@ -29,7 +29,7 @@ function isRightUserByUserId(req, res, next) {
     if (req.user.id === Number(req.params.userId)) {
         return next();
     } else {
-        console.log("FAILED IN isRightUserByUserId", req)
+        console.log("FAILED IN isRightUserByUserId")
         res.status(403).send('Access denied. Contact a system administrator if you believe you\'re seeing this message in error.')
         throw new Error();
     }
