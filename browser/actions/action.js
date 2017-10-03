@@ -118,7 +118,9 @@ export const unsave_dispatch = saveId => dispatch => {
 export const fetchMySaves_dispatch = userId => dispatch => {
     return axios.get(`/api/actions/saves/user/${userId}`)
         .then(res => {
-            dispatch(setMySaves_action(res.data));
+            let savesArr = res.data;
+            savesArr.sort((save1, save2) => new Date(save2.updatedAt) - new Date(save1.updatedAt));
+            dispatch(setMySaves_action(savesArr));
         })
         .catch(error =>
             dispatch(setMySaves_action({ error })));
