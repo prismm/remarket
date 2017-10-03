@@ -2,7 +2,7 @@
 // @import url('https://fonts.googleapis.com/css?family=Roboto');
 $md-primary-color: $md-grey-900;
 $md-secondary-color: $md-pink-a-400;
-@import url('http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css');
+@import url('//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css');
 @include react-md-everything;
 * {
     font-family: avenir;

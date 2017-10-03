@@ -241,29 +241,29 @@ const photos = require('./seedfile/photos.json');
 //     .finally(function() {
 //         db.close();
 //         return null;
-//     });
+// //     });
 
 
-Offer.sync({ force: true })
-    .then(function() {
-        console.log('synced offers')
-        return Endorsement.sync({ force: true })
-    })
-    .then(function() {
-        console.log('synced endorsements')
-        return Comment.sync({ force: true })
-    })
-    .then(function() {
-        console.log('synced comments')
-        return db.sync()
-    })
-    .then(function() {
-        console.log('db synced')
-    }, function() {
-        console.log('Error while syncing')
-    })
-    .finally(function() {
-        db.close();
-        console.log('NICE!')
-        return null;
-    })
+// Offer.sync({ force: true })
+//     .then(function() {
+//         console.log('synced offers')
+//         return Endorsement.sync({ force: true })
+//     })
+//     .then(function() {
+//         console.log('synced endorsements')
+//         return Comment.sync({ force: true })
+//     })
+//     .then(function() {
+//         console.log('synced comments')
+//         return db.sync()
+//     })
+//     .then(function() {
+//         console.log('db synced')
+//     }, function() {
+//         console.log('Error while syncing')
+//     })
+//     .finally(function() {
+//         db.close();
+//         console.log('NICE!')
+//         return null;
+//     })

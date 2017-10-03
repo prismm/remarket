@@ -139,7 +139,7 @@ class SelectedItemActions extends Component {
             {this.state.pageViews ? <div className="selected-item-error">{pageViewNote} viewed this post.</div> : null}
             {!this.state.shared ?
                 <div className="action-item-container" onClick={ this.facebookShare }>
-                    <span className="action-item">Share on Facebook </span> 
+                    <span className="action-item">Share on Facebook </span>
                     <i className="action-item-icon icon ion-social-facebook" />
                 </div>
                 :
