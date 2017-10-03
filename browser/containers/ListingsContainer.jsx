@@ -101,7 +101,7 @@ class Listings extends Component {
         return (
             <div>
                 <MetaTags>
-                    <meta id="og-url" property="og:url" content={window.location.href} />
+                    <meta id="og-url" property="og:url" content="https://www.reuse.market" />
                     <meta id="og-type" property="og:type" content="website" />
                     <meta id="fb-app-id" property="fb:app_id" content="1809907029339544" />
                     <meta id="og-title" property="og:title" content="Remarket" />
