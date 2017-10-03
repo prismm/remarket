@@ -50,6 +50,16 @@ module.exports = {
                     },
                     'postcss-loader'
                 ]
+            },
+            {
+                test: /\.(ttf|eot|woff|woff2)$/,
+                loader: 'file-loader'
+            },
+            {
+                test: /\.svg/,
+                use: {
+                    loader: 'svg-url-loader'
+                }
             }
         ]
     },

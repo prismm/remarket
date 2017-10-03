@@ -8,6 +8,13 @@ const Comment = db.define('comment', {
             len: [2, 140]
         }
     }
+}, {
+    paranoid: true,
+    getterMethods: {
+        type: function() {
+            return 'comment';
+        }
+    },
 });
 
 module.exports = Comment;

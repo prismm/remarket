@@ -7,9 +7,7 @@ const User = model.User;
 const Network = model.Network;
 const Message = model.Message;
 const Listing = model.Listing;
-const Offer = model.Offer;
 const Token = model.Token;
-const Comment = model.Comment;
 const affiliations = model.network_affiliations;
 const mailer = require('../mailer');
 const crypto = require('crypto');
@@ -19,7 +17,7 @@ var analytics = new Analytics('NxBhoGdVdYkBQtlIQdvKg2ZRwDNxoaYo');
 
 function isLoggedIn(req, res, next) {
     if (!req.user) {
-        console.log("FAILED IN isLoggedIn", req)
+        console.log("FAILED IN isLoggedIn")
         res.status(403).send('Access denied. Contact a system administrator if you believe you\'re seeing this message in error.')
             // throw new Error();
     } else {
@@ -31,20 +29,20 @@ function isRightUserByUserId(req, res, next) {
     if (req.user.id === Number(req.params.userId)) {
         return next();
     } else {
-        console.log("FAILED IN isRightUserByUserId", req)
+        console.log("FAILED IN isRightUserByUserId")
         res.status(403).send('Access denied. Contact a system administrator if you believe you\'re seeing this message in error.')
         throw new Error();
     }
 }
 
-router.get('/', (req, res, next) => {
+router.get('/', isLoggedIn, (req, res, next) => {
     User.findAll({ include: [{ all: true }] })
         .then(users => res.json(users))
         .catch(next)
 })
 
 //filtering networks {confirmed: true} on front end
-router.get('/:id', (req, res, next) => {
+router.get('/:id', isLoggedIn, (req, res, next) => {
     User.findById(req.params.id, { include: [{ all: true }] })
         .then(user => {
             if (!user) {
@@ -56,8 +54,9 @@ router.get('/:id', (req, res, next) => {
         .catch(next)
 })
 
+
 //a route for GET: /api/users/${user.id}/networks that returns a user's networks -- as entries in join table
-router.get('/:id/networks', (req, res, next) => {
+router.get('/:id/networks/', isLoggedIn, (req, res, next) => {
     affiliations.findAll({ where: { userId: req.params.id, confirmed: true } })
         .then(userNetworks => res.json(userNetworks))
         .catch(next)

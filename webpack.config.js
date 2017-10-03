@@ -43,6 +43,16 @@ module.exports = {
                 ]
             },
             {
+                test: /\.(ttf|eot|woff|woff2)$/,
+                loader: 'file-loader'
+            },
+            {
+                test: /\.svg/,
+                use: {
+                    loader: 'svg-url-loader'
+                }
+            },
+            {
                 test: /\.html$/, //for html minification; if you take out minifier you must also take this test out
                 loaders: [
                     'file-loader?name=[name].html',

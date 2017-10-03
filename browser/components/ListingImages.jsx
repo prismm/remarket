@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import spinner from '../HOC/Spinner.jsx';
+import spinner from '../HOC/SpinnerForArray.jsx';
 import AutoRotateImage from '../HOC/LoadImage.jsx'
 
 /*----------------------- ListingImages Component ---------------------------*/
