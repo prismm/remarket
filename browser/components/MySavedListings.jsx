@@ -36,7 +36,7 @@ function MySavedListings(props){
                                 <TableColumn><Listing listing={listing}/></TableColumn>
                                 <TableColumn>{listing.category}</TableColumn>
                                 <TableColumn>{listing.status !== 'active' ? <i>{listing.status}</i> : listing.status}</TableColumn>
-                                <TableColumn>{listing.status !== 'active' ? <i>{listing.expiresIn}</i> : <p>{listing.expiresIn} <TimeLeft time={listing.expirationDate} /></p>}</TableColumn>
+                                <TableColumn>{listing.status !== 'active' ? <i>{listing.expiresIn}</i> : <div>{listing.expiresIn} <TimeLeft time={listing.expirationDate} /></div>}</TableColumn>
                             </TableRow>
                         )
                     )

@@ -42,7 +42,7 @@ const MyListings = (props) => {
                                 <TableColumn><Listing listing={listing}/></TableColumn>
                                 <TableColumn>{listing.category}</TableColumn>
                                 <TableColumn>{listing.status !== 'active' ? <i>{listing.status}</i> : listing.status}</TableColumn>
-                                <TableColumn>{listing.status !== 'active' ? <i>{listing.expiresIn}</i> : <p>{listing.expiresIn} <TimeLeft time={listing.expirationDate} /></p>}</TableColumn>
+                                <TableColumn>{listing.status !== 'active' ? <i>{listing.expiresIn}</i> : <div>{listing.expiresIn} <TimeLeft time={listing.expirationDate} /></div>}</TableColumn>
                                 <TableColumn>{listing.status !== 'deleted' ? <RenewListing renewListing={props.renewListing} currentListing={listing} /> : null}</TableColumn>
                                 <TableColumn>{listing.status !== 'deleted' ? <EditListingButton setCurrentListing={props.setCurrentListing} setEditStatus={props.setEditStatus} currentListing={listing} /> : null}</TableColumn>
                                 <TableColumn>{listing.status !== 'deleted' ? <DeleteListingButton deleteListing={props.deleteListing} archiveListing={props.archiveListing} currentListing={listing} /> : null}</TableColumn>
