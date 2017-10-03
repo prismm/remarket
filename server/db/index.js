@@ -45,7 +45,6 @@ Message.belongsTo(Listing)
 
 // User has many Offers (Offer table has userId foreign key)
 Offer.belongsTo(User, { as: 'bidder' });
-// User.hasMany(Offer);
 
 // Listing has many Offers (Offer table has listingId foreign key)
 Offer.belongsTo(Listing);
@@ -57,7 +56,6 @@ Listing.hasMany(Photo);
 
 // User has many Comments (Comments table has userId foreign key)
 Comment.belongsTo(User, { as: 'author' });
-// User.hasMany(Comment);
 
 //Listing has many Comments
 Comment.belongsTo(Listing);
@@ -65,7 +63,6 @@ Listing.hasMany(Comment);
 
 // User has many Endorsements (Endorsement table has userId foreign key)
 Endorsement.belongsTo(User, { as: 'endorser' });
-// User.hasMany(Endorsement);
 
 //Listing has many Endorsements
 Endorsement.belongsTo(Listing);
