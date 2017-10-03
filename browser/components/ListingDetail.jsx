@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import MetaTags from 'react-meta-tags';
 
 import Button from 'react-md/lib/Buttons/Button'
 
@@ -15,7 +16,8 @@ import { NetworkAvatar } from './Avatars.jsx';
 import MessageUser from './MessageUser.jsx';
 import ListingImages from './ListingImages.jsx';
 import ImgUpload from './ImgUpload.jsx';
-import Snackbar from '../HOC/Snackbar.jsx'
+import Snackbar from '../HOC/Snackbar.jsx';
+import SelectedItemActions from './SelectedItemActions.jsx'
 
 import { clearCurrentListing_dispatch } from '../actions/listing';
 import { messageSent_action } from '../actions/user';
@@ -74,9 +76,17 @@ class ListingDetail extends Component {
         return (
             <div>
             { error &&  <h3 className="error"> { error.response && error.response.status } / { error.response && error.response.statusText } </h3> }
-            { error &&  <div className="error listing-not-found"> { error.response.data } </div> }
+            { error &&  <div className="error listing-not-found"> { error.response && error.response.data } </div> }
             {shouldRenderDetail && (
                 <div className="md-grid listing-detail-container">
+                <MetaTags>
+                    <meta id="og-url" property="og:url" content={window.location.href} />
+                    <meta id="og-type" property="og:type" content="product" />
+                    <meta id="fb-app-id" property="fb:app_id" content="1809907029339544" />
+                    <meta id="og-title" property="og:title" content={this.props.currentListing.name} />
+                    <meta id ="og-description" property="og:description" content={this.props.currentListing.category + ' - ' + this.props.currentListing.subcategory + ': ' + this.props.currentListing.description.slice(0, 140) + '...'} />
+                    {this.props.currentListing.photos && this.props.currentListing.photos.length ? <meta id ="og-image" property="og:image" content={this.props.currentListing.photos[0].link} /> : <meta id ="og-image" property="og:image" content="https://s3.us-east-2.amazonaws.com/remarket-123/remarket-logo-588.png" /> }
+                </MetaTags>
                 <Breadcrumbs currentListing={this.props.currentListing} />
                 <div className="md-cell md-cell--10 currentListing md-grid">
                 <div className="md-cell md-cell--1" />
@@ -84,8 +94,8 @@ class ListingDetail extends Component {
                     <div className="md-cell md-cell--1" />
                     <div className={bodyClassname}>
                     <div className="item-descr">
+                        <h3 className="selected-item-name">{this.props.currentListing.name}</h3>
                         <div className="selected-item-headers">
-                            <h3 className="selected-item-name">{this.props.currentListing.name}</h3>
                             <h3 className="selected-item-category">{this.props.currentListing.category}</h3>
                             {isItMyListing ?
                                 <div>
@@ -110,9 +120,9 @@ class ListingDetail extends Component {
                                 <MessageUser label={label(this.props.currentListing)} subject={subject} />
                                 </div>
                             }
-                            {wasItEdited ? <div className="modified-timestamp"><p className="listing-detail-timestamp">Updated on {this.props.currentListing.modified}<TimeAgo time={this.props.currentListing.updatedAt} /></p></div>
+                            {wasItEdited ? <div className="modified-timestamp"><div className="listing-detail-timestamp">Updated on {this.props.currentListing.modified}<TimeAgo time={this.props.currentListing.updatedAt} /></div></div>
                                 :
-                                <p className="listing-detail-timestamp">Created on {this.props.currentListing.created}<TimeAgo time={this.props.currentListing.createdAt} /></p>
+                                <div className="listing-detail-timestamp">Created on {this.props.currentListing.created}<TimeAgo time={this.props.currentListing.createdAt} /></div>
                             }
                             { (this.props.currentListing.networks && this.props.currentListing.networks.length) ?
                                 this.props.currentListing.networks.map(
@@ -123,6 +133,7 @@ class ListingDetail extends Component {
                             }
                         </div>
                         <div className="selected-item-actions">
+                            <SelectedItemActions />
                         </div>
                         <hr className="detail-section-separator" />
                         {this.props.currentListing.location ? <p className="selected-item-location">Location: {this.props.currentListing.location}</p> : null}
@@ -159,7 +170,7 @@ class ListingDetail extends Component {
 }
 
 ListingDetail.propTypes = {
-  currentListing: PropTypes.object,
+  currentListing: PropTypes.object.isRequired,
   clearCurrentListing: PropTypes.func.isRequired,
   user: PropTypes.object
 };

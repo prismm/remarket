@@ -26,7 +26,7 @@ const MyListings = (props) => {
         <DataTable plain>
             <TableHeader>
             <TableRow>
-                <TableColumn>listing</TableColumn>
+                <TableColumn>post</TableColumn>
                 <TableColumn>category</TableColumn>
                 <TableColumn>status</TableColumn>
                 <TableColumn>expires on</TableColumn>
@@ -51,7 +51,7 @@ const MyListings = (props) => {
                     )
                 )
                 :
-                <div>You haven't posted anything yet.</div>
+                <div className="no-posts-yet">You haven't posted anything yet.</div>
                 }
             </TableBody>
             </DataTable>

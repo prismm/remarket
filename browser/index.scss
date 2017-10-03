@@ -2,9 +2,16 @@
 // @import url('https://fonts.googleapis.com/css?family=Roboto');
 $md-primary-color: $md-grey-900;
 $md-secondary-color: $md-pink-a-400;
+@import url('http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css');
 @include react-md-everything;
 * {
     font-family: avenir;
+}
+
+.icon {
+    font-size: 24px;
+    padding-right: 8.5px;
+    padding-left: 8.5px;
 }
 
 html {
@@ -13,6 +20,7 @@ html {
 }
 
 h3 {
+    white-space: normal;
     @media (max-width: 800px) {
         white-space: normal;
     }
@@ -159,18 +167,24 @@ body {
         font-style: italic;
     }
     .edit-listing-button {
-        margin-bottom: 2em;
+        margin-bottom: 1em;
         margin-right: 1em;
     }
     .listing-detail-timestamp {
         font-style: italic;
-        // margin-bottom: 0;
+        font-family: "Roboto", sans-serif;
+        line-height: 1.42857;
+        margin-bottom: 10px;
+        font-size: 13px;
+        color: rgba(0, 0, 0, 0.87);
     }
     .time-ago {
         color: rgb(63, 81, 181);
         font-style: italic;
         display: inline;
         padding-left: 5px;
+        font-family: "Roboto", sans-serif;
+        line-height: 1.42857;
         @media (max-width: 599px) {
             display: none;
         }
@@ -825,9 +839,87 @@ fieldset {
 .selected-item-headers {
     float: left;
     margin-bottom: 1em;
+    width: 60%;
 }
 
 .selected-item-actions {
     float: right;
     margin-bottom: 1em;
+    text-align: right;
+    opacity: 0.82;
+}
+
+.action-item-container {
+    height: 2.5em;
+    color: rgb(63, 81, 181);
+    font-size: 12px;
+    margin-right: 1em;
+    &:hover {
+        cursor: pointer;
+    }
+    &:active {
+        cursor: pointer;
+        color: $md-secondary-color
+    }
+}
+
+.action-item {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+    padding-right: 0.5em;
+    &:hover {
+        font-style: italic;
+    }
+}
+
+.action-item-done {
+    color: $md-secondary-color;
+    font-style: italic;
+    &:hover {
+        font-style: normal;
+    }
+}
+
+.action-item-icon {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+}
+
+.action-item-icon-done {
+    color: $md-secondary-color !important;
+}
+
+.theme--title--2J-aP90f {
+    font-family: avenir;
+}
+
+.dialog-text {
+    font-family: avenir;
+}
+
+.yes-flag-it {
+    color: $md-secondary-color !important;
+    &:hover {
+        color: black !important;
+        background-color: $md-secondary-color !important;
+    }
+}
+
+.action-flag-container {
+    margin-top: -4px;
+}
+
+.action-save-item {
+    padding-top: 1px;
+}
+
+.selected-item-error {
+    margin-right: 1em;
+    color: #FC0096;
+}
+
+.no-posts-yet {
+    margin: 1em 0;
 }

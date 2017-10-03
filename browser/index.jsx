@@ -11,6 +11,7 @@ import store from './store.jsx';
 import { me_dispatch, viewUser_dispatch, viewUserListings_dispatch, setDestination_action } from './actions/user';
 import { fetchAllListings_dispatch, fetchSingleListing_dispatch, fetchListingsByUser_dispatch } from './actions/listing';
 import { fetchAllNetworks_dispatch } from './actions/network';
+import { fetchMySaves_dispatch } from './actions/action';
 
 import LoginOrSignup from './components/LoginOrSignup.jsx';
 import Success from './components/Success.jsx';
@@ -42,8 +43,9 @@ const requireLogin = (nextRouterState, replace, next) => {
       if (!user.id) {
         store.dispatch(setDestination_action(nextRouterState.location.pathname)); //captures destination for post-login route
         replace('/login');
+      } else {
+        recordPageView('Create Listing', user.id)
       }
-      recordPageView('Create Listing', user.id)
       next();
     })
     .catch(console.error)
@@ -60,10 +62,11 @@ const getMyListings = (nextRouterState, replace, next) => {
       const { user } = store.getState();
       if (!user.id) {
         store.dispatch(setDestination_action(nextRouterState.location.pathname));  //captures destination for post-login route
-        replace('/login')
+        replace('/login');
+      } else {
+        store.dispatch(fetchListingsByUser_dispatch(user.id));
+        recordPageView('Account', user.id);
       }
-      store.dispatch(fetchListingsByUser_dispatch(user.id));
-      recordPageView('Account', user.id);
       next();
     })
     .catch(console.error)
@@ -75,11 +78,12 @@ const viewUser = (nextRouterState, replace, next) => {
       const { user } = store.getState();
       if (!user.id) {
         store.dispatch(setDestination_action(nextRouterState.location.pathname));  //captures destination for post-login route
-        replace('/login')
+        replace('/login');
+      } else {
+        store.dispatch(viewUser_dispatch(nextRouterState.params.userId));
+        store.dispatch(viewUserListings_dispatch(nextRouterState.params.userId));
+        recordPageView();
       }
-      store.dispatch(viewUser_dispatch(nextRouterState.params.userId));
-      store.dispatch(viewUserListings_dispatch(nextRouterState.params.userId));
-      recordPageView();
       next();
     })
     .catch(console.error)
@@ -88,6 +92,12 @@ const viewUser = (nextRouterState, replace, next) => {
 const loadEverything = () => {
   store.dispatch(fetchAllListings_dispatch());
   store.dispatch(fetchAllNetworks_dispatch());
+  recordPageView();
+}
+
+const loadSavedPosts = () => {
+  const { user } = store.getState();
+  store.dispatch(fetchMySaves_dispatch(user.id));
   recordPageView();
 }
 
@@ -125,7 +135,7 @@ ReactDOM.render(
           <Route path="/account/managenetworks" component={AddNetwork} onEnter={recordPageView} />
           <Route path="/account/managelistings" component={MyListings} onEnter={recordPageView} />
           <Route path="/account/manageoffers" component={MyOffers} onEnter={recordPageView} />
-          <Route path="/account/savedlistings" component={MySavedListings} onEnter={recordPageView} />
+          <Route path="/account/savedlistings" component={MySavedListings} onEnter={loadSavedPosts} />
         </Route>
       </Route>
       <Route path="listings" component={ListingsContainer} />

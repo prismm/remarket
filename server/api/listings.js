@@ -11,9 +11,54 @@ const mailer = require('../mailer')
 var Analytics = require('analytics-node');
 var analytics = new Analytics('NxBhoGdVdYkBQtlIQdvKg2ZRwDNxoaYo');
 
+//setting up google analytics reporting api to query page views
+const google = require('googleapis');
+const clientEmail = process.env.GA_CLIENT_EMAIL ? process.env.GA_CLIENT_EMAIL : require('remarket-reporting-api.json').client_email; //will be gitignored -- need to handle thru heroku on deploy
+const privateKey = process.env.GA_PRIVATE_KEY ? process.env.GA_PRIVATE_KEY : require('remarket-reporting-api.json').private_key;
+const VIEW_ID = 'ga:121605325';
+let jwtClient = new google.auth.JWT(
+    clientEmail,
+    null,
+    privateKey, ['https://www.googleapis.com/auth/analytics.readonly'],
+    null
+);
+
+//creating analytics route to query pageviews
+router.get('/googleanalytics/:listingId', (req, res, next) => {
+    function queryData(analyticsObj) {
+        analyticsObj.data.ga.get({
+            auth: jwtClient,
+            ids: VIEW_ID,
+            metrics: 'ga:pageviews', //switch to pageviews for basic views -- this is unique visitors
+            dimensions: 'ga:pagePath',
+            filters: `ga:pagePath==/listings/${req.params.listingId}`,
+            'start-date': '2005-01-01',
+            'end-date': 'today'
+        }, function(err, response) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            if (response && response.rows) {
+                res.json(response.rows[0]) //if the route exists send back a nested array with length = 1, [{listingRoute}, {number of views}]
+            } else {
+                res.json([]) //if the route is invalid then send back an empty array
+            }
+        })
+    }
+    jwtClient.authorize(function(err) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        let googleAnalytics = google.analytics('v3');
+        queryData(googleAnalytics);
+    });
+})
+
 function isLoggedIn(req, res, next) {
     if (!req.user) {
-        console.log("FAILED IN isLoggedIn", req)
+        console.log("FAILED IN isLoggedIn")
         res.status(403).send('Access denied. Contact a system administrator if you believe you\'re seeing this message in error.')
         throw new Error();
     } else {

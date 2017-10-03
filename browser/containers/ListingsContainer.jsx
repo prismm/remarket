@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import MetaTags from 'react-meta-tags';
 
 import ListingsList from '../components/ListingsList.jsx';
 import Filters from '../components/Filters.jsx';
@@ -99,6 +100,14 @@ class Listings extends Component {
         const subcategories = this.props.subcategories ? this.props.subcategories : null;
         return (
             <div>
+                <MetaTags>
+                    <meta id="og-url" property="og:url" content={window.location.href} />
+                    <meta id="og-type" property="og:type" content="website" />
+                    <meta id="fb-app-id" property="fb:app_id" content="1809907029339544" />
+                    <meta id="og-title" property="og:title" content="Remarket" />
+                    <meta id ="og-description" property="og:description" content="Remarket (www.reuse.market) is a classifieds site and marketplace for students at NYU & Columbia. The goal of remarket is to improve the efficiency of our community's secondhand markets by unifying and streamlining all the fragmented markets that are in place today (on facebook groups, listservs, etc.)." />
+                    <meta id ="og-image" property="og:image" content="https://s3.us-east-2.amazonaws.com/remarket-123/remarket-logo-588.png" />
+                </MetaTags>
                 <Filters
                     handleLocationChange={this.handleLocationChange}
                     handleSubmit={this.handleSubmit}
