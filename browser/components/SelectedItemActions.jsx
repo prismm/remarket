@@ -13,7 +13,6 @@ import {clearListingActions_dispatch, fetchMyActions_dispatch, fetchListingActio
 class SelectedItemActions extends Component {
     constructor(props){
         super(props);
-        console.log('constructed', props.saved)
         this.state = {
             saved: props.saved || false,
             shared: false,
