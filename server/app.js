@@ -6,6 +6,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const models = require('./db');
 const db = models.db;
+const Listing = models.Listing;
 const session = require('express-session');
 
 //secures app by setting http headers
@@ -54,6 +55,44 @@ app.use('/s3', require('react-s3-uploader/s3router')({
     region: 'us-east-2',
     signatureVersion: 'v4'
 }))
+
+//using views folder for pug template to serve social bots
+app.set('view engine', 'pug');
+
+function servingBots(req, res, next) {
+    const ua = req.headers['user-agent'];
+    let photoUrl;
+    if (/^(facebookexternalhit)|(Twitterbot)|(Pinterest)/gi.test(ua)) {
+        console.log(ua, ' is a bot');
+        Listing.findById(req.params.id, { include: [{ all: true }] })
+            .then(listing => {
+                if (!listing) {
+                    res.status('404').send('Failing to fetch me at first keep encouraged, Missing me one place search another, I stop somewhere waiting for you.');
+                } else {
+                    if (listing.photos && listing.photos.length) {
+                        photoUrl = listing.photos[0].link;
+                    } else {
+                        photoUrl = 'https://www.reuse.market/imgs/remarket-logo-588.png'
+                    }
+                    res.render('index', {
+                        url: `https://www.reuse.market/listings/${listing.id}`,
+                        title: listing.name,
+                        description: listing.category.toUpperCase() + ' -- ' + listing.subcategory + ': ' + listing.description,
+                        imageUrl: photoUrl
+                    })
+                }
+            })
+            .catch(next)
+    } else {
+        next();
+    }
+}
+
+app.get('/listings/:id', servingBots, (req, res, next) => {
+    console.log('hitting this route')
+    next();
+})
+
 
 //serves index.html file for non-api routes
 app.get('*', (req, res, next) => {
