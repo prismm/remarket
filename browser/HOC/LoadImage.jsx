@@ -10,6 +10,7 @@ class AutoRotateImage extends Component {
           if (img.type === 'error') {
             console.log('Error loading image ' + url);
           } else {
+            // img = this.convertCanvasToImage(img);
             if (this.refs && this.refs.container){this.refs.container.appendChild(img)};
           }
         },
@@ -18,6 +19,15 @@ class AutoRotateImage extends Component {
           contain: true
         }
       )
+    }
+
+    // Converts canvas to an image
+    convertCanvasToImage(canvas) {
+      console.log('this is happening now')
+      var image = new Image();
+      image.src = canvas.toDataURL("image/png");
+      image.classList.add('contain-image');
+      return image;
     }
 
     componentDidMount() {

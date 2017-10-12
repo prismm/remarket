@@ -63,7 +63,6 @@ function servingBots(req, res, next) {
     const ua = req.headers['user-agent'];
     let photoUrl;
     if (/^(facebookexternalhit)|(Twitterbot)|(Pinterest)/gi.test(ua)) {
-        console.log(ua, ' is a bot');
         Listing.findById(req.params.id, { include: [{ all: true }] })
             .then(listing => {
                 if (!listing) {
@@ -89,10 +88,8 @@ function servingBots(req, res, next) {
 }
 
 app.get('/listings/:id', servingBots, (req, res, next) => {
-    console.log('hitting this route')
     next();
 })
-
 
 //serves index.html file for non-api routes
 app.get('*', (req, res, next) => {

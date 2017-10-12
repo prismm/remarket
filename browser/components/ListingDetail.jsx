@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Helmet } from 'react-helmet';
 
 import Button from 'react-md/lib/Buttons/Button'
 
@@ -79,14 +78,6 @@ class ListingDetail extends Component {
             { error &&  <div className="error listing-not-found"> { error.response && error.response.data } </div> }
             {shouldRenderDetail && (
                 <div className="md-grid listing-detail-container">
-                <Helmet>
-                    <meta id="og-url" property="og:url" content={window.location.href} />
-                    <meta id="og-type" property="og:type" content="product" />
-                    <meta id="fb-app-id" property="fb:app_id" content="1809907029339544" />
-                    <meta id="og-title" property="og:title" content={this.props.currentListing.name} />
-                    <meta id ="og-description" property="og:description" content={this.props.currentListing.category + ' - ' + this.props.currentListing.subcategory + ': ' + this.props.currentListing.description.slice(0, 140) + '...'} />
-                    {this.props.currentListing.photos && this.props.currentListing.photos.length ? <meta id ="og-image" property="og:image" content={this.props.currentListing.photos[0].link} /> : <meta id ="og-image" property="og:image" content="https://s3.us-east-2.amazonaws.com/remarket-123/remarket-logo-588.png" /> }
-                </Helmet>
                 <Breadcrumbs currentListing={this.props.currentListing} />
                 <div className="md-cell md-cell--10 currentListing md-grid">
                 <div className="md-cell md-cell--1" />
