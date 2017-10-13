@@ -27,11 +27,11 @@ class ListingsList extends Component {
         this.timeout = setTimeout(() => {
             this.timeout = null;
             this.setState({waiting: false});
-          }, 750);
+          }, 4000);
     }
 
     componentWillReceiveProps(nextProps){
-        if (nextProps.listings){
+        if (nextProps.listings.length !== this.props.listings.length){
             this.setState({waiting: false})
         }
     }
@@ -77,10 +77,10 @@ class ListingsList extends Component {
                 { listings && !this.state.waiting ?
                     listings.map(listing => <div key={listing.id}><Listing listing={listing} /></div>)
                     :
-                    <Loader loadingText="" />
+                    <Loader loadingText="" /> //will occur if !listings (won't happen since listings is []) or if this.state.waiting (will happen when component mounts for 4 seconds or until component receives new listings)
                 }
                 { !listings.length && !this.state.waiting ?
-                    <div className="no-posts">No posts to display</div>
+                    <div className="no-posts">No posts to display</div> //will occur if there are no listings and 4 seconds have elapsed since mounting
                     :
                     null
                 }

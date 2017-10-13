@@ -64,34 +64,36 @@ class Main extends Component {
 
     return (
       <div>
-        <Link to="/">
-          <img
-            className={`remarket-logo ${rotateLogo && 'rotate-logo'}`} 
-            src="/imgs/remarket-logo.png"
-            alt="" height="40" width="40"
-            onClick={() => this.clickLogo()}
-          />
-        </Link>
-        
-        <h1 className="site-header">
-          <Link to="/" onClick={() => this.clickLogo()}>remarket</Link>
-        </h1>
-        
-        <Button raised primary className={NyuClassNames} onClick={() => this.setNetwork(2)} label="NYU" />
-        <Button raised primary className={ColumbiaClassNames} onClick={() => this.setNetwork(1)} label="Columbia" />
-        { loggedIn ?
-            <nav className="site-nav">
-              <a className="site-nav-link" href="#" onClick={handleClick}>Logout</a>
-              <Link className="site-nav-link" to="/account">My Account</Link>
-              <Link className="site-nav-link link-new-post" to="/listings/post">New Post</Link>
-            </nav> :
-            <nav className="site-nav">
-              <Link className="site-nav-link" method="login" to="/login">Login</Link>
-              <Link className="site-nav-link signup-link" method="signup" to="/signup">Sign Up</Link>
-            </nav>
-        }
+        <div className="site-header-container">
+          <Link to="/">
+            <img
+              className={`remarket-logo ${rotateLogo && 'rotate-logo'}`} 
+              src="/imgs/remarket-logo.png"
+              alt="" height="40" width="40"
+              onClick={() => this.clickLogo()}
+            />
+          </Link>
+          <h1 className="site-header">
+            <Link to="/" onClick={() => this.clickLogo()}>remarket</Link>
+          </h1>
+          <Button raised primary className={NyuClassNames} onClick={() => this.setNetwork(2)} label="NYU" />
+          <Button raised primary className={ColumbiaClassNames} onClick={() => this.setNetwork(1)} label="Columbia" />
+          { loggedIn ?
+              <nav className="site-nav">
+                <a className="site-nav-link" href="#" onClick={handleClick}>Logout</a>
+                <Link className="site-nav-link" to="/account">My Account</Link>
+                <Link className="site-nav-link link-new-post" to="/listings/post">New Post</Link>
+              </nav> :
+              <nav className="site-nav">
+                <Link className="site-nav-link" method="login" to="/login">Login</Link>
+                <Link className="site-nav-link signup-link" method="signup" to="/signup">Sign Up</Link>
+              </nav>
+          }
+        </div>
         <hr />
-        { children }
+          <div className="container-div">
+          { children }
+          </div>
         <hr />
       <Footer />
       </div>

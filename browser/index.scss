@@ -602,6 +602,7 @@ body {
     //     }}
     .loader-1 {
         width: 30px;
+        height: 10px;
         // height: 60px;
         font-size: 0;
         text-align: center;
@@ -926,4 +927,12 @@ fieldset {
 
 .contain-image {
     width: 100%
+}
+
+.container-div {
+    min-height: 500px;
+}
+
+.site-header-container {
+    // height: 45px;
 }
