@@ -133,8 +133,8 @@ class ListingDetail extends Component {
                         {this.props.currentListing.askingPrice ?
                             <div className="price">
                                 <hr />
-                                <p>floor price: {'$' + this.props.currentListing.floorPrice}</p>
-                                <p>asking price: {'$' + this.props.currentListing.askingPrice}</p>
+                                {this.props.currentListing.category !== 'housing' ? <p>floor price: {'$' + this.props.currentListing.floorPrice}</p> : null}
+                                <p>asking price: {'$' + this.props.currentListing.askingPrice} {this.props.currentListing.priceDescriptor ? <span>{this.props.currentListing.priceDescriptor}</span> : null}</p>
                             </div>
                             :
                             null
