@@ -17,6 +17,7 @@ import ListingImages from './ListingImages.jsx';
 import ImgUpload from './ImgUpload.jsx';
 import Snackbar from '../HOC/Snackbar.jsx';
 import SelectedItemActions from './SelectedItemActions.jsx'
+import ListingFeed from './ListingFeed.jsx'
 
 import { clearCurrentListing_dispatch } from '../actions/listing';
 import { messageSent_action } from '../actions/user';
@@ -134,7 +135,7 @@ class ListingDetail extends Component {
                             <div className="price">
                                 <hr />
                                 {this.props.currentListing.category !== 'housing' ? <p>floor price: {'$' + this.props.currentListing.floorPrice}</p> : null}
-                                <p>asking price: {'$' + this.props.currentListing.askingPrice} {this.props.currentListing.priceDescriptor ? <span>{this.props.currentListing.priceDescriptor}</span> : null}</p>
+                                <p>asking price: {'$' + this.props.currentListing.askingPrice} {this.props.currentListing.priceDescriptor ? <span className="price-descriptor">{this.props.currentListing.priceDescriptor}</span> : null}</p>
                             </div>
                             :
                             null
@@ -142,6 +143,7 @@ class ListingDetail extends Component {
                         <hr />
                         <ExpiresIn time={this.props.currentListing.expirationDate} expiry={this.props.currentListing.expiresIn} />
                     </div>
+                    <ListingFeed />
                     </div>
                 </div>
                 </div>)
