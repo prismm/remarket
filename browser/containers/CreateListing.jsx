@@ -144,24 +144,24 @@ class CreateListing extends Component {
                             <legend className="md-subheading-1">What are you selling?</legend>
                             <div className="md-grid inner-fieldset">
                             <TextField
-                                    id="name"
-                                    name="name"
-                                    value={this.state.name}
-                                    maxLength={55}
-                                    errorText="Must be no more than 55 characters"
-                                    label="Title"
-                                    className="create-listing-title md-cell md-cell--12"
-                                    required
-                                />
-                                <TextField
-                                    id="description"
-                                    label="Description"
-                                    name="description"
-                                    value={this.state.description}
-                                    rows={3}
-                                    className="md-cell md-cell--12"
-                                    required
-                                />
+                                id="name"
+                                name="name"
+                                value={this.state.name}
+                                maxLength={55}
+                                errorText="Must be no more than 55 characters"
+                                label="Title"
+                                className="create-listing-title md-cell md-cell--12"
+                                required
+                            />
+                            <TextField
+                                id="description"
+                                label="Description"
+                                name="description"
+                                value={this.state.description}
+                                rows={3}
+                                className="md-cell md-cell--12"
+                                required
+                            />
                             </div>
                         </fieldset>
                         <fieldset className="location">
