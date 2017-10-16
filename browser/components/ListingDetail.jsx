@@ -143,7 +143,6 @@ class ListingDetail extends Component {
                         <hr />
                         <ExpiresIn time={this.props.currentListing.expirationDate} expiry={this.props.currentListing.expiresIn} />
                     </div>
-                    <ListingFeed />
                     </div>
                 </div>
                 </div>)

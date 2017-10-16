@@ -940,3 +940,100 @@ fieldset {
 .price-descriptor {
     font-family: Roboto
 }
+
+.listing-feed-container {
+    margin-top: 2em;
+    margin-bottom: 2em;
+    background-color: white;
+    border: 1px solid #dddfe2;
+    border-radius: 3px;
+}
+
+.listing-feed-container .md-table-column:first-child {
+    color: #FC0096;
+    padding-left: 0px;
+}
+
+.listing-feed-container .md-table-column--header {
+    height: 40px;
+}
+
+.listing-feed-inner-container {
+    margin: 3px;
+}
+
+.listing-feed-container .md-subheading-1 {
+    margin-bottom: 0;
+}
+
+.listing-feed-container fieldset {
+    padding: 0.5em;
+    border-color: #dddfe2;
+}
+
+.listing-feed-container legend {
+    color: #FC0096;
+}
+
+.chime-in .md-cell {
+    margin: 0;
+}
+
+.no-action-yet {
+    padding-top: 0.5em;
+    font-size: 10px;
+    font-style: italic;
+}
+
+.chime-in .action-type-dropdown {
+    max-width: 120px;
+    margin: 0 1em 0 0;
+    min-width: 80px;
+}
+
+.chime-in .action-input {
+    margin: 0 1em 0 1px;
+}
+
+.chime-in .action-add-button {
+    margin-top: 0.7em;
+}
+
+.chime-in li {
+    font-size: 13px;
+    padding: 3px;
+}
+
+.chime-in input {
+    font-size: 13px;
+}
+
+.action-user {
+    display: inline
+}
+
+.action-save {
+    background-color: rgb(252, 240, 245);
+}
+
+.action-comment {
+    background-color: rgb(252, 250, 240);
+}
+
+.action-offer {
+    background-color: rgb(240, 242, 252);
+}
+
+.action-endorse {
+    background-color: rgb(240, 252, 241);
+}
+
+.action-author {
+    background-color: aquamarine;
+}
+
+.action-list-item {
+    &:hover {
+        background-color: #eee
+    }
+}
