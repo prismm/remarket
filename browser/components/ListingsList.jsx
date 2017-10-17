@@ -7,7 +7,8 @@ import Dropdown from 'react-toolbox/lib/dropdown';
 
 import Listing from './Listing.jsx';
 import spinner from '../HOC/Spinner.jsx';
-import Loader from '../HOC/Loader.jsx'
+import Loader from '../HOC/Loader.jsx';
+import ListingListMenu from './ListingListMenu.jsx'
 
 
 /*------------------- ListingsList component ----------------------*/
@@ -50,7 +51,7 @@ class ListingsList extends Component {
     }
 
     render(){
-        let {listings, category, currentNetwork, classNames} = this.props;
+        let {listings, category, currentNetwork, classNames, menuSubcategories} = this.props;
         // let listings = this.props.listings;
         const catUrl = category === 'for sale' ? 'for-sale' : category;
         const catName = category === 'for sale' ? 'free & for sale' : category;
@@ -62,6 +63,7 @@ class ListingsList extends Component {
         return (
             <div className={classNames}>
                 <h2 className="category-header"><Link to={`/${catUrl}`}>{catName}</Link></h2>
+                {menuSubcategories ? <ListingListMenu category={category} menuSubcategories={menuSubcategories} /> : null }
                 {subcategories ?
                     <Dropdown
                         auto
