@@ -9,6 +9,8 @@ import TableHeader from 'react-md/lib/DataTables/TableHeader';
 import TableBody from 'react-md/lib/DataTables/TableBody';
 import TableRow from 'react-md/lib/DataTables/TableRow';
 import TableColumn from 'react-md/lib/DataTables/TableColumn';
+import ExpansionPanel from 'react-md/lib/ExpansionPanels/ExpansionPanel';
+import Button from 'react-md/lib/Buttons/Button';
 
 import { UpdateNameButton, UpdateUsernameButton, UpdateBioButton, UpdateEmailButton, UpdatePasswordButton } from '../components/Buttons.jsx'
 import Snackbar from '../HOC/Snackbar.jsx'
@@ -19,12 +21,13 @@ import { editUser_dispatch } from '../actions/user';
 class Profile extends Component {
     constructor(props){
         super(props);
-        this.state = Object.assign({}, props.user, {error: false, password: 'actualpasswordishidden'});
+        this.state = Object.assign({}, props.user, {error: false, password: 'actualpasswordishidden', pwError: null});
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handleBioChange = this.handleBioChange.bind(this);
         this.handleEmailChange = this.handleEmailChange.bind(this);
-        this.handlePasswordChange = this.handlePasswordChange.bind(this)
+        this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        this.newPasswordFunc = this.newPasswordFunc.bind(this)
     }
 
     handleNameChange(newName) {
@@ -51,6 +54,17 @@ class Profile extends Component {
             error: true,
             password: newPassword
         })
+    }
+
+    newPasswordFunc(event){
+        event.preventDefault();
+        let newPassword = event.target.newPassword.value;
+        if (newPassword.length < 7){
+            this.setState({pwError: 'Sorry, your new password should be at least 7 characters long.'})
+        } else {
+            this.setState({pwError: null});
+            this.props.updatePassword(this.props.user.id, newPassword)
+        }
     }
 
     render(){
@@ -137,25 +151,30 @@ class Profile extends Component {
                                 </TableColumn>
                             <TableColumn><UpdateEmailButton newEmail={this.state.email} updateEmail={this.props.updateEmail} currentUser={this.props.user} /></TableColumn>
                         </TableRow>
-                        <TableRow key={2}>
-                            <TableColumn>Password</TableColumn>
-                            <TableColumn>
-                                <TextField
-                                id="password"
-                                name="password"
-                                type="password"
-                                error={this.state.error}
-                                errorText="To reset, your new password must be at least 7 characters"
-                                value={this.state.password}
-                                onChange={this.handlePasswordChange}
-                                className="profile-field"
-                                required
-                                />
-                            </TableColumn>
-                            <TableColumn><UpdatePasswordButton newPassword={this.state.password} updatePassword={this.props.updatePassword} currentUser={this.props.user} /></TableColumn>
-                        </TableRow>
                     </TableBody>
                 </DataTable>
+                <ExpansionPanel flat className="my-expansion-panel" label="Reset your password" saveLabel="Done">
+                    <form onSubmit={this.newPasswordFunc} >
+                    <div className="md-grid">
+                    <TextField
+                        name="newPassword"
+                        type="password"
+                        helpText="Please enter a new password, no less than 7 characters."
+                        className="profile-field md-cell--10"
+                    />
+                    <div className="user-button-container pw-button">
+                    <Button
+                        raised
+                        secondary
+                        label="update"
+                        className="user-button"
+                        type="submit"
+                    />
+                    </div>
+                    {   this.state.pwError &&  <div className="response-message"> { this.state.pwError } </div> }
+                    </div>
+                    </form>
+                </ExpansionPanel>
             </div>
             {success ? <Snackbar /> : null}
         </div>

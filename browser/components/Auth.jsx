@@ -115,6 +115,13 @@ class AuthForm extends Component {
   }
 };
 
+// formatError: error => ({
+//   message: error.message,
+//   locations: error.locations,
+//   stack: error.stack,
+//   path: error.path
+// })
+
 AuthForm.propTypes = {
   name: PropTypes.string.isRequired,
   displayName: PropTypes.string.isRequired,
