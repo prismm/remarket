@@ -23,6 +23,7 @@ class AuthForm extends Component {
     this.forgotPassword = this.forgotPassword.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.resendConfirmLink = this.resendConfirmLink.bind(this);
   }
 
   componentWillReceiveProps(nextProps){
@@ -49,7 +50,8 @@ class AuthForm extends Component {
     this.props.forgotPassword(this.state.email);
   }
 
-  resendConfirmLink(){
+  resendConfirmLink(evt){
+    evt.preventDefault();
     this.props.resendConfirmLink(this.state.email);
   }
 
