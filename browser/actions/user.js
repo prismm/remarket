@@ -43,6 +43,7 @@ export const forgotPassword_dispatch = email => dispatch => {
 }
 
 export const resendConfirmLink_dispatch = email => dispatch => {
+    console.log('WOOT this is happening');
     return axios.post('/auth/resendconfirmlink', { email })
         .then(res => {
             dispatch(getUser_action(res.data)); //unlikely to occur -- would mean that the user was in fact already confirmed

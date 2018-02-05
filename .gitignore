@@ -1,6 +1,7 @@
 node_modules
 public/bundle.js
 public/bundle.js.map
+public/bundle.js.gz
 google_api.js
 aws-config.json
 .env
