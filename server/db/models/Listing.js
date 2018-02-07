@@ -64,7 +64,7 @@ const Listing = db.define('listing', {
                     return timestamp.getHours() + ':' + mins + 'am';
                 }
             }
-            if (this.expirationDate && this.status === 'active') return days[timestamp.getDay()] + ' ' + timestamp.toLocaleDateString() + ', ' + time();
+            if (this.expirationDate && this.status === 'active') return days[timestamp.getDay()] + ' ' + timestamp.toLocaleDateString('en-US') + ', ' + time();
             else if (this.status === 'archived') return 'expired';
             else return '---'
         },
@@ -80,7 +80,7 @@ const Listing = db.define('listing', {
                     return timestamp.getHours() + ':' + mins + 'am';
                 }
             }
-            return days[timestamp.getDay()] + ' ' + timestamp.toLocaleDateString() + ', ' + time();
+            return days[timestamp.getDay()] + ' ' + timestamp.toLocaleDateString('en-US') + ', ' + time();
         },
         modified: function() {
             const days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
@@ -94,7 +94,7 @@ const Listing = db.define('listing', {
                     return timestamp.getHours() + ':' + mins + 'am';
                 }
             }
-            return days[timestamp.getDay()] + ' ' + timestamp.toLocaleDateString() + ', ' + time();
+            return days[timestamp.getDay()] + ' ' + timestamp.toLocaleDateString('en-US') + ', ' + time();
         }
     },
     instanceMethods: {
