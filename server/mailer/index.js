@@ -184,7 +184,7 @@ let listingAboutToArchive = function(listingAuthor, listing, renewUrl) {
         from: remarket,
         to: listingAuthor.email,
         subject: '[' + listing.name.slice(0, 10) + '...] Your listing is about to expire',
-        text: 'Hi ' + listingAuthor.userId + ', your listing "' + listing.name + '" is about to expire in ' + listing.expiresIn + ' on remarket. \n To manage this listing, visit My Account -> My Listings (you can edit, renew, or archive/delete the listing there). Thanks and good luck!',
+        text: 'Hi ' + listingAuthor.userId + ', your listing "' + listing.name + '" is about to expire on ' + listing.expiresIn + ' on remarket. \n To manage this listing, visit My Account -> My Listings (you can edit, renew, or archive/delete the listing there). Thanks and good luck!',
         html: '<p>Hi ' + listingAuthor.userId + ', your listing <a href="' + listingLink + '">' + listing.name + '</a> is about to expire in ' + listing.expiresIn + ' on remarket. \n To manage this listing, visit My Account -> My Listings (you can edit, renew, or archive/delete the listing there). Thanks and good luck!</p>'
     }
 };
