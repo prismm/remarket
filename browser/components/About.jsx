@@ -55,69 +55,55 @@ export default function About () {
                 <div className="about-content">
                     <div style={{'font-family': 'avenir'}} >
                         <span className="about-question">How do I sign up? </span>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu ante enim.
-                        Mauris vitae nunc eget ante commodo varius. Sed nisi orci, rhoncus at sem quis, tincidunt auctor lorem.
-                        Cras dignissim metus eros, et fringilla mauris ultricies a. Fusce turpis purus, rhoncus non mauris at, aliquam elementum lacus.
+                        Click 'Sign Up' in the top right-hand corner. Sign up to use remarket with any valid email address, or through your existing Google or Facebook accounts.
+                        Confirm your account by checking your email for a confirmation message from remarket -- follow the link in the email to confirm.
+                        
+                        If you use an @nyu.edu or @columbia.edu email address, you will automatically be joined into your school's network on remarket.
+                        If you choose to sign up with another email address, or with your Google or Facebook account, you will always have the opportunity to join your school's network later, through My Account -> My Networks.
                     </div>
                     <div style={{'font-family': 'avenir'}} >
                         <span className="about-question">How do I edit my username or bio on remarket? </span>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu ante enim.
-                        Mauris vitae nunc eget ante commodo varius. Sed nisi orci, rhoncus at sem quis, tincidunt auctor lorem.
-                        Cras dignissim metus eros, et fringilla mauris ultricies a. Fusce turpis purus, rhoncus non mauris at, aliquam elementum lacus.
+                        Log in, and then navigate to My Account -> My Profile. Here you can edit your username and bio and update your account information.
                     </div>
                     <div style={{'font-family': 'avenir'}} >
                         <span className="about-question">How do I create a new post? </span>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu ante enim.
-                        Mauris vitae nunc eget ante commodo varius. Sed nisi orci, rhoncus at sem quis, tincidunt auctor lorem.
-                        Cras dignissim metus eros, et fringilla mauris ultricies a. Fusce turpis purus, rhoncus non mauris at, aliquam elementum lacus.
+                        Once you’re logged into remarket, click on New Post in the upper righthand corner. 
+                        This will bring you to a form you can use to create your post. Fill in the form, choose an expiration date for your post, and press Publish Post.
+                        Your post will then be published and you will be redirected to the published post, which you can then edit, add photos, or share on Facebook.
                     </div>
                     <div style={{'font-family': 'avenir'}} >
                         <span className="about-question">How do I see all my posts? </span>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu ante enim.
-                        Mauris vitae nunc eget ante commodo varius. Sed nisi orci, rhoncus at sem quis, tincidunt auctor lorem.
-                        Cras dignissim metus eros, et fringilla mauris ultricies a. Fusce turpis purus, rhoncus non mauris at, aliquam elementum lacus.
+                        Log in and click on My Account in the upper righthand corner, and then select My Posts from the lefthand menu. All your posts (whether active or archived) will be listed there.
                     </div>
                     <div style={{'font-family': 'avenir'}} >
                         <span className="about-question">How do I edit my post? </span>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu ante enim.
-                        Mauris vitae nunc eget ante commodo varius. Sed nisi orci, rhoncus at sem quis, tincidunt auctor lorem.
-                        Cras dignissim metus eros, et fringilla mauris ultricies a. Fusce turpis purus, rhoncus non mauris at, aliquam elementum lacus.
+                        There are two ways to edit your post. <br />
+                        First, you can navigate to My Account ->  My Posts -> Edit, which will bring you to a form you can use to edit your post.<br />
+                        Second, you can navigate to your post itself; if you’re logged in, you should see an option to edit the post right below the post’s title.
                     </div>
                     <div style={{'font-family': 'avenir'}} >
                         <span className="about-question">How do I add photos to my post? </span>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu ante enim.
-                        Mauris vitae nunc eget ante commodo varius. Sed nisi orci, rhoncus at sem quis, tincidunt auctor lorem.
-                        Cras dignissim metus eros, et fringilla mauris ultricies a. Fusce turpis purus, rhoncus non mauris at, aliquam elementum lacus.
+                        Log in and navigate to your post. Click on Add/Manage Photos to add, edit, or delete the photos that display alongside your post.
                     </div>
                     <div style={{'font-family': 'avenir'}} >
                         <span className="about-question">Who can view my post? </span>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu ante enim.
-                        Mauris vitae nunc eget ante commodo varius. Sed nisi orci, rhoncus at sem quis, tincidunt auctor lorem.
-                        Cras dignissim metus eros, et fringilla mauris ultricies a. Fusce turpis purus, rhoncus non mauris at, aliquam elementum lacus.
+                        Anyone visiting remarket can view your post. Only logged in users can see your profile or contact you through remarket. Your email address is not exposed to users on the site.
                     </div>
                     <div style={{'font-family': 'avenir'}} >
                         <span className="about-question">How will I know if someone is interested in my post? </span>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu ante enim.
-                        Mauris vitae nunc eget ante commodo varius. Sed nisi orci, rhoncus at sem quis, tincidunt auctor lorem.
-                        Cras dignissim metus eros, et fringilla mauris ultricies a. Fusce turpis purus, rhoncus non mauris at, aliquam elementum lacus.
+                        Anyone visiting your post will have the option of messaging you to express interest in your post. For security purposes, we require that users log in or create an account in order to message other users.
                     </div>
                     <div style={{'font-family': 'avenir'}} >
                         <span className="about-question">How can I mark my item as sold or no longer available? </span>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu ante enim.
-                        Mauris vitae nunc eget ante commodo varius. Sed nisi orci, rhoncus at sem quis, tincidunt auctor lorem.
-                        Cras dignissim metus eros, et fringilla mauris ultricies a. Fusce turpis purus, rhoncus non mauris at, aliquam elementum lacus.
+                        We encourage you to keep your posts up-to-date and relevant. If your posted item is no longer available, or if your post is no longer relevant, please archive the post by visiting My Account -> My Posts -> Delete.<br /> (You will then be given the choice of archiving or completely deleting the post; we recommend archiving as it takes the item off the market but saves the post in case you want to revisit or reactivate it in the future.)
                     </div>
                     <div style={{'font-family': 'avenir'}} >
                         <span className="about-question">How can I renew my post? </span>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu ante enim.
-                        Mauris vitae nunc eget ante commodo varius. Sed nisi orci, rhoncus at sem quis, tincidunt auctor lorem.
-                        Cras dignissim metus eros, et fringilla mauris ultricies a. Fusce turpis purus, rhoncus non mauris at, aliquam elementum lacus.
+                        Log in and navigate to My Account ->  My Posts; there you will see an option to renew your post by selecting a new expiration date in the future.
                     </div>
                     <div style={{'font-family': 'avenir'}} >
                         <span className="about-question">How do I reply to another user's post? </span>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu ante enim.
-                        Mauris vitae nunc eget ante commodo varius. Sed nisi orci, rhoncus at sem quis, tincidunt auctor lorem.
-                        Cras dignissim metus eros, et fringilla mauris ultricies a. Fusce turpis purus, rhoncus non mauris at, aliquam elementum lacus.
+                        
                     </div>
                     <div style={{'font-family': 'avenir'}} >
                         <span className="about-question">How do I join a network? </span>
