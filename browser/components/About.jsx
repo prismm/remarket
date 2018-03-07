@@ -103,20 +103,25 @@ export default function About () {
                     </div>
                     <div style={{'font-family': 'avenir'}} >
                         <span className="about-question">How do I reply to another user's post? </span>
-                        
+                        Log in and navigate to the post. Click the "Message" button under the post's title to message the user. 
+                        Your message will go directly to that user's email inbox. Their replies to your message will go directly to your email inbox.
                     </div>
                     <div style={{'font-family': 'avenir'}} >
                         <span className="about-question">How do I join a network? </span>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu ante enim.
-                        Mauris vitae nunc eget ante commodo varius. Sed nisi orci, rhoncus at sem quis, tincidunt auctor lorem.
-                        Cras dignissim metus eros, et fringilla mauris ultricies a. Fusce turpis purus, rhoncus non mauris at, aliquam elementum lacus.
+                        There are two ways to join a network. 
+
+                        You can join a network automatically by signing up for remarket with your network email address -- you@nyu.edu, or you@columbia.edu. Once you confirm your account by verifying your email, you will be joined into your school's network.
+
+                        Alternatively, you can join a network after you've already created an account by logging in and navigating to My Account -> My Networks. Choose your network from the dropdown menu and provide your associated email address (you@nyu.edu, or you@columbia.edu). Then check your network email inbox for a confirmation email, to verify your affiliation.
                     </div>
                     <div style={{'font-family': 'avenir'}} >
                         <span className="about-question">Why should I join a network? </span>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu ante enim.
-                        Mauris vitae nunc eget ante commodo varius. Sed nisi orci, rhoncus at sem quis, tincidunt auctor lorem.
-                        Cras dignissim metus eros, et fringilla mauris ultricies a. Fusce turpis purus, rhoncus non mauris at, aliquam elementum lacus.
-                    </div>
+                        You are not required to be part of a network in order to post or reply to posts on remarket.
+
+                        Nevertheless, we recommend you join your school's networks on remarket so that other users will be able to see that you are within their school's network. Being part of a network increases your trustworthiness and improves your chances of receiving replies from other network members.
+
+                        Remarket can be a more efficient marketplace when all users have joined their networks, because trust leads to greater market efficiency.
+                        </div>
                     <div className="about-note" style={{'font-family': 'avenir'}} >
                         Remarket is free to use and your information privacy and security are important to us.
                         Remarket is not sponsored by, endorsed by, or affiliated with NYU or Columbia University in any way
