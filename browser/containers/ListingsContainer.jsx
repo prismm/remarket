@@ -126,9 +126,11 @@ class Listings extends Component {
                             <ListingsList classNames="category-list md-cell md-cell--10" listings={this.filterByCategory(this.props.selectedCategory, filteredListings)} category={this.props.selectedCategory} subcategories={subcategories} subcategory={subcategory} />
                         </div>) : (
                         <div className="md-grid">
-                            <ListingsList classNames="category-list md-cell md-cell--6" listings={this.filterByCategory('for sale', filteredListings)} category="for sale" menuSubcategories={forSaleSubcategories.slice(1)} />
                             <div className="category-list md-cell md-cell--6">
+                                <ListingsList classNames="category-list" listings={this.filterByCategory('for sale', filteredListings)} category="for sale" menuSubcategories={forSaleSubcategories.slice(1)} />
                                 <ListingsList classNames="category-list" listings={this.filterByCategory('community', filteredListings)} category="community" menuSubcategories={communitySubcategories.slice(1)} />
+                            </div>
+                            <div className="category-list md-cell md-cell--6">
                                 <ListingsList classNames="category-list" listings={this.filterByCategory('housing', filteredListings)} category="housing" menuSubcategories={housingSubcategories.slice(1)} />
                             </div>
                         </div>
