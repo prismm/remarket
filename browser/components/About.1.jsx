@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 import React from 'react';
-import { ExpansionList, ExpansionPanel } from 'react-md';
 
 /*----------------------- About Component ---------------------------*/
 export default function About () {
@@ -10,19 +9,12 @@ export default function About () {
         color: '#FC0096'
     }
 
-    const footer = null;
-
     return (
         <div className="md-grid">
             <div className="md-cell md-cell--8 about-body">
-                <h2 style={style} classNames="category-header about-header">remarket FAQs</h2>
+                <h2 style={style} classNames="category-header about-header">about remarket</h2>
                 <div className="about-content">
                     <div style={{'font-family': 'avenir'}} >Hello & welcome to reuse.market, a.k.a. remarket!</div>
-                    <ExpansionList>
-                    <ExpansionPanel label="This one has no footer RIGHT" footer={footer}>
-                        <p> test content for expansion</p>
-                    </ExpansionPanel>
-                    </ExpansionList>
                     <div style={{'font-family': 'avenir'}} >
                     <span className="about-question">What is remarket? </span>
                         This website is a marketplace and classifieds site for NYU & Columbia.
