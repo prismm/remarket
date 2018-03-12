@@ -769,10 +769,11 @@ fieldset {
 }
 
 .about-header {
-    // font-family: avenir !important;
+    font-family: avenir;
+    color: #FC0096;
     font-weight: 500;
     text-align: center;
-    font-size: 18px;
+    font-size: 24px;
 }
 
 .about-content {
@@ -781,9 +782,17 @@ fieldset {
     @media (max-width: 599px) {
         text-align: left;
     }
+    p {
+        font-size: 16px;
+        font-family: avenir;
+    }
+    .md-panel-column {
+        color: #FC0096;
+    }
 }
 
 .about-body {
+    font-family: avenir;
     background-color: white;
     padding: 2em;
     margin: auto;
@@ -1085,4 +1094,12 @@ fieldset {
 .pw-button {
     float: right;
     margin-left: 2em;
+}
+
+.faq-expansion-list {
+    margin: 1em 0 1em 0;
+}
+
+.color-link {
+    color: #FC0096;
 }
