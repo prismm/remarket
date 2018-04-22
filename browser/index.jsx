@@ -23,6 +23,7 @@ import ListingDetail from './components/ListingDetail.jsx'
 import CreateListing from './containers/CreateListing.jsx';
 import AccountContainer from './containers/Account.jsx';
 import AddNetwork from './containers/AddNetwork.jsx';
+import AdminCreateUser from './containers/AdminCreateUser.jsx';
 import Profile from './containers/Profile.jsx';
 import MyListings from './components/MyListings.jsx';
 import MyOffers from './components/MyOffers.jsx';
@@ -50,6 +51,19 @@ const requireLogin = (nextRouterState, replace, next) => {
     })
     .catch(console.error)
   }
+
+  const checkAdmin = (nextRouterState, replace, next) => {
+    whoAmI
+      .then(() => {
+        const { user } = store.getState();
+        if (!user.id || !user.isAdmin) {
+          store.dispatch(setDestination_action(nextRouterState.location.pathname)); //captures destination for post-login route
+          replace('/login');
+        }
+        next();
+      })
+      .catch(console.error)
+    }
 
 const getCurrentListing = (nextRouterState) => {
   store.dispatch(fetchSingleListing_dispatch(nextRouterState.params.listingId));
@@ -136,6 +150,7 @@ ReactDOM.render(
           <Route path="/account/managelistings" component={MyListings} onEnter={recordPageView} />
           <Route path="/account/manageoffers" component={MyOffers} onEnter={recordPageView} />
           <Route path="/account/savedlistings" component={MySavedListings} onEnter={loadSavedPosts} />
+          <Route path="/account/admin-create-user" component={AdminCreateUser} onEnter={checkAdmin} />
         </Route>
       </Route>
       <Route path="listings" component={ListingsContainer} />

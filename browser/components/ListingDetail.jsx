@@ -141,6 +141,8 @@ class ListingDetail extends Component {
                             null
                         }
                         <hr />
+                        {/*<ListingFeed />
+                        <hr />*/}
                         <ExpiresIn time={this.props.currentListing.expirationDate} expiry={this.props.currentListing.expiresIn} />
                     </div>
                     </div>
