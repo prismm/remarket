@@ -169,6 +169,45 @@ router.post('/signup', (req, res, next) => {
         .catch(next)
 })
 
+router.post('/admincreateuser', (req, res, next) => {
+    User.findOne({ where: { email: req.body.email } })
+        .then(user => {
+            if (user) {
+                res.status(401).send('An account with that email address already exists.')
+            } else {
+                User.create(req.body)
+                    .then(newUser => {
+                        analytics.identify({
+                            userId: newUser.id,
+                            traits: {
+                                email: newUser.email,
+                                confirmed: newUser.confirmed
+                            }
+                        });
+                        analytics.track({
+                            userId: newUser.id,
+                            event: 'Signed up by admin'
+                        });
+                        if (newUser.email.slice(-12).toLowerCase() === 'columbia.edu') {
+                            affiliations.create({ userId: newUser.id, networkId: 1, networkEmail: newUser.email, confirmed: true })
+                        } else if (newUser.email.slice(-7).toLowerCase() === 'nyu.edu') {
+                            affiliations.create({ userId: newUser.id, networkId: 2, networkEmail: newUser.email, confirmed: true })
+                        }
+                        mailer.transporter.sendMail(mailer.adminCreateUserWelcome(newUser, req.body.password), (error, info) => {
+                            if (error) console.error(error);
+                            if (!error) console.log('Message %s sent: %s', info.messageId, info.response);
+                        });
+                        res.status(201).send('all good');
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        res.status(401).send('Something went wrong... oops.')
+                    })
+            }
+        })
+        .catch(next)
+})
+
 router.get('/verify', (req, res, next) => {
     let loginPage = domainUrl + 'login/'
     Token.findOne({ where: { token: req.query.id, type: 'confirm-account' } })

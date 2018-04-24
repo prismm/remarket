@@ -7,7 +7,7 @@ import generator from 'generate-password';
 import { Button } from 'react-toolbox/lib/button';
 import Input from 'react-toolbox/lib/input';
 
-
+import Snackbar from '../HOC/Snackbar.jsx'
 import {adminCreateUser_dispatch} from '../actions/user'
 
 /*----------------------- MyOffers Component ---------------------------*/
@@ -22,6 +22,7 @@ class AdminCreateUser extends Component {
         };
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.generateTemporaryPassword = this.generateTemporaryPassword.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     generateTemporaryPassword(){
@@ -44,11 +45,12 @@ class AdminCreateUser extends Component {
 
     handleSubmit(){
         if (this.state.email && this.state.password) {
+            console.log(this.state.email, this.state.password, 'trying!')
             this.props.adminCreateUser(this.state.email, this.state.password)
         } else {
             this.setState({error: 'Please enter a valid email address and generate a temporary password for the user.'})
         }
-        console.log('Data to be submitted: ', this.state.email, this.state.password)
+        // console.log('Data to be submitted: ', this.state.email, this.state.password)
     }
 
     checkEmailError(){
@@ -58,10 +60,11 @@ class AdminCreateUser extends Component {
     render(){
         return (
             <div>
-                <Input type="email" label="Email address" icon="email" value={this.state.email} onChange={this.handleChange} error={this.state.emailError} />
-                <Button label="Generate temporary password" raised primary /><div>{ this.state.password ? this.state.password : <em>none</em> }</div>
+                <Input type="email" label="Email address" icon="email" value={this.state.email} onChange={this.handleEmailChange} error={this.state.emailError} />
+                <Button label="Generate temporary password" raised primary onMouseUp={this.generateTemporaryPassword} /><div>{ this.state.password ? this.state.password : <em>none</em> }</div>
                 <Button icon="add" label="Create confirmed user" raised accent disabled={!this.state.password || !this.state.email} onMouseUp={this.handleSubmit} />
                 <div>{this.state.error ? this.state.error : null}</div>
+                {this.props.success ? <Snackbar /> : null}
             </div>
         )
     }
@@ -74,7 +77,11 @@ AdminCreateUser.PropTypes = {
 
 /*---------------------------------Container------------------------------------*/
 
-const mapState = () => {};
+const mapState = state => {
+    return {
+        success: state.browse.success
+    }
+};
 
 const mapDispatch = dispatch => ({
     adminCreateUser: (email, password) => dispatch(adminCreateUser_dispatch(email, password))
