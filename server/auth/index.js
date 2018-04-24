@@ -134,7 +134,7 @@ const facebookStrategy = new FacebookStrategy(FacebookConfig, function(accessTok
                                     analytics.track({
                                         userId: createdUser.id,
                                         event: 'Signed up with Facebook'
-                                    })
+                                    });
                                     mailer.transporter.sendMail(mailer.welcome(createdUser), (error, info) => {
                                         if (error) console.error(error);
                                         if (!error) console.log('Message %s sent: %s', info.messageId, info.response);

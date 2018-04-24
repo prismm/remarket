@@ -40,6 +40,18 @@ const welcome = function(user) {
     }
 };
 
+const adminCreateUserWelcome = function(user, tempPassword) {
+    const account = domainUrl + 'account/';
+
+    return {
+        from: remarket,
+        to: user.email,
+        subject: 'Welcome to remarket',
+        text: 'Hello, welcome to remarket! Your temporary password is ' + tempPassword + '. When you have a second, set up your account by clicking below.\n ' + account, // plain text body
+        html: '<p>Hello, welcome to remarket! Your temporary password is ' + tempPassword + '. When you have a second, <a href="' + account + '">set up your account</a> here.</p>' // html body
+    }
+};
+
 const changePassword = function(user, resetPwUrl) {
     return {
         from: remarket,
@@ -203,5 +215,6 @@ module.exports = {
     sendMessage,
     passwordReset,
     welcome,
-    contact
+    contact,
+    adminCreateUserWelcome
 }

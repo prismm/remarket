@@ -9,7 +9,7 @@ import FontIcon from 'react-toolbox/lib/font_icon';
 import {flagListing_dispatch, fetchPageViews_dispatch } from '../actions/listing';
 import {clearListingActions_dispatch, fetchMyActions_dispatch, fetchListingActions_dispatch, addSave_dispatch, unsave_dispatch} from '../actions/action'
 
-/*----------------------- MyOffers Component ---------------------------*/
+/*----------------------- SelectedItemActions Component ---------------------------*/
 class SelectedItemActions extends Component {
     constructor(props){
         super(props);

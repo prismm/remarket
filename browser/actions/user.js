@@ -74,6 +74,17 @@ export const contact_dispatch = (replyToEmail, message, subject) => dispatch => 
             console.error(error))
 }
 
+export const adminCreateUser_dispatch = (email, password) => dispatch => {
+    return axios.post('/auth/admincreateuser', { email, password, confirmed: true })
+        .then(() => {
+            console.log('we made it')
+            dispatch(interactionSuccess_action('Admin: you have created user'))
+        })
+        .catch(() => {
+            console.log('admin: USER ALREADY EXISTS!')
+        })
+}
+
 export const messageUser_dispatch = (sender, receiver, message, subject, listingId) => dispatch => {
     return axios.post('/api/users/msg', { sender, receiver, message, subject, listingId })
         .then(res => {
