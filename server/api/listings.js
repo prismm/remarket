@@ -23,9 +23,6 @@ let jwtClient = new google.auth.JWT(
     null
 );
 
-// const path = require('path')
-// router.use(express.static(path.join(__dirname, '../public')));
-
 //creating analytics route to query pageviews
 router.get('/googleanalytics/:listingId', (req, res, next) => {
     function queryData(analyticsObj) {
