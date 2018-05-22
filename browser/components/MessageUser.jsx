@@ -81,10 +81,6 @@ class MessageUser extends Component {
                 label={this.props.label}
                 className="message-button"
                 onClick={() => this.showMessage()}
-                style={{
-                    height: 'inherit',
-                    minHeight: '36px'
-                }}
             />}
             <CSSTransitionGroup
                 transitionName="md-cross-fade"
