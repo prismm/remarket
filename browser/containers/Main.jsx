@@ -86,9 +86,9 @@ class Main extends Component {
           <h1 className="site-header">
             <Link to="/" onClick={() => this.clickLogo()}>remarket</Link>
           </h1>
-          {this.props.location.pathname === '/' || this.props.location.pathname === '/home' && //hide buttons if not on home page
+          {(this.props.location.pathname === '/' || this.props.location.pathname === '/home') && //hide buttons if not on home page
           <Button raised primary className={NyuClassNames} onClick={() => this.setNetwork(2)} label="NYU" />}
-          {this.props.location.pathname === '/' || this.props.location.pathname === '/home' &&
+          {(this.props.location.pathname === '/' || this.props.location.pathname === '/home') &&
           <Button raised primary className={ColumbiaClassNames} onClick={() => this.setNetwork(1)} label="Columbia" />}
           { loggedIn ?
               <nav className="site-nav">
