@@ -91,10 +91,7 @@
   "devDependencies": {
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
-<<<<<<< HEAD
     "babel-polyfill": "^6.26.0",
-=======
->>>>>>> parent of 33c3cae... style message button, hide network buttons, remove duplicate dependencies, fix seed file
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
