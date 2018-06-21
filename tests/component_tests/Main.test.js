@@ -22,8 +22,7 @@ describe('<Main />', () => {
   })
 
   it('should update state when clicking the network buttons', () => {
-    const wrapper = mount(<Main selectNetwork={() => {}} />)
-    console.log('hey', wrapper.state())
+    let wrapper = mount(<Main selectNetwork={() => {}} />)
     wrapper.find('button.network-button-nyu').simulate('click')
     expect(wrapper.state().selectedNetwork).to.equal(2)
   })
