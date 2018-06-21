@@ -13,7 +13,7 @@ import { fetchSingleNetwork_dispatch, setCurrentNetwork_action } from '../action
 
 /*------------------- Main component ----------------------*/
 
-class Main extends Component {
+export class Main extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -67,7 +67,7 @@ class Main extends Component {
         <div className="site-header-container">
           <Link to="/">
             <img
-              className={`remarket-logo ${rotateLogo && 'rotate-logo'}`} 
+              className={`remarket-logo ${rotateLogo && 'rotate-logo'}`}
               src="/imgs/remarket-logo.png"
               alt="" height="40" width="40"
               onClick={() => this.clickLogo()}
