@@ -52,12 +52,22 @@ class Main extends Component {
   render(){
     const { children, handleClick, loggedIn } = this.props;
     // logic to determine button styling below
-    let NyuClassNames = this.state.selectedNetwork === 2 ? 'network-button network-button-nyu-selected' : 'network-button network-button-nyu';
-    NyuClassNames = this.state.selectedNetwork === 1 ? 'network-button network-button-disabled-nyu' : NyuClassNames;
-    NyuClassNames = this.state.selectedNetwork === 0 ? 'network-button network-button-nyu' : NyuClassNames;
-    let ColumbiaClassNames = this.state.selectedNetwork === 1 ? 'network-button network-button-columbia-selected' : 'network-button network-button-columbia';
-    ColumbiaClassNames = this.state.selectedNetwork === 2 ? 'network-button network-button-disabled-columbia' : ColumbiaClassNames;
-    ColumbiaClassNames = this.state.selectedNetwork === 0 ? 'network-button network-button-columbia' : ColumbiaClassNames;
+    let NyuClassNames = 'network-button'
+    let ColumbiaClassNames = 'network-button'
+    switch (this.state.selectedNetwork) {
+      case 1:
+        NyuClassNames += ' network-button-disabled-nyu'
+        ColumbiaClassNames += ' network-button-columbia-selected'
+        break;
+      case 2:
+        NyuClassNames += ' network-button-nyu-selected'
+        ColumbiaClassNames += ' network-button-disabled-columbia'
+        break;
+      default:
+        NyuClassNames += ' network-button-nyu'
+        ColumbiaClassNames += ' network-button-columbia'
+        break;
+    }
 
     // logic for logo rotation
     let { rotateLogo } = this.state
@@ -67,7 +77,7 @@ class Main extends Component {
         <div className="site-header-container">
           <Link to="/">
             <img
-              className={`remarket-logo ${rotateLogo && 'rotate-logo'}`} 
+              className={`remarket-logo ${rotateLogo && 'rotate-logo'}`}
               src="/imgs/remarket-logo.png"
               alt="" height="40" width="40"
               onClick={() => this.clickLogo()}
@@ -76,8 +86,10 @@ class Main extends Component {
           <h1 className="site-header">
             <Link to="/" onClick={() => this.clickLogo()}>remarket</Link>
           </h1>
-          <Button raised primary className={NyuClassNames} onClick={() => this.setNetwork(2)} label="NYU" />
-          <Button raised primary className={ColumbiaClassNames} onClick={() => this.setNetwork(1)} label="Columbia" />
+          {(this.props.location.pathname === '/' || this.props.location.pathname === '/home') && //hide buttons if not on home page
+          <Button raised primary className={NyuClassNames} onClick={() => this.setNetwork(2)} label="NYU" />}
+          {(this.props.location.pathname === '/' || this.props.location.pathname === '/home') &&
+          <Button raised primary className={ColumbiaClassNames} onClick={() => this.setNetwork(1)} label="Columbia" />}
           { loggedIn ?
               <nav className="site-nav">
                 <a className="site-nav-link" href="#" onClick={handleClick}>Logout</a>
