@@ -14,7 +14,7 @@ Remarket uses OAuth and Passort to allow users to log in or sign up using their 
 
 Remarket uses Segment Analytics to collect data and keep track of multiple user flows.
 
-The Remarket UI implements principles of material design using opensource React component libraries including react-md and react-toolbox. The look and feel of the app, as well as its turning logo, are purely based on the vision of its creator.  
+The Remarket UI implements principles of material design using opensource React component libraries including react-md and react-toolbox. The look and feel of the app, as well as its turning logo, are the vision of its creator.  
 
 As a production application with real users, Remarket took the following measures to meet its users' expectations for data security and privacy:
 --> it keeps user info 'sanitized,' never handles passwords or emails on the front-end or stores in logs, keeps private info off of req/res headers;
@@ -24,6 +24,8 @@ As a production application with real users, Remarket took the following measure
 --> it maintains a valid SSL certificate / uses HTTPS.
 
 *What is a two-sided marketplace? https://en.wikipedia.org/wiki/Two-sided_market
+
+*Why was this created? When markets are more efficient at allocating goods, less waste is generated. I found existing secondhand marketplaces to be inefficient -- the larger ones were too clunky, took too much of a cut, or lacked trust, while the ones within networks used outdated technology like email listservs. I wanted to create a solution.
 
 *What could be done better?
 Probably a lot of things. This was the first live app I ever built, and I only learned to code a few months before creating it. I did not have the guidance of a more senior developer to oversee the app's development, instead relying on documentation and the wisdom of the internet whenever I was in a jam. Some solutions here are hack-y. Remarket could be more secure, for instance by using tokens to prevent CSRF attacks, or in probably countless other ways I'm not aware of. Things broke occasionally, and occasionally things broke silently. This was a serious passion project for me and my devotion to it taught me a lot about coding that would have been hard to learn if I cared any less. Thanks for reading.
