@@ -1,6 +1,12 @@
 const nodemailer = require('nodemailer');
 const secrets = process.env.GOOGLE_CLIENT_ID ? null : require('../../google_api.js');
-const domainUrl = process.env.GOOGLE_CLIENT_ID ? 'https://www.reuse.market/' : 'http://localhost:1337/'; //'https://reuse.market/'
+const domainUrl = process.env.DOMAIN_OK ? process.env.DOMAIN_OK : 'http://localhost:1337/'; //'https://reuse.market/'
+// var allowedOrigins = ['https://www.reuse.market/', 'https://remarket-example1.herokuapp.com/'];
+// var origin = req.headers.origin;
+
+// const isAllowedOrigin = origin => {
+//     return allowedOrigins.indexOf(origin) > -1
+// };
 
 const remarket = '"Remarket 👻" <hello@coases.com>';
 

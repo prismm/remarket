@@ -166,7 +166,7 @@ export default function About () {
                         <div className="about-note">
                             Remarket is free to use and your information privacy and security are important to us.
                             Remarket is not sponsored by, endorsed by, or affiliated with NYU or Columbia University in any way
-                            (except that <a href="https://www.reuse.market/user/13">its creator</a> is an alumna of both 👻 ).
+                            (except that <a href="https://www.reuse.market/user/1">its creator</a> is an alumna of both 👻 ).
                         </div>
                 </div>
             </div>

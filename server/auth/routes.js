@@ -11,7 +11,7 @@ const Token = model.Token;
 const affiliations = model.network_affiliations;
 const mailer = require('../mailer')
 const crypto = require('crypto');
-const domainUrl = process.env.GOOGLE_CLIENT_ID ? 'https://www.reuse.market/' : 'http://localhost:1337/';
+const domainUrl = process.env.DOMAIN_OK ? process.env.DOMAIN_OK : 'http://localhost:1337/';
 var Analytics = require('analytics-node');
 var analytics = new Analytics('NxBhoGdVdYkBQtlIQdvKg2ZRwDNxoaYo');
 
@@ -152,7 +152,7 @@ router.post('/signup', (req, res, next) => {
                                 mailer.transporter.sendMail(mailer.verifyEmail(newUser, confirmUrl), (error, info) => {
                                     if (error) {
                                         console.error(error);
-                                        res.status(401).send('Something went wrong. Try again or <a href="priya@coases.com">contact us</a>.');
+                                        res.status(401).send('Something went wrong. Try again or contact us for help.');
                                     } else {
                                         res.status(307).send('Great! Check your email and follow the confirmation link to activate your account.')
                                         console.log('Message %s sent: %s', info.messageId, info.response)
