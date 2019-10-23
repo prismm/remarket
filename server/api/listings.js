@@ -15,6 +15,7 @@ var analytics = new Analytics('NxBhoGdVdYkBQtlIQdvKg2ZRwDNxoaYo');
 const google = require('googleapis');
 const clientEmail = process.env.GA_CLIENT_EMAIL ? process.env.GA_CLIENT_EMAIL : require('remarket-reporting-api.json').client_email; //will be gitignored -- need to handle thru heroku on deploy
 const privateKey = process.env.GA_PRIVATE_KEY ? process.env.GA_PRIVATE_KEY : require('remarket-reporting-api.json').private_key;
+
 const VIEW_ID = 'ga:121605325';
 let jwtClient = new google.auth.JWT(
     clientEmail,
