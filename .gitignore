@@ -6,3 +6,4 @@ google_api.js
 aws-config.json
 .env
 seedfile
+config.txt
