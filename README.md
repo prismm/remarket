@@ -2,7 +2,7 @@
 
 Welcome to the Remarket repository. Remarket is a two-sided marketplace* app with built-in networks, where students can affiliate with their school network, and buy and sell things to each other. 
 
-To learn more about the features of Remarket, read through our FAQ -- https://www.reuse.market/about -- or play around with the app itself -- https://www.reuse.market/
+To learn more about the features of Remarket, read through our FAQ -- https://www.reuse.market/about -- or play around with the app itself on the test site -- http://remarket-example1.herokuapp.com
 
 This application was coded 100% by Priya Murthy. It was launched in September 2017. At its peak, it had 800+ active users, predominantly students at NYU Law School (Priya's alma mater).
 
