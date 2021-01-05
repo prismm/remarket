@@ -18,7 +18,7 @@
     "dependencies": {
         "analytics-node": "3.0.0",
         "aws-sdk": "2.100.0",
-        "axios": "0.16.2",
+        "axios": "0.21.1",
         "babel-core": "6.24.1",
         "babel-loader": "7.0.0",
         "babel-polyfill": "6.26.0",
